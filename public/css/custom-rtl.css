@@ -1,0 +1,254 @@
+/*---------------- Persian Fonts -------------------*/
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: bold;
+	src: url('../fonts/vazir/Vazir-Bold.eot');
+	src: url('../fonts/vazir/Vazir-Bold.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../fonts/vazir/Vazir-Bold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../fonts/vazir/Vazir-Bold.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../fonts/vazir/Vazir-Bold.ttf') format('truetype');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: 500;
+	src: url('../fonts/vazir/Vazir-Medium-FD-WOL.eot');
+	src: url('../fonts/vazir/Vazir-Medium-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../fonts/vazir/Vazir-Medium-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../fonts/vazir/Vazir-Medium-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../fonts/vazir/Vazir-Medium-FD-WOL.ttf') format('truetype');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: 300;
+	src: url('../fonts/vazir/Vazir-Light-FD-WOL.eot');
+	src: url('../fonts/vazir/Vazir-Light-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../fonts/vazir/Vazir-Light-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../fonts/vazir/Vazir-Light-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../fonts/vazir/Vazir-Light-FD-WOL.ttf') format('truetype');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: 300;
+	src: url('../fonts/vazir/Vazir-Thin-FD-WOL.eot');
+	src: url('../fonts/vazir/Vazir-Thin-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../fonts/vazir/Vazir-Thin-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../fonts/vazir/Vazir-Thin-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../fonts/vazir/Vazir-Thin-FD-WOL.ttf') format('truetype');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: normal;
+	src: url('../fonts/vazir/Vazir.eot');
+	src: url('../fonts/vazir/Vazir.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../fonts/vazir/Vazir.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../fonts/vazir/Vazir.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../fonts/vazir/Vazir.ttf') format('truetype');
+}
+@font-face {
+	font-family: Yekan;
+	font-style: normal;
+	font-weight: normal;
+	src: url('../fonts/yekan/Yekan.eot');
+	src: url('../fonts/yekan/Yekan.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../fonts/yekan/Yekan.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../fonts/yekan/Yekan.ttf') format('truetype');
+}
+/*---------------- Common -------------------*/
+body{
+    font-family: 'Vazir', sans-serif !important;
+}
+#content-container {
+    direction: rtl;
+}
+.dir-rtl {
+    direction: rtl;
+}
+.pull-left {
+    float: right !important;
+}
+.pull-right {
+    float: left !important;
+}
+.dash-widget-vertical {
+    right: 0;
+    left: unset;
+}
+.dash-widget-left {
+    padding-left: 0;
+    padding-right: 50px;
+}
+@media (min-width: 992px){
+    #container.mainnav-lg #footer, #container.mainnav-lg #content-container {
+        padding-right: 280px;
+        padding-left: 0;
+    }
+    #container.mainnav-lg #mainnav-container {
+        left: unset;
+        right: 0;
+    }
+}
+@media (min-width: 1200px){
+    .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9 {
+        float: right;
+    }
+    .col-lg-offset-2 {
+        margin-right: 16.66666667%;
+        margin-left: unset;
+    }
+}
+@media (min-width: 768px){
+    .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9 {
+        float: right;
+    }
+    #container.mainnav-sm #mainnav-container {
+        left: unset;
+        right: 0;
+    }
+    #container.mainnav-sm #content-container {
+        padding-right: 55px;
+        padding-left: 0;
+        right: 0;
+        left: unset;
+    }
+    #container.mainnav-sm #navbar .navbar-content{
+        margin-left: 0;
+        margin-right: 55px;
+    }
+    .navbar-header {
+        left: unset;
+        right: 0;
+        float: right;
+    }
+    .navbar-content {
+        margin-left: 0;
+        margin-right: 280px;
+    }
+    .navbar-top-links:first-child {
+        margin-left: 0;
+        margin-right: 10px;
+        float: right;
+    }
+    .navbar-top-links:last-child {
+        margin-left: 10px;
+        margin-right: 0;
+        float: left;
+    }
+}
+.navbar-top-links>li {
+    float: right;
+    direction: rtl;
+}
+.dropdown-menu-right {
+    left: 0;
+    right: auto;
+}
+.navbar-top-links .head-list li a {
+    text-align: right;
+}
+.nav > li > a > img {
+    margin-left: 6px;
+}
+#mainnav-menu a {
+    text-align: right;
+    direction: rtl;
+}
+#mainnav-menu i {
+    padding: 0 0 0 10px;
+}
+#mainnav li .arrow {
+    float: left;
+}
+#mainnav li .arrow:before {
+    transform: rotate(225deg);
+}
+#mainnav-menu ul a, .menu-popover .sub-menu ul a {
+    padding: 8px 53px 8px 20px;
+}
+#container .table th {
+    text-align: right;
+}
+.select2-container--default .select2-search--inline .select2-search__field {
+    text-align: right;
+}
+/*---------------- Modal -------------------*/
+.modal-dialog {
+    direction: rtl;
+}
+.modal-title, .modal-body {
+    text-align: right;
+}
+.modal-body>.close, .modal-header>.close {
+    right: auto;
+    left: 10px;
+}
+/*---------------- Select2 -------------------*/
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    left: 1px;
+    right: unset;
+}
+.select2-container .select2-selection--single .select2-selection__rendered {
+    text-align: right;
+}
+.select2-results__option {
+    text-align: right;
+}
+.dropdown-menu > li > a {
+	text-align: right;
+}
+.brand-icon {
+    float: right;
+}
+#navbar .brand-title {
+    padding: 0 0 0 1.5em;
+    text-align: right;
+}
+.pagination > li {
+    float: right;
+}
+.pagination>li:first-child>a, .pagination>li:first-child span {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+.pagination>li:last-child>a, .pagination>li:last-child span {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.nav-tabs {
+    padding-right: 0;
+    margin-right: 0;
+}
+.nav-tabs > li {
+    float: right;
+}
+#mainnav-menu ul ul a, .menu-popover .sub-menu ul ul a {
+    padding: 8px 65px 8px 20px;
+}
+.disabled-persian-date {
+    opacity: 1 !important;
+    background: none;
+    border: none;
+}
+.invoice-details tr {
+    height: 30px;
+}
+.jodit_placeholder {
+	left: unset;
+	right: 0;
+	font-family: 'Vazir';
+}
+.media-left, .media > .pull-left {
+    padding-right: 0;
+    padding-left: 10px;
+}
+.panel {
+    direction: rtl;
+}

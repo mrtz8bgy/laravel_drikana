@@ -1,0 +1,273 @@
+/*---------------- Persian Fonts -------------------*/
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: bold;
+	src: url('../../fonts/vazir/Vazir-Bold.eot');
+	src: url('../../fonts/vazir/Vazir-Bold.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../../fonts/vazir/Vazir-Bold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../../fonts/vazir/Vazir-Bold.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../../fonts/vazir/Vazir-Bold.ttf') format('truetype');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: 500;
+	src: url('../../fonts/vazir/Vazir-Medium-FD-WOL.eot');
+	src: url('../../fonts/vazir/Vazir-Medium-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../../fonts/vazir/Vazir-Medium-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../../fonts/vazir/Vazir-Medium-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../../fonts/vazir/Vazir-Medium-FD-WOL.ttf') format('truetype');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: 300;
+	src: url('../../fonts/vazir/Vazir-Light-FD-WOL.eot');
+	src: url('../../fonts/vazir/Vazir-Light-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../../fonts/vazir/Vazir-Light-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../../fonts/vazir/Vazir-Light-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../../fonts/vazir/Vazir-Light-FD-WOL.ttf') format('truetype');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: 300;
+	src: url('../../fonts/vazir/Vazir-Thin-FD-WOL.eot');
+	src: url('../../fonts/vazir/Vazir-Thin-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../../fonts/vazir/Vazir-Thin-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../../fonts/vazir/Vazir-Thin-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../../fonts/vazir/Vazir-Thin-FD-WOL.ttf') format('truetype');
+}
+@font-face {
+	font-family: Vazir;
+	font-style: normal;
+	font-weight: normal;
+	src: url('../../fonts/vazir/Vazir.eot');
+	src: url('../../fonts/vazir/Vazir.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../../fonts/vazir/Vazir.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
+		 url('../../fonts/vazir/Vazir.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../../fonts/vazir/Vazir.ttf') format('truetype');
+}
+@font-face {
+	font-family: Yekan;
+	font-style: normal;
+	font-weight: normal;
+	src: url('../../fonts/yekan/Yekan.eot');
+	src: url('../../fonts/yekan/Yekan.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
+		 url('../../fonts/yekan/Yekan.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+		 url('../../fonts/yekan/Yekan.ttf') format('truetype');
+}
+/*---------------- Common -------------------*/
+body {
+	font-size: 14px !important;
+}
+body,
+ul.categories > li > a,
+h1, h2, h3, h4, h5, h6,
+.btn,
+.tabs--style-2 .nav-tabs .nav-link {
+    font-family: 'Vazir', sans-serif !important;
+}
+
+.product-gal-thumb {
+	margin-left: 10px;
+	margin-right: unset;
+}
+
+.product-title a {
+	font-family: Yekan, sans-serif !important;
+	font-size: 12px;
+	font-weight: normal;
+	color: #000;
+	text-align: justify;
+}
+
+.yekan {
+	font-family: 'Yekan', sans-serif !important;
+}
+
+.btn-link:hover {
+	text-decoration: none;
+}
+
+.product-description-wrapper .product-description-label, 
+.product-description-wrapper .avialable-amount {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.product-description-wrapper .product-price {
+	font-size: 20px !important;
+}
+
+.bg-white {
+	border-radius: 5px;
+}
+
+#login-box input[type="text"],
+#login-box input[type="password"],
+#login-box input[type="email"]{
+	text-align: right;
+}
+
+.magic-checkbox+label {
+	padding-right: 25px;
+}
+
+.magic-radio+label:before, 
+.magic-checkbox+label:before {
+	left: unset;
+	right: 0;
+}
+
+.product-description-wrapper .product-title {
+	line-height: 30px;
+}
+
+.product-desc-tab .tab-pane {
+	line-height: 2rem;
+	font-family: 'yekan', sans-serif;
+}
+
+.mr-4 {
+	margin-left: 1.5rem!important;
+	margin-right: 0!important;
+}
+
+.added-to-cart .product-box .block-body {
+	padding: 0 2rem 0 0;
+}
+
+.table-cart tbody tr td.product-remove a {
+	width: 50px;
+}
+.table-cart > thead > tr > th {
+	text-align: center;
+}
+
+.form-default .input-group--style-1 .input-group-addon {
+	border-left: 0;
+	border-right: 1px solid #e6e6e6;
+}
+.input-group--style-1 .form-control:not(:first-child) {
+	border-left: 1px solid #e6e6e6;
+	border-right: 0;
+}
+.product-desc-tab .tab-pane span{
+	font-family: 'Yekan';
+} 
+.modal-header .close {
+	margin: -1rem auto -1rem -1rem;
+}
+.checkbox label::after {
+	left: unset;
+	right: 0;
+	margin-right: -15px;
+	padding-right: 3px;
+	margin-left: 0;
+	padding-left: 0;
+}
+.dropdown-menu > li > a {
+	text-align: right;
+}
+
+.slick-track {
+    margin-left: auto;
+    margin-right: unset;
+}
+
+.modal-category-list.has-right-arrow ul li:after {
+	content: "\f104";
+	left: 0;
+	right: unset;
+}
+
+.product-desc-tab table td {
+	border-width: 5px;
+	background-color: #fafafa;
+}
+
+.product-desc-tab table td:first-child {
+	width: 20%;
+	border-color: #fff !important;
+}
+
+.product-desc-tab table td:last-child {
+	border-color: #fff !important;
+}
+
+.seller-info-box .sold-by .medal-badge {
+	right: unset;
+	left: 0;
+}
+.category-widget ul li {
+    float: right;
+    width: 50%;
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    border-left: 1px solid #eee;
+}
+.footer-top .heading {
+	font-size: 1.2rem;
+}
+
+.contact-widget li {
+	margin-bottom: 10px !important;
+}
+.contact-widget li span{
+	margin-bottom: 10px;
+}
+.disabled-persian-date {
+    opacity: 1 !important;
+    background: none;
+    border: none;
+}
+.jodit_placeholder {
+	left: unset;
+	right: 0;
+	font-family: 'Vazir';
+}
+.product-card-2 {
+	height: 350px;
+}
+.price-box .old-product-price {
+	font-size: 12px;
+}
+.side-menu-close {
+	right: unset;
+	left: 0;
+}
+.side-menu-header .widget-profile-box .name {
+	margin-right: 10px;
+}
+.footer-top-bar .col-lg-3:last-child {
+    border-left: 1px solid #eee;
+}
+.custom-input-file--4 + label strong {
+	float: left;
+}
+.dropdown-cart {
+	text-align: right;
+}
+.dc-item .subtotal-amount {
+	float: left;
+}
+.dc-item .subtotal-text {
+	float: right;
+}
+.social-media.social-media--style-1-v4 > li:last-child > a {
+	margin-right: 1rem;
+}
+
+@media (max-width: 991px){
+	.side-menu-wrap {
+		left: unset;
+		right: 0;
+	}
+	.side-menu {
+		transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        -webkit-transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+        -ms-webkit-transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+	}
+}
