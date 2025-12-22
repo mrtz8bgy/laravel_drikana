@@ -4081,7 +4081,7 @@ ul.inline-links > li {
 }
 @media (min-width: 1500px) {
     .container {
-        max-width: 95%;
+        max-width: 98%;
     }
     .col-xxl {
         -ms-flex-preferred-size: 0;

@@ -9158,7 +9158,7 @@ textarea.form-control:focus {
 }
 
 .input-group--style-2 {
-    border-radius: 50px;
+    border-radius: 5px;
     overflow: hidden;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 }
@@ -13895,7 +13895,7 @@ section.ss-slice::after {
   text-transform: none;
   padding: 1.25rem 0;
   vertical-align: middle;
-  color: #2b2b2c;
+  color: #fff;
   border: none;
 }
 
