@@ -121,7 +121,7 @@
 
                                                 <td class="product-quantity d-none d-md-table-cell">
                                                     @if($cartItem['digital'] != 1)
-                                                        <div class="input-group input-group--style-2" style="width: 100px;margin-left: 10px;margin-right: 10px;">
+                                                        <div class="input-group input-group--style-2" style="width: 200px;margin-left: 10px;margin-right: 10px;">
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-number" type="button" data-type="minus" data-field="quantity[{{ $key }}]">
                                                                     <i class="la la-minus"></i>
