@@ -444,9 +444,9 @@ select + .select2-container {
 }
 .logo-bar-area .navbar-brand img {
     max-width: 100%;
-    width: auto;
-    height: auto;
-    max-height: 40px;
+    width: 150px;
+    height: 100px;
+    max-height: 100px;
 }
 .category-menu-icon-box {
     width: 46px;
