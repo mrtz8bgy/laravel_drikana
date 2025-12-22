@@ -125,7 +125,7 @@ ul.categories--style-3 > li > ul > li > a.active,
 .product-box-2 .add-to-cart
 
 {
-    color: #377dff;
+    color: #f01717;
 }
 
 
@@ -144,7 +144,7 @@ ul.categories--style-3 > li > ul > li > a.active,
 .link-menu--style-2 a.active
 
 {
-    color: #377dff !important;
+    color: #f01717 !important;
 }
 
 
@@ -236,7 +236,7 @@ input:checked + .toggle-switch-slider:before,
 .aiz-rounded-check:after
 
 {
-    background: #2d377f;
+    background: #377dff;
 }
 
 
