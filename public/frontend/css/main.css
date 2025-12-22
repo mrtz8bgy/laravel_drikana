@@ -429,7 +429,7 @@ select + .select2-container {
 }
 .sm-fixed-top {
     position: fixed !important;
-    top: -81px;
+    top: -120px;
     background: #00014b;
     width: 100%;
     left: 0;
@@ -444,9 +444,9 @@ select + .select2-container {
 }
 .logo-bar-area .navbar-brand img {
     max-width: 100%;
-    width: 150px;
-    height: 100px;
-    max-height: 100px;
+    width: 100%;
+    height: 80px;
+    max-height: 80px;
 }
 .category-menu-icon-box {
     width: 46px;
@@ -2929,7 +2929,7 @@ ul.seller-brand-list .brand-item {
         padding: 12px 0;
     }
     .sm-fixed-top {
-        top: -65px;
+        top: -110px;
     }
     .mobile-menu-icon-box {
         padding: 8px 0;
