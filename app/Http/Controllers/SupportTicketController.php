@@ -70,11 +70,11 @@ class SupportTicketController extends Controller
         }
 
         if($ticket->save()){
-            flash('ØªÛŒÚ©Øª Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø§ÛŒØ¬Ø§Ø¯ Ø´Ø¯')->success();
+            flash('تیکت با موفقیت ایجاد شد')->success();
             return redirect()->route('support_ticket.index');
         }
         else{
-            flash('Ù…Ø´Ú©Ù„ÛŒ Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡! Ù„Ø·ÙØ§ Ù…Ø¬Ø¯Ø¯Ø§ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†ÛŒØ¯.')->error();
+            flash('مشکل پیش آمد! لطفا مجددا امتحان کنید.')->error();
         }
     }
 
@@ -101,11 +101,11 @@ class SupportTicketController extends Controller
         $ticket_reply->ticket->status = $request->status;
         $ticket_reply->ticket->save();
         if($ticket_reply->save()){
-            flash('Ù¾Ø§Ø³Ø® ØªÛŒÚ©Øª Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø§Ø±Ø³Ø§Ù„ Ø´Ø¯.')->success();
+            flash('پاسخ تیکت با موفقیت ارسال شد.')->success();
             return back();
         }
         else{
-            flash('Ù…Ø´Ú©Ù„ÛŒ Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡! Ù„Ø·ÙØ§ Ù…Ø¬Ø¯Ø¯Ø§ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†ÛŒØ¯')->error();
+            flash('مشکل پیش آمد! لطفا مجددا امتحان کنید')->error();
         }
     }
 
@@ -131,11 +131,11 @@ class SupportTicketController extends Controller
         $ticket_reply->ticket->status = 'pending';
         $ticket_reply->ticket->save();
         if($ticket_reply->save()){
-            flash('Ù¾Ø§Ø³Ø® ØªÛŒÚ©Øª Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø§Ø±Ø³Ø§Ù„ Ø´Ø¯.')->success();
+            flash('پاسخ تیکت با موفقیت ارسال شد.')->success();
             return back();
         }
         else{
-            flash('Ù…Ø´Ú©Ù„ÛŒ Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡! Ù„Ø·ÙØ§ Ù…Ø¬Ø¯Ø¯Ø§ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†ÛŒØ¯')->error();
+            flash('مشکل پیش آمد! لطفا مجددا امتحان کنید')->error();
         }
     }
 
