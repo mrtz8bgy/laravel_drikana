@@ -25,7 +25,7 @@ class SubCategoryController extends Controller
             $subcategories = $subcategories->where('name', 'like', '%'.$sort_search.'%');
         }
         $subcategories = $subcategories->paginate(15);
-        return view('subcategories.index', compact('subcategories', 'sort_search'));
+        return view('admin.subcategories.index', compact('subcategories', 'sort_search'));
     }
 
     /**
@@ -36,7 +36,7 @@ class SubCategoryController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('subcategories.create', compact('categories'));
+        return view('admin.subcategories.create', compact('categories'));
     }
 
     /**
@@ -94,7 +94,7 @@ class SubCategoryController extends Controller
     {
         $subcategory = SubCategory::findOrFail(decrypt($id));
         $categories = Category::all();
-        return view('subcategories.edit', compact('categories', 'subcategory'));
+        return view('admin.subcategories.edit', compact('categories', 'subcategory'));
     }
 
     /**
@@ -171,3 +171,5 @@ class SubCategoryController extends Controller
         return $subcategories;
     }
 }
+
+

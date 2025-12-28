@@ -19,12 +19,12 @@ class LanguageController extends Controller
     public function index(Request $request)
     {
         $languages = Language::all();
-        return view('business_settings.languages.index', compact('languages'));
+        return view('admin.business_settings.languages.index', compact('languages'));
     }
 
     public function create(Request $request)
     {
-        return view('business_settings.languages.create');
+        return view('admin.business_settings.languages.create');
     }
 
     public function store(Request $request)
@@ -46,13 +46,13 @@ class LanguageController extends Controller
     public function show($id)
     {
         $language = Language::findOrFail(decrypt($id));
-        return view('business_settings.languages.language_view', compact('language'));
+        return view('admin.business_settings.languages.language_view', compact('language'));
     }
 
     public function edit($id)
     {
         $language = Language::findOrFail(decrypt($id));
-        return view('business_settings.languages.edit', compact('language'));
+        return view('admin.business_settings.languages.edit', compact('language'));
     }
 
     public function update(Request $request, $id)
@@ -105,3 +105,5 @@ class LanguageController extends Controller
         }
     }
 }
+
+

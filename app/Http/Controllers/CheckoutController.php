@@ -69,12 +69,12 @@ class CheckoutController extends Controller
                     $request->session()->forget('coupon_id');
                     $request->session()->forget('coupon_discount');
 
-                    flash(__('Your order has been placed successfully. Please submit payment information from purchase history'))->success();
+                    flash(__('سفارش شما با موفقیت ثبت شد. لطفاً اطلاعات پرداخت را از تاریخچه خرید ارسال کنید'))->success();
                 	return redirect()->route('order_confirmed');
                 }
             }
         }else {
-            flash(__('Select Payment Option.'))->success();
+            flash(__('گزینه پرداخت را انتخاب کنید.'))->success();
             return back();
         }
     }
@@ -164,7 +164,7 @@ class CheckoutController extends Controller
     {
         if (Auth::check()) {
             if($request->address_id == null){
-                flash("لطفا یک آدرس برای دریافت مرسوله اضافه کنید")->warning();
+                flash("لطفاً یک آدرس برای دریافت مرسوله اضافه کنید")->warning();
                 return back();
             }
             $address = Address::findOrFail($request->address_id);
@@ -345,7 +345,7 @@ class CheckoutController extends Controller
                     }
                 }
                 else{
-                    flash('قبلا از این کد استفاده کردید')->warning();
+                    flash('قبلاً از این کد استفاده کرده‌اید')->warning();
                 }
             }
             else{
@@ -369,3 +369,5 @@ class CheckoutController extends Controller
         return view('frontend.order_confirmed', compact('order'));
     }
 }
+
+

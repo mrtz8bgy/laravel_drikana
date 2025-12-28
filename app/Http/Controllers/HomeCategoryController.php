@@ -16,7 +16,7 @@ class HomeCategoryController extends Controller
     public function index()
     {
         $home_categories = HomeCategory::all();
-        return view('home_categories.index', compact('home_categories'));
+        return view('admin.home_categories.index', compact('home_categories'));
     }
 
     /**
@@ -26,7 +26,7 @@ class HomeCategoryController extends Controller
      */
     public function create()
     {
-        return view('home_categories.create');
+        return view('admin.home_categories.create');
     }
 
     /**
@@ -69,7 +69,7 @@ class HomeCategoryController extends Controller
     public function edit($id)
     {
         $homeCategory = HomeCategory::findOrFail($id);
-        return view('home_categories.edit', compact('homeCategory'));
+        return view('admin.home_categories.edit', compact('homeCategory'));
     }
 
     /**
@@ -134,3 +134,5 @@ class HomeCategoryController extends Controller
         return $result;
     }
 }
+
+

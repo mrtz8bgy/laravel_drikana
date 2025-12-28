@@ -28,7 +28,7 @@ class CustomerController extends Controller
             });
         }
         $customers = $customers->paginate(15);
-        return view('customers.index', compact('customers', 'sort_search'));
+        return view('admin.customers.index', compact('customers', 'sort_search'));
     }
 
     /**
@@ -105,3 +105,5 @@ class CustomerController extends Controller
         return back();
     }
 }
+
+

@@ -15,7 +15,7 @@ class SliderController extends Controller
     public function index()
     {
         $sliders = Slider::all();
-        return view('sliders.index', compact('sliders'));
+        return view('admin.sliders.index', compact('sliders'));
     }
 
     /**
@@ -25,7 +25,7 @@ class SliderController extends Controller
      */
     public function create()
     {
-        return view('sliders.create');
+        return view('admin.sliders.create');
     }
 
     /**
@@ -109,3 +109,5 @@ class SliderController extends Controller
         return redirect()->route('home_settings.index');
     }
 }
+
+

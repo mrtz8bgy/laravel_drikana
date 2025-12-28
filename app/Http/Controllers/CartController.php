@@ -179,3 +179,5 @@ class CartController extends Controller
         return view('frontend.partials.cart_details');
     }
 }
+
+

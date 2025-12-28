@@ -15,7 +15,7 @@ class PickupPointController extends Controller
     public function index()
     {
         $pickup_points = PickupPoint::paginate(15);
-        return view('pickup_point.index', compact('pickup_points'));
+        return view('admin.pickup_point.index', compact('pickup_points'));
     }
 
     /**
@@ -25,7 +25,7 @@ class PickupPointController extends Controller
      */
     public function create()
     {
-        return view('pickup_point.create');
+        return view('admin.pickup_point.create');
     }
 
     /**
@@ -73,7 +73,7 @@ class PickupPointController extends Controller
     public function edit($id)
     {
         $pickup_point = PickupPoint::findOrFail(decrypt($id));
-        return view('pickup_point.edit', compact('pickup_point'));
+        return view('admin.pickup_point.edit', compact('pickup_point'));
     }
 
     /**
@@ -121,3 +121,5 @@ class PickupPointController extends Controller
         }
     }
 }
+
+

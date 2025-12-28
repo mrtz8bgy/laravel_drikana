@@ -97,7 +97,7 @@ class HomeController extends Controller
      */
     public function admin_dashboard()
     {
-        return view('dashboard');
+        return view('admin.dashboard');
     }
 
     /**
@@ -151,7 +151,7 @@ class HomeController extends Controller
             return back();
         }
 
-        flash(__('مشکلی پیش آمده لطفا مجددا امتحان کنید'))->error();
+        flash(__('مشکل پیش آمده لطفاً مجدداً امتحان کنید'))->error();
         return back();
     }
 
@@ -187,7 +187,7 @@ class HomeController extends Controller
             return back();
         }
 
-        flash(__('مشکلی پیش آمده لطفا مجددا امتحان کنید'))->error();
+        flash(__('مشکل پیش آمده لطفاً مجدداً امتحان کنید'))->error();
         return back();
     }
 
@@ -515,7 +515,7 @@ class HomeController extends Controller
 
     public function home_settings(Request $request)
     {
-        return view('home_settings.index');
+        return view('admin.home_settings.index');
     }
 
     public function top_10_settings(Request $request)
@@ -670,3 +670,5 @@ class HomeController extends Controller
         return view('frontend.seller.digitalproducts.product_edit', compact('categories', 'product'));
     }
 }
+
+

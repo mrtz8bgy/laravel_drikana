@@ -47,7 +47,7 @@ class ProductController extends Controller
 
         $products = $products->where('digital', 0)->orderBy('created_at', 'desc')->paginate(15);
 
-        return view('products.index', compact('products','type', 'col_name', 'query', 'sort_search'));
+        return view('admin.products.index', compact('products','type', 'col_name', 'query', 'sort_search'));
     }
 
     /**
@@ -82,7 +82,7 @@ class ProductController extends Controller
         $products = $products->orderBy('created_at', 'desc')->paginate(15);
         $type = 'Seller';
 
-        return view('products.index', compact('products','type', 'col_name', 'query', 'seller_id', 'sort_search'));
+        return view('admin.products.index', compact('products','type', 'col_name', 'query', 'seller_id', 'sort_search'));
     }
 
     /**
@@ -93,7 +93,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('products.create', compact('categories'));
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -325,7 +325,7 @@ class ProductController extends Controller
         $product = Product::findOrFail(decrypt($id));
         $tags = json_decode($product->tags);
         $categories = Category::all();
-        return view('products.edit', compact('product', 'categories', 'tags'));
+        return view('admin.products.edit', compact('product', 'categories', 'tags'));
     }
 
     /**
@@ -339,7 +339,7 @@ class ProductController extends Controller
         $product = Product::findOrFail(decrypt($id));
         $tags = json_decode($product->tags);
         $categories = Category::all();
-        return view('products.edit', compact('product', 'categories', 'tags'));
+        return view('admin.products.edit', compact('product', 'categories', 'tags'));
     }
 
     /**
@@ -702,3 +702,5 @@ class ProductController extends Controller
     }
 
 }
+
+

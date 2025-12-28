@@ -11,7 +11,7 @@ class PolicyController extends Controller
     public function index($type)
     {
         $policy = Policy::where('name', $type)->first();
-        return view('policies.index', compact('policy'));
+        return view('admin.policies.index', compact('policy'));
     }
 
     //updates the policy pages
@@ -21,7 +21,9 @@ class PolicyController extends Controller
         $policy->content = $request->content;
         $policy->save();
 
-        flash($request->name.' با موفقیت به روز رسانی شد');
+        flash($request->name.' Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø¨Ù‡ Ø±ÙˆØ² Ø±Ø³Ø§Ù†ÛŒ Ø´Ø¯');
         return back();
     }
 }
+
+

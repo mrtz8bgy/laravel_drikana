@@ -25,7 +25,7 @@ class CustomerPackageController extends Controller
     public function index()
     {
         $customer_packages = CustomerPackage::all();
-        return view('customer_packages.index',compact('customer_packages'));
+        return view('admin.customer_packages.index',compact('customer_packages'));
     }
 
     /**
@@ -35,7 +35,7 @@ class CustomerPackageController extends Controller
      */
     public function create()
     {
-        return view('customer_packages.create');
+        return view('admin.customer_packages.create');
     }
 
     /**
@@ -84,7 +84,7 @@ class CustomerPackageController extends Controller
     public function edit($id)
     {
         $customer_package = CustomerPackage::findOrFail(decrypt($id));
-        return view('customer_packages.edit', compact('customer_package'));
+        return view('admin.customer_packages.edit', compact('customer_package'));
     }
 
     /**
@@ -194,3 +194,5 @@ class CustomerPackageController extends Controller
         return redirect()->route('dashboard');
     }
 }
+
+

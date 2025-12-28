@@ -27,7 +27,7 @@ class PaymentController extends Controller
     public function payment_histories(Request $request)
     {
         $payments = Payment::orderBy('created_at', 'desc')->paginate(15);
-        return view('sellers.payment_histories', compact('payments'));
+        return view('admin.sellers.payment_histories', compact('payments'));
     }
 
     /**
@@ -61,9 +61,9 @@ class PaymentController extends Controller
     {
         $payments = Payment::where('seller_id', decrypt($id))->orderBy('created_at', 'desc')->get();
         if($payments->count() > 0){
-            return view('sellers.payment', compact('payments'));
+            return view('admin.sellers.payment', compact('payments'));
         }
-        flash('آرشیو پرداختی برای این فروشنده یافت نشد')->warning();
+        flash('آرشیو پرداخت برای این فروشنده یافت نشد')->warning();
         return back();
     }
 
@@ -101,3 +101,5 @@ class PaymentController extends Controller
         //
     }
 }
+
+

@@ -18,7 +18,7 @@ class ReviewController extends Controller
     public function index(Request $request)
     {
         $reviews = Review::orderBy('created_at', 'desc')->paginate(15);
-        return view('reviews.index', compact('reviews'));
+        return view('admin.reviews.index', compact('reviews'));
     }
 
 
@@ -77,7 +77,7 @@ class ReviewController extends Controller
             flash('نظر شما با موفقیت ثبت شد')->success();
             return back();
         }
-        flash('مشکلی پیش آمده لطفا مجددا امتحان کنید.')->error();
+        flash('مشکل پیش آمده لطفاً مجدداً امتحان کنید.')->error();
         return back();
     }
 
@@ -144,3 +144,5 @@ class ReviewController extends Controller
         return 0;
     }
 }
+
+

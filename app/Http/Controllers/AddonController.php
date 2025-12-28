@@ -22,7 +22,7 @@ class AddonController extends Controller
     public function index()
     {
         CoreComponentRepository::instantiateShopRepository();
-        return view('addons.index');
+        return view('admin.addons.index');
     }
 
     /**
@@ -32,7 +32,7 @@ class AddonController extends Controller
      */
     public function create()
     {
-        return view('addons.create');
+        return view('admin.addons.create');
     }
 
     /**
@@ -235,3 +235,5 @@ class AddonController extends Controller
         return 1;
     }
 }
+
+

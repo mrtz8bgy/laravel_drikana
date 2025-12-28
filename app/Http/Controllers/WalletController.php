@@ -71,7 +71,7 @@ class WalletController extends Controller
     public function offline_recharge_request()
     {
         $wallets = Wallet::where('offline_payment', 1)->paginate(10);
-        return view('manual_payment_methods.wallet_request', compact('wallets'));
+        return view('admin.manual_payment_methods.wallet_request', compact('wallets'));
     }
 
     public function updateApproved(Request $request)
@@ -94,3 +94,5 @@ class WalletController extends Controller
         return 0;
     }
 }
+
+

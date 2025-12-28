@@ -49,7 +49,7 @@ class LinkController extends Controller
             flash('لینک با موفقیت اضافه شد.')->success();
             return redirect()->route('links.index');
         }
-        flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+        flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->error();
         return back();
     }
 
@@ -92,7 +92,7 @@ class LinkController extends Controller
             flash('لینک با موفقیت به روز رسانی شد.')->success();
             return redirect()->route('links.index');
         }
-        flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+        flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->error();
         return back();
     }
 
@@ -110,7 +110,9 @@ class LinkController extends Controller
             return redirect()->route('links.index');
         }
 
-        flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+        flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->error();
         return back();
     }
 }
+
+

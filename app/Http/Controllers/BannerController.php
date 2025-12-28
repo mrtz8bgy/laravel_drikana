@@ -15,7 +15,7 @@ class BannerController extends Controller
     public function index()
     {
         $banners = Banner::all();
-        return view('banners.index', compact('banners'));
+        return view('admin.banners.index', compact('banners'));
     }
 
     /**
@@ -25,7 +25,7 @@ class BannerController extends Controller
      */
     public function create($position)
     {
-        return view('banners.create', compact('position'));
+        return view('admin.banners.create', compact('position'));
     }
 
     /**
@@ -67,7 +67,7 @@ class BannerController extends Controller
     public function edit($id)
     {
         $banner = Banner::findOrFail($id);
-        return view('banners.edit', compact('banner'));
+        return view('admin.banners.edit', compact('banner'));
     }
 
     /**
@@ -137,3 +137,5 @@ class BannerController extends Controller
         return redirect()->route('home_settings.index');
     }
 }
+
+

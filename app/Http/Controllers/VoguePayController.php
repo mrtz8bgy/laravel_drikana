@@ -66,3 +66,5 @@ class VoguePayController extends Controller
         return redirect()->route('home');
     }
 }
+
+

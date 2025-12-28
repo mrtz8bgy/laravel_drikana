@@ -19,7 +19,7 @@ class CurrencyController extends Controller
     {
         $currencies = Currency::all();
         $active_currencies = Currency::where('status', 1)->get();
-        return view('business_settings.currency', compact('currencies', 'active_currencies'));
+        return view('admin.business_settings.currency', compact('currencies', 'active_currencies'));
     }
 
     // public function updateCurrency(Request $request)
@@ -31,7 +31,7 @@ class CurrencyController extends Controller
     //         flash('Currency updated successfully')->success();
     //         return '1';
     //     }
-    //     flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+    //     flash('Ù…Ø´Ú©Ù„ÛŒ Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡! Ù„Ø·ÙØ§ Ù…Ø¬Ø¯Ø¯Ø§ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†ÛŒØ¯')->error();
     //     return '0';
     // }
 
@@ -48,7 +48,7 @@ class CurrencyController extends Controller
             return redirect()->route('currency.index');
         }
         else {
-            flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+            flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->error();
             return redirect()->route('currency.index');
         }
     }
@@ -77,7 +77,7 @@ class CurrencyController extends Controller
             return redirect()->route('currency.index');
         }
         else {
-            flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+            flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->error();
             return redirect()->route('currency.index');
         }
     }
@@ -92,3 +92,5 @@ class CurrencyController extends Controller
         return 0;
     }
 }
+
+

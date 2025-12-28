@@ -53,7 +53,7 @@ class PageController extends Controller
             return redirect()->route('pages.index');
         }
 
-        flash('آدرس صفحه قبلا استفاده شده است.')->warning();
+        flash('آدرس صفحه قبلاً استفاده شده است.')->warning();
         return back();
     }
 
@@ -105,11 +105,11 @@ class PageController extends Controller
             }
             $page->save();
 
-            flash('صفحه جدید با موفقیت ایجاد شد.')->success();
+            flash('ØµÙØ­Ù‡ Ø¬Ø¯ÛŒØ¯ Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø§ÛŒØ¬Ø§Ø¯ Ø´Ø¯.')->success();
             return redirect()->route('pages.index');
         }
 
-        flash('آدرس صفحه قبلا استفاده شده است.')->warning();
+        flash('Ø¢Ø¯Ø±Ø³ ØµÙØ­Ù‡ Ù‚Ø¨Ù„Ø§ Ø§Ø³ØªÙØ§Ø¯Ù‡ Ø´Ø¯Ù‡ Ø§Ø³Øª.')->warning();
         return back();
     }
 
@@ -122,7 +122,7 @@ class PageController extends Controller
     public function destroy($id)
     {
         if(Page::destroy($id)){
-            flash('صفحه مورد نظر با موفقیت حذف شد')->success();
+            flash('ØµÙØ­Ù‡ Ù…ÙˆØ±Ø¯ Ù†Ø¸Ø± Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø­Ø°Ù Ø´Ø¯')->success();
             return redirect()->back();
         }
         return back();
@@ -136,3 +136,5 @@ class PageController extends Controller
         abort(404);
     }
 }
+
+

@@ -20,7 +20,7 @@ class CouponController extends Controller
     public function index()
     {
         $coupons = Coupon::orderBy('id','desc')->get();
-        return view('coupons.index', compact('coupons'));
+        return view('admin.coupons.index', compact('coupons'));
     }
 
     /**
@@ -30,7 +30,7 @@ class CouponController extends Controller
      */
     public function create()
     {
-        return view('coupons.create');
+        return view('admin.coupons.create');
     }
 
     /**
@@ -42,7 +42,7 @@ class CouponController extends Controller
     public function store(Request $request)
     {
         if(count(Coupon::where('code', $request->coupon_code)->get()) > 0){
-            flash('این کد قبلا ثبت شده است.')->error();
+            flash('این کد قبلاً ثبت شده است.')->error();
             return back();
         }
         $coupon = new Coupon;
@@ -67,7 +67,7 @@ class CouponController extends Controller
                   return redirect()->route('coupon.index');
               }
               else{
-                  flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->danger();
+                  flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->danger();
                   return back();
               }
           }
@@ -87,7 +87,7 @@ class CouponController extends Controller
                   return redirect()->route('coupon.index');
               }
               else{
-                  flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->danger();
+                  flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->danger();
                   return back();
               }
           }
@@ -113,7 +113,7 @@ class CouponController extends Controller
     public function edit($id)
     {
       $coupon = Coupon::findOrFail(decrypt($id));
-      return view('coupons.edit', compact('coupon'));
+      return view('admin.coupons.edit', compact('coupon'));
     }
 
     /**
@@ -147,7 +147,7 @@ class CouponController extends Controller
                 return redirect()->route('coupon.index');
             }
             else{
-                flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->danger();
+                flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->danger();
                 return back();
             }
         }
@@ -167,7 +167,7 @@ class CouponController extends Controller
                 return redirect()->route('coupon.index');
             }
             else{
-                flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->danger();
+                flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->danger();
                 return back();
             }
         }
@@ -187,7 +187,7 @@ class CouponController extends Controller
             return redirect()->route('coupon.index');
         }
 
-        flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+        flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->error();
         return back();
     }
 
@@ -214,3 +214,5 @@ class CouponController extends Controller
     }
 
 }
+
+

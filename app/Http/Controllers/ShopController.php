@@ -37,7 +37,7 @@ class ShopController extends Controller
     public function create()
     {
         if(Auth::check() && Auth::user()->user_type == 'admin'){
-            flash(__('ادمین سایت نمی تواند فروشنده باشید'))->error();
+            flash(__('ادمین سایت نمی تواند فروشنده باشد'))->error();
             return back();
         }
         else{
@@ -56,7 +56,7 @@ class ShopController extends Controller
         $user = null;
         if(!Auth::check()){
             if(User::where('email', $request->email)->first() != null){
-                flash(__('این ایمیل از قبل وجود دارد. لطفا از ایمیل دیگری استفاده کنید!'))->error();
+                flash(__('این ایمیل از قبل وجود دارد. لطفاً از ایمیل دیگری استفاده کنید!'))->error();
                 return back();
             }
             if($request->password == $request->password_confirmation){
@@ -265,3 +265,5 @@ class ShopController extends Controller
         return back();
     }
 }
+
+

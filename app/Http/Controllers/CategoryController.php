@@ -24,7 +24,7 @@ class CategoryController extends Controller
             $categories = $categories->where('name', 'like', '%'.$sort_search.'%');
         }
         $categories = $categories->paginate(15);
-        return view('categories.index', compact('categories', 'sort_search'));
+        return view('admin.categories.index', compact('categories', 'sort_search'));
     }
 
     /**
@@ -34,7 +34,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        return view('admin.categories.create');
     }
 
     /**
@@ -101,7 +101,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail(decrypt($id));
-        return view('categories.edit', compact('category'));
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -204,3 +204,5 @@ class CategoryController extends Controller
         return 0;
     }
 }
+
+

@@ -1,0 +1,10 @@
+# remove_bom.ps1
+Get-ChildItem -Path . -Include *.php -Recurse | ForEach-Object {
+    $content = Get-Content $_.FullName -Raw
+    if ($content -match '^\xEF\xBB\xBF') {
+        $content = $content -replace '^\xEF\xBB\xBF', ''
+        $content | Set-Content $_.FullName -Encoding UTF8 -NoNewline
+        Write-Host "BOM removed from: $($_.FullName)" -ForegroundColor Yellow
+    }
+}
+Write-Host "BOM cleanup completed!" -ForegroundColor Green

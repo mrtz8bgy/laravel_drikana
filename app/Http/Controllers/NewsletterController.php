@@ -14,7 +14,7 @@ class NewsletterController extends Controller
     {
     	$users = User::all();
         $subscribers = Subscriber::all();
-    	return view('newsletters.index', compact('users', 'subscribers'));
+    	return view('admin.newsletters.index', compact('users', 'subscribers'));
     }
 
     public function send(Request $request)
@@ -61,3 +61,5 @@ class NewsletterController extends Controller
     	return redirect()->route('admin.dashboard');
     }
 }
+
+

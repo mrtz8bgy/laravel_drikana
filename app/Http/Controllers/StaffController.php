@@ -18,7 +18,7 @@ class StaffController extends Controller
     public function index()
     {
         $staffs = Staff::all();
-        return view('staffs.index', compact('staffs'));
+        return view('admin.staffs.index', compact('staffs'));
     }
 
     /**
@@ -29,7 +29,7 @@ class StaffController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('staffs.create', compact('roles'));
+        return view('admin.staffs.create', compact('roles'));
     }
 
     /**
@@ -58,7 +58,7 @@ class StaffController extends Controller
             }
         }
 
-        flash(__('این ایمیل از قبل وجود دارد. لطفا از ایمیل دیگری استفاده کنید'))->error();
+        flash(__('این ایمیل از قبل وجود دارد. لطفاً از ایمیل دیگری استفاده کنید'))->error();
         return back();
     }
 
@@ -83,7 +83,7 @@ class StaffController extends Controller
     {
         $staff = Staff::findOrFail(decrypt($id));
         $roles = Role::all();
-        return view('staffs.edit', compact('staff', 'roles'));
+        return view('admin.staffs.edit', compact('staff', 'roles'));
     }
 
     /**
@@ -133,3 +133,5 @@ class StaffController extends Controller
         return back();
     }
 }
+
+

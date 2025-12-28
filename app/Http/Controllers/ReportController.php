@@ -17,7 +17,7 @@ class ReportController extends Controller
         else{
             $products = Product::all();
         }
-        return view('reports.stock_report', compact('products'));
+        return view('admin.reports.stock_report', compact('products'));
     }
 
     public function in_house_sale_report(Request $request)
@@ -28,7 +28,7 @@ class ReportController extends Controller
         else{
             $products = Product::orderBy('num_of_sale', 'desc')->get();
         }
-        return view('reports.in_house_sale_report', compact('products'));
+        return view('admin.reports.in_house_sale_report', compact('products'));
     }
 
     public function seller_report(Request $request)
@@ -39,7 +39,7 @@ class ReportController extends Controller
         else{
             $sellers = Seller::all();
         }
-        return view('reports.seller_report', compact('sellers'));
+        return view('admin.reports.seller_report', compact('sellers'));
     }
 
     public function seller_sale_report(Request $request)
@@ -50,7 +50,7 @@ class ReportController extends Controller
         else{
             $sellers = Seller::all();
         }
-        return view('reports.seller_sale_report', compact('sellers'));
+        return view('admin.reports.seller_sale_report', compact('sellers'));
     }
 
     public function wish_report(Request $request)
@@ -61,6 +61,8 @@ class ReportController extends Controller
         else{
             $products = Product::all();
         }
-        return view('reports.wish_report', compact('products'));
+        return view('admin.reports.wish_report', compact('products'));
     }
 }
+
+

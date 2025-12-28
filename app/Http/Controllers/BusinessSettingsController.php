@@ -13,37 +13,37 @@ class BusinessSettingsController extends Controller
     public function activation(Request $request)
     {
         CoreComponentRepository::instantiateShopRepository();
-    	return view('business_settings.activation');
+    	return view('admin.business_settings.activation');
     }
 
     public function social_login(Request $request)
     {
         CoreComponentRepository::instantiateShopRepository();
-        return view('business_settings.social_login');
+        return view('admin.business_settings.social_login');
     }
 
     public function smtp_settings(Request $request)
     {
         CoreComponentRepository::instantiateShopRepository();
-        return view('business_settings.smtp_settings');
+        return view('admin.business_settings.smtp_settings');
     }
 
     public function google_analytics(Request $request)
     {
         CoreComponentRepository::instantiateShopRepository();
-        return view('business_settings.google_analytics');
+        return view('admin.business_settings.google_analytics');
     }
 
     public function facebook_chat(Request $request)
     {
         CoreComponentRepository::instantiateShopRepository();
-        return view('business_settings.facebook_chat');
+        return view('admin.business_settings.facebook_chat');
     }
 
     public function payment_method(Request $request)
     {
         CoreComponentRepository::instantiateShopRepository();
-        return view('business_settings.payment_method');
+        return view('admin.business_settings.payment_method');
     }
 
     /**
@@ -70,7 +70,7 @@ class BusinessSettingsController extends Controller
             }
         }
 
-        flash("تنظیمات با موفقیت به روز رسانی شد")->success();
+        flash("تنظیمات با موفقیت بروزرسانی شد")->success();
         return back();
     }
 
@@ -96,7 +96,7 @@ class BusinessSettingsController extends Controller
             $business_settings->save();
         }
 
-        flash("تنظیمات با موفقیت به روز رسانی شد")->success();
+        flash("تنظیمات با موفقیت بروزرسانی شد")->success();
         return back();
     }
 
@@ -122,7 +122,7 @@ class BusinessSettingsController extends Controller
             $business_settings->save();
         }
 
-        flash("تنظیمات با موفقیت به روز رسانی شد")->success();
+        flash("تنظیمات با موفقیت بروزرسانی شد")->success();
         return back();
     }
 
@@ -143,7 +143,7 @@ class BusinessSettingsController extends Controller
             $business_settings->save();
         }
 
-        flash("تنظیمات با موفقیت به روز رسانی شد")->success();
+        flash("تنظیمات با موفقیت بروزرسانی شد")->success();
         return back();
     }
 
@@ -160,7 +160,7 @@ class BusinessSettingsController extends Controller
             $this->overWriteEnvFile($type, $request[$type]);
         }
 
-        flash("تنظیمات با موفقیت به روز رسانی شد")->success();
+        flash("تنظیمات با موفقیت بروزرسانی شد")->success();
         return back();
     }
 
@@ -189,7 +189,7 @@ class BusinessSettingsController extends Controller
 
     public function seller_verification_form(Request $request)
     {
-    	return view('business_settings.seller_verification_form');
+    	return view('admin.business_settings.seller_verification_form');
     }
 
     /**
@@ -214,7 +214,7 @@ class BusinessSettingsController extends Controller
         $business_settings = BusinessSetting::where('type', 'verification_form')->first();
         $business_settings->value = json_encode($form);
         if($business_settings->save()){
-            flash("فرم تایید با موفقیت به روزرسانی شد")->success();
+            flash("فرم تایید با موفقیت بروزرسانی شد")->success();
             return back();
         }
     }
@@ -234,7 +234,7 @@ class BusinessSettingsController extends Controller
                 $business_settings->save();
             }
         }
-        flash("تنظیمات با موفقیت به روز رسانی شد")->success();
+        flash("تنظیمات با موفقیت بروزرسانی شد")->success();
         return back();
     }
 
@@ -263,7 +263,7 @@ class BusinessSettingsController extends Controller
     public function vendor_commission(Request $request)
     {
         $business_settings = BusinessSetting::where('type', 'vendor_commission')->first();
-        return view('business_settings.vendor_commission', compact('business_settings'));
+        return view('admin.business_settings.vendor_commission', compact('business_settings'));
     }
 
     public function vendor_commission_update(Request $request){
@@ -272,12 +272,12 @@ class BusinessSettingsController extends Controller
         $business_settings->value = $request->value;
         $business_settings->save();
 
-        flash('کمیسیون فروشنده با موفقیت به روز رسانی شد')->success();
+        flash('کمیسیون فروشنده با موفقیت بروزرسانی شد')->success();
         return back();
     }
 
     public function shipping_configuration(Request $request){
-        return view('shipping_configuration.index');
+        return view('admin.shipping_configuration.index');
     }
 
     public function shipping_configuration_update(Request $request){
@@ -287,3 +287,5 @@ class BusinessSettingsController extends Controller
         return back();
     }
 }
+
+

@@ -30,7 +30,7 @@ class SupportTicketController extends Controller
             $tickets = $tickets->where('code', 'like', '%'.$sort_search.'%');
         }
         $tickets = $tickets->paginate(15);
-        return view('support_tickets.index', compact('tickets', 'sort_search'));
+        return view('admin.support_tickets.index', compact('tickets', 'sort_search'));
     }
 
     /**
@@ -70,11 +70,11 @@ class SupportTicketController extends Controller
         }
 
         if($ticket->save()){
-            flash('تیکت با موفقیت ایجاد شد')->success();
+            flash('ØªÛŒÚ©Øª Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø§ÛŒØ¬Ø§Ø¯ Ø´Ø¯')->success();
             return redirect()->route('support_ticket.index');
         }
         else{
-            flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید.')->error();
+            flash('Ù…Ø´Ú©Ù„ÛŒ Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡! Ù„Ø·ÙØ§ Ù…Ø¬Ø¯Ø¯Ø§ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†ÛŒØ¯.')->error();
         }
     }
 
@@ -101,11 +101,11 @@ class SupportTicketController extends Controller
         $ticket_reply->ticket->status = $request->status;
         $ticket_reply->ticket->save();
         if($ticket_reply->save()){
-            flash('پاسخ تیکت با موفقیت ارسال شد.')->success();
+            flash('Ù¾Ø§Ø³Ø® ØªÛŒÚ©Øª Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø§Ø±Ø³Ø§Ù„ Ø´Ø¯.')->success();
             return back();
         }
         else{
-            flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+            flash('Ù…Ø´Ú©Ù„ÛŒ Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡! Ù„Ø·ÙØ§ Ù…Ø¬Ø¯Ø¯Ø§ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†ÛŒØ¯')->error();
         }
     }
 
@@ -131,11 +131,11 @@ class SupportTicketController extends Controller
         $ticket_reply->ticket->status = 'pending';
         $ticket_reply->ticket->save();
         if($ticket_reply->save()){
-            flash('پاسخ تیکت با موفقیت ارسال شد.')->success();
+            flash('Ù¾Ø§Ø³Ø® ØªÛŒÚ©Øª Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø§Ø±Ø³Ø§Ù„ Ø´Ø¯.')->success();
             return back();
         }
         else{
-            flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+            flash('Ù…Ø´Ú©Ù„ÛŒ Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡! Ù„Ø·ÙØ§ Ù…Ø¬Ø¯Ø¯Ø§ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†ÛŒØ¯')->error();
         }
     }
 
@@ -159,7 +159,7 @@ class SupportTicketController extends Controller
         $ticket = Ticket::findOrFail(decrypt($id));
         $ticket->viewed = 1;
         $ticket->save();
-        return view('support_tickets.show', compact('ticket'));
+        return view('admin.support_tickets.show', compact('ticket'));
     }
 
     /**
@@ -196,3 +196,5 @@ class SupportTicketController extends Controller
         //
     }
 }
+
+

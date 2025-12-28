@@ -44,3 +44,5 @@ class CompareController extends Controller
         return view('frontend.partials.compare');
     }
 }
+
+

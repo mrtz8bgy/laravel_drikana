@@ -15,7 +15,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        return view('roles.index', compact('roles'));
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**
@@ -25,7 +25,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        return view('admin.roles.create');
     }
 
     /**
@@ -69,7 +69,7 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::findOrFail(decrypt($id));
-        return view('roles.edit', compact('role'));
+        return view('admin.roles.edit', compact('role'));
     }
 
     /**
@@ -113,3 +113,5 @@ class RoleController extends Controller
         }
     }
 }
+
+

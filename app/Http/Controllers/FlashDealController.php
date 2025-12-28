@@ -29,7 +29,7 @@ class FlashDealController extends Controller
             $fd->start_date = \Morilog\Jalali\CalendarUtils::strftime('Y/m/d', strtotime($sdate));
             $fd->end_date = \Morilog\Jalali\CalendarUtils::strftime('Y/m/d', strtotime($edate));
         }
-        return view('flash_deals.index', compact('flash_deals', 'sort_search'));
+        return view('admin.flash_deals.index', compact('flash_deals', 'sort_search'));
     }
 
     /**
@@ -39,7 +39,7 @@ class FlashDealController extends Controller
      */
     public function create()
     {
-        return view('flash_deals.create');
+        return view('admin.flash_deals.create');
     }
 
     /**
@@ -98,7 +98,7 @@ class FlashDealController extends Controller
     public function edit($id)
     {
         $flash_deal = FlashDeal::findOrFail(decrypt($id));
-        return view('flash_deals.edit', compact('flash_deal'));
+        return view('admin.flash_deals.edit', compact('flash_deal'));
     }
 
     /**
@@ -202,3 +202,5 @@ class FlashDealController extends Controller
         return view('partials.flash_deal_discount_edit', compact('product_ids', 'flash_deal_id'));
     }
 }
+
+

@@ -27,7 +27,7 @@ class CustomerProductController extends Controller
     public function customer_product_index()
     {
         $products = CustomerProduct::all();
-        return view('classified_products.index', compact('products'));
+        return view('admin.classified_products.index', compact('products'));
     }
 
     /**
@@ -321,3 +321,5 @@ class CustomerProductController extends Controller
         return view('frontend.customer_product_listing', compact('customer_products', 'query', 'category_id', 'subcategory_id', 'subsubcategory_id', 'brand_id', 'sort_by', 'condition'));
     }
 }
+
+

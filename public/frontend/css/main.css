@@ -429,7 +429,7 @@ select + .select2-container {
 }
 .sm-fixed-top {
     position: fixed !important;
-    top: -120px;
+    top: -121px;
     background: #00014b;
     width: 100%;
     left: 0;

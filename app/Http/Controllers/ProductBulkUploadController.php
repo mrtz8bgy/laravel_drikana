@@ -23,7 +23,7 @@ class ProductBulkUploadController extends Controller
             return view('frontend.seller.product_bulk_upload.index');
         }
         elseif (Auth::user()->user_type == 'admin' || Auth::user()->user_type == 'staff') {
-            return view('bulk_upload.index');
+            return view('admin.bulk_upload.index');
         }
     }
 
@@ -101,3 +101,5 @@ class ProductBulkUploadController extends Controller
     }
 
 }
+
+

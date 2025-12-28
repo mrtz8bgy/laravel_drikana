@@ -14,7 +14,7 @@ class CustomerBulkUploadController extends Controller
 {
     public function index()
     {
-        return view('bulk_upload.customer_upload');
+        return view('admin.bulk_upload.customer_upload');
     }
 
     public function user_bulk_upload(Request $request)
@@ -47,3 +47,5 @@ class CustomerBulkUploadController extends Controller
         return back();
     }
 }
+
+

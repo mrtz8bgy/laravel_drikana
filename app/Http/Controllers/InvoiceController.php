@@ -40,3 +40,5 @@ class InvoiceController extends Controller
         return $pdf->download('order-'.$order->code.'.pdf');
     }
 }
+
+

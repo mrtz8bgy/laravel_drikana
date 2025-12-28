@@ -61,7 +61,7 @@ class GeneralSettingController extends Controller
             return redirect()->route('generalsettings.logo');
         }
         else{
-            flash('مشکلی پیش آمده لطفا مجددا امتحان کنید.')->error();
+            flash('مشکل پیش آمده لطفاً مجدداً امتحان کنید.')->error();
             return back();
         }
     }
@@ -83,7 +83,7 @@ class GeneralSettingController extends Controller
             return redirect()->route('generalsettings.color');
         }
         else{
-            flash('مشکلی پیش آمده لطفا مجددا امتحان کنید.')->error();
+            flash('مشکل پیش آمده لطفاً مجدداً امتحان کنید.')->error();
             return back();
         }
     }
@@ -160,7 +160,7 @@ class GeneralSettingController extends Controller
             return redirect()->route('generalsettings.index');
         }
         else{
-            flash('مشکلی پیش آمده لطفا مجددا امتحان کنید.')->error();
+            flash('مشکل پیش آمده لطفاً مجدداً امتحان کنید.')->error();
             return back();
         }
     }
@@ -176,3 +176,5 @@ class GeneralSettingController extends Controller
         //
     }
 }
+
+

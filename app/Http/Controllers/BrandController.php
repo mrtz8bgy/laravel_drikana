@@ -22,7 +22,7 @@ class BrandController extends Controller
             $brands = $brands->where('name', 'like', '%'.$sort_search.'%');
         }
         $brands = $brands->paginate(15);
-        return view('brands.index', compact('brands', 'sort_search'));
+        return view('admin.brands.index', compact('brands', 'sort_search'));
     }
 
     /**
@@ -32,7 +32,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        return view('brands.create');
+        return view('admin.brands.create');
     }
 
     /**
@@ -87,7 +87,7 @@ class BrandController extends Controller
     public function edit($id)
     {
         $brand = Brand::findOrFail(decrypt($id));
-        return view('brands.edit', compact('brand'));
+        return view('admin.brands.edit', compact('brand'));
     }
 
     /**
@@ -146,3 +146,5 @@ class BrandController extends Controller
         }
     }
 }
+
+

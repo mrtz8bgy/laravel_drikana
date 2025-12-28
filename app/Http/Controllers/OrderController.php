@@ -99,7 +99,7 @@ class OrderController extends Controller
             $orders = $orders->where('code', 'like', '%'.$sort_search.'%');
         }
         $orders = $orders->paginate(15);
-        return view('orders.index', compact('orders','payment_status','delivery_status', 'sort_search', 'admin_user_id'));
+        return view('admin.orders.index', compact('orders','payment_status','delivery_status', 'sort_search', 'admin_user_id'));
     }
 
     /**
@@ -118,7 +118,7 @@ class OrderController extends Controller
             $orders = $orders->where('code', 'like', '%'.$sort_search.'%');
         }
         $orders = $orders->paginate(15);
-        return view('sales.index', compact('orders', 'sort_search'));
+        return view('admin.sales.index', compact('orders', 'sort_search'));
     }
 
 
@@ -134,7 +134,7 @@ class OrderController extends Controller
                         ->distinct()
                         ->paginate(15);
 
-            return view('pickup_point.orders.index', compact('orders'));
+            return view('admin.pickup_point.orders.index', compact('orders'));
         }
         else{
             //$orders = Order::where('shipping_type', 'Pick-up Point')->get();
@@ -146,7 +146,7 @@ class OrderController extends Controller
                         ->distinct()
                         ->paginate(15);
 
-            return view('pickup_point.orders.index', compact('orders'));
+            return view('admin.pickup_point.orders.index', compact('orders'));
         }
     }
 
@@ -154,11 +154,11 @@ class OrderController extends Controller
     {
         if (Auth::user()->user_type == 'staff') {
             $order = Order::findOrFail(decrypt($id));
-            return view('pickup_point.orders.show', compact('order'));
+            return view('admin.pickup_point.orders.show', compact('order'));
         }
         else{
             $order = Order::findOrFail(decrypt($id));
-            return view('pickup_point.orders.show', compact('order'));
+            return view('admin.pickup_point.orders.show', compact('order'));
         }
     }
 
@@ -170,7 +170,7 @@ class OrderController extends Controller
     public function sales_show($id)
     {
         $order = Order::findOrFail(decrypt($id));
-        return view('sales.show', compact('order'));
+        return view('admin.sales.show', compact('order'));
     }
 
     /**
@@ -324,9 +324,9 @@ class OrderController extends Controller
     		file_put_contents('public/invoices/'.'Order#'.$order->code.'.pdf', $output);
 
             $array['view'] = 'emails.invoice';
-            $array['subject'] = 'اطلاعات سفارش - '.$order->code;
+            $array['subject'] = 'Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ø³ÙØ§Ø±Ø´ - '.$order->code;
             $array['from'] = env('MAIL_USERNAME');
-            $array['content'] = 'خریدار عزیز، امیدواریم خرید لذت‌ بخشی را تجربه کرده باشید.';
+            $array['content'] = 'Ø®Ø±ÛŒØ¯Ø§Ø± Ø¹Ø²ÛŒØ²ØŒ Ø§Ù…ÛŒØ¯ÙˆØ§Ø±ÛŒÙ… Ø®Ø±ÛŒØ¯ Ù„Ø°Øªâ€Œ Ø¨Ø®Ø´ÛŒ Ø±Ø§ ØªØ¬Ø±Ø¨Ù‡ Ú©Ø±Ø¯Ù‡ Ø¨Ø§Ø´ÛŒØ¯.';
             $array['file'] = 'public/invoices/Order#'.$order->code.'.pdf';
             $array['file_name'] = 'Order#'.$order->code.'.pdf';
 
@@ -373,7 +373,7 @@ class OrderController extends Controller
         $order = Order::findOrFail(decrypt($id));
         $order->viewed = 1;
         $order->save();
-        return view('orders.show', compact('order'));
+        return view('admin.orders.show', compact('order'));
     }
 
     /**
@@ -416,7 +416,7 @@ class OrderController extends Controller
             flash('سفارش با موفقیت حذف شد.')->success();
         }
         else{
-            flash('مشکلی پیش آمده! لطفا مجددا امتحان کنید')->error();
+            flash('مشکل پیش آمده! لطفاً مجدداً امتحان کنید')->error();
         }
         return back();
     }
@@ -570,3 +570,5 @@ class OrderController extends Controller
         return 1;
     }
 }
+
+

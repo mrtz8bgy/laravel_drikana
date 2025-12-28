@@ -18,7 +18,7 @@ class DigitalProductController extends Controller
     public function index()
     {
         $products = Product::where('digital', 1)->orderBy('created_at', 'desc')->get();
-        return view('digitalproducts.index', compact('products'));
+        return view('admin.digitalproducts.index', compact('products'));
     }
 
     /**
@@ -28,7 +28,7 @@ class DigitalProductController extends Controller
      */
     public function create()
     {
-        return view('digitalproducts.create');
+        return view('admin.digitalproducts.create');
     }
 
     /**
@@ -133,7 +133,7 @@ class DigitalProductController extends Controller
     public function edit($id)
     {
         $product = Product::findOrFail(decrypt($id));
-        return view('digitalproducts.edit', compact('product'));
+        return view('admin.digitalproducts.edit', compact('product'));
     }
 
     /**
@@ -283,3 +283,5 @@ class DigitalProductController extends Controller
         return 0;
     }
 }
+
+

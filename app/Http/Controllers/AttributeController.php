@@ -17,7 +17,7 @@ class AttributeController extends Controller
     {
         CoreComponentRepository::instantiateShopRepository();
         $attributes = Attribute::all();
-        return view('attribute.index', compact('attributes'));
+        return view('admin.attribute.index', compact('attributes'));
     }
 
     /**
@@ -27,7 +27,7 @@ class AttributeController extends Controller
      */
     public function create()
     {
-         return view('attribute.create');
+         return view('admin.attribute.create');
     }
 
     /**
@@ -70,7 +70,7 @@ class AttributeController extends Controller
     public function edit($id)
     {
         $attribute = Attribute::findOrFail(decrypt($id));
-        return view('attribute.edit', compact('attribute'));
+        return view('admin.attribute.edit', compact('attribute'));
     }
 
     /**
@@ -113,3 +113,5 @@ class AttributeController extends Controller
         }
     }
 }
+
+

@@ -15,7 +15,7 @@ class CountryController extends Controller
     public function index(Request $request)
     {
         $countries = Country::paginate(15);
-        return view('countries.index', compact('countries'));
+        return view('admin.countries.index', compact('countries'));
     }
 
     /**
@@ -93,3 +93,5 @@ class CountryController extends Controller
         return 0;
     }
 }
+
+

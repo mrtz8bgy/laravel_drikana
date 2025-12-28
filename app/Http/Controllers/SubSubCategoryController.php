@@ -25,7 +25,7 @@ class SubSubCategoryController extends Controller
             $subsubcategories = $subsubcategories->where('name', 'like', '%'.$sort_search.'%');
         }
         $subsubcategories = $subsubcategories->paginate(15);
-        return view('subsubcategories.index', compact('subsubcategories', 'sort_search'));
+        return view('admin.subsubcategories.index', compact('subsubcategories', 'sort_search'));
     }
 
     /**
@@ -37,7 +37,7 @@ class SubSubCategoryController extends Controller
     {
         $categories = Category::all();
         $brands = Brand::all();
-        return view('subsubcategories.create', compact('categories', 'brands'));
+        return view('admin.subsubcategories.create', compact('categories', 'brands'));
     }
 
     /**
@@ -98,7 +98,7 @@ class SubSubCategoryController extends Controller
         $subsubcategory = SubSubCategory::findOrFail(decrypt($id));
         $categories = Category::all();
         $brands = Brand::all();
-        return view('subsubcategories.edit', compact('subsubcategory', 'categories', 'brands'));
+        return view('admin.subsubcategories.edit', compact('subsubcategory', 'categories', 'brands'));
     }
 
     /**
@@ -195,3 +195,5 @@ class SubSubCategoryController extends Controller
     //     return $attributes;
     // }
 }
+
+

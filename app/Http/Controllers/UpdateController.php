@@ -20,7 +20,7 @@ use App\Product;
 class UpdateController extends Controller
 {
     public function step0() {
-        return view('update.step0');
+        return view('admin.update.step0');
     }
 
     public function step1() {
@@ -421,7 +421,7 @@ class UpdateController extends Controller
         $newRouteServiceProvier      = base_path('app/Providers/RouteServiceProvider.txt');
         copy($newRouteServiceProvier, $previousRouteServiceProvier);
 
-        return view('update.done');
+        return view('admin.update.done');
     }
 
     public function convertProducts(){
@@ -480,3 +480,5 @@ class UpdateController extends Controller
         }
     }
 }
+
+

@@ -15,7 +15,7 @@ class SEOController extends Controller
     public function index()
     {
         $seosetting = SeoSetting::first();
-        return view('seo_settings.index', compact("seosetting"));
+        return view('admin.seo_settings.index', compact("seosetting"));
     }
 
     /**
@@ -97,3 +97,5 @@ class SEOController extends Controller
         //
     }
 }
+
+
