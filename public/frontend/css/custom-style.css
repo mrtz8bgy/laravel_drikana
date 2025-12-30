@@ -1,1 +1,783 @@
-/* your custom style goes here */
+/* ==========================
+   استایل پایه — مرحله 1️⃣ (بهینه‌شده)
+   تغییرات اضافه شده:
+   - box-sizing همگانی
+   - کنترل بهتر transitionها و reduced-motion
+   - دسترس‌پذیری: focus-visible
+   - تصاویر پاسخگو و تنظیمات پایه فرم
+   - سایه‌ی سطحی ملایم و اصلاح فونت-سایز
+*/
+
+:root {
+    /* رنگ‌ها */
+    --gold: #D4AF37;
+    /* طلایی ملایم */
+    --bg: #ffffff;
+    --text: #222222;
+    /* متن اصلی */
+    --muted: #6b6b6b;
+    /* متن کم‌اهمیت */
+    --surface: #f8f8f8;
+    --border: #e9e9e9;
+    --elev-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+
+    /* فواصل و اندازه‌ها */
+    --radius: 8px;
+    --container-max: 1200px;
+}
+
+.btn-primary {
+    /* دکمه اصلی طلایی‌تر برای خوانایی بهتر */
+    background: var(--gold);
+    background-image: linear-gradient(180deg, var(--gold), #b58f2a);
+    color: #111;
+    border: 0;
+    padding: .75rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    font-weight: 800;
+    min-width: 140px;
+    text-align: center;
+    transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+}
+
+.btn-primary:hover {
+    filter: brightness(.95);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .6rem .9rem;
+    border-radius: 8px;
+}
+
+.btn-outline-gold {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    color: var(--gold);
+    padding: .6rem .9rem;
+    border-radius: 8px;
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgba(212, 175, 55, 0.18);
+    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.08);
+}
+
+margin: 0 0 .5rem 0;
+font-weight: 600;
+line-height: 1.2
+}
+
+h1 {
+    font-size: 1.75rem
+}
+
+h2 {
+    font-size: 1.375rem
+}
+
+h3 {
+    font-size: 1.125rem
+}
+
+p {
+    margin: 0 0 1rem 0;
+    color: var(--muted)
+}
+
+/* لینک‌ها */
+a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color .18s ease, opacity .18s ease
+}
+
+a:hover {
+    color: #b88f2a;
+    opacity: .95
+}
+
+/* کانتینر */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 1rem
+}
+
+/* سطوح و کارت‌ها */
+.surface {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--elev-shadow)
+}
+
+/* دکمه پایه (جزئیات در مرحله 5) */
+.btn {
+    display: inline-block;
+    padding: .6rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center
+}
+
+/* عناصر تصویری و مدیا */
+img,
+svg,
+video,
+picture {
+    max-width: 100%;
+    height: auto;
+    display: block
+}
+
+/* فرم‌ها: پایه‌ای و قابل خواندن */
+input,
+button,
+textarea,
+select {
+    font-family: inherit;
+    font-size: 1rem
+}
+
+/* دستورات کمکی */
+.muted {
+    color: var(--muted)
+}
+
+.text-center {
+    text-align: center
+}
+
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap
+}
+
+.spacer-sm {
+    height: 8px
+}
+
+.spacer {
+    height: 16px
+}
+
+.spacer-lg {
+    height: 32px
+}
+
+/* دسترس‌پذیری فوکوس */
+:focus {
+    outline: none
+}
+
+:focus-visible {
+    outline: 3px solid rgba(212, 175, 55, 0.14);
+    box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.08);
+    border-radius: 6px
+}
+
+/* محدود کردن transition به خواص سبک و پرهیز از اعمال عمومی سنگین */
+*,
+:before,
+:after {
+    transition-property: color, background-color, opacity, transform;
+    transition-duration: .18s;
+    transition-timing-function: cubic-bezier(.2, .9, .3, 1)
+}
+
+/* کاربرانی که reduced motion را ترجیح می‌دهند */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    :before,
+    :after {
+        transition: none !important;
+        animation: none !important
+    }
+}
+
+/* تنظیمات ریسپانسیو — افزایش سایز فونت در تبلت/دسکتاپ */
+@media(min-width:768px) {
+    body {
+        font-size: 16px
+    }
+
+    h1 {
+        font-size: 2rem
+    }
+}
+
+/* پایان استایل پایه بهینه‌شده */
+
+/* ==========================
+     هدر و منوی اصلی — مرحله 2️⃣
+     - موبایل‌اول، مینیمال، حس لوکس
+     - استفاده از متغیرهای تم
+     - دسترسی: اندازه کلیک مناسب و focus-visible
+     ==========================
+*/
+
+/* بخش کلی هدر */
+.site-header {
+    width: 100%;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    z-index: 1200;
+}
+
+.site-header .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: .6rem 1rem;
+}
+
+/* لوگو */
+.site-logo {
+    display: flex;
+    align-items: center;
+    gap: .5rem
+}
+
+.site-logo img {
+    height: 40px;
+    width: auto;
+    display: block
+}
+
+.site-logo .brand-name {
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: .2px
+}
+
+/* دکمه هَمبورگر برای موبایل */
+.nav-toggle {
+    background: transparent;
+    border: 0;
+    padding: .4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer
+}
+
+.nav-toggle .icon {
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    display: block;
+    position: relative
+}
+
+.nav-toggle .icon:before,
+.nav-toggle .icon:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--text)
+}
+
+.nav-toggle .icon:before {
+    top: -7px
+}
+
+.nav-toggle .icon:after {
+    bottom: -7px
+}
+
+/* ناوبری اصلی — موبایل: پنهان، دسکتاپ: افقی */
+.main-nav {
+    display: none
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem
+}
+
+.main-nav a {
+    display: block;
+    padding: .6rem 1rem;
+    color: var(--text);
+    border-radius: 6px
+}
+
+.main-nav a:hover {
+    background: rgba(212, 175, 55, 0.06);
+    color: var(--text)
+}
+
+/* پنجره منوی موبایل (بک‌درپ) */
+.mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1190;
+    display: none
+}
+
+.mobile-nav-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: var(--bg);
+    z-index: 1200;
+    padding: 1rem;
+    box-shadow: var(--elev-shadow);
+    display: none
+}
+
+/* ناوبری دسکتاپ */
+@media(min-width:768px) {
+    .nav-toggle {
+        display: none
+    }
+
+    .main-nav {
+        display: block
+    }
+
+    .main-nav ul {
+        flex-direction: row;
+        gap: 1rem
+    }
+
+    .main-nav a {
+        padding: .5rem .6rem
+    }
+}
+
+/* dropdown سبک برای آیتم‌های منو */
+.main-nav .has-dropdown {
+    position: relative
+}
+
+.main-nav .dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    min-width: 180px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .5rem;
+    box-shadow: var(--elev-shadow);
+    display: none
+}
+
+.main-nav .has-dropdown:focus-within>.dropdown,
+.main-nav .has-dropdown:hover>.dropdown {
+    display: block
+}
+
+.main-nav .dropdown a {
+    padding: .45rem .75rem;
+    color: var(--text);
+    display: block;
+    border-radius: 6px
+}
+
+/* عناصر کمکی در هدر */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: .5rem
+}
+
+/* ==========================
+     کارت محصولات — مرحله 3️⃣
+     - طرح مینیمال، تصاویر برجسته، تایپوگرافی واضح
+     - مناسب طلا و جواهر: فضای سفید، رنگ طلایی ملایم برای تاکید
+     - موبایل-اول و ریسپانسیو
+     ==========================
+*/
+
+.product-card-2 {
+    background: var(--bg);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.product-card-2:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08)
+}
+
+.product-card-2 .card-image {
+    position: relative;
+    padding-top: 75%;
+    background: var(--surface)
+}
+
+.product-card-2 .card-image a {
+    position: absolute;
+    inset: 0;
+    display: block
+}
+
+.product-card-2 .card-image img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 100%;
+    width: auto
+}
+
+.product-card-2 .p-md-3,
+.product-card-2 .p-2 {
+    padding: 12px
+}
+
+.product-card-2 .price-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--text)
+}
+
+.product-card-2 .old-product-price {
+    color: var(--muted);
+    font-size: .9rem
+}
+
+.product-card-2 .product-price {
+    color: var(--text);
+    font-size: 1.05rem
+}
+
+.product-card-2 .product-title {
+    font-size: 0.98rem;
+    margin-top: 6px
+}
+
+.product-card-2 .product-title a {
+    color: var(--text);
+    text-decoration: none
+}
+
+.product-card-2 .product-title a:hover {
+    color: var(--gold)
+}
+
+.product-card-2 .badge-gold {
+    display: inline-block;
+    padding: .25rem .5rem;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.06));
+    color: var(--gold);
+    font-weight: 700;
+    font-size: .82rem;
+    border: 1px solid rgba(212, 175, 55, 0.12)
+}
+
+.product-card-2 .product-title a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.product-card-2 .product-title a:hover {
+    color: var(--gold);
+    text-decoration: underline;
+}
+
+.product-card-2 .badge-gold {
+    display: inline-block;
+    padding: .25rem .5rem;
+    border-radius: 999px;
+    background: var(--gold);
+    color: #111;
+    font-weight: 800;
+    font-size: .82rem;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+/* action row */
+.product-card-2 .card-actions {
+    display: flex;
+    gap: .5rem;
+    margin-top: .6rem;
+    align-items: center
+}
+
+.product-card-2 .card-actions .btn {
+    padding: .45rem .6rem;
+    font-size: .95rem
+}
+
+/* کوچک‌سازی متن ستاره، برچسب‌ها */
+.product-card-2 .star-rating {
+    font-size: .85rem
+}
+
+/* ریسپانسیو کارت */
+@media(min-width:992px) {
+    .product-card-2 .card-image {
+        padding-top: 68%
+    }
+}
+
+/* پایان کارت محصولات */
+
+/* ==========================
+     صفحه جزئیات محصول — مرحله 4️⃣
+     - گالری تصویر با ستون thumbnails و ستون جزئیات
+     - تاکید روی تصویر محصول و اطلاعات قیمت/CTA
+     - فضای سفید برای جلوهٔ لوکس
+     ==========================
+*/
+
+.product-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg)
+}
+
+.product-detail .gallery {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column
+}
+
+.product-detail .gallery .main-image {
+    background: var(--surface);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px
+}
+
+.product-detail .gallery .main-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain
+}
+
+.product-detail .gallery .thumbnails {
+    display: flex;
+    gap: .5rem;
+    margin-top: .6rem
+}
+
+.product-detail .gallery .thumbnails img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid var(--border)
+}
+
+.product-detail .info {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem
+}
+
+.product-detail .title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text)
+}
+
+.product-detail .sku {
+    color: var(--muted);
+    font-size: .95rem
+}
+
+.product-detail .price-row {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem
+}
+
+.product-detail .price-row .current-price {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--text)
+}
+
+.product-detail .price-row .old-price {
+    color: var(--muted);
+    text-decoration: line-through
+}
+
+.product-detail .meta {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    color: var(--muted);
+    font-size: .95rem
+}
+
+.product-detail .buy-actions {
+    display: flex;
+    gap: .6rem;
+    align-items: center;
+    margin-top: .6rem
+}
+
+/* ==========================
+     دکمه‌ها و CTA — مرحله 5️⃣
+     - دکمهٔ اصلی: طلایی ملایم با کنترست مناسب
+     - حالت hover و focus قابل لمس و ملایم
+     ==========================
+*/
+
+.btn-primary {
+    background: linear-gradient(180deg, var(--gold), #b88f2a);
+    color: #fff;
+    border: 0;
+    padding: .75rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.12);
+    font-weight: 700;
+    min-width: 140px;
+    text-align: center
+}
+
+.btn-primary:hover {
+    filter: brightness(.96);
+    transform: translateY(-1px)
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .6rem .9rem;
+    border-radius: 8px
+}
+
+.btn-outline-gold {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.22);
+    color: var(--gold);
+    padding: .6rem .9rem;
+    border-radius: 8px
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgba(212, 175, 55, 0.12)
+}
+
+/* ==========================
+     ریسپانسیو موبایل — مرحله 6️⃣
+     - همهٔ بخش‌ها موبایل-اول تکمیل شوند
+     - افزایش اندازه لمسی و ستون‌بندی ساده
+     ==========================
+*/
+
+@media(max-width:767.98px) {
+    .product-detail {
+        padding: .8rem
+    }
+
+    .product-detail .gallery {
+        order: 1
+    }
+
+    .product-detail .info {
+        order: 2
+    }
+
+    .product-card-2 {
+        border-radius: 10px
+    }
+
+    .site-header .header-inner {
+        padding: .5rem
+    }
+
+    .site-logo img {
+        height: 36px
+    }
+}
+
+@media(min-width:768px) {
+    .product-detail {
+        flex-direction: row
+    }
+
+    .product-detail .gallery {
+        width: 48%
+    }
+
+    .product-detail .info {
+        width: 52%
+    }
+}
+
+/* ==========================
+     بهینه‌سازی نهایی — مرحله 7️⃣
+     - قوانین تکراری حذف شده‌اند
+     - transitionها محدود شدند
+     - کامنت‌ها جهت نگهداری اضافه شدند
+     ==========================
+*/
+
+/* نکته: برای تولید (production) پیشنهاد می‌شود فایل CSS فشرده شود (minify) و قوانین غیرقابل استفاده حذف شوند. */
+
+
+.header-actions .icon-btn {
+    background: transparent;
+    border: 0;
+    padding: .45rem;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text)
+}
+
+.header-actions .icon-btn:hover {
+    background: rgba(212, 175, 55, 0.06)
+}
+
+/* دسترس‌پذیری و لمس */
+.main-nav a,
+.icon-btn,
+.nav-toggle {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center
+}
+
+/* نمایش منوی موبایل وقتی فعال است */
+.mobile-open .mobile-nav-backdrop {
+    display: block
+}
+
+.mobile-open .mobile-nav-panel {
+    display: block
+}
+
+/* تمام تغییرات هدر در این فایل مینیمال و قابل بازنویسی بوسیله فایل‌های اختصاصی */

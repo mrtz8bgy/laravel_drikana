@@ -533,7 +533,9 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="mw-100 overflow--hidden">
-                                                    <?php echo $detailedProduct->description; ?>
+                                                   <div class="mw-100 overflow--hidden product-description">
+                                                     <?php echo $detailedProduct->description; ?>
+                                                   </div>
                                                 </div>
                                             </div>
                                         </div>

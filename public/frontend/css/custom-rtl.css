@@ -79,7 +79,7 @@ h1, h2, h3, h4, h5, h6,
 	font-family: Yekan, sans-serif !important;
 	font-size: 12px;
 	font-weight: normal;
-	color: #fdc74f;
+	color: #fff;
 	text-align: justify;
 }
 
@@ -182,6 +182,43 @@ h1, h2, h3, h4, h5, h6,
 	left: 0;
 	right: unset;
 }
+
+/* استایل متن توضیحات محصول طلا و جواهر */
+.product-description {
+    text-align: justify;          /* هم‌تراز شدن متن */
+    line-height: 2;               /* فاصله مناسب خطوط */
+    font-size: 15px;
+    color: #f3c726;
+    word-spacing: 1px;
+
+}
+
+/* پاراگراف‌ها */
+.product-description p {
+    margin-bottom: 16px;
+}
+
+/* لیست‌ها */
+.product-description ul,
+.product-description ol {
+    padding-right: 20px;
+    margin-bottom: 16px;
+}
+
+.product-description li {
+    margin-bottom: 8px;
+}
+
+/* تیترها داخل توضیحات */
+.product-description h1,
+.product-description h2,
+.product-description h3,
+.product-description h4 {
+    margin: 20px 0 12px;
+    font-weight: 600;
+    color: #111;
+}
+
 
 .product-desc-tab table td {
 	border-width: 5px;
