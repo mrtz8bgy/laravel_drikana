@@ -625,6 +625,7 @@
                             <h3 class="heading-5 strong-700 mb-0">
                                 <span class="mr-4">{{__('Related products')}}</span>
                             </h3>
+                          
                         </div>
                         <div class="caorusel-box arrow-round gutters-5">
                             <div class="slick-carousel" data-slick-items="3" data-slick-xl-items="2" data-slick-lg-items="3"  data-slick-md-items="2" data-slick-sm-items="1" data-slick-xs-items="1"  data-slick-rows="2">

@@ -779,5 +779,15 @@ select {
 .mobile-open .mobile-nav-panel {
     display: block
 }
+.product-attributes {
+    display: flex;
+    flex-wrap: wrap;      /* وقتی جا تموم شد بره خط بعد */
+    gap: 12px;            /* فاصله بین آیتم‌ها */
+}
+
+.product-attribute {
+    white-space: nowrap; /* هر آیتم نشکنه */
+    font-size: 14px;
+}
 
 /* تمام تغییرات هدر در این فایل مینیمال و قابل بازنویسی بوسیله فایل‌های اختصاصی */

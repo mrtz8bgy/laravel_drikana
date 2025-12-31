@@ -71,7 +71,7 @@
                             <div class="card-header py-2">
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-xl-3">
-                                        <h6 class="mb-0">همه محصولات</h6>
+                                        <h6 class="mb-0">همه محصولات</h6>   
                                     </div>
                                     <div class="col-md-6 col-xl-3 mr-auto">
                                         <form class="" action="" method="GET">

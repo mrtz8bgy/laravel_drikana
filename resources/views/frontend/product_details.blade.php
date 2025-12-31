@@ -192,25 +192,23 @@
                                 <input type="hidden" name="id" value="{{ $detailedProduct->id }}">
 
                                 @if ($detailedProduct->choice_options != null)
-                                    @foreach (json_decode($detailedProduct->choice_options) as $key => $choice)
-
                                     <div class="row mt-3">
-                                        <div class="col-2">
-                                            <div class="product-description-label mt-2 ">{{ \App\Attribute::find($choice->attribute_id)->name }}:</div>
-                                        </div>
-                                        <div class="col-10">
-                                            <ul class="list-inline checkbox-alphanumeric checkbox-alphanumeric--style-1 mb-2">
-                                                @foreach ($choice->values as $key => $value)
-                                                    <li>
-                                                        <input type="radio" id="{{ $choice->attribute_id }}-{{ $value }}" name="attribute_id_{{ $choice->attribute_id }}" value="{{ $value }}" @if($key == 0) checked @endif>
-                                                        <label for="{{ $choice->attribute_id }}-{{ $value }}">{{ $value }}</label>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                                        <div class="col-12">
+                                            @foreach (json_decode($detailedProduct->choice_options) as $key => $choice)
+                                                <div class="d-inline-block mr-3">
+                                                    <div class="product-description-label mt-2 d-inline">{{ \App\Attribute::find($choice->attribute_id)->name }}:</div>
+                                                    <ul class="list-inline checkbox-alphanumeric checkbox-alphanumeric--style-1 mb-2 d-inline">
+                                                        @foreach ($choice->values as $key => $value)
+                                                            <li>
+                                                                <input type="radio" id="{{ $choice->attribute_id }}-{{ $value }}" name="attribute_id_{{ $choice->attribute_id }}" value="{{ $value }}" @if($key == 0) checked @endif>
+                                                                <label for="{{ $choice->attribute_id }}-{{ $value }}">{{ $value }}</label>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            @endforeach
                                         </div>
                                     </div>
-
-                                    @endforeach
                                 @endif
 
                                 @if (count(json_decode($detailedProduct->colors)) > 0)

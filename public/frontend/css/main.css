@@ -811,56 +811,89 @@ section.home-banner-area {
     max-width: 80px;
     max-height: 40px;
 }
+/* ===============================
+   Hover Category Menu (Final)
+================================ */
 
-/* icon hover category menu */
 .hover-category-menu {
     position: absolute;
+    top: 50%;
+    right: 0;
     width: 100%;
-    top: calc(100% -20px);
+    max-height: 70vh;
+    background: transparent;
     display: none;
+    z-index: 9999;
+ 
 }
+
+/* container */
 .hover-category-menu .category-sidebar {
-    box-shadow: 0 3px 3px 0 rgba(51, 51, 51, 0.2);
-    padding-top: 0%;
-   
+    background: #f2f2f2;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    overflow: hidden;
 }
-.hover-category-menu .category-sidebar .all-category {
-    position: relative;
-}
+
+/* arrow */
 .hover-category-menu .category-sidebar .all-category::before {
     position: absolute;
     content: "";
-    height: 8px;
-    width: 8px;
-    border-top: 0;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-bottom: 8px solid #f2f2f2;
-    border-left: 8px solid transparent;
-    top: 0px;
+    top: -8px;
     right: 20px;
 }
 
-.hover-category-menu .all-category {
-    background-color: #f2f2f2;
-    padding-left: 10px;
-    line-height: 41px;
-    height: 49px;
-    line-height: 49px;
-    color: #333;
-    border-bottom: 1px solid #e9e9e9;
+/* scrollable category list */
+.hover-category-menu .category-sidebar .categories {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0;
+    margin: 0;
 }
 
-.hover-category-menu .all-category span {
+/* category item */
+.hover-category-menu .categories > li {
+    list-style: none;
+}
+
+/* category link */
+.hover-category-menu .categories > li > a {
+    display: block;
+    padding: 10px 14px;
+    color: #333;
     font-size: 14px;
+    border-bottom: 1px solid #e5e5e5;
+    transition: background 0.2s ease;
 }
-.hover-category-menu .category-sidebar .sub-cat-menu {
-    height: calc(100% - 8px);
-    top: 8px;
-    box-shadow: 2px 3px 5px 0 rgba(51, 51, 51, 0.2);
+
+.hover-category-menu .categories > li > a:hover {
+    background: #e6e6e6;
 }
-.hover-category-menu .category-sidebar .categories > li > a {
-    padding: 8px 10px;
+
+/* sub category menu */
+.hover-category-menu .sub-cat-menu {
+    max-height: 60vh;
+    overflow-y: auto;
 }
+
+/* scrollbar (optional but pro) */
+.hover-category-menu ::-webkit-scrollbar {
+    width: 6px;
+}
+
+.hover-category-menu ::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.hover-category-menu ::-webkit-scrollbar-track {
+    background: transparent;
+}
+
 
 /* product details page */
 .product-details-area {
@@ -4269,7 +4302,8 @@ ul.inline-links > li {
     z-index: 1;
 }
 .box-2 .img {
-    max-height: 50px;
+    max-height: 65px;
+    border-radius: 50%;
 }
 
 .box-2 .name {

@@ -44,16 +44,16 @@
     <section class="gry-bg pt-4 ">
         <div class="container">
             <div class="row align-items-baseline">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="d-flex">
                         <img
                             height="70"
                             class="lazyload"
                             src="{{ asset('frontend/images/placeholder.jpg') }}"
                             data-src="@if ($shop->logo !== null) {{ asset($shop->logo) }} @else {{ asset('frontend/images/placeholder.jpg') }} @endif"
-                            alt="{{ $shop->name }}"
-                        >
-                        <div class="pr-4">
+                            alt="{{ $shop->name }}" >
+
+                        <div class="pr-2">
                             <h3 class="strong-700 heading-4 mb-0">{{ $shop->name }}
                                 @if ($shop->user->seller->verification_status == 1)
                                     <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span>
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <ul class="text-md-left mt-4 mt-md-0 social-nav model-2">
                         @if ($shop->facebook != null)
                             <li>
