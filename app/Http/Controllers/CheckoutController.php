@@ -29,6 +29,10 @@ class CheckoutController extends Controller
     //check the selected payment gateway and redirect to that controller accordingly
     public function checkout(Request $request)
     {
+        if ($request->isMethod('get')) {
+            return redirect()->route('home');
+        }
+
         if ($request->payment_option != null) {
             $orderController = new OrderController;
             $orderController->store($request);

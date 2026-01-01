@@ -87,7 +87,7 @@ Route::group(['middleware' => ['checkout']], function(){
 });
 
 Route::get('/checkout/order-confirmed', 'CheckoutController@order_confirmed')->name('order_confirmed');
-Route::post('/checkout/payment', 'CheckoutController@checkout')->name('payment.checkout');
+Route::any('/checkout/payment', 'CheckoutController@checkout')->name('payment.checkout');
 Route::post('/get_pick_ip_points', 'HomeController@get_pick_ip_points')->name('shipping_info.get_pick_ip_points');
 Route::get('/checkout/payment_select', 'CheckoutController@get_payment_info')->name('checkout.payment_info');
 Route::post('/checkout/apply_coupon_code', 'CheckoutController@apply_coupon_code')->name('checkout.apply_coupon_code');

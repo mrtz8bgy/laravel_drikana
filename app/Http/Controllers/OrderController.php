@@ -319,15 +319,19 @@ class OrderController extends Controller
             $order->save();
 
             //stores the pdf for invoice
-            $pdf = PDFNEW::loadView('invoices.customer_invoice', compact('order'),[],['mode' => 'utf-8']);
+            $invoice_dir = base_path('public/invoices');
+            if (!file_exists($invoice_dir)) {
+                mkdir($invoice_dir, 0755, true);
+            }
+            $pdf = PDFNEW::loadView('invoices.customer_invoice', compact('order'),['default_font' => 'dejavu sans'],['mode' => 'utf-8']);
             $output = $pdf->output();
-    		file_put_contents('public/invoices/'.'Order#'.$order->code.'.pdf', $output);
+    		file_put_contents($invoice_dir.'/'.'Order#'.$order->code.'.pdf', $output);
 
             $array['view'] = 'emails.invoice';
             $array['subject'] = 'Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ø³ÙØ§Ø±Ø´ - '.$order->code;
             $array['from'] = env('MAIL_USERNAME');
             $array['content'] = 'Ø®Ø±ÛŒØ¯Ø§Ø± Ø¹Ø²ÛŒØ²ØŒ Ø§Ù…ÛŒØ¯ÙˆØ§Ø±ÛŒÙ… Ø®Ø±ÛŒØ¯ Ù„Ø°Øªâ€Œ Ø¨Ø®Ø´ÛŒ Ø±Ø§ ØªØ¬Ø±Ø¨Ù‡ Ú©Ø±Ø¯Ù‡ Ø¨Ø§Ø´ÛŒØ¯.';
-            $array['file'] = 'public/invoices/Order#'.$order->code.'.pdf';
+            $array['file'] = $invoice_dir.'/Order#'.$order->code.'.pdf';
             $array['file_name'] = 'Order#'.$order->code.'.pdf';
 
             foreach($seller_products as $key => $seller_product){

@@ -189,7 +189,7 @@ class ProductController extends Controller
             $product->pdf = $request->pdf->store('uploads/products/pdf');
         }
 
-        $product->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->name)).'-'.str_random(5);
+        $product->slug = str_replace(' ', '-', $request->name) . '-' . str_random(5);
 
         if($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0){
             $product->colors = json_encode($request->colors);
@@ -273,9 +273,9 @@ class ProductController extends Controller
                 }
 
                 $product_stock->variant = $str;
-                $product_stock->price = $request['price_'.str_replace('.', '_', $str)];
-                $product_stock->sku = $request['sku_'.str_replace('.', '_', $str)];
-                $product_stock->qty = $request['qty_'.str_replace('.', '_', $str)];
+                $product_stock->price = $request['price_'.str_replace('.', '_', $str)] ?? $request->unit_price;
+                $product_stock->sku = $request['sku_'.str_replace('.', '_', $str)] ?? null;
+                $product_stock->qty = $request['qty_'.str_replace('.', '_', $str)] ?? 10;
                 $product_stock->save();
             }
         }
@@ -437,7 +437,7 @@ class ProductController extends Controller
             $product->pdf = $request->pdf->store('uploads/products/pdf');
         }
 
-        $product->slug = preg_replace('/[^A-Za-z0-9\-]/', '', str_replace(' ', '-', $request->name)).'-'.substr($product->slug, -5);
+        $product->slug = str_replace(' ', '-', $request->name) . '-' . str_random(5);
 
         if($request->has('colors_active') && $request->has('colors') && count($request->colors) > 0){
             $product->colors = json_encode($request->colors);
@@ -524,9 +524,9 @@ class ProductController extends Controller
                 }
 
                 $product_stock->variant = $str;
-                $product_stock->price = $request['price_'.str_replace('.', '_', $str)];
-                $product_stock->sku = $request['sku_'.str_replace('.', '_', $str)];
-                $product_stock->qty = $request['qty_'.str_replace('.', '_', $str)];
+                $product_stock->price = $request['price_'.str_replace('.', '_', $str)] ?? $request->unit_price;
+                $product_stock->sku = $request['sku_'.str_replace('.', '_', $str)] ?? null;
+                $product_stock->qty = $request['qty_'.str_replace('.', '_', $str)] ?? 10;
 
                 $product_stock->save();
             }
