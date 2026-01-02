@@ -81,7 +81,15 @@
         </div>
         <div class="tab-pane fade" id="available">
             <div class="row" id="available-addons-content">
-
+                <div class="col-lg-12 text-center">
+                    <div class="panel">
+                        <div class="panel-body">
+                            <h3>Addons Marketplace</h3>
+                            <p class="text-muted">Addons marketplace is temporarily unavailable.</p>
+                            <p>You can install addons manually by uploading them via the installation page.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -111,6 +119,8 @@
         }
 
         $(document).ready(function(){
+            // کامنت کردن درخواست به activeitzone
+            /*
             $.post('https://activeitzone.com/addons/public/addons', {item: 'ecommerce'}, function(data){
                 //console.log(data);
                 html = '';
@@ -156,6 +166,9 @@
                 });
                 $('#available-addons-content').html(html);
             });
+            */
+            
+            // پیام قبلاً در HTML نمایش داده می‌شود
         })
     </script>
 @endsection
