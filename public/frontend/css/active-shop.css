@@ -8822,6 +8822,7 @@ svg#bigTriangleColor {
   color: #fff;
   position: relative;
   overflow: hidden;
+  direction: ltr;
 }
 
 #footer.footer::before {
@@ -8975,7 +8976,7 @@ svg#bigTriangleColor {
   background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
   border: none;
   border-radius: 8px;
-  padding: 12px 25px;
+  /* padding: 12px 25px; */
   font-weight: 600;
   transition: all 0.3s ease;
 }
