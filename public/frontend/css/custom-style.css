@@ -23,7 +23,7 @@
 
     /* فواصل و اندازه‌ها */
     --radius: 8px;
-    --container-max: 1200px;
+    --container-max: 98%;
 }
 
 .btn-primary {
