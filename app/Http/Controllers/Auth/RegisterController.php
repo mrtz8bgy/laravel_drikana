@@ -91,13 +91,7 @@ class RegisterController extends Controller
             }
         } else {
             // ثبت‌نام با شماره همراه
-<<<<<<< HEAD
             // تولید کد OTP
-=======
-            // تولید ک OTP
- 
-              $verification_code = '123456';
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
             $verification_code = $this->generateOTPCode();
             
             $user = User::create([
