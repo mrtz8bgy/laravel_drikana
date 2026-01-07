@@ -91,7 +91,7 @@ class RegisterController extends Controller
             }
         } else {
             // ثبت‌نام با شماره همراه
-             // تولید کد OTP
+           // تولید کد OTP
             $verification_code = $this->generateOTPCode();
             
             $user = User::create([
