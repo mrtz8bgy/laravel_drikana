@@ -1,7 +1,7 @@
 /*
  Navicat Premium Dump SQL
 
- Source Server         : localhost
+ Source Server         : localhost_3306
  Source Server Type    : MySQL
  Source Server Version : 100411 (10.4.11-MariaDB)
  Source Host           : localhost:3306
@@ -11,11 +11,7 @@
  Target Server Version : 100411 (10.4.11-MariaDB)
  File Encoding         : 65001
 
-<<<<<<< HEAD
- Date: 02/01/2026 15:24:13
-=======
- Date: 01/01/2026 18:09:36
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
+ Date: 07/01/2026 04:10:13
 */
 
 SET NAMES utf8mb4;
@@ -35,7 +31,7 @@ CREATE TABLE `addons`  (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of addons
@@ -57,11 +53,7 @@ CREATE TABLE `addresses`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-<<<<<<< HEAD
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
-=======
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of addresses
@@ -70,10 +62,7 @@ INSERT INTO `addresses` VALUES (1, 8, 'سیدخندان پلاک 40', 'Iran (Isl
 INSERT INTO `addresses` VALUES (3, 3, 'ولیعصر پاساژ رضا پلاک 1234', 'Iran (Islamic Republic of)', 'تهران', '1476822666', '9121112233', 1, '2020-07-12 07:47:28', '2020-07-12 07:47:36');
 INSERT INTO `addresses` VALUES (4, 8, 'ورامین میدان رازی', 'Iran (Islamic Republic of)', 'ورامین', '3371745768', '02136725581', 0, '2025-12-22 12:16:32', '2025-12-22 12:16:32');
 INSERT INTO `addresses` VALUES (5, 12, 'ورامین میدان رازی', 'Iran (Islamic Republic of)', 'ورامین', '3371745768', '+989306060331', 0, '2026-01-01 09:45:41', '2026-01-01 09:45:41');
-<<<<<<< HEAD
 INSERT INTO `addresses` VALUES (6, 29, 'ورامین میدان رازی', 'Iran (Islamic Republic of)', 'ورامین', '3371745768', '+989306060331', 0, '2026-01-01 23:27:24', '2026-01-01 23:27:24');
-=======
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
 
 -- ----------------------------
 -- Table structure for app_settings
@@ -93,7 +82,7 @@ CREATE TABLE `app_settings`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of app_settings
@@ -110,7 +99,7 @@ CREATE TABLE `attributes`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of attributes
@@ -139,7 +128,7 @@ CREATE TABLE `banners`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of banners
@@ -166,7 +155,7 @@ CREATE TABLE `brands`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of brands
@@ -198,7 +187,7 @@ CREATE TABLE `business_settings`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of business_settings
@@ -266,7 +255,7 @@ CREATE TABLE `carts`  (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 47 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of carts
@@ -291,7 +280,7 @@ CREATE TABLE `categories`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of categories
@@ -318,7 +307,7 @@ CREATE TABLE `colors`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 144 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 144 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of colors
@@ -481,7 +470,7 @@ CREATE TABLE `conversations`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of conversations
@@ -499,7 +488,7 @@ CREATE TABLE `countries`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 297 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 297 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of countries
@@ -812,7 +801,7 @@ CREATE TABLE `coupon_usages`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of coupon_usages
@@ -834,7 +823,7 @@ CREATE TABLE `coupons`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of coupons
@@ -854,7 +843,7 @@ CREATE TABLE `currencies`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of currencies
@@ -874,7 +863,7 @@ CREATE TABLE `customer_packages`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of customer_packages
@@ -913,7 +902,7 @@ CREATE TABLE `customer_products`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of customer_products
@@ -929,7 +918,7 @@ CREATE TABLE `customers`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of customers
@@ -937,6 +926,7 @@ CREATE TABLE `customers`  (
 INSERT INTO `customers` VALUES (4, 8, '2019-08-01 14:05:09', '2019-08-01 14:05:09');
 INSERT INTO `customers` VALUES (10, 23, '2026-01-01 21:52:16', '2026-01-01 21:52:16');
 INSERT INTO `customers` VALUES (17, 30, '2026-01-01 23:35:30', '2026-01-01 23:35:30');
+INSERT INTO `customers` VALUES (18, 31, '2026-01-06 19:02:06', '2026-01-06 19:02:06');
 
 -- ----------------------------
 -- Table structure for flash_deal_products
@@ -951,7 +941,7 @@ CREATE TABLE `flash_deal_products`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 59 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of flash_deal_products
@@ -985,7 +975,7 @@ CREATE TABLE `flash_deals`  (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of flash_deals
@@ -1018,7 +1008,7 @@ CREATE TABLE `general_settings`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of general_settings
@@ -1037,12 +1027,91 @@ CREATE TABLE `home_categories`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of home_categories
 -- ----------------------------
 INSERT INTO `home_categories` VALUES (3, 7, 'null', 1, '2020-08-01 16:29:17', '2020-08-01 16:29:17');
+
+-- ----------------------------
+-- Table structure for jewelry_certificates
+-- ----------------------------
+DROP TABLE IF EXISTS `jewelry_certificates`;
+CREATE TABLE `jewelry_certificates`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `owner_id` int UNSIGNED NOT NULL,
+  `product_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `metal_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `purity` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `weight` decimal(10, 2) NULL DEFAULT NULL,
+  `stone_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `serial_number` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `issued_at` date NULL DEFAULT NULL,
+  `certificate_file` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `is_verified` tinyint(1) NULL DEFAULT 0,
+  `rejected_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `serial_number`(`serial_number` ASC) USING BTREE,
+  INDEX `owner_id`(`owner_id` ASC) USING BTREE,
+  CONSTRAINT `jewelry_certificates_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `jewelry_owners` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of jewelry_certificates
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for jewelry_owners
+-- ----------------------------
+DROP TABLE IF EXISTS `jewelry_owners`;
+CREATE TABLE `jewelry_owners`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int UNSIGNED NOT NULL,
+  `full_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `national_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `jewelry_owners_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of jewelry_owners
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for jewelry_transfers
+-- ----------------------------
+DROP TABLE IF EXISTS `jewelry_transfers`;
+CREATE TABLE `jewelry_transfers`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `certificate_id` int UNSIGNED NOT NULL,
+  `from_owner_id` int UNSIGNED NOT NULL,
+  `to_owner_id` int UNSIGNED NOT NULL,
+  `transfer_date` date NULL DEFAULT NULL,
+  `transfer_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `certificate_id`(`certificate_id` ASC) USING BTREE,
+  INDEX `from_owner_id`(`from_owner_id` ASC) USING BTREE,
+  INDEX `to_owner_id`(`to_owner_id` ASC) USING BTREE,
+  CONSTRAINT `jewelry_transfers_ibfk_1` FOREIGN KEY (`certificate_id`) REFERENCES `jewelry_certificates` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `jewelry_transfers_ibfk_2` FOREIGN KEY (`from_owner_id`) REFERENCES `jewelry_owners` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `jewelry_transfers_ibfk_3` FOREIGN KEY (`to_owner_id`) REFERENCES `jewelry_owners` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of jewelry_transfers
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for languages
@@ -1056,7 +1125,7 @@ CREATE TABLE `languages`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of languages
@@ -1075,7 +1144,7 @@ CREATE TABLE `links`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of links
@@ -1098,7 +1167,7 @@ CREATE TABLE `messages`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of messages
@@ -1113,13 +1182,18 @@ CREATE TABLE `migrations`  (
   `migration` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
 -- ----------------------------
 INSERT INTO `migrations` VALUES (1, '2014_10_12_000000_create_users_table', 1);
 INSERT INTO `migrations` VALUES (2, '2014_10_12_100000_create_password_resets_table', 1);
+INSERT INTO `migrations` VALUES (3, '2016_06_01_000001_create_oauth_auth_codes_table', 2);
+INSERT INTO `migrations` VALUES (4, '2016_06_01_000002_create_oauth_access_tokens_table', 2);
+INSERT INTO `migrations` VALUES (5, '2016_06_01_000003_create_oauth_refresh_tokens_table', 2);
+INSERT INTO `migrations` VALUES (6, '2016_06_01_000004_create_oauth_clients_table', 2);
+INSERT INTO `migrations` VALUES (7, '2016_06_01_000005_create_oauth_personal_access_clients_table', 2);
 
 -- ----------------------------
 -- Table structure for oauth_access_tokens
@@ -1137,7 +1211,7 @@ CREATE TABLE `oauth_access_tokens`  (
   `expires_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oauth_access_tokens_user_id_index`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oauth_access_tokens
@@ -1173,7 +1247,7 @@ CREATE TABLE `oauth_auth_codes`  (
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oauth_auth_codes
@@ -1196,7 +1270,7 @@ CREATE TABLE `oauth_clients`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oauth_clients_user_id_index`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oauth_clients
@@ -1215,7 +1289,7 @@ CREATE TABLE `oauth_personal_access_clients`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oauth_personal_access_clients_client_id_index`(`client_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oauth_personal_access_clients
@@ -1233,7 +1307,7 @@ CREATE TABLE `oauth_refresh_tokens`  (
   `expires_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oauth_refresh_tokens_access_token_id_index`(`access_token_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of oauth_refresh_tokens
@@ -1261,11 +1335,7 @@ CREATE TABLE `order_details`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-<<<<<<< HEAD
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
-=======
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_details
@@ -1277,14 +1347,9 @@ INSERT INTO `order_details` VALUES (4, 2, 14, 9, '0421055885', 4200000, 0.00, 80
 INSERT INTO `order_details` VALUES (5, 3, 14, 12, '41', 9900, 0.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 09:50:04', '2026-01-01 09:50:04');
 INSERT INTO `order_details` VALUES (6, 3, 14, 9, '0421055885', 4200000, 0.00, 8000.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 09:50:04', '2026-01-01 09:50:04');
 INSERT INTO `order_details` VALUES (7, 4, 12, 1, 'Black-0421088-18', 38000000, 0.00, 0.00, 4, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 10:06:54', '2026-01-01 10:06:54');
-<<<<<<< HEAD
 INSERT INTO `order_details` VALUES (8, 5, 12, 1, 'Black-0421088-18', 38000000, 0.00, 0.00, 4, 'paid', 'delivered', 'home_delivery', NULL, NULL, '2026-01-01 10:07:08', '2026-01-02 11:33:01');
 INSERT INTO `order_details` VALUES (9, 6, 15, 19, '0421802222-18-1404', 2744000, 274400.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 10:12:50', '2026-01-01 10:12:50');
 INSERT INTO `order_details` VALUES (10, 7, 12, 2, 'DarkSeaGreen', 4899000, 0.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 23:27:41', '2026-01-01 23:27:41');
-=======
-INSERT INTO `order_details` VALUES (8, 5, 12, 1, 'Black-0421088-18', 38000000, 0.00, 0.00, 4, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 10:07:08', '2026-01-01 10:07:08');
-INSERT INTO `order_details` VALUES (9, 6, 15, 19, '0421802222-18-1404', 2744000, 274400.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 10:12:50', '2026-01-01 10:12:50');
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
 
 -- ----------------------------
 -- Table structure for orders
@@ -1309,11 +1374,7 @@ CREATE TABLE `orders`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-<<<<<<< HEAD
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
-=======
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orders
@@ -1322,11 +1383,7 @@ INSERT INTO `orders` VALUES (1, NULL, 221543, '{\"name\":\"morteza\",\"email\":\
 INSERT INTO `orders` VALUES (2, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'unpaid', NULL, 4217900, 0.00, '20260101-09461158', 1767260771, 0, 0, 0, 0, '2026-01-01 09:46:11', '2026-01-01 09:46:11');
 INSERT INTO `orders` VALUES (3, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'unpaid', NULL, 4217900, 0.00, '20260101-09500431', 1767261004, 0, 0, 0, 0, '2026-01-01 09:50:04', '2026-01-01 09:50:04');
 INSERT INTO `orders` VALUES (4, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'zarinpal', 'unpaid', NULL, 38000000, 0.00, '20260101-10065426', 1767262014, 0, 0, 0, 0, '2026-01-01 10:06:54', '2026-01-01 10:06:54');
-<<<<<<< HEAD
 INSERT INTO `orders` VALUES (5, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'paid', NULL, 38000000, 0.00, '20260101-10070899', 1767262028, 1, 0, 0, 1, '2026-01-01 10:07:08', '2026-01-02 11:33:01');
-=======
-INSERT INTO `orders` VALUES (5, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'unpaid', NULL, 38000000, 0.00, '20260101-10070899', 1767262028, 0, 0, 0, 0, '2026-01-01 10:07:08', '2026-01-01 10:07:08');
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
 INSERT INTO `orders` VALUES (6, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'unpaid', NULL, 3018400, 0.00, '20260101-10125063', 1767262370, 0, 0, 0, 0, '2026-01-01 10:12:50', '2026-01-01 10:12:50');
 
 -- ----------------------------
@@ -1340,7 +1397,7 @@ CREATE TABLE `otp_configurations`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of otp_configurations
@@ -1364,7 +1421,7 @@ CREATE TABLE `pages`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pages
@@ -1379,7 +1436,7 @@ CREATE TABLE `password_resets`  (
   `token` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   INDEX `password_resets_email_index`(`email` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of password_resets
@@ -1399,7 +1456,7 @@ CREATE TABLE `payments`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of payments
@@ -1422,7 +1479,7 @@ CREATE TABLE `pickup_points`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pickup_points
@@ -1440,7 +1497,7 @@ CREATE TABLE `policies`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of policies
@@ -1465,7 +1522,7 @@ CREATE TABLE `product_stocks`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of product_stocks
@@ -1497,11 +1554,7 @@ INSERT INTO `product_stocks` VALUES (75, 5, 'Azure', NULL, 28000000, 10, '2026-0
 INSERT INTO `product_stocks` VALUES (76, 5, 'Beige', NULL, 28000000, 10, '2026-01-01 09:15:59', '2026-01-01 09:15:59');
 INSERT INTO `product_stocks` VALUES (77, 9, '0421055885', NULL, 4200000, 8, '2026-01-01 09:42:26', '2026-01-01 09:50:04');
 INSERT INTO `product_stocks` VALUES (78, 22, '0421088269', NULL, 12500000, 10, '2026-01-01 09:44:15', '2026-01-01 09:44:15');
-<<<<<<< HEAD
 INSERT INTO `product_stocks` VALUES (79, 2, 'DarkSeaGreen', NULL, 4899000, 8, '2026-01-01 10:04:46', '2026-01-01 23:27:41');
-=======
-INSERT INTO `product_stocks` VALUES (79, 2, 'DarkSeaGreen', NULL, 4899000, 9, '2026-01-01 10:04:46', '2026-01-01 10:04:46');
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
 INSERT INTO `product_stocks` VALUES (80, 2, 'GhostWhite', NULL, 4899000, 10, '2026-01-01 10:04:46', '2026-01-01 10:04:46');
 INSERT INTO `product_stocks` VALUES (81, 1, 'Black-0421088-18', NULL, 9500000, 2, '2026-01-01 10:05:59', '2026-01-01 10:07:08');
 INSERT INTO `product_stocks` VALUES (82, 1, 'DarkOrange-0421088-18', NULL, 9500000, 10, '2026-01-01 10:05:59', '2026-01-01 10:05:59');
@@ -1578,17 +1631,13 @@ CREATE TABLE `products`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
 INSERT INTO `products` VALUES (1, 'گردنبند طلای 24 عیار | طرح ابدی سلطنتی', 'admin', 12, 4, 105, NULL, 6, '[\"uploads\\/products\\/photos\\/Z4E6qsPrDR545IKbRYG0qUsxrDAILjXSxIy4gyvv.jpg\",\"uploads\\/products\\/photos\\/aHJcGqGInVJYjtiMLm3qunZoqnrAJQupn2Lcqo4W.jpg\"]', 'uploads/products/thumbnail/jUANPNxmrIQyD5fOnHP6V3Ce3IROYdhu7urmKTNN.jpg', 'uploads/products/featured/hEh2nBd1iw4caSZqEwIReFOFb7lgYTKklmtRYbJF.jpg', 'uploads/products/flash_deal/7cTZHv7B529r7xKKWNczxTRV6Mykelg7ipkDAjIu.jpg', 'youtube', NULL, 'گردنبند', 'گردنبندی از طلای خالص 24 عیار با طراحی کلاسیک سلطنتی. هر گلبرگ دست‌ساز این قطعه، نور را به شیوه‌ای منحصر به فرد بازمی‌تاباند. مناسب مراسم عروسی، مهمانی‌های لوکس و به عنوان سرمایه‌ای ماندگار.', 9500000, 7500000, 1, '[\"1\",\"3\"]', '[{\"attribute_id\":\"1\",\"values\":[\"0421088\"]},{\"attribute_id\":\"3\",\"values\":[\"18\"]}]', '[\"#000000\",\"#FF8C00\"]', NULL, 0, 1, 1, 0, 'انس', 0.00, NULL, 0.00, NULL, 'free', 0.00, 3, 'گردنبند طلای 24 عیار سلطنتی | سرمایه ماندگار', 'خرید گردنبند طلای خالص 24 عیار با طراحی دست‌ساز سلطنتی. مناسب سرمایه‌گذاری و مراسم خاص.', 'uploads/products/meta/K0j3z2jbqBsPEP8iqkWPP1IVTkdpZCMMxZLEiHWA.jpg', NULL, 'گردنبند-طلای-24-عیار-|-طرح-ابدی-سلطنتی-HjVn1', 0.00, NULL, 0, NULL, NULL, '2020-07-07 13:38:21', '2026-01-01 10:07:08');
-<<<<<<< HEAD
 INSERT INTO `products` VALUES (2, 'انگشتر طلا با یاقوت برمه‌ای | آتش دریا', 'admin', 12, 4, 105, NULL, 6, '[\"uploads\\/products\\/photos\\/D6vxSqjBVBJ3J15rgtq9mJky8LrCR2ehv9aIFnj2.jpg\",\"uploads\\/products\\/photos\\/puXkf5ZjQEfMDYliGDLUMITEtMDuu2szk8NPpb0P.jpg\"]', 'uploads/products/thumbnail/mdeIxTUn5V2i872kMVsjaXlNzn5WJgkzIHxvcyJU.jpg', 'uploads/products/featured/aV4sIBkPlO7EXvbystyopDiQTUf5R9ytZwTam9fg.jpg', 'uploads/products/flash_deal/xbLThsl88J58cn9NJyGwEjogPlGiAqEzReEjl56g.jpg', 'youtube', NULL, 'انگشتر', 'یاقوت سرخ برمه‌ای اصل با درخششی افسانه‌ای، در قابی از طلای 18 عیار. این سنگ نادر نماد عشق ابدی و شجاعت است. وزن سنگ: 1.5 قیراط، تراش کابوشون.', 18500000, 15000000, 1, '[]', '[]', '[\"#8FBC8F\",\"#F8F8FF\"]', NULL, 0, 1, 1, 0, 'انس', 0.00, NULL, 0.00, NULL, 'free', 0.00, 2, 'انگشتر یاقوت برمه‌ای اصل | سنگ نادر و ارزشمند', 'خرید انگشتر طلا با یاقوت سرخ برمه‌ای اصل 1.5 قیراط. سرمایه‌گذاری در گوهرهای نادر.', 'uploads/products/meta/9jVMoUzesW4HegYsEpmIL3FxDU0xIJ4O5vm0Crz2.jpg', NULL, 'انگشتر-طلا-با-یاقوت-برمه‌ای-|-آتش-دریا-pCVCn', 0.00, NULL, 0, NULL, NULL, '2020-07-07 13:42:50', '2026-01-01 23:27:41');
-=======
-INSERT INTO `products` VALUES (2, 'انگشتر طلا با یاقوت برمه‌ای | آتش دریا', 'admin', 12, 4, 105, NULL, 6, '[\"uploads\\/products\\/photos\\/D6vxSqjBVBJ3J15rgtq9mJky8LrCR2ehv9aIFnj2.jpg\",\"uploads\\/products\\/photos\\/puXkf5ZjQEfMDYliGDLUMITEtMDuu2szk8NPpb0P.jpg\"]', 'uploads/products/thumbnail/mdeIxTUn5V2i872kMVsjaXlNzn5WJgkzIHxvcyJU.jpg', 'uploads/products/featured/aV4sIBkPlO7EXvbystyopDiQTUf5R9ytZwTam9fg.jpg', 'uploads/products/flash_deal/xbLThsl88J58cn9NJyGwEjogPlGiAqEzReEjl56g.jpg', 'youtube', NULL, 'انگشتر', 'یاقوت سرخ برمه‌ای اصل با درخششی افسانه‌ای، در قابی از طلای 18 عیار. این سنگ نادر نماد عشق ابدی و شجاعت است. وزن سنگ: 1.5 قیراط، تراش کابوشون.', 18500000, 15000000, 1, '[]', '[]', '[\"#8FBC8F\",\"#F8F8FF\"]', NULL, 0, 1, 1, 0, 'انس', 0.00, NULL, 0.00, NULL, 'free', 0.00, 1, 'انگشتر یاقوت برمه‌ای اصل | سنگ نادر و ارزشمند', 'خرید انگشتر طلا با یاقوت سرخ برمه‌ای اصل 1.5 قیراط. سرمایه‌گذاری در گوهرهای نادر.', 'uploads/products/meta/9jVMoUzesW4HegYsEpmIL3FxDU0xIJ4O5vm0Crz2.jpg', NULL, 'انگشتر-طلا-با-یاقوت-برمه‌ای-|-آتش-دریا-pCVCn', 0.00, NULL, 0, NULL, NULL, '2020-07-07 13:42:50', '2026-01-01 10:04:46');
->>>>>>> 4105440b4d09c18722853c51d3f2ebfadc804b35
 INSERT INTO `products` VALUES (3, 'دستبند الماس کلوش | حلقه‌های نور', 'admin', 12, 4, 105, NULL, 6, '[\"uploads\\/products\\/photos\\/rKGSRCVCN1KlxQzJTblkWGpJw2THEM96sZ1OsajG.jpg\",\"uploads\\/products\\/photos\\/kFXXxnqxVnfldypzCcQIMC4wpGFmqNtuROfpMC0r.jpg\"]', 'uploads/products/thumbnail/4DGUzj9DnWaaYugkARl5taN9ykfsj7uA9Jh2EVwP.jpg', 'uploads/products/featured/nXeLAkZJGcESuC12vCcXB3X4cAYVgy6ROHiJy9SN.jpg', 'uploads/products/flash_deal/aFGXSH1jqdLEQeIutcK1mHgFTNMR8zfFIdAOCdWw.jpg', 'youtube', NULL, 'دستبند', 'دستبندی از الماس‌های برلیان تراش‌خورده با درجه خلوص VS1، بر بستری از طلای سفید 18 عیار. 25 قطعه الماس با وزن کل 3 قیراط که حلقه‌ای از نور را دور مچ شما ایجاد می‌کنند.', 32000000, 25000000, 1, '[]', '[]', '[\"#000000\",\"#0000FF\",\"#F8F8FF\"]', NULL, 0, 1, 1, 0, 'انس', 0.00, NULL, 0.00, NULL, 'free', 0.00, 1, 'دستبند الماس کلوش | 3 قیراط الماس برلیان', 'خرید دستبند الماس با 25 قطعه الماس برلیان VS1. طراحی کلوش مدرن و درخشان.', 'uploads/products/meta/G6eoC1nWmbpUBNL8J4AP57SIwCa6hgQOLqBGesnZ.jpg', NULL, 'دستبند-الماس-کلوش-|-حلقه‌های-نور-w7spY', 0.00, NULL, 0, NULL, NULL, '2020-07-08 04:50:33', '2026-01-01 12:31:03');
 INSERT INTO `products` VALUES (4, 'گوشواره زمرد کلمبیایی | قطره جنگل', 'admin', 12, 6, 110, 141, 5, '[\"uploads\\/products\\/photos\\/xT9pxR1qHJt82iQbnVRO95mEWOe2TowdoCzpymQf.jpg\",\"uploads\\/products\\/photos\\/tmfnWU35C7WfrRdYhXjNwZevD68u83HQJlumc9lg.jpg\"]', 'uploads/products/thumbnail/pRo18mlUvp2pOrLAMGvpmOfqmDMJSXh65yGwXYiD.jpg', 'uploads/products/featured/lQNtgBj3dU5CEMjFltyZcg9YfjET4d2AZG9oWvpb.jpg', 'uploads/products/flash_deal/hHhreYYyYZxFICQkucv4rn8eDIiHK8XNkewH6fzm.jpg', 'youtube', NULL, 'earing', 'زمردهای کلمبیایی اصل با رنگ سبز عمیق و درخشان، در طراحی قطره‌ای. هر زمرد (0.75 قیراط) از معادن موزو بوده و گواهی اصالت دارد. قاب از طلای زرد 21 عیار.', 12500000, 9800000, 1, '[\"1\",\"2\",\"4\",\"3\",\"5\",\"7\",\"8\",\"9\"]', '[{\"attribute_id\":\"1\",\"values\":[\"0421088273\"]},{\"attribute_id\":\"2\",\"values\":[\"\\u06a9\\u0644\\u0645\\u0628\\u06cc\\u0627\\u06cc\\u06cc\"]},{\"attribute_id\":\"4\",\"values\":[\"\\u0633\\u0641\\u06cc\\u062f\"]},{\"attribute_id\":\"3\",\"values\":[\"18\"]},{\"attribute_id\":\"5\",\"values\":[\"\\u0628\\u0631\\u0644\\u06cc\\u0627\\u0646\"]},{\"attribute_id\":\"7\",\"values\":[\"\\u0632\\u0646\\u0627\\u0646\\u0647\"]},{\"attribute_id\":\"8\",\"values\":[\"3 \\u06af\\u0631\\u0645\"]},{\"attribute_id\":\"9\",\"values\":[\"1398\"]}]', '[\"#E6E6FA\",\"#FFF0F5\"]', NULL, 0, 1, 0, 0, 'انس', 10.00, 'percent', 9.00, 'percent', 'free', 0.00, 0, 'گوشواره زمرد کلمبیایی اصل | رنگ سبز موزو', 'خرید گوشواره زمرد کلمبیایی با گواهی اصالت. رنگ سبز عمیق و درخشان مناسب سرمایه‌گذاری.', 'uploads/products/meta/CkBC3L2pLk5v27H1W6W7NFTPpSybKzsEhwf0pwYm.jpg', 'uploads/products/pdf/zPQScVHujhlV9yprcru5NvyQ72MoU5vm1w3jT4h2.pdf', 'گوشواره زمرد کلمبیایی | قطره جنگل', 0.00, NULL, 0, NULL, NULL, '2020-07-08 05:05:15', '2025-12-31 14:28:01');
 INSERT INTO `products` VALUES (5, 'حلقه نامزدی الماس | وعده ابدی', 'seller', 3, 4, 106, 132, 7, '[\"uploads\\/products\\/photos\\/Wbyo7C7FOOLev0NYmWKsu9rm1WUikg6kZGcBeomf.jpg\"]', 'uploads/products/thumbnail/lyyPJrjtLP1n9c1vlMlXfaFBkyoJUbZgfTjSG8Kp.jpg', 'uploads/products/featured/Q1zLSzK1Upa2Zrc7N8apmemaTSJRbEwsO2up9bct.jpg', 'uploads/products/flash_deal/xozcjkNOK763TZenugvOnl5a7h3grtA5sDM6kgF7.jpg', 'youtube', NULL, 'حلقه', 'حلقه‌ای از الماس تک‌قطعه 2 قیراطی با تراش پرنسس، بر بستری از طلای سفید 18 عیار. طراحی سه‌نگین (Three-stone) نماد گذشته، حال و آینده. همراه با گواهی GIA.', 28000000, 22000000, 1, '[]', '[]', '[\"#F0FFFF\",\"#F5F5DC\"]', NULL, 0, 1, 0, 0, NULL, 0.00, 'amount', 0.00, 'amount', 'flat_rate', 10000.00, 2, 'حلقه نامزدی الماس 2 قیراط | تراش پرنسس', 'خرید حلقه نامزدی با الماس 2 قیراطی و گواهی GIA. طراحی سه‌نگین نمادین.', 'uploads/products/meta/6UKdzChPM5B9XNeHEJnPOddhuCCzPxm6y7TW6qR5.jpg', NULL, '------?اط', 0.00, NULL, 0, NULL, NULL, '2020-07-12 15:50:04', '2026-01-01 09:15:59');
@@ -1615,6 +1664,31 @@ INSERT INTO `products` VALUES (25, 'گردنبند ستاره داود مردا�
 INSERT INTO `products` VALUES (26, 'ساعت مردانه کلاسیک تمام استیل', 'admin', 12, 5, 107, 134, 8, '[\"uploads\\/products\\/photos\\/Dry82chTBgVtwOrQd9IgDnWUGLs2peFM52AkwX8Y.jpg\",\"uploads\\/products\\/photos\\/7lcX3OHGZYSWI2Au3S9UAVbWqiymtfuVwBuDHdF7.jpg\"]', 'uploads/products/thumbnail/TTzSfxMYiP8eChVYoVPek1yQFfZETuUAKef0L80l.jpg', 'uploads/products/featured/xfxPxVWHTXr0yuDlyaN3oltgfoFf6PnMnYL16eRF.jpg', 'uploads/products/flash_deal/kYOCXRFLT8b0yxETBd6qSs1s4waQkA1GSLEA3F7O.jpg', 'youtube', NULL, 'ساعت', 'ساعت مچی کلاسیک مردانه با طرح مدرن و شیک برای اقایان شیک پوش&nbsp;', 200000000, 19000000, 1, '[\"1\",\"2\",\"9\"]', '[{\"attribute_id\":\"1\",\"values\":[\"25525522\"]},{\"attribute_id\":\"2\",\"values\":[\"20251500\"]},{\"attribute_id\":\"9\",\"values\":[\"2025\"]}]', '[\"#C0C0C0\"]', NULL, 0, 1, 0, 0, 'دستگاه', 3.00, 'percent', 9.00, 'percent', 'flat_rate', 200000.00, 0, 'ساعت‌های لوکس', 'ندارد', 'uploads/products/meta/oEEZ9m78qKF7lH8bG4EvQUBJfJ0LOdLeDWNe91z2.jpg', NULL, 'ساعت-مردانه-کلاسیک-تمام-استیل-o8lwP', 0.00, NULL, 0, NULL, NULL, '2026-01-01 11:05:14', '2026-01-01 11:05:14');
 
 -- ----------------------------
+-- Table structure for repair_orders
+-- ----------------------------
+DROP TABLE IF EXISTS `repair_orders`;
+CREATE TABLE `repair_orders`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int UNSIGNED NOT NULL,
+  `jewelry_certificate_id` int UNSIGNED NULL DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `repair_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'در انتظار',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  INDEX `jewelry_certificate_id`(`jewelry_certificate_id` ASC) USING BTREE,
+  CONSTRAINT `repair_orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `repair_orders_ibfk_2` FOREIGN KEY (`jewelry_certificate_id`) REFERENCES `jewelry_certificates` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of repair_orders
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for reviews
 -- ----------------------------
 DROP TABLE IF EXISTS `reviews`;
@@ -1629,7 +1703,7 @@ CREATE TABLE `reviews`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of reviews
@@ -1646,7 +1720,7 @@ CREATE TABLE `roles`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of roles
@@ -1666,7 +1740,7 @@ CREATE TABLE `searches`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of searches
@@ -1692,7 +1766,7 @@ CREATE TABLE `seller_withdraw_requests`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of seller_withdraw_requests
@@ -1719,7 +1793,7 @@ CREATE TABLE `sellers`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sellers
@@ -1746,7 +1820,7 @@ CREATE TABLE `seo_settings`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of seo_settings
@@ -1776,7 +1850,7 @@ CREATE TABLE `shops`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shops
@@ -1801,7 +1875,7 @@ CREATE TABLE `sliders`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sliders
@@ -1821,7 +1895,7 @@ CREATE TABLE `staff`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of staff
@@ -1843,7 +1917,7 @@ CREATE TABLE `sub_categories`  (
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_category_id`(`category_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 125 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 125 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sub_categories
@@ -1884,7 +1958,7 @@ CREATE TABLE `sub_sub_categories`  (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_sub_category_id`(`sub_category_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 170 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 170 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sub_sub_categories
@@ -1941,7 +2015,7 @@ CREATE TABLE `subscribers`  (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `email`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of subscribers
@@ -1962,7 +2036,7 @@ CREATE TABLE `ticket_replies`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ticket_replies
@@ -1988,7 +2062,7 @@ CREATE TABLE `tickets`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tickets
@@ -2026,7 +2100,7 @@ CREATE TABLE `users`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
@@ -2043,6 +2117,7 @@ INSERT INTO `users` VALUES (18, NULL, NULL, 'staff', 'اپراتور سفارش�
 INSERT INTO `users` VALUES (19, NULL, NULL, 'seller', 'یوسف ابراهیمی', 'seller7@example.com', '2020-07-18 03:07:11', '$2y$10$boTae38mLpu10h7dVecfjuulM4zbthdFskY9zZ7bb1PxHgNGMfQvy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-08-09 16:05:08', '2020-08-09 16:05:08');
 INSERT INTO `users` VALUES (23, NULL, NULL, 'customer', 'احمد کریمی', 'ahmad@gmail.com', '2026-01-01 21:01:16', '$2y$10$P3ckpHolKl.2.nd8X2bbK.8V2uURZYvPcXfkE/Hb4C45hQJvFT0Gm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-01-01 21:52:16', '2026-01-01 21:52:16');
 INSERT INTO `users` VALUES (30, NULL, NULL, 'customer', 'امیر حسین بهنامی', NULL, NULL, '$2y$10$y3YKcuXKDeSft1AA0XsSOek97lnKVdy4oflRIXMzwMTbDrWxFesf.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09021313131', '2026-01-01 23:35:39', '213877', 0.00, NULL, NULL, 0, '2026-01-01 23:35:30', '2026-01-01 23:52:21');
+INSERT INTO `users` VALUES (31, NULL, NULL, 'customer', 'morteza', 'aliw@gmail.com', '2026-01-06 19:01:06', '$2y$10$xiHrfWnEEFifOJ2hQKjfKesfjPwE8GhaItXDogrlAJp4WYT67RYRu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-01-06 19:02:06', '2026-01-06 19:02:06');
 
 -- ----------------------------
 -- Table structure for wallets
@@ -2057,7 +2132,7 @@ CREATE TABLE `wallets`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wallets
@@ -2074,7 +2149,7 @@ CREATE TABLE `wishlists`  (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of wishlists

@@ -328,32 +328,6 @@ Route::get('/addresses/destroy/{id}', 'AddressController@destroy')->name('addres
 Route::get('/addresses/set_default/{id}', 'AddressController@set_default')->name('addresses.set_default');
 
 // ============================================
-# مدیریت جواهرات (Jewelry Management)
-// ============================================
-Route::middleware(['auth'])->prefix('jewelry')->group(function () {
-    // داشبورد
-    Route::get('/dashboard', 'Jewelry\\DashboardController@index')->name('jewelry.dashboard');
-
-    // مالکان جواهرات
-    Route::resource('owners', 'Jewelry\\JewelryOwnerController');
-
-    // شناسنامه جواهرات
-    Route::resource('certificates', 'Jewelry\\JewelryCertificateController');
-
-    // سفارشات تعمیر
-    Route::resource('repair-orders', 'Jewelry\\RepairOrderController');
-
-    // انتقال جواهرات
-    Route::get('transfers/create', 'Jewelry\\JewelryTransferController@create')->name('jewelry.transfers.create');
-    Route::get('transfers/create/certificate/{certificate}', 'Jewelry\\JewelryTransferController@createForCertificate')->name('jewelry.transfers.createForCertificate');
-    Route::post('transfers', 'Jewelry\\JewelryTransferController@store')->name('jewelry.transfers.store');
-
-    // گزارش‌ها
-    Route::get('reports/certificates', 'Jewelry\\ReportController@certificateReport')->name('jewelry.reports.certificates');
-    // سایر گزارش‌ها در صورت نیاز اضافه شود
-});
-
-// ============================================
 # صفحات سفارشی (Custom Pages)
 // ============================================
 Route::get('/{slug}', 'PageController@show_custom_page')->name('custom-pages.show_custom_page');
