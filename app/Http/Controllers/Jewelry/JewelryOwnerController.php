@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
 class JewelryOwnerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * نمایش لیست مالکین
      */
     public function index()
     {
@@ -20,19 +20,19 @@ class JewelryOwnerController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(15);
         
-        return view('jewelry.owners.index', compact('owners'));
+        return view('admin.jewelry.owners.index', compact('owners'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * فرم ایجاد مالک جدید
      */
     public function create()
     {
-        return view('jewelry.owners.create');
+        return view('admin.jewelry.owners.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * ذخیره مالک جدید
      */
     public function store(Request $request)
     {
@@ -56,19 +56,17 @@ class JewelryOwnerController extends Controller
         ]);
         
         $validated['user_id'] = Auth::id();
-        
         $owner = JewelryOwner::create($validated);
         
-        return redirect()->route('my-jewelry.owners.show', $owner)
+        return redirect()->route('admin.jewelry.owners.show', $owner)
             ->with('success', 'مالک جدید با موفقیت ثبت شد.');
     }
 
     /**
-     * Display the specified resource.
+     * نمایش مالک و شناسنامه‌های مرتبط
      */
     public function show(JewelryOwner $owner)
     {
-        // بررسی دسترسی
         $this->authorize('view', $owner);
         
         $certificates = $owner->certificates()
@@ -76,21 +74,20 @@ class JewelryOwnerController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         
-        return view('jewelry.owners.show', compact('owner', 'certificates'));
+        return view('admin.jewelry.owners.show', compact('owner', 'certificates'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * فرم ویرایش مالک
      */
     public function edit(JewelryOwner $owner)
     {
         $this->authorize('update', $owner);
-        
-        return view('jewelry.owners.edit', compact('owner'));
+        return view('admin.jewelry.owners.edit', compact('owner'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * بروزرسانی مالک
      */
     public function update(Request $request, JewelryOwner $owner)
     {
@@ -113,18 +110,17 @@ class JewelryOwnerController extends Controller
         
         $owner->update($validated);
         
-        return redirect()->route('my-jewelry.owners.show', $owner)
+        return redirect()->route('admin.jewelry.owners.show', $owner)
             ->with('success', 'اطلاعات مالک با موفقیت بروزرسانی شد.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * حذف مالک
      */
     public function destroy(JewelryOwner $owner)
     {
         $this->authorize('delete', $owner);
         
-        // بررسی آیا شناسنامه‌ای مرتبط دارد
         if ($owner->certificates()->count() > 0) {
             return redirect()->back()
                 ->with('error', 'امکان حذف مالک دارای شناسنامه وجود ندارد. ابتدا شناسنامه‌های مرتبط را حذف کنید.');
@@ -132,12 +128,12 @@ class JewelryOwnerController extends Controller
         
         $owner->delete();
         
-        return redirect()->route('my-jewelry.owners.index')
+        return redirect()->route('admin.jewelry.owners.index')
             ->with('success', 'مالک با موفقیت حذف شد.');
     }
     
     /**
-     * جستجوی مالکین (برای AJAX)
+     * جستجوی مالکین (AJAX)
      */
     public function search(Request $request)
     {
@@ -159,7 +155,7 @@ class JewelryOwnerController extends Controller
     }
     
     /**
-     * گرفتن لیست مالکین برای انتخاب (برای AJAX)
+     * گرفتن لیست مالکین برای انتخاب (AJAX)
      */
     public function getOwnersForSelect()
     {

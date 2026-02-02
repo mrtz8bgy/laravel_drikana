@@ -12,7 +12,7 @@ use App\Models\JewelryTransfer;
 class DashboardController extends Controller
 {
     /**
-     * نمایش داشبورد مدیریت جواهرات کاربر
+     * نمایش داشبورد مدیریت جواهرات کاربر (صفحه ادمین)
      */
     public function index()
     {
@@ -69,7 +69,8 @@ class DashboardController extends Controller
         ->whereNull('rejected_at')
         ->count();
         
-        return view('jewelry.dashboard.index', compact(
+        // مسیر view تغییر کرد به admin.jewelry.dashboard.index
+        return view('admin.jewelry.dashboard.index', compact(
             'stats', 
             'recentCertificates', 
             'recentRepairs', 
