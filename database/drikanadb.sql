@@ -11,7 +11,7 @@
  Target Server Version : 100411 (10.4.11-MariaDB)
  File Encoding         : 65001
 
- Date: 07/01/2026 04:10:13
+ Date: 03/02/2026 00:54:45
 */
 
 SET NAMES utf8mb4;
@@ -1049,6 +1049,7 @@ CREATE TABLE `jewelry_certificates`  (
   `serial_number` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `issued_at` date NULL DEFAULT NULL,
   `certificate_file` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `is_verified` tinyint(1) NULL DEFAULT 0,
   `rejected_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1057,11 +1058,13 @@ CREATE TABLE `jewelry_certificates`  (
   UNIQUE INDEX `serial_number`(`serial_number` ASC) USING BTREE,
   INDEX `owner_id`(`owner_id` ASC) USING BTREE,
   CONSTRAINT `jewelry_certificates_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `jewelry_owners` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jewelry_certificates
 -- ----------------------------
+INSERT INTO `jewelry_certificates` VALUES (1, 4, 'انگشتر طلای مصری', 'طلا', '18', 100.00, NULL, '202020', '2026-02-02', 'jewelry-certificates/v5W8WCtXCcnAu76PkpFlbnuAZxXteYz8uO4jKyS1.jpg', NULL, 0, NULL, '2026-02-02 19:45:33', '2026-02-02 21:01:28');
+INSERT INTO `jewelry_certificates` VALUES (2, 5, 'دستبند طلا', 'طلا', '26', 40.00, 'سایر', '202210', '2026-02-02', 'jewelry-certificates/JJeuXnfPf3UVjWurudxyfQs9ZI0YsJBG52eRQoxP.png', 'این یک دستبند عتیقه هست', 0, NULL, '2026-02-02 20:11:22', '2026-02-02 21:08:46');
 
 -- ----------------------------
 -- Table structure for jewelry_owners
@@ -1080,11 +1083,17 @@ CREATE TABLE `jewelry_owners`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `jewelry_owners_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jewelry_owners
 -- ----------------------------
+INSERT INTO `jewelry_owners` VALUES (1, 12, 'morteza', '0421088273', '02136735582', 'ورامین میدان رازی', 'mrtz8bgy@gmail.com', '2026-02-02 16:09:50', '2026-02-02 19:37:09');
+INSERT INTO `jewelry_owners` VALUES (2, 12, 'علی محمد قادسی', '0421088283', '09205050221', 'تهران خیابان جمهوری پاساژ امجد', 'edeban.almas@gmail.com', '2026-02-02 16:14:37', '2026-02-02 19:43:12');
+INSERT INTO `jewelry_owners` VALUES (3, 12, 'رضا الهی', '0421088275', '02136735590', 'ورامین میدان رازی', 'morteza@gmail.com', '2026-02-02 16:42:08', '2026-02-02 16:42:08');
+INSERT INTO `jewelry_owners` VALUES (4, 12, 'امیر بوجاری', '0411097237', '09926008650', 'ورامین میدان رازی', 'm.amir2211381@gmail.com', '2026-02-02 16:43:27', '2026-02-02 16:43:27');
+INSERT INTO `jewelry_owners` VALUES (5, 12, 'حسن مهاجری', '0215586255', '09128754129', 'ورامین میدان رازی خ احمد مقیسه', 'hasan@gmail.com', '2026-02-02 19:07:07', '2026-02-02 19:07:07');
+INSERT INTO `jewelry_owners` VALUES (6, 12, 'حسین مهاجری', '0421852525', '09128754128', 'ورامین میدان رازی خ احمد مقیسه', 'hasan@gmail.com', '2026-02-02 19:12:29', '2026-02-02 21:18:17');
 
 -- ----------------------------
 -- Table structure for jewelry_transfers
@@ -2106,7 +2115,7 @@ CREATE TABLE `users`  (
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES (3, NULL, NULL, 'seller', 'آرمین رحیمی', 'seller@example.com', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'ne8qEnuHh0AqRDV297wUyqViP45M1dr5JcEr217O0NL5nqH4vK3bIR4Hz8AO', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/9XPIm6rto3nggN0zgBx32dHYQi5DyU1SRrYxOa0s.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '3dLUoHsR1l', NULL, NULL, '2018-10-07 08:12:57', '2020-07-12 15:25:49');
-INSERT INTO `users` VALUES (8, NULL, NULL, 'customer', 'علی احمدی', 'customer@example.com', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'VJJWLjK1VcahUGdKqPLmlATzH66vNTEZbylJOxQIqt2vlH1iW6520b6iEjGB', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/users/jo3EHt8rbcdfprb6sw74GKYK2iQyc5jmxVfd3vEj.jpeg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '8zJTyXTlTT', NULL, NULL, '2018-10-07 08:12:57', '2020-07-24 06:24:26');
+INSERT INTO `users` VALUES (8, NULL, NULL, 'customer', 'علی احمدی', 'customer@example.com', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'zEEqQRhudteInr1D2Ac0L3FXibyGNa20pFA5KOBamfHzr6J0ooNA3wwrnHPC', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/users/jo3EHt8rbcdfprb6sw74GKYK2iQyc5jmxVfd3vEj.jpeg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '8zJTyXTlTT', NULL, NULL, '2018-10-07 08:12:57', '2020-07-24 06:24:26');
 INSERT INTO `users` VALUES (12, NULL, NULL, 'admin', 'admin', 'admin@example.com', '2020-06-25 10:06:33', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-06-25 10:08:33', '2020-06-25 10:08:33');
 INSERT INTO `users` VALUES (13, NULL, NULL, 'seller', 'متین جوان', 'seller2@example.com', '2020-07-13 10:07:56', '$2y$10$mnzXF29.dVrSzL/zy3dKF.Xt0koaOJ2wQs5APOYfdJkf3ZrEXzAGi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-13 09:55:49', '2020-07-13 10:08:56');
 INSERT INTO `users` VALUES (14, NULL, NULL, 'seller', 'رضا رحمتی', 'seller3@example.com', '2020-07-18 03:07:11', '$2y$10$hA0vvwR/Rx5KSieJ9/xaL.O1GYaIQORu9zScwzrhtIER4ILzXTjHu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-18 03:07:32', '2020-07-18 03:31:11');
