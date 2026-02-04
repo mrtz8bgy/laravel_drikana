@@ -8,69 +8,78 @@ use App\Models\JewelryOwner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 
 class JewelryCertificateController extends Controller
 {
+    protected $metalTypes = ['طلا', 'نقره', 'پلاتین', 'سایر'];
+    protected $stoneTypes = ['الماس', 'یاقوت', 'زمررد', 'یاقوت کبود', 'مروارید', 'فیروزه', 'عقیق', 'سایر'];
+    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
-     * Display a listing of the resource.
+     * نمایش لیست شناسنامه‌ها
      */
     public function index(Request $request)
     {
-        $query = JewelryCertificate::whereHas('owner', function($q) {
-            $q->where('user_id', Auth::id());
-        })->with(['owner', 'transfers']);
+        $query = JewelryCertificate::with(['owner']);
         
-        // فیلترها
-        if ($request->has('metal_type')) {
+        // فیلتر بر اساس مالک
+        if ($request->has('owner_id') && $request->owner_id) {
+            $query->where('owner_id', $request->owner_id);
+        }
+        
+        // فیلتر نوع فلز
+        if ($request->has('metal_type') && $request->metal_type != 'all') {
             $query->where('metal_type', $request->metal_type);
         }
         
-        if ($request->has('verification_status')) {
-            if ($request->verification_status == 'verified') {
-                $query->where('is_verified', true);
-            } elseif ($request->verification_status == 'pending') {
-                $query->where('is_verified', false)->whereNull('rejected_at');
-            } elseif ($request->verification_status == 'rejected') {
-                $query->whereNotNull('rejected_at');
-            }
-        }
-        
-        if ($request->has('search')) {
-            $query->where(function($q) use ($request) {
-                $q->where('serial_number', 'LIKE', "%{$request->search}%")
-                  ->orWhere('product_name', 'LIKE', "%{$request->search}%")
-                  ->orWhereHas('owner', function($q2) use ($request) {
-                      $q2->where('full_name', 'LIKE', "%{$request->search}%");
+        // جستجو
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('serial_number', 'LIKE', "%{$search}%")
+                  ->orWhere('product_name', 'LIKE', "%{$search}%")
+                  ->orWhere('stone_type', 'LIKE', "%{$search}%")
+                  ->orWhereHas('owner', function($q2) use ($search) {
+                      $q2->where('full_name', 'LIKE', "%{$search}%")
+                         ->orWhere('phone', 'LIKE', "%{$search}%")
+                         ->orWhere('national_id', 'LIKE', "%{$search}%");
                   });
             });
         }
         
-        $certificates = $query->orderBy('created_at', 'desc')->paginate(15);
+        // مرتب‌سازی
+        $sortBy = $request->get('sort_by', 'created_at');
+        $sortOrder = $request->get('sort_order', 'desc');
+        $query->orderBy($sortBy, $sortOrder);
         
-        $metalTypes = ['طلا', 'نقره', 'پلاتین', 'سایر'];
-        $verificationStatuses = [
-            'all' => 'همه',
-            'verified' => 'تأیید شده',
-            'pending' => 'در انتظار تأیید',
-            'rejected' => 'رد شده'
-        ];
+        $certificates = $query->paginate($request->get('per_page', 15));
         
-        return view('jewelry.certificates.index', compact('certificates', 'metalTypes', 'verificationStatuses'));
+        $owners = JewelryOwner::orderBy('full_name')->get();
+        
+        return view('admin.jewelry.certificates.index', compact(
+            'certificates', 'owners'
+        ));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * فرم ایجاد شناسنامه جدید
      */
     public function create()
     {
-        $owners = JewelryOwner::where('user_id', Auth::id())->get();
+        $owners = JewelryOwner::orderBy('full_name')->get();
         
-        return view('jewelry.certificates.create', compact('owners'));
+        return view('admin.jewelry.certificates.create', compact('owners'))->with([
+            'metalTypes' => $this->metalTypes,
+            'stoneTypes' => $this->stoneTypes,
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * ذخیره شناسنامه جدید
      */
     public function store(Request $request)
     {
@@ -78,43 +87,40 @@ class JewelryCertificateController extends Controller
             'owner_id' => 'required|exists:jewelry_owners,id',
             'product_name' => 'required|string|max:255',
             'metal_type' => 'required|in:طلا,نقره,پلاتین,سایر',
-            'purity' => 'nullable|string|max:10',
+            'purity' => 'nullable|integer|min:0|max:1000',
             'weight' => 'nullable|numeric|min:0',
             'stone_type' => 'nullable|string|max:255',
-            'serial_number' => 'required|string|unique:jewelry_certificates',
+            'serial_number' => [
+                'required',
+                'string',
+                'max:100',
+                'unique:jewelry_certificates,serial_number'
+            ],
             'issued_at' => 'required|date',
-            'certificate_file' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+            'certificate_file' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:5120',
             'description' => 'nullable|string|max:1000',
         ]);
         
-        // بررسی مالکیت مالک
-        $owner = JewelryOwner::findOrFail($validated['owner_id']);
-        if ($owner->user_id !== Auth::id()) {
-            abort(403, 'دسترسی غیرمجاز');
-        }
-        
-        // آپلود فایل شناسنامه
+        // آپلود فایل
         if ($request->hasFile('certificate_file')) {
             $path = $request->file('certificate_file')->store('jewelry-certificates', 'public');
             $validated['certificate_file'] = $path;
         }
         
-        // اضافه کردن وضعیت پیش‌فرض
-        $validated['is_verified'] = false;
-        
+        // ایجاد شناسنامه
         $certificate = JewelryCertificate::create($validated);
         
-        return redirect()->route('my-jewelry.certificates.show', $certificate)
+        return redirect()->route('admin.jewelry.certificates.show', $certificate)
             ->with('success', 'شناسنامه جدید با موفقیت ثبت شد.');
     }
 
     /**
-     * Display the specified resource.
+     * نمایش شناسنامه
      */
     public function show(JewelryCertificate $certificate)
     {
-        // بررسی دسترسی
-        $this->authorize('view', $certificate);
+        // بارگذاری روابط
+        $certificate->load(['owner', 'transfers.fromOwner', 'transfers.toOwner', 'repairOrders']);
         
         $transfers = $certificate->transfers()
             ->with(['fromOwner', 'toOwner'])
@@ -125,50 +131,52 @@ class JewelryCertificateController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         
-        return view('jewelry.certificates.show', compact('certificate', 'transfers', 'repairOrders'));
+        return view('admin.jewelry.certificates.show', compact(
+            'certificate', 'transfers', 'repairOrders'
+        ));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * فرم ویرایش شناسنامه
      */
     public function edit(JewelryCertificate $certificate)
     {
-        $this->authorize('update', $certificate);
+        $owners = JewelryOwner::orderBy('full_name')->get();
         
-        $owners = JewelryOwner::where('user_id', Auth::id())->get();
-        
-        return view('jewelry.certificates.edit', compact('certificate', 'owners'));
+        return view('admin.jewelry.certificates.edit', compact(
+            'certificate', 'owners'
+        ))->with([
+            'metalTypes' => $this->metalTypes,
+            'stoneTypes' => $this->stoneTypes,
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * بروزرسانی شناسنامه
      */
     public function update(Request $request, JewelryCertificate $certificate)
     {
-        $this->authorize('update', $certificate);
-        
         $validated = $request->validate([
             'owner_id' => 'required|exists:jewelry_owners,id',
             'product_name' => 'required|string|max:255',
             'metal_type' => 'required|in:طلا,نقره,پلاتین,سایر',
-            'purity' => 'nullable|string|max:10',
+            'purity' => 'nullable|integer|min:0|max:1000',
             'weight' => 'nullable|numeric|min:0',
             'stone_type' => 'nullable|string|max:255',
-            'serial_number' => 'required|string|unique:jewelry_certificates,serial_number,' . $certificate->id,
+            'serial_number' => [
+                'required',
+                'string',
+                'max:100',
+                'unique:jewelry_certificates,serial_number,' . $certificate->id,
+            ],
             'issued_at' => 'required|date',
-            'certificate_file' => 'nullable|file|mimes:pdf,jpg,png|max:5120',
+            'certificate_file' => 'nullable|file|mimes:pdf,jpg,png,jpeg|max:5120',
             'description' => 'nullable|string|max:1000',
         ]);
         
-        // بررسی مالکیت مالک جدید
-        $newOwner = JewelryOwner::findOrFail($validated['owner_id']);
-        if ($newOwner->user_id !== Auth::id()) {
-            abort(403, 'دسترسی غیرمجاز');
-        }
-        
-        // آپلود فایل جدید
+        // آپلود فایل جدید (اگر وجود دارد)
         if ($request->hasFile('certificate_file')) {
-            // حذف فایل قبلی
+            // حذف فایل قدیمی
             if ($certificate->certificate_file) {
                 Storage::disk('public')->delete($certificate->certificate_file);
             }
@@ -176,30 +184,28 @@ class JewelryCertificateController extends Controller
             $path = $request->file('certificate_file')->store('jewelry-certificates', 'public');
             $validated['certificate_file'] = $path;
         } else {
-            // حفظ فایل قبلی
+            // نگه داشتن فایل قبلی
             $validated['certificate_file'] = $certificate->certificate_file;
         }
         
         $certificate->update($validated);
         
-        return redirect()->route('my-jewelry.certificates.show', $certificate)
+        return redirect()->route('admin.jewelry.certificates.show', $certificate)
             ->with('success', 'شناسنامه با موفقیت بروزرسانی شد.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * حذف شناسنامه
      */
     public function destroy(JewelryCertificate $certificate)
     {
-        $this->authorize('delete', $certificate);
-        
-        // بررسی آیا نقل و انتقالاتی دارد
+        // بررسی وجود انتقالات
         if ($certificate->transfers()->count() > 0) {
             return redirect()->back()
                 ->with('error', 'امکان حذف شناسنامه دارای تاریخچه انتقال وجود ندارد.');
         }
         
-        // بررسی آیا سفارش تعمیر فعال دارد
+        // بررسی سفارشات تعمیر فعال
         $activeRepairs = $certificate->repairOrders()
             ->whereIn('status', ['در انتظار', 'در حال تعمیر'])
             ->count();
@@ -209,92 +215,48 @@ class JewelryCertificateController extends Controller
                 ->with('error', 'امکان حذف شناسنامه با سفارش تعمیر فعال وجود ندارد.');
         }
         
-        // حذف فایل مرتبط
+        // حذف فایل ضمیمه
         if ($certificate->certificate_file) {
             Storage::disk('public')->delete($certificate->certificate_file);
         }
         
         $certificate->delete();
         
-        return redirect()->route('my-jewelry.certificates.index')
+        return redirect()->route('admin.jewelry.certificates.index')
             ->with('success', 'شناسنامه با موفقیت حذف شد.');
     }
-    
-    /**
-     * مشاهده تاریخچه انتقالات
-     */
-    public function transfers(JewelryCertificate $certificate)
-    {
-        $this->authorize('view', $certificate);
-        
-        $transfers = $certificate->transfers()
-            ->with(['fromOwner', 'toOwner'])
-            ->orderBy('transfer_date', 'desc')
-            ->paginate(15);
-            
-        return view('jewelry.certificates.transfers', compact('certificate', 'transfers'));
-    }
-    
+
     /**
      * چاپ شناسنامه
      */
     public function print(JewelryCertificate $certificate)
     {
-        $this->authorize('view', $certificate);
-        
-        return view('jewelry.certificates.print', compact('certificate'));
+        $certificate->load('owner');
+        return view('admin.jewelry.certificates.print', compact('certificate'));
     }
-    
-    /**
-     * جستجوی شناسنامه
-     */
-    public function search(Request $request)
-    {
-        $request->validate([
-            'serial_number' => 'required|string',
-        ]);
-        
-        $certificate = JewelryCertificate::where('serial_number', $request->serial_number)
-            ->whereHas('owner', function($q) {
-                $q->where('user_id', Auth::id());
-            })
-            ->first();
-        
-        if ($certificate) {
-            return redirect()->route('my-jewelry.certificates.show', $certificate);
-        }
-        
-        return redirect()->route('my-jewelry.certificates.index')
-            ->with('error', 'شناسنامه با شماره سریال وارد شده یافت نشد.');
-    }
-    
-    /**
-     * تأیید عمومی شناسنامه (بدون نیاز به لاگین)
-     */
-    public function publicVerify($serial_number)
-    {
-        $certificate = JewelryCertificate::where('serial_number', $serial_number)
-            ->with(['owner'])
-            ->first();
-        
-        if (!$certificate) {
-            abort(404, 'شناسنامه یافت نشد');
-        }
-        
-        return view('jewelry.certificates.public-verify', compact('certificate'));
-    }
-    
+
     /**
      * دانلود فایل شناسنامه
      */
     public function downloadFile(JewelryCertificate $certificate)
     {
-        $this->authorize('view', $certificate);
-        
-        if (!$certificate->certificate_file || !Storage::disk('public')->exists($certificate->certificate_file)) {
+        if (!$certificate->certificate_file || 
+            !Storage::disk('public')->exists($certificate->certificate_file)) {
             abort(404, 'فایل یافت نشد');
         }
         
         return Storage::disk('public')->download($certificate->certificate_file);
+    }
+
+    /**
+     * تأیید عمومی شناسنامه
+     */
+    public function publicVerify($serial_number)
+    {
+        $certificate = JewelryCertificate::where('serial_number', $serial_number)
+            ->with(['owner'])
+            ->firstOrFail();
+        
+        return view('admin.jewelry.certificates.public-verify', compact('certificate'));
     }
 }
