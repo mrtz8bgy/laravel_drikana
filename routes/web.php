@@ -364,3 +364,78 @@ Route::middleware(['auth'])->prefix('admin/jewelry')->name('admin.jewelry.')->gr
     // گزارش‌ها
     Route::get('reports/certificates', 'Jewelry\ReportController@certificateReport')->name('reports.certificates');
 });
+
+
+
+// روت‌های قبلی پروژه‌تان اینجا هست...
+
+// ================================================
+// روت‌های ماژول ثبت سرقت و مفقودی
+// ================================================
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function() {
+    
+    // روت‌های مربوط به jewelry
+    Route::prefix('jewelry')->name('jewelry.')->group(function() {
+        
+        // روت‌های resource برای missing_reports (index, create, store, show)
+        Route::resource('missing_reports', 'MissingReportController')->only(['index', 'create', 'store', 'show']);
+        
+        // روت جداگانه برای آپدیت وضعیت (از POST استفاده کن بخاطر فرم)
+        Route::post('missing_reports/{id}/status', 'MissingReportController@updateStatus')
+             ->name('missing_reports.update_status');
+        
+        // روت جداگانه برای چاپ
+        Route::get('missing_reports/{id}/print', 'MissingReportController@print')
+             ->name('missing_reports.print');
+        
+        // روت برای دریافت اطلاعات قطعه (AJAX)
+        Route::get('missing_reports/get-jewelry-info/{id}', 'MissingReportController@getJewelryInfo')
+             ->name('missing_reports.get_info');
+    });
+});
+
+// روت API مستقل (اگه نیاز به دسترسی از جاهای دیگه هست)
+Route::middleware(['auth'])->get('/api/jewelry/{id}/info', 'MissingReportController@getJewelryInfo');
+
+// روت‌های ماژول تعمیرات
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function() {
+    Route::prefix('jewelry')->name('jewelry.')->group(function() {
+        
+        // روت‌های repair-orders
+        Route::resource('repair-orders', 'Jewelry\Admin\RepairOrderController');
+        
+        // روت جداگانه برای تغییر وضعیت
+        Route::post('repair-orders/{id}/status', 'Jewelry\Admin\RepairOrderController@updateStatus')
+             ->name('repair-orders.update_status');
+        
+        // روت برای دریافت سابقه تعمیرات قطعه
+        Route::get('repair-orders/jewelry/{jewelryId}/history', 'Jewelry\Admin\RepairOrderController@jewelryHistory')
+             ->name('repair-orders.jewelry_history');
+    });
+});
+
+
+
+// ================================================
+// روت‌های گزارشات
+// ================================================
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function() {
+    Route::prefix('jewelry')->name('jewelry.')->group(function() {
+        
+        // روت‌های گزارشات
+        Route::get('reports/certificates', 'Jewelry\ReportController@certificateReport')
+             ->name('reports.certificates');
+             
+        Route::get('reports/repairs', 'Jewelry\ReportController@repairReport')
+             ->name('reports.repairs');
+             
+        Route::get('reports/transfers', 'Jewelry\ReportController@transferReport')
+             ->name('reports.transfers');
+             
+        Route::get('reports/financial', 'Jewelry\ReportController@financialReport')
+             ->name('reports.financial');
+             
+        Route::post('reports/export', 'Jewelry\ReportController@export')
+             ->name('reports.export');
+    });
+});

@@ -16,7 +16,7 @@ class RepairOrderController extends Controller
      */
     public function index(Request $request)
     {
-        $query = RepairOrder::with(['user', 'certificate.owner']);
+        $query = RepairOrder::with(['user', 'jewelry.owner']);
         
         // فیلتر بر اساس وضعیت
         if ($request->has('status')) {
@@ -66,14 +66,52 @@ class RepairOrderController extends Controller
     }
     
     /**
+     * نمایش فرم ایجاد سفارش تعمیر جدید برای ادمین
+     */
+    public function create()
+    {
+        $jewelries = \App\Models\JewelryCertificate::with('owner.user')->get();
+        
+        return view('admin.jewelry.repair-orders.create', compact('jewelries'));
+    }
+    
+    /**
+     * ذخیره سفارش تعمیر جدید (توسط ادمین)
+     */
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'jewelry_certificate_id' => 'required|exists:jewelry_certificates,id',
+            'description' => 'required|string|min:10|max:2000',
+            'repair_type' => 'required|string|max:255',
+            'location' => 'required|in:workshop,customer',
+            'scheduled_date' => 'nullable|date',
+            'estimated_cost' => 'nullable|numeric|min:0',
+            'priority' => 'nullable|in:normal,urgent',
+        ]);
+        
+        // Get the user_id from the jewelry certificate's owner
+        $jewelry = \App\Models\JewelryCertificate::findOrFail($validated['jewelry_certificate_id']);
+        $validated['user_id'] = $jewelry->owner->user_id;
+        
+        $validated['status'] = 'در انتظار';
+        $validated['order_number'] = RepairOrder::generateOrderNumber();
+        
+        $repairOrder = RepairOrder::create($validated);
+        
+        return redirect()->route('admin.jewelry.repair-orders.show', $repairOrder)
+            ->with('success', 'سفارش تعمیر با موفقیت ایجاد شد.');
+    }
+    
+    /**
      * نمایش جزئیات یک سفارش تعمیر برای ادمین
      */
     public function show($id)
     {
         $repairOrder = RepairOrder::with([
             'user', 
-            'certificate.owner.user',
-            'assignedTo'
+            'jewelry.owner.user',
+            'technician'
         ])->findOrFail($id);
         
         $technicians = User::where('user_type', 'staff')

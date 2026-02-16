@@ -76,7 +76,7 @@ class ReportController extends Controller
         
         $metalTypes = ['طلا', 'نقره', 'پلاتین', 'سایر'];
         
-        return view('jewelry.reports.certificates', compact(
+        return view('admin.jewelry.reports.certificates', compact(
             'certificates', 
             'stats', 
             'metalDistribution',
@@ -139,7 +139,7 @@ class ReportController extends Controller
         
         $statuses = ['در انتظار', 'در حال تعمیر', 'تکمیل شده', 'لغو شده'];
         
-        return view('jewelry.reports.repairs', compact(
+        return view('admin.jewelry.reports.repairs', compact(
             'repairOrders', 
             'stats', 
             'repairTypeDistribution',

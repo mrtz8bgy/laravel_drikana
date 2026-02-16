@@ -143,7 +143,7 @@ class ReportController extends Controller
      */
     public function repairs(Request $request)
     {
-        $query = RepairOrder::with(['user', 'certificate.owner.user', 'assignedTo']);
+        $query = RepairOrder::with(['user', 'jewelry.owner.user', 'technician']);
         
         // فیلترها
         if ($request->has('status')) {

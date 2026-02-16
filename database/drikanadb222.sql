@@ -11,7 +11,7 @@
  Target Server Version : 100411 (10.4.11-MariaDB)
  File Encoding         : 65001
 
- Date: 17/02/2026 00:51:15
+ Date: 03/02/2026 00:54:45
 */
 
 SET NAMES utf8mb4;
@@ -1058,14 +1058,13 @@ CREATE TABLE `jewelry_certificates`  (
   UNIQUE INDEX `serial_number`(`serial_number` ASC) USING BTREE,
   INDEX `owner_id`(`owner_id` ASC) USING BTREE,
   CONSTRAINT `jewelry_certificates_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `jewelry_owners` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jewelry_certificates
 -- ----------------------------
-INSERT INTO `jewelry_certificates` VALUES (1, 4, 'انگشتر طلای مصری', 'طلا', '18', 100.00, NULL, '202020', '2026-02-02', 'jewelry-certificates/hX14111HOQ24K6MF3q0p4DGCRjHg8qnBD5v7SXCp.jpg', NULL, 0, NULL, '2026-02-02 19:45:33', '2026-02-04 23:12:28');
-INSERT INTO `jewelry_certificates` VALUES (2, 5, 'دستبند پلاتین', 'پلاتین', '26', 40.00, 'سایر', '202210', '2026-02-02', 'jewelry-certificates/pCZppsVdq5XoLlqe18qNFtadREogR3uN7CQHvI5B.jpg', 'این یک دستبند عتیقه هست', 0, NULL, '2026-02-02 20:11:22', '2026-02-04 23:36:38');
-INSERT INTO `jewelry_certificates` VALUES (3, 3, 'گردنبند پلاتین نقره ای زنانه', 'پلاتین', '26', 10.00, 'الماس', '042101010', '2026-02-04', 'jewelry-certificates/hTiFsHoN8yhoSB7vB7CRYHvMPDobLeRcuz8gZ1TK.jpg', 'این گردنبند عتیقه هست', 0, NULL, '2026-02-04 23:17:10', '2026-02-04 23:17:10');
+INSERT INTO `jewelry_certificates` VALUES (1, 4, 'انگشتر طلای مصری', 'طلا', '18', 100.00, NULL, '202020', '2026-02-02', 'jewelry-certificates/v5W8WCtXCcnAu76PkpFlbnuAZxXteYz8uO4jKyS1.jpg', NULL, 0, NULL, '2026-02-02 19:45:33', '2026-02-02 21:01:28');
+INSERT INTO `jewelry_certificates` VALUES (2, 5, 'دستبند طلا', 'طلا', '26', 40.00, 'سایر', '202210', '2026-02-02', 'jewelry-certificates/JJeuXnfPf3UVjWurudxyfQs9ZI0YsJBG52eRQoxP.png', 'این یک دستبند عتیقه هست', 0, NULL, '2026-02-02 20:11:22', '2026-02-02 21:08:46');
 
 -- ----------------------------
 -- Table structure for jewelry_owners
@@ -1159,7 +1158,7 @@ CREATE TABLE `links`  (
 -- ----------------------------
 -- Records of links
 -- ----------------------------
-INSERT INTO `links` VALUES (1, 'سایت گوگل', 'https://www.google.com', '2026-02-16 17:34:05', '2026-02-16 14:04:05');
+INSERT INTO `links` VALUES (1, 'لینک اول', '#', '2020-07-19 06:21:35', '2020-07-19 06:21:35');
 INSERT INTO `links` VALUES (2, 'لینک دوم', '#', '2020-07-19 06:22:07', '2020-07-19 06:22:07');
 INSERT INTO `links` VALUES (3, 'لینک سوم', '#', '2020-07-19 06:22:24', '2020-07-19 06:22:24');
 INSERT INTO `links` VALUES (4, 'لینک چهارم', '#', '2020-07-19 06:22:36', '2020-07-19 06:22:36');
@@ -1204,30 +1203,6 @@ INSERT INTO `migrations` VALUES (4, '2016_06_01_000002_create_oauth_access_token
 INSERT INTO `migrations` VALUES (5, '2016_06_01_000003_create_oauth_refresh_tokens_table', 2);
 INSERT INTO `migrations` VALUES (6, '2016_06_01_000004_create_oauth_clients_table', 2);
 INSERT INTO `migrations` VALUES (7, '2016_06_01_000005_create_oauth_personal_access_clients_table', 2);
-
--- ----------------------------
--- Table structure for missing_reports
--- ----------------------------
-DROP TABLE IF EXISTS `missing_reports`;
-CREATE TABLE `missing_reports`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `jewelry_id` bigint UNSIGNED NOT NULL,
-  `type` enum('theft','lost') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'سرقت یا مفقودی',
-  `location` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `status` enum('pending','found') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of missing_reports
--- ----------------------------
-INSERT INTO `missing_reports` VALUES (1, 12, 1, 'lost', 'تهران نرسیده به تقاطع', 'چیزی یادم نیست', 'found', '2026-02-16 15:55:00', '2026-02-16 15:55:24');
-INSERT INTO `missing_reports` VALUES (2, 12, 3, 'theft', 'ورامین', 'با پلیس هماهنگ شده', 'pending', '2026-02-16 15:56:44', '2026-02-16 15:56:44');
-INSERT INTO `missing_reports` VALUES (3, 12, 2, 'theft', 'تهران نرسیده به تقاطع ولیعصر', 'با پلیس هماهنگ شده', 'pending', '2026-02-16 16:07:37', '2026-02-16 16:07:37');
 
 -- ----------------------------
 -- Table structure for oauth_access_tokens
@@ -1703,25 +1678,12 @@ INSERT INTO `products` VALUES (26, 'ساعت مردانه کلاسیک تمام 
 DROP TABLE IF EXISTS `repair_orders`;
 CREATE TABLE `repair_orders`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `order_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `user_id` int UNSIGNED NOT NULL,
   `jewelry_certificate_id` int UNSIGNED NULL DEFAULT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `repair_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `scheduled_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `estimated_delivery_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `estimated_cost` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `final_cost` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `assigned_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `priority` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `notes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'در انتظار',
-  `completion_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `delivery_date` varbinary(255) NULL DEFAULT NULL,
-  `cancelled_at` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `cancelled_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
@@ -1729,72 +1691,11 @@ CREATE TABLE `repair_orders`  (
   INDEX `jewelry_certificate_id`(`jewelry_certificate_id` ASC) USING BTREE,
   CONSTRAINT `repair_orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
   CONSTRAINT `repair_orders_ibfk_2` FOREIGN KEY (`jewelry_certificate_id`) REFERENCES `jewelry_certificates` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of repair_orders
 -- ----------------------------
-INSERT INTO `repair_orders` VALUES (1, 'REP-140411-0001', 12, NULL, 'رنگ پریدگی جواهر', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 18:10:59', '2026-02-16 18:10:59');
-INSERT INTO `repair_orders` VALUES (2, 'REP-140411-0001', 12, NULL, 'رنگ پریدگی جواهر', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 18:12:52', '2026-02-16 18:12:52');
-INSERT INTO `repair_orders` VALUES (3, 'REP-140411-0001', 12, NULL, 'رنگ پریدگی جواهر', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 18:12:57', '2026-02-16 18:12:57');
-INSERT INTO `repair_orders` VALUES (4, 'REP-140411-0001', 12, NULL, 'رنگ پریدگی جواهر', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 18:13:10', '2026-02-16 18:13:10');
-INSERT INTO `repair_orders` VALUES (5, NULL, 12, NULL, 'تست', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 19:02:27', '2026-02-16 19:02:27');
-INSERT INTO `repair_orders` VALUES (6, NULL, 12, NULL, 'تغییر اندازه', 'resizing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 19:06:40', '2026-02-16 19:06:40');
-INSERT INTO `repair_orders` VALUES (8, NULL, 12, 1, 'بازسازی انگشتر اینجانب', 'restoration', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 19:50:23', '2026-02-16 19:50:23');
-INSERT INTO `repair_orders` VALUES (9, NULL, 12, 2, 'ندارد فقط بازسازی', 'restoration', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 19:57:15', '2026-02-16 19:57:15');
-INSERT INTO `repair_orders` VALUES (10, NULL, 12, 2, 'نیاز به تمیز کاری و تعمیر دارد', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 20:06:47', '2026-02-16 20:06:47');
-INSERT INTO `repair_orders` VALUES (11, 'REP-202602-0010', 12, 2, 'تست تغییر اندازه', 'resizing', 'workshop', '2026-03-01 00:00:00', NULL, '300000', NULL, NULL, 'urgent', NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 20:20:12', '2026-02-16 20:20:12');
-INSERT INTO `repair_orders` VALUES (12, 'REP-202602-0011', 12, 1, 'test tala va javaherat', 'cleaning', 'customer', '2026-02-17 00:00:00', NULL, '200000', NULL, NULL, 'urgent', NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 21:17:32', '2026-02-16 21:17:32');
-INSERT INTO `repair_orders` VALUES (13, 'REP-202602-0012', 12, 3, 'baz sazi asli', 'restoration', 'workshop', '2026-02-25 00:00:00', NULL, '600000', NULL, NULL, 'normal', NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 21:19:20', '2026-02-16 21:19:20');
-
--- ----------------------------
--- Table structure for repair_status_histories
--- ----------------------------
-DROP TABLE IF EXISTS `repair_status_histories`;
-CREATE TABLE `repair_status_histories`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `repair_order_id` bigint UNSIGNED NOT NULL,
-  `status` enum('pending','in_progress','completed','delivered','cancelled') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
-  `updated_by` bigint UNSIGNED NULL DEFAULT NULL,
-  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `repair_status_histories_repair_order_id_index`(`repair_order_id` ASC) USING BTREE,
-  INDEX `repair_status_histories_updated_by_index`(`updated_by` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of repair_status_histories
--- ----------------------------
-INSERT INTO `repair_status_histories` VALUES (1, 5, 'pending', 12, 'ثبت اولیه سفارش', '2026-02-16 19:02:27', '2026-02-16 19:02:27');
-INSERT INTO `repair_status_histories` VALUES (2, 6, 'pending', 12, 'ثبت اولیه سفارش', '2026-02-16 19:06:40', '2026-02-16 19:06:40');
-
--- ----------------------------
--- Table structure for repair_technicians
--- ----------------------------
-DROP TABLE IF EXISTS `repair_technicians`;
-CREATE TABLE `repair_technicians`  (
-  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` bigint UNSIGNED NOT NULL,
-  `specialty` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `experience_years` int NULL DEFAULT NULL,
-  `certificate` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `is_active` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `repair_technicians_user_id_unique`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of repair_technicians
--- ----------------------------
-INSERT INTO `repair_technicians` VALUES (1, 1, 'طلاسازی', 5, '1', 1, '2026-02-17 00:12:00', '2026-02-17 00:12:00');
-INSERT INTO `repair_technicians` VALUES (2, 2, 'ابکاری', 10, '1', 1, '2026-02-17 00:31:21', '2026-02-17 00:31:26');
-INSERT INTO `repair_technicians` VALUES (3, 3, 'تعمیرات', 20, '2', 1, NULL, NULL);
-INSERT INTO `repair_technicians` VALUES (4, 32, 'gold', 5, NULL, 1, '2026-02-17 00:38:59', '2026-02-17 00:38:59');
-INSERT INTO `repair_technicians` VALUES (5, 33, 'silver', 3, NULL, 1, '2026-02-17 00:38:59', '2026-02-17 00:38:59');
 
 -- ----------------------------
 -- Table structure for reviews
@@ -2123,14 +2024,13 @@ CREATE TABLE `subscribers`  (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `email`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of subscribers
 -- ----------------------------
 INSERT INTO `subscribers` VALUES (1, 'mrtz8bgy@gmail.com', '2025-12-28 17:14:41', '2025-12-28 17:14:41');
 INSERT INTO `subscribers` VALUES (2, 'edeban.almas@gmail.com', '2025-12-28 17:56:15', '2025-12-28 17:56:15');
-INSERT INTO `subscribers` VALUES (3, 'edeban.almasa@gmail.com', '2026-02-16 14:09:40', '2026-02-16 14:09:40');
 
 -- ----------------------------
 -- Table structure for ticket_replies
@@ -2189,7 +2089,6 @@ CREATE TABLE `users`  (
   `user_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'customer',
   `name` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `role` enum('admin','technician','customer') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT 'customer',
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `remember_token` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
@@ -2210,26 +2109,24 @@ CREATE TABLE `users`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (3, NULL, NULL, 'seller', 'آرمین رحیمی', 'seller@example.com', 'customer', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'ne8qEnuHh0AqRDV297wUyqViP45M1dr5JcEr217O0NL5nqH4vK3bIR4Hz8AO', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/9XPIm6rto3nggN0zgBx32dHYQi5DyU1SRrYxOa0s.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '3dLUoHsR1l', NULL, NULL, '2018-10-07 08:12:57', '2020-07-12 15:25:49');
-INSERT INTO `users` VALUES (8, NULL, NULL, 'customer', 'علی احمدی', 'customer@example.com', 'customer', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'zEEqQRhudteInr1D2Ac0L3FXibyGNa20pFA5KOBamfHzr6J0ooNA3wwrnHPC', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/users/jo3EHt8rbcdfprb6sw74GKYK2iQyc5jmxVfd3vEj.jpeg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '8zJTyXTlTT', NULL, NULL, '2018-10-07 08:12:57', '2020-07-24 06:24:26');
-INSERT INTO `users` VALUES (12, NULL, NULL, 'admin', 'admin', 'admin@example.com', 'customer', '2020-06-25 10:06:33', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-06-25 10:08:33', '2020-06-25 10:08:33');
-INSERT INTO `users` VALUES (13, NULL, NULL, 'seller', 'متین جوان', 'seller2@example.com', 'customer', '2020-07-13 10:07:56', '$2y$10$mnzXF29.dVrSzL/zy3dKF.Xt0koaOJ2wQs5APOYfdJkf3ZrEXzAGi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-13 09:55:49', '2020-07-13 10:08:56');
-INSERT INTO `users` VALUES (14, NULL, NULL, 'seller', 'رضا رحمتی', 'seller3@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$hA0vvwR/Rx5KSieJ9/xaL.O1GYaIQORu9zScwzrhtIER4ILzXTjHu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-18 03:07:32', '2020-07-18 03:31:11');
-INSERT INTO `users` VALUES (15, NULL, NULL, 'seller', 'علی همتی', 'seller4@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$ichl8tRniAkh76QYF5npmOh629z6n/IYrj59zN/lvSE9hxEFBYArK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-18 11:09:46', '2020-07-18 11:09:46');
-INSERT INTO `users` VALUES (16, NULL, NULL, 'seller', 'الهام جابری', 'seller5@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$MB6TzZZi8vfBqReeqj8ndemsLeQARD4a3yDA2AvW9IyT4pQjpnj4S', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-19 05:18:09', '2020-07-19 05:18:09');
-INSERT INTO `users` VALUES (17, NULL, NULL, 'seller', 'علی سلطانی', 'seller6@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$.8SzfNdSupTjXwb/dFGkt.e7MxGp7fIhAQd02t82H60sFRH9Pj2u6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-19 05:51:12', '2020-07-19 05:51:12');
-INSERT INTO `users` VALUES (18, NULL, NULL, 'staff', 'اپراتور سفارشات حضوری', 'inhouse_orders@example.com', 'customer', NULL, '$2y$10$4kWT7UZSvGLc0b.UT1MS4.rLVk2daB5iUB9wzCX3mMWBbtN3XuxpK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09121111111', NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-20 15:12:24', '2020-07-20 15:12:24');
-INSERT INTO `users` VALUES (19, NULL, NULL, 'seller', 'یوسف ابراهیمی', 'seller7@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$boTae38mLpu10h7dVecfjuulM4zbthdFskY9zZ7bb1PxHgNGMfQvy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-08-09 16:05:08', '2020-08-09 16:05:08');
-INSERT INTO `users` VALUES (23, NULL, NULL, 'customer', 'احمد کریمی', 'ahmad@gmail.com', 'customer', '2026-01-01 21:01:16', '$2y$10$P3ckpHolKl.2.nd8X2bbK.8V2uURZYvPcXfkE/Hb4C45hQJvFT0Gm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-01-01 21:52:16', '2026-01-01 21:52:16');
-INSERT INTO `users` VALUES (30, NULL, NULL, 'customer', 'امیر حسین بهنامی', NULL, 'customer', NULL, '$2y$10$y3YKcuXKDeSft1AA0XsSOek97lnKVdy4oflRIXMzwMTbDrWxFesf.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09021313131', '2026-01-01 23:35:39', '213877', 0.00, NULL, NULL, 0, '2026-01-01 23:35:30', '2026-01-01 23:52:21');
-INSERT INTO `users` VALUES (31, NULL, NULL, 'customer', 'morteza', 'aliw@gmail.com', 'customer', '2026-01-06 19:01:06', '$2y$10$xiHrfWnEEFifOJ2hQKjfKesfjPwE8GhaItXDogrlAJp4WYT67RYRu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-01-06 19:02:06', '2026-01-06 19:02:06');
-INSERT INTO `users` VALUES (32, NULL, NULL, 'customer', 'احمد رضایی', 'ahmad@example.com', 'technician', NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-02-17 00:38:24', '2026-02-17 00:38:24');
-INSERT INTO `users` VALUES (33, NULL, NULL, 'customer', 'محمد کریمی', 'mohammad@example.com', 'technician', NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-02-17 00:38:24', '2026-02-17 00:38:24');
+INSERT INTO `users` VALUES (3, NULL, NULL, 'seller', 'آرمین رحیمی', 'seller@example.com', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'ne8qEnuHh0AqRDV297wUyqViP45M1dr5JcEr217O0NL5nqH4vK3bIR4Hz8AO', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/9XPIm6rto3nggN0zgBx32dHYQi5DyU1SRrYxOa0s.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '3dLUoHsR1l', NULL, NULL, '2018-10-07 08:12:57', '2020-07-12 15:25:49');
+INSERT INTO `users` VALUES (8, NULL, NULL, 'customer', 'علی احمدی', 'customer@example.com', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'zEEqQRhudteInr1D2Ac0L3FXibyGNa20pFA5KOBamfHzr6J0ooNA3wwrnHPC', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/users/jo3EHt8rbcdfprb6sw74GKYK2iQyc5jmxVfd3vEj.jpeg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '8zJTyXTlTT', NULL, NULL, '2018-10-07 08:12:57', '2020-07-24 06:24:26');
+INSERT INTO `users` VALUES (12, NULL, NULL, 'admin', 'admin', 'admin@example.com', '2020-06-25 10:06:33', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-06-25 10:08:33', '2020-06-25 10:08:33');
+INSERT INTO `users` VALUES (13, NULL, NULL, 'seller', 'متین جوان', 'seller2@example.com', '2020-07-13 10:07:56', '$2y$10$mnzXF29.dVrSzL/zy3dKF.Xt0koaOJ2wQs5APOYfdJkf3ZrEXzAGi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-13 09:55:49', '2020-07-13 10:08:56');
+INSERT INTO `users` VALUES (14, NULL, NULL, 'seller', 'رضا رحمتی', 'seller3@example.com', '2020-07-18 03:07:11', '$2y$10$hA0vvwR/Rx5KSieJ9/xaL.O1GYaIQORu9zScwzrhtIER4ILzXTjHu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-18 03:07:32', '2020-07-18 03:31:11');
+INSERT INTO `users` VALUES (15, NULL, NULL, 'seller', 'علی همتی', 'seller4@example.com', '2020-07-18 03:07:11', '$2y$10$ichl8tRniAkh76QYF5npmOh629z6n/IYrj59zN/lvSE9hxEFBYArK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-18 11:09:46', '2020-07-18 11:09:46');
+INSERT INTO `users` VALUES (16, NULL, NULL, 'seller', 'الهام جابری', 'seller5@example.com', '2020-07-18 03:07:11', '$2y$10$MB6TzZZi8vfBqReeqj8ndemsLeQARD4a3yDA2AvW9IyT4pQjpnj4S', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-19 05:18:09', '2020-07-19 05:18:09');
+INSERT INTO `users` VALUES (17, NULL, NULL, 'seller', 'علی سلطانی', 'seller6@example.com', '2020-07-18 03:07:11', '$2y$10$.8SzfNdSupTjXwb/dFGkt.e7MxGp7fIhAQd02t82H60sFRH9Pj2u6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-19 05:51:12', '2020-07-19 05:51:12');
+INSERT INTO `users` VALUES (18, NULL, NULL, 'staff', 'اپراتور سفارشات حضوری', 'inhouse_orders@example.com', NULL, '$2y$10$4kWT7UZSvGLc0b.UT1MS4.rLVk2daB5iUB9wzCX3mMWBbtN3XuxpK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09121111111', NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-20 15:12:24', '2020-07-20 15:12:24');
+INSERT INTO `users` VALUES (19, NULL, NULL, 'seller', 'یوسف ابراهیمی', 'seller7@example.com', '2020-07-18 03:07:11', '$2y$10$boTae38mLpu10h7dVecfjuulM4zbthdFskY9zZ7bb1PxHgNGMfQvy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-08-09 16:05:08', '2020-08-09 16:05:08');
+INSERT INTO `users` VALUES (23, NULL, NULL, 'customer', 'احمد کریمی', 'ahmad@gmail.com', '2026-01-01 21:01:16', '$2y$10$P3ckpHolKl.2.nd8X2bbK.8V2uURZYvPcXfkE/Hb4C45hQJvFT0Gm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-01-01 21:52:16', '2026-01-01 21:52:16');
+INSERT INTO `users` VALUES (30, NULL, NULL, 'customer', 'امیر حسین بهنامی', NULL, NULL, '$2y$10$y3YKcuXKDeSft1AA0XsSOek97lnKVdy4oflRIXMzwMTbDrWxFesf.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09021313131', '2026-01-01 23:35:39', '213877', 0.00, NULL, NULL, 0, '2026-01-01 23:35:30', '2026-01-01 23:52:21');
+INSERT INTO `users` VALUES (31, NULL, NULL, 'customer', 'morteza', 'aliw@gmail.com', '2026-01-06 19:01:06', '$2y$10$xiHrfWnEEFifOJ2hQKjfKesfjPwE8GhaItXDogrlAJp4WYT67RYRu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-01-06 19:02:06', '2026-01-06 19:02:06');
 
 -- ----------------------------
 -- Table structure for wallets
