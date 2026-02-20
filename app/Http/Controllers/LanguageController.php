@@ -13,7 +13,14 @@ class LanguageController extends Controller
     {
     	$request->session()->put('locale', $request->locale);
         $language = Language::where('code', $request->locale)->first();
-    	flash(__('تغییر زبان به ').$language->name)->success();
+
+        if ($language) {
+            flash(__('تغییر زبان به ').$language->name)->success();
+        } else {
+            flash(__('زبان انتخاب‌شده یافت نشد'))->warning();
+        }
+
+        return back();
     }
 
     public function index(Request $request)

@@ -2,7 +2,7 @@
 @extends('admin.jewelry.layouts.app')
 
 @section('jewelry_content')
-<h1>داشبورد جواهرات</h1>
+<h1> پیشخوان اشیاء قیمتی</h1>
 
 {{-- مثال آمار و اطلاعات کلی --}}
 <div class="row mt-4">

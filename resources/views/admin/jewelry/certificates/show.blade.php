@@ -315,7 +315,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $order->created_at->format('Y/m/d') }}</td>
-                            <td>{{ Str::limit($order->problem_description, 50) }}</td>
+                                <td>{{ \Illuminate\Support\Str::limit($order->problem_description, 50) }}</td>
                             <td>
                                 @php
                                     $statusColor = [
