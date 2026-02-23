@@ -747,9 +747,9 @@
             <div class="stat-icon" style="background: linear-gradient(135deg, var(--pink-color), #ec4899);">
                 <span>🛒</span>
             </div>
-            <span class="stat-label">سفارشات امروز</span>
-            <div class="stat-value">42</div>
-            <a href="#" class="btn-link">
+            <span class="stat-label">سرقت و مفقودی </span>
+            <div class="stat-value">---</div>
+            <a href="./admin/jewelry/missing_reports" class="btn-link">
                 مشاهده جزئیات
                 <span class="emoji-icon">←</span>
             </a>
@@ -761,9 +761,9 @@
             <div class="stat-icon" style="background: linear-gradient(135deg, var(--orange-color), #f97316);">
                 <span>💰</span>
             </div>
-            <span class="stat-label">فروش امروز</span>
-            <div class="stat-value">$2,345</div>
-            <a href="#" class="btn-link">
+            <span class="stat-label">مدیریت شناسنامه‌ها</span>
+            <div class="stat-value">---</div>
+            <a href="./admin/jewelry/certificates" class="btn-link">
                 مشاهده جزئیات
                 <span class="emoji-icon">←</span>
             </a>
@@ -775,9 +775,9 @@
             <div class="stat-icon" style="background: linear-gradient(135deg, var(--info-color), #3b82f6);">
                 <span>👁️</span>
             </div>
-            <span class="stat-label">بازدید امروز</span>
-            <div class="stat-value">5,678</div>
-            <a href="#" class="btn-link">
+            <span class="stat-label">مدیریت مالکان طلا و جواهر </span>
+            <div class="stat-value">---</div>
+            <a href="./admin/jewelry/owners" class="btn-link">
                 مشاهده جزئیات
                 <span class="emoji-icon">←</span>
             </a>

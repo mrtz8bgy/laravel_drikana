@@ -152,6 +152,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
         Mehedi\Paystack\PaystackServiceProvider::class,
+        App\Providers\OverrideServiceProvider::class,
         MehediIitdu\CoreComponentRepository\CoreComponentRepositoryServiceProvider::class,
         Nexmo\Laravel\NexmoServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
