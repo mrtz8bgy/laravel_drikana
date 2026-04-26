@@ -1,310 +1,559 @@
-/*---------------- Persian Fonts -------------------*/
-@font-face {
-	font-family: Vazir;
-	font-style: normal;
-	font-weight: bold;
-	src: url('../../fonts/vazir/Vazir-Bold.eot');
-	src: url('../../fonts/vazir/Vazir-Bold.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
-		 url('../../fonts/vazir/Vazir-Bold.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-		 url('../../fonts/vazir/Vazir-Bold.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-		 url('../../fonts/vazir/Vazir-Bold.ttf') format('truetype');
+/*---------------- Colors Variables -------------------*/
+:root {
+    /* رنگ‌های اصلی طلایی - برای جواهرات */
+    --gold-primary: #d4af37;      /* طلایی کلاسیک */
+    --gold-dark: #b8960c;         /* طلایی تیره */
+    --gold-light: #f5e18b;        /* طلایی روشن */
+    --gold-gradient: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
+    
+    /* رنگ‌های آبی سلطنتی - پس‌زمینه */
+    --navy-dark: #0a1428;         /* آبی خیلی تیره */
+    --navy-primary: #121e3a;      /* آبی اصلی */
+    --navy-light: #1a2a4f;        /* آبی روشن‌تر */
+    --navy-gradient: linear-gradient(135deg, #121e3a 0%, #0a1428 100%);
+    
+    /* رنگ‌های جواهری */
+    --ruby: #e31b23;              /* یاقوت سرخ */
+    --emerald: #2e8b57;           /* زمرد سبز */
+    --sapphire: #0f52ba;          /* یاقوت کبود */
+    --amethyst: #9966cc;          /* آمیتیست بنفش */
+    
+    /* رنگ‌های کمکی */
+    --white: #ffffff;
+    --black: #000000;
+    --gray-light: #f8f9fa;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    
+    /* رنگ‌های وضعیت */
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --info: #17a2b8;
 }
-@font-face {
-	font-family: Vazir;
-	font-style: normal;
-	font-weight: 500;
-	src: url('../../fonts/vazir/Vazir-Medium-FD-WOL.eot');
-	src: url('../../fonts/vazir/Vazir-Medium-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
-		 url('../../fonts/vazir/Vazir-Medium-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-		 url('../../fonts/vazir/Vazir-Medium-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-		 url('../../fonts/vazir/Vazir-Medium-FD-WOL.ttf') format('truetype');
-}
-@font-face {
-	font-family: Vazir;
-	font-style: normal;
-	font-weight: 300;
-	src: url('../../fonts/vazir/Vazir-Light-FD-WOL.eot');
-	src: url('../../fonts/vazir/Vazir-Light-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
-		 url('../../fonts/vazir/Vazir-Light-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-		 url('../../fonts/vazir/Vazir-Light-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-		 url('../../fonts/vazir/Vazir-Light-FD-WOL.ttf') format('truetype');
-}
-@font-face {
-	font-family: Vazir;
-	font-style: normal;
-	font-weight: 300;
-	src: url('../../fonts/vazir/Vazir-Thin-FD-WOL.eot');
-	src: url('../../fonts/vazir/Vazir-Thin-FD-WOL.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
-		 url('../../fonts/vazir/Vazir-Thin-FD-WOL.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-		 url('../../fonts/vazir/Vazir-Thin-FD-WOL.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-		 url('../../fonts/vazir/Vazir-Thin-FD-WOL.ttf') format('truetype');
-}
-@font-face {
-	font-family: Vazir;
-	font-style: normal;
-	font-weight: normal;
-	src: url('../../fonts/vazir/Vazir.eot');
-	src: url('../../fonts/vazir/Vazir.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
-		 url('../../fonts/vazir/Vazir.woff2') format('woff2'),  /* FF39+,Chrome36+, Opera24+*/
-		 url('../../fonts/vazir/Vazir.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-		 url('../../fonts/vazir/Vazir.ttf') format('truetype');
-}
-@font-face {
-	font-family: Yekan;
-	font-style: normal;
-	font-weight: normal;
-	src: url('../../fonts/yekan/Yekan.eot');
-	src: url('../../fonts/yekan/Yekan.eot?#iefix') format('embedded-opentype'),  /* IE6-8 */
-		 url('../../fonts/yekan/Yekan.woff') format('woff'),  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-		 url('../../fonts/yekan/Yekan.ttf') format('truetype');
-}
-/*---------------- Common -------------------*/
+
+/*---------------- اعمال رنگ‌ها به المان‌ها -------------------*/
+
+/* بدنه اصلی */
 body {
-	font-size: 14px !important;
-}
-body,
-ul.categories > li > a,
-h1, h2, h3, h4, h5, h6,
-.btn,
-.tabs--style-2 .nav-tabs .nav-link {
-    font-family: 'Vazir', sans-serif !important;
+    background-color: var(--navy-dark);
+    color: var(--gray-light);
 }
 
-.product-gal-thumb {
-	margin-left: 10px;
-	margin-right: unset;
+/* لینک‌ها */
+a {
+    color: var(--gold-primary);
+    transition: all 0.3s ease;
+}
+a:hover {
+    color: var(--gold-light);
+    text-decoration: none;
 }
 
-.product-title a {
-	font-family: Yekan, sans-serif !important;
-	font-size: 12px;
-	font-weight: normal;
-	color: #fff;
-	text-align: justify;
-}
-
-.yekan {
-	font-family: 'Yekan', sans-serif !important;
-}
-
-.btn-link:hover {
-	text-decoration: none;
-}
-
-.product-description-wrapper .product-description-label, 
-.product-description-wrapper .avialable-amount {
-	font-size: 14px;
-	font-weight: bold;
-}
-
-.product-description-wrapper .product-price {
-	font-size: 20px !important;
-}
-
-.bg-white {
-	border-radius: 5px;
-}
-
-#login-box input[type="text"],
-#login-box input[type="password"],
-#login-box input[type="email"]{
-	text-align: right;
-}
-
-.magic-checkbox+label {
-	padding-right: 25px;
-}
-
-.magic-radio+label:before, 
-.magic-checkbox+label:before {
-	left: unset;
-	right: 0;
-}
-
-.product-description-wrapper .product-title {
-	line-height: 30px;
-}
-
-.product-desc-tab .tab-pane {
-	line-height: 2rem;
-	font-family: 'yekan', sans-serif;
-}
-
-.mr-4 {
-	margin-left: 1.5rem!important;
-	margin-right: 0!important;
-}
-
-.added-to-cart .product-box .block-body {
-	padding: 0 2rem 0 0;
-}
-
-.table-cart tbody tr td.product-remove a {
-	width: 50px;
-}
-.table-cart > thead > tr > th {
-	text-align: center;
-}
-
-.form-default .input-group--style-1 .input-group-addon {
-	border-left: 0;
-	border-right: 1px solid #e6e6e6;
-}
-.input-group--style-1 .form-control:not(:first-child) {
-	border-left: 1px solid #e6e6e6;
-	border-right: 0;
-}
-.product-desc-tab .tab-pane span{
-	font-family: 'Yekan';
-} 
-.modal-header .close {
-	margin: -1rem auto -1rem -1rem;
-}
-.checkbox label::after {
-	left: unset;
-	right: 0;
-	margin-right: -15px;
-	padding-right: 3px;
-	margin-left: 0;
-	padding-left: 0;
-}
-.dropdown-menu > li > a {
-	text-align: right;
-}
-
-.slick-track {
-    margin-left: auto;
-    margin-right: unset;
-}
-
-.modal-category-list.has-right-arrow ul li:after {
-	content: "\f104";
-	left: 0;
-	right: unset;
-}
-
-/* استایل متن توضیحات محصول طلا و جواهر */
-.product-description {
-    text-align: justify;          /* هم‌تراز شدن متن */
-    line-height: 2;               /* فاصله مناسب خطوط */
-    font-size: 15px;
-    color: #f3c726;
-    word-spacing: 1px;
-
-}
-
-/* پاراگراف‌ها */
-.product-description p {
-    margin-bottom: 16px;
-}
-
-/* لیست‌ها */
-.product-description ul,
-.product-description ol {
-    padding-right: 20px;
-    margin-bottom: 16px;
-}
-
-.product-description li {
-    margin-bottom: 8px;
-}
-
-/* تیترها داخل توضیحات */
-.product-description h1,
-.product-description h2,
-.product-description h3,
-.product-description h4 {
-    margin: 20px 0 12px;
-    font-weight: 600;
-    color: #111;
-}
-
-
-.product-desc-tab table td {
-	border-width: 5px;
-	background-color: #fafafa;
-}
-
-.product-desc-tab table td:first-child {
-	width: 20%;
-	border-color: #fff !important;
-}
-
-.product-desc-tab table td:last-child {
-	border-color: #fff !important;
-}
-
-.seller-info-box .sold-by .medal-badge {
-	right: unset;
-	left: 0;
-}
-.category-widget ul li {
-    float: right;
-    width: 50%;
-    padding: 10px 15px;
-    border-top: 1px solid #eee;
-    border-left: 1px solid #eee;
-}
-.footer-top .heading {
-	font-size: 1.2rem;
-}
-
-.contact-widget li {
-	margin-bottom: 10px !important;
-}
-.contact-widget li span{
-	margin-bottom: 10px;
-}
-.disabled-persian-date {
-    opacity: 1 !important;
-    background: none;
+/* دکمه اصلی */
+.btn-primary {
+    background: var(--gold-gradient);
     border: none;
+    color: var(--navy-dark);
+    font-weight: 600;
+    padding: 10px 24px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
 }
-.jodit_placeholder {
-	left: unset;
-	right: 0;
-	font-family: 'Vazir';
+.btn-primary:hover {
+    background: linear-gradient(135deg, #b8960c 0%, #9a7b0a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+    color: var(--white);
 }
+
+/* دکمه ثانویه */
+.btn-secondary {
+    background: var(--navy-gradient);
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+}
+.btn-secondary:hover {
+    background: var(--gold-gradient);
+    border-color: transparent;
+    color: var(--navy-dark);
+}
+
+/* دکمه‌های خطی */
+.btn-outline-primary {
+    border: 2px solid var(--gold-primary);
+    color: var(--gold-primary);
+    background: transparent;
+}
+.btn-outline-primary:hover {
+    background: var(--gold-gradient);
+    border-color: transparent;
+    color: var(--navy-dark);
+}
+
+/* تاپ بار */
+.top-navbar {
+    background: var(--navy-primary);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+.top-navbar a {
+    color: var(--gold-light);
+}
+.top-navbar .dropdown-menu {
+    background: var(--navy-light);
+    border: 1px solid var(--gold-primary);
+}
+.top-navbar .dropdown-item a {
+    color: var(--gold-light);
+}
+.top-navbar .dropdown-item:hover a {
+    color: var(--gold-primary);
+}
+
+/* لوگو بار */
+.logo-bar-area {
+    background-color: var(--navy-dark);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* آیکون‌های هدر */
+.logo-bar-icons .nav-search-box .nav-box-icon,
+.logo-bar-icons .nav-compare-box .nav-box-icon,
+.logo-bar-icons .nav-wishlist-box .nav-box-icon,
+.logo-bar-icons .nav-cart-box .nav-box-icon {
+    color: var(--gold-primary);
+    transition: all 0.3s;
+}
+.logo-bar-icons .nav-search-box .nav-box-icon:hover,
+.logo-bar-icons .nav-compare-box .nav-box-icon:hover,
+.logo-bar-icons .nav-wishlist-box .nav-box-icon:hover,
+.logo-bar-icons .nav-cart-box .nav-box-icon:hover {
+    color: var(--gold-light);
+    transform: scale(1.1);
+}
+.logo-bar-icons .nav-search-box .nav-box-number,
+.logo-bar-icons .nav-compare-box .nav-box-number,
+.logo-bar-icons .nav-wishlist-box .nav-box-number,
+.logo-bar-icons .nav-cart-box .nav-box-number {
+    background: var(--gold-primary);
+    color: var(--navy-dark);
+}
+
+/* بخش بنر اصلی */
+section.home-banner-area {
+    background: var(--navy-gradient);
+}
+
+/* سایدبار دسته‌بندی */
+.category-sidebar {
+    background-color: var(--navy-primary);
+    border-radius: 12px;
+    overflow: hidden;
+}
+.category-sidebar .all-category {
+    background: var(--gold-gradient);
+    color: var(--navy-dark);
+}
+.category-sidebar .all-category > span {
+    color: var(--navy-dark);
+    font-weight: 700;
+}
+.category-sidebar .categories > li > a {
+    color: var(--gold-light);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+.category-sidebar .categories > li > a:hover {
+    background: rgba(212, 175, 55, 0.1);
+}
+.category-sidebar .categories > li > a:hover .cat-name {
+    color: var(--gold-primary);
+}
+.category-sidebar .categories > li > a .cat-name {
+    color: var(--gold-light);
+}
+
+/* محصولات */
+.product-title a {
+    font-family: 'Yekan', sans-serif !important;
+    font-size: 12px;
+    color: var(--gold-light);
+}
+.product-title a:hover {
+    color: var(--gold-primary);
+}
+
 .product-card-2 {
-	height: 350px;
+    background: var(--navy-primary);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 12px;
+    transition: all 0.3s;
+    height: 350px;
+}
+.product-card-2:hover {
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+    transform: translateY(-5px);
+    border-color: var(--gold-primary);
+}
+
+.product-price {
+    color: var(--gold-primary);
+    font-weight: 700;
 }
 .price-box .old-product-price {
-	font-size: 12px;
+    color: var(--gray);
 }
-.side-menu-close {
-	right: unset;
-	left: 0;
-}
-.side-menu-header .widget-profile-box .name {
-	margin-right: 10px;
-}
-.footer-top-bar .col-lg-3:last-child {
-    border-left: 1px solid #eee;
-}
-.custom-input-file--4 + label strong {
-	float: left;
-}
-.dropdown-cart {
-	text-align: right;
-}
-.dc-item .subtotal-amount {
-	float: left;
-}
-.dc-item .subtotal-text {
-	float: right;
-}
-.social-media.social-media--style-1-v4 > li:last-child > a {
-	margin-right: 1rem;
+.price-box .product-price {
+    color: var(--gold-primary);
+    font-size: 16px;
 }
 
-@media (max-width: 991px){
-	.side-menu-wrap {
-		left: unset;
-		right: 0;
-	}
-	.side-menu {
-		transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-        -webkit-transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-        -ms-webkit-transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-	}
+/* برچسب تخفیف */
+.product-label.label-hot {
+    background: var(--gold-gradient);
+    color: var(--navy-dark);
+}
+
+/* بخش عنوان */
+.section-title-1 {
+    border-bottom-color: rgba(212, 175, 55, 0.3);
+}
+.section-title-1:before {
+    background: var(--gold-gradient);
+}
+.section-title-1 li a {
+    background: var(--navy-light);
+    color: var(--gold-light) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+.section-title-1 li a.active,
+.section-title-1 li a:hover {
+    background: var(--gold-gradient);
+    color: #f8f9fa !important;
+}
+
+/* فلش دیل */
+.flash-deal-box {
+    background: var(--navy-primary);
+    border-radius: 12px;
+    overflow: hidden;
+}
+.flash-deal-box .title {
+    background: var(--gold-gradient);
+}
+.flash-deal-box .title h3 {
+    color: var(--navy-dark);
+}
+.flash-deal-item {
+    background: var(--navy-light);
+    border-radius: 10px;
+}
+.flash-deal-item .price {
+    color: var(--gold-primary);
+}
+.flash-deal-item .price del {
+    color: var(--gray);
+}
+
+/* بنرهای تبلیغاتی */
+.mobile-icons-section {
+    background: var(--navy-gradient);
+    border-radius: 12px;
+}
+
+.mobile-icon-circle {
+    background: rgba(212, 175, 55, 0.2);
+}
+.mobile-icon-item:hover .mobile-icon-circle {
+    background: var(--gold-gradient);
+}
+.mobile-icon-title {
+    color: var(--gold-light);
+}
+
+/* مگا منو */
+.mega-menu-section {
+    background: var(--navy-primary);
+}
+.mega-menu-item {
+    background: var(--navy-light);
+}
+.mega-menu-item:hover {
+    background: var(--gold-gradient);
+}
+.mega-menu-item .mega-menu-link {
+    color: var(--gold-light);
+}
+.mega-menu-item:hover .mega-menu-link {
+    color: var(--navy-dark);
+}
+
+/* فوتر */
+.footer {
+    background: var(--navy-primary);
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+}
+.footer .footer-bottom {
+    background: var(--navy-dark);
+}
+.footer a {
+    color: var(--gold-light);
+}
+.footer a:hover {
+    color: var(--gold-primary);
+}
+.footer-top .heading {
+    color: var(--gold-primary);
+}
+
+/* دکمه‌های عملیات محصول */
+button.paction.add-wishlist,
+button.paction.add-compare {
+    background: var(--navy-light);
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+}
+button.paction.add-wishlist:hover,
+button.paction.add-compare:hover {
+    background: var(--gold-gradient);
+    border-color: transparent;
+    color: var(--navy-dark);
+}
+
+/* استار ریتینگ */
+.star-rating i {
+    color: var(--gray);
+}
+.star-rating .active {
+    color: #ffcc00;
+}
+
+/* فرم‌ها و اینپوت‌ها */
+.form-control {
+    background: var(--navy-light);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    color: var(--gold-light);
+}
+.form-control:focus {
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
+    background: var(--navy-light);
+    color: var(--gold-light);
+}
+.form-control::placeholder {
+    color: var(--gray);
+}
+
+/* سوییچ‌ها */
+input:checked + .slider {
+    background-color: var(--gold-primary);
+}
+
+/* اسکرول بار */
+.c-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--gold-primary);
+    border-radius: 10px;
+}
+.c-scrollbar::-webkit-scrollbar-track {
+    background: var(--navy-light);
+}
+
+/* دکمه بازگشت به بالا */
+.btn-back-to-top {
+    background: var(--gold-gradient);
+    color: var(--navy-dark);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-back-to-top:hover {
+    background: linear-gradient(135deg, #b8960c 0%, #9a7b0a 100%);
+    transform: translateY(-3px);
+    color: var(--white);
+}
+
+/* دراپ داون منو */
+.dropdown-menu {
+    background: var(--navy-light);
+    border: 1px solid var(--gold-primary);
+    border-top: 3px solid var(--gold-primary);
+}
+.dropdown-item {
+    color: var(--gold-light);
+}
+.dropdown-item:hover {
+    background: rgba(212, 175, 55, 0.2);
+    color: var(--gold-primary);
+}
+
+/* اسلایدر */
+.slick-dots li button {
+    background: var(--gray);
+}
+.slick-dots li.slick-active button {
+    background: var(--gold-primary);
+}
+.slick-prev, .slick-next {
+    background: rgba(212, 175, 55, 0.8);
+    border-radius: 50%;
+}
+.slick-prev:hover, .slick-next:hover {
+    background: var(--gold-gradient);
+}
+
+/* جدول‌ها */
+.table {
+    color: var(--gold-light);
+}
+.table thead th {
+    border-bottom-color: var(--gold-primary);
+}
+.table td, .table th {
+    border-top-color: rgba(212, 175, 55, 0.2);
+}
+
+/* آیکون‌های شبکه‌های اجتماعی */
+.social-nav a {
+    background: var(--gold-primary);
+    color: var(--navy-dark);
+}
+.social-nav a:hover {
+    background: var(--gold-dark);
+    color: var(--white);
+}
+
+/* پیام‌های آلرت */
+.alert-success {
+    background: rgba(40, 167, 69, 0.2);
+    border-color: var(--success);
+    color: var(--success);
+}
+.alert-danger {
+    background: rgba(220, 53, 69, 0.2);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+.alert-warning {
+    background: rgba(255, 193, 7, 0.2);
+    border-color: var(--warning);
+    color: var(--warning);
+}
+
+/* صفحه محصول */
+.product-description {
+    text-align: justify;
+    line-height: 2;
+    font-size: 15px;
+    color: var(--gold-light);
+    word-spacing: 1px;
+}
+.product-description-wrapper .product-title {
+    color: var(--gold-primary);
+}
+.product-description-wrapper .product-price {
+    font-size: 20px !important;
+    color: var(--gold-primary);
+}
+
+/* سبد خرید */
+.table-cart thead th {
+    color: var(--gold-primary);
+}
+.cart-total {
+    background: var(--navy-light);
+    border-radius: 12px;
+}
+
+/* مودال */
+.modal-content {
+    background: var(--navy-primary);
+    border: 1px solid var(--gold-primary);
+}
+.modal-header {
+    border-bottom-color: rgba(212, 175, 55, 0.3);
+}
+.modal-footer {
+    border-top-color: rgba(212, 175, 55, 0.3);
+}
+.close {
+    color: var(--gold-light);
+}
+.close:hover {
+    color: var(--gold-primary);
+}
+
+/* تب‌ها */
+.nav-tabs {
+    border-bottom-color: rgba(212, 175, 55, 0.3);
+}
+.nav-tabs .nav-link {
+    color: var(--gold-light);
+}
+.nav-tabs .nav-link.active {
+    background: var(--navy-light);
+    border-color: var(--gold-primary);
+    color: var(--gold-primary);
+}
+
+/* صفحه لاگین */
+.card-header {
+    background: var(--navy-light);
+    border-bottom-color: var(--gold-primary);
+    color: var(--gold-primary);
+}
+
+/* وضعیت موجودی */
+.in-stock {
+    color: var(--success);
+}
+.out-stock {
+    color: var(--danger);
+}
+
+/* دکمه افزایش/کاهش تعداد */
+.plus-minus .input-group-addon {
+    background: var(--navy-light);
+    border-color: rgba(212, 175, 55, 0.3);
+    color: var(--gold-primary);
+    cursor: pointer;
+}
+.plus-minus .input-group-addon:hover {
+    background: var(--gold-primary);
+    color: var(--navy-dark);
+}
+
+/* انتخاب رنگ و سایز */
+.color-option {
+    border: 2px solid transparent;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+.color-option.selected {
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 0 2px var(--navy-dark), 0 0 0 4px var(--gold-primary);
+}
+
+/* صفحه پرداخت */
+.payment-option {
+    background: var(--navy-light);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+.payment-option.selected {
+    border-color: var(--gold-primary);
+    background: rgba(212, 175, 55, 0.1);
+}
+
+/* ریسپانسیو */
+@media (max-width: 768px) {
+    .product-card-2 {
+        height: auto;
+    }
+    .section-title-1 li a {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
 }

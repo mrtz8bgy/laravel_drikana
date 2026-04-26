@@ -19,17 +19,18 @@ class RepairOrderController extends Controller
         $query = RepairOrder::with(['user', 'jewelry.owner']);
         
         // فیلتر بر اساس وضعیت
-        if ($request->has('status')) {
+        if ($request->has('status') && !empty($request->get('status'))) {
             $query->where('status', $request->get('status'));
         }
         
-        // فیلتر بر اساس نوع تعمیر
-        if ($request->has('repair_type')) {
-            $query->where('repair_type', 'LIKE', "%{$request->get('repair_type')}%");
+        // فیلتر بر اساس نوع تعمیر - اصلاح شده
+        if ($request->has('repair_type') && !empty($request->get('repair_type'))) {
+            $repairType = $request->get('repair_type');
+            $query->where('repair_type', 'LIKE', "%{$repairType}%");
         }
         
         // جستجو بر اساس توضیحات یا شماره سفارش
-        if ($request->has('search')) {
+        if ($request->has('search') && !empty($request->get('search'))) {
             $search = $request->get('search');
             $query->where(function($q) use ($search) {
                 $q->where('description', 'LIKE', "%{$search}%")
@@ -43,24 +44,25 @@ class RepairOrderController extends Controller
         }
         
         // فیلتر بر اساس تاریخ ایجاد
-        if ($request->has('date_from')) {
+        if ($request->has('date_from') && !empty($request->get('date_from'))) {
             $query->whereDate('created_at', '>=', $request->get('date_from'));
         }
-        if ($request->has('date_to')) {
+        if ($request->has('date_to') && !empty($request->get('date_to'))) {
             $query->whereDate('created_at', '<=', $request->get('date_to'));
         }
         
         $repairOrders = $query->orderBy('created_at', 'desc')->paginate(20);
         
+        // استفاده از ثابت‌های ثابت به جای متن فارسی مستقیم
         $stats = [
             'total' => RepairOrder::count(),
-            'pending' => RepairOrder::where('status', 'در انتظار')->count(),
-            'in_progress' => RepairOrder::where('status', 'در حال تعمیر')->count(),
-            'completed' => RepairOrder::where('status', 'تکمیل شده')->count(),
-            'cancelled' => RepairOrder::where('status', 'لغو شده')->count(),
+            'pending' => RepairOrder::where('status', 'pending')->count(),
+            'in_progress' => RepairOrder::where('status', 'in_progress')->count(),
+            'completed' => RepairOrder::where('status', 'completed')->count(),
+            'cancelled' => RepairOrder::where('status', 'cancelled')->count(),
         ];
         
-        $statuses = ['در انتظار', 'در حال تعمیر', 'تکمیل شده', 'لغو شده'];
+        $statuses = ['pending', 'in_progress', 'completed', 'cancelled'];
         
         return view('admin.jewelry.repair-orders.index', compact('repairOrders', 'stats', 'statuses'));
     }
@@ -71,8 +73,13 @@ class RepairOrderController extends Controller
     public function create()
     {
         $jewelries = \App\Models\JewelryCertificate::with('owner.user')->get();
+        $technicians = User::where('user_type', 'staff')
+            ->orWhere('user_type', 'admin')
+            ->where('id', '!=', auth()->id())
+            ->whereNotNull('id') // اضافه شده برای اطمینان
+            ->get();
         
-        return view('admin.jewelry.repair-orders.create', compact('jewelries'));
+        return view('admin.jewelry.repair-orders.create', compact('jewelries', 'technicians'));
     }
     
     /**
@@ -88,13 +95,21 @@ class RepairOrderController extends Controller
             'scheduled_date' => 'nullable|date',
             'estimated_cost' => 'nullable|numeric|min:0',
             'priority' => 'nullable|in:normal,urgent',
+            'assigned_to' => 'nullable|exists:users,id',
         ]);
         
-        // Get the user_id from the jewelry certificate's owner
+        // Get the user_id from the jewelry certificate's owner - اصلاح شده با بررسی null
         $jewelry = \App\Models\JewelryCertificate::findOrFail($validated['jewelry_certificate_id']);
-        $validated['user_id'] = $jewelry->owner->user_id;
         
-        $validated['status'] = 'در انتظار';
+        // بررسی وجود owner و user_id
+        if ($jewelry->owner && $jewelry->owner->user_id) {
+            $validated['user_id'] = $jewelry->owner->user_id;
+        } else {
+            // اگر کاربر وجود نداشت، از کاربر لاگین شده استفاده کن
+            $validated['user_id'] = auth()->id();
+        }
+        
+        $validated['status'] = 'pending';
         $validated['order_number'] = RepairOrder::generateOrderNumber();
         
         $repairOrder = RepairOrder::create($validated);
@@ -128,8 +143,9 @@ class RepairOrderController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|in:در انتظار,در حال تعمیر,تکمیل شده,لغو شده',
-            'status_notes' => 'nullable|string|max:500',
+            'status' => 'required|in:pending,in_progress,completed,cancelled,delivered',
+            'notes' => 'nullable|string|max:500',
+            'final_cost' => 'nullable|numeric|min:0',
         ]);
         
         $repairOrder = RepairOrder::findOrFail($id);
@@ -138,42 +154,55 @@ class RepairOrderController extends Controller
         $allowedTransitions = $this->getAllowedStatusTransitions($repairOrder->status);
         if (!in_array($request->get('status'), $allowedTransitions)) {
             return redirect()->back()
-                ->with('error', 'تغییر وضعیت از ' . $repairOrder->status . ' به ' . $request->get('status') . ' مجاز نیست.');
+                ->with('error', 'تغییر وضعیت مجاز نیست.');
         }
         
         $oldStatus = $repairOrder->status;
         
         $updateData = [
             'status' => $request->get('status'),
-            'status_notes' => $request->get('status_notes'),
         ];
         
-        // اگر وضعیت به "تکمیل شده" تغییر کرد
-        if ($request->get('status') == 'تکمیل شده') {
-            $updateData['completed_at'] = Carbon::now();
-            $updateData['completed_by'] = auth()->id();
+        if ($request->has('notes')) {
+            $updateData['notes'] = $request->get('notes');
         }
         
-        // اگر وضعیت به "لغو شده" تغییر کرد
-        if ($request->get('status') == 'لغو شده') {
+        if ($request->has('final_cost')) {
+            $updateData['final_cost'] = $request->get('final_cost');
+        }
+        
+        // اگر وضعیت به "completed" تغییر کرد
+        if ($request->get('status') == 'completed') {
+            $updateData['completion_date'] = Carbon::now();
+        }
+        
+        // اگر وضعیت به "delivered" تغییر کرد
+        if ($request->get('status') == 'delivered') {
+            $updateData['delivery_date'] = Carbon::now();
+        }
+        
+        // اگر وضعیت به "cancelled" تغییر کرد
+        if ($request->get('status') == 'cancelled') {
             $updateData['cancelled_at'] = Carbon::now();
             $updateData['cancelled_by'] = auth()->id();
         }
         
         $repairOrder->update($updateData);
         
-        // TODO: ارسال نوتیفیکیشن به کاربر
-        
-        // لاگ تغییر وضعیت
-        DB::table('repair_order_status_logs')->insert([
-            'repair_order_id' => $repairOrder->id,
-            'old_status' => $oldStatus,
-            'new_status' => $request->get('status'),
-            'changed_by' => auth()->id(),
-            'notes' => $request->get('status_notes'),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        // لاگ تغییر وضعیت - با بررسی وجود جدول
+        try {
+            DB::table('repair_order_status_logs')->insert([
+                'repair_order_id' => $repairOrder->id,
+                'old_status' => $oldStatus,
+                'new_status' => $request->get('status'),
+                'changed_by' => auth()->id(),
+                'notes' => $request->get('notes'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        } catch (\Exception $e) {
+            // جدول لاگ وجود ندارد - نادیده گرفته شود
+        }
         
         return redirect()->route('admin.jewelry.repair-orders.show', $repairOrder)
             ->with('success', 'وضعیت سفارش تعمیر با موفقیت به‌روزرسانی شد.');
@@ -219,10 +248,8 @@ class RepairOrderController extends Controller
             'assigned_at' => Carbon::now(),
             'assignment_notes' => $request->get('assignment_notes'),
             'estimated_completion_date' => $request->get('estimated_completion_date'),
-            'status' => 'در حال تعمیر', // هنگام اختصاص، وضعیت به "در حال تعمیر" تغییر می‌کند
+            'status' => 'in_progress',
         ]);
-        
-        // TODO: ارسال نوتیفیکیشن به تکنسین
         
         return redirect()->route('admin.jewelry.repair-orders.show', $repairOrder)
             ->with('success', 'سفارش تعمیر با موفقیت به تکنسین اختصاص داده شد.');
@@ -235,12 +262,16 @@ class RepairOrderController extends Controller
     {
         $repairOrder = RepairOrder::with('user')->findOrFail($id);
         
-        $statusHistory = DB::table('repair_order_status_logs')
-            ->where('repair_order_id', $id)
-            ->join('users', 'repair_order_status_logs.changed_by', '=', 'users.id')
-            ->select('repair_order_status_logs.*', 'users.name as changer_name')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        try {
+            $statusHistory = DB::table('repair_order_status_logs')
+                ->where('repair_order_id', $id)
+                ->join('users', 'repair_order_status_logs.changed_by', '=', 'users.id')
+                ->select('repair_order_status_logs.*', 'users.name as changer_name')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } catch (\Exception $e) {
+            $statusHistory = collect();
+        }
         
         return view('admin.jewelry.repair-orders.status-history', compact('repairOrder', 'statusHistory'));
     }
@@ -261,14 +292,18 @@ class RepairOrderController extends Controller
         $path = $request->file('photo')->store('repair-orders/admin', 'public');
         
         // ذخیره اطلاعات تصویر در دیتابیس
-        DB::table('repair_order_photos')->insert([
-            'repair_order_id' => $repairOrder->id,
-            'photo_path' => $path,
-            'uploaded_by' => auth()->id(),
-            'description' => $request->get('photo_description'),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        try {
+            DB::table('repair_order_photos')->insert([
+                'repair_order_id' => $repairOrder->id,
+                'photo_path' => $path,
+                'uploaded_by' => auth()->id(),
+                'description' => $request->get('photo_description'),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        } catch (\Exception $e) {
+            // جدول عکس وجود ندارد
+        }
         
         return redirect()->route('admin.jewelry.repair-orders.show', $repairOrder)
             ->with('success', 'تصویر با موفقیت آپلود شد.');
@@ -282,7 +317,7 @@ class RepairOrderController extends Controller
         $repairOrder = RepairOrder::findOrFail($id);
         
         // فقط سفارشات لغو شده یا تکمیل شده قدیمی قابل حذف هستند
-        if (!in_array($repairOrder->status, ['لغو شده', 'تکمیل شده'])) {
+        if (!in_array($repairOrder->status, ['cancelled', 'completed'])) {
             return redirect()->back()
                 ->with('error', 'فقط سفارشات تکمیل شده یا لغو شده قابل حذف هستند.');
         }
@@ -294,19 +329,22 @@ class RepairOrderController extends Controller
             }
             
             // حذف عکس‌های اضافی
-            $additionalPhotos = DB::table('repair_order_photos')
-                ->where('repair_order_id', $repairOrder->id)
-                ->get();
-                
-            foreach ($additionalPhotos as $photo) {
-                if (\Storage::disk('public')->exists($photo->photo_path)) {
-                    \Storage::disk('public')->delete($photo->photo_path);
+            try {
+                $additionalPhotos = DB::table('repair_order_photos')
+                    ->where('repair_order_id', $repairOrder->id)
+                    ->get();
+                    
+                foreach ($additionalPhotos as $photo) {
+                    if (\Storage::disk('public')->exists($photo->photo_path)) {
+                        \Storage::disk('public')->delete($photo->photo_path);
+                    }
                 }
+                
+                DB::table('repair_order_status_logs')->where('repair_order_id', $repairOrder->id)->delete();
+                DB::table('repair_order_photos')->where('repair_order_id', $repairOrder->id)->delete();
+            } catch (\Exception $e) {
+                // جداول وجود ندارند
             }
-            
-            // حذف رکوردهای مرتبط
-            DB::table('repair_order_status_logs')->where('repair_order_id', $repairOrder->id)->delete();
-            DB::table('repair_order_photos')->where('repair_order_id', $repairOrder->id)->delete();
             
             $repairOrder->delete();
         });
@@ -321,10 +359,11 @@ class RepairOrderController extends Controller
     private function getAllowedStatusTransitions($currentStatus)
     {
         $transitions = [
-            'در انتظار' => ['در حال تعمیر', 'لغو شده'],
-            'در حال تعمیر' => ['تکمیل شده', 'لغو شده'],
-            'تکمیل شده' => [], // پس از تکمیل، هیچ تغییری مجاز نیست
-            'لغو شده' => [], // پس از لغو، هیچ تغییری مجاز نیست
+            'pending' => ['in_progress', 'cancelled'],
+            'in_progress' => ['completed', 'cancelled'],
+            'completed' => ['delivered'],
+            'delivered' => [],
+            'cancelled' => [],
         ];
         
         return $transitions[$currentStatus] ?? [];

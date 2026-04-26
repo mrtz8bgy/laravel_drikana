@@ -11,12 +11,12 @@
         <!-- مالک -->
         <div class="card mb-4">
             <div class="card-header bg-primary text-white">
-                <i class="fas fa-user"></i> اطلاعات مالک
+                👤 اطلاعات مالک
             </div>
             <div class="card-body">
                 <div class="mb-3">
                     <label for="owner_id" class="form-label">مالک جواهر <span class="text-danger">*</span></label>
-                    <select class="form-control select2 @error('owner_id') is-invalid @enderror" 
+                    <select class="form-control @error('owner_id') is-invalid @enderror" 
                             id="owner_id" 
                             name="owner_id" 
                             required>
@@ -42,7 +42,7 @@
         <!-- اطلاعات شناسنامه -->
         <div class="card mb-4">
             <div class="card-header bg-info text-white">
-                <i class="fas fa-file-alt"></i> اطلاعات شناسنامه
+                📄 اطلاعات شناسنامه
             </div>
             <div class="card-body">
                 <div class="mb-3">
@@ -107,7 +107,7 @@
                                     <a href="{{ Storage::url($certificate->certificate_file) }}" 
                                        target="_blank" 
                                        class="btn btn-sm btn-outline-primary">
-                                        <i class="fas fa-eye"></i> مشاهده فایل فعلی
+                                        👁 مشاهده فایل فعلی
                                     </a>
                                 </div>
                             @endif
@@ -123,7 +123,7 @@
         <!-- مشخصات فنی -->
         <div class="card mb-4">
             <div class="card-header bg-warning text-dark">
-                <i class="fas fa-gem"></i> مشخصات فنی جواهر
+                💎 مشخصات فنی جواهر
             </div>
             <div class="card-body">
                 <div class="row">
@@ -210,7 +210,7 @@
         <!-- توضیحات و وضعیت -->
         <div class="card mb-4">
             <div class="card-header bg-secondary text-white">
-                <i class="fas fa-sticky-note"></i> توضیحات و وضعیت
+                📝 توضیحات و وضعیت
             </div>
             <div class="card-body">
                 <div class="mb-3">
@@ -260,25 +260,25 @@
                         : route('admin.jewelry.certificates.index');
                 @endphp
                 <a href="{{ $backUrl }}" class="btn btn-secondary">
-                    <i class="fas fa-times"></i> انصراف
+                    ✖ انصراف
                 </a>
             </div>
             
             <div class="btn-group">
                 @if(isset($certificate) && $certificate->id)
                     <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save"></i> بروزرسانی شناسنامه
+                        💾 بروزرسانی شناسنامه
                     </button>
                 @else
                     <button type="submit" class="btn btn-success">
-                        <i class="fas fa-plus-circle"></i> ثبت شناسنامه جدید
+                        ➕ ثبت شناسنامه جدید
                     </button>
                 @endif
                 
                 @if(isset($certificate) && $certificate->id)
                     <a href="{{ route('admin.jewelry.certificates.print', $certificate) }}" 
                        class="btn btn-outline-info" target="_blank">
-                        <i class="fas fa-print"></i> چاپ
+                        🖨 چاپ
                     </a>
                 @endif
             </div>
@@ -286,19 +286,7 @@
     </div>
 </div>
 
-@push('styles')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <style>
-    .select2-container--default .select2-selection--single {
-        height: calc(2.25rem + 2px);
-        padding: 0.375rem 0.75rem;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        line-height: 1.5;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: calc(2.25rem + 2px);
-    }
     .card {
         border: 1px solid #e0e0e0;
         border-radius: 10px;
@@ -308,83 +296,80 @@
         font-weight: 600;
     }
 </style>
-@endpush
 
-@push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
-    $(document).ready(function() {
-        // فعال‌سازی Select2 برای انتخاب مالک
-        $('#owner_id').select2({
-            placeholder: '-- انتخاب مالک --',
-            allowClear: true,
-            width: '100%'
-        });
-        
+    document.addEventListener('DOMContentLoaded', function() {
         // اعتبارسنجی شماره سریال
-        $('#serial_number').on('blur', function() {
-            const serialNumber = $(this).val().trim();
-            if (serialNumber.length > 0) {
-                // می‌توانید اینجا چک کنید که شماره سریال تکراری نباشد (با AJAX)
-                console.log('Checking serial number:', serialNumber);
-            }
-        });
+        const serialNumberInput = document.getElementById('serial_number');
+        if (serialNumberInput) {
+            serialNumberInput.addEventListener('blur', function() {
+                const serialNumber = this.value.trim();
+                if (serialNumber.length > 0) {
+                    console.log('Checking serial number:', serialNumber);
+                }
+            });
+        }
         
         // تغییرات بر اساس نوع فلز
-        $('#metal_type').change(function() {
-            const metalType = $(this).val();
-            const purityField = $('#purity');
-            
-            if (metalType === 'طلا') {
-                purityField.attr('placeholder', 'مثال: 750 برای طلای ۱۸ عیار');
-            } else if (metalType === 'نقره') {
-                purityField.attr('placeholder', 'مثال: 925 برای نقره استرلینگ');
-            } else if (metalType === 'پلاتین') {
-                purityField.attr('placeholder', 'مثال: 950 برای پلاتین');
-            } else {
-                purityField.attr('placeholder', 'درصد خلوص');
-            }
-        });
+        const metalTypeSelect = document.getElementById('metal_type');
+        const purityField = document.getElementById('purity');
         
-        // پیش‌بارگذاری metal_type
-        if ($('#metal_type').val()) {
-            $('#metal_type').trigger('change');
+        if (metalTypeSelect && purityField) {
+            metalTypeSelect.addEventListener('change', function() {
+                const metalType = this.value;
+                
+                if (metalType === 'طلا') {
+                    purityField.placeholder = 'مثال: 750 برای طلای ۱۸ عیار';
+                } else if (metalType === 'نقره') {
+                    purityField.placeholder = 'مثال: 925 برای نقره استرلینگ';
+                } else if (metalType === 'پلاتین') {
+                    purityField.placeholder = 'مثال: 950 برای پلاتین';
+                } else {
+                    purityField.placeholder = 'درصد خلوص';
+                }
+            });
+            
+            // پیش‌بارگذاری metal_type
+            if (metalTypeSelect.value) {
+                metalTypeSelect.dispatchEvent(new Event('change'));
+            }
         }
         
         // اعتبارسنجی فرم قبل از ارسال
-        $('form').submit(function(e) {
-            const ownerId = $('#owner_id').val();
-            const productName = $('#product_name').val().trim();
-            const serialNumber = $('#serial_number').val().trim();
-            const metalType = $('#metal_type').val();
-            
-            if (!ownerId) {
-                alert('لطفا مالک جواهر را انتخاب کنید.');
-                e.preventDefault();
-                return false;
-            }
-            
-            if (!productName) {
-                alert('لطفا نام محصول را وارد کنید.');
-                e.preventDefault();
-                return false;
-            }
-            
-            if (!serialNumber) {
-                alert('لطفا شماره سریال را وارد کنید.');
-                e.preventDefault();
-                return false;
-            }
-            
-            if (!metalType) {
-                alert('لطفا نوع فلز را انتخاب کنید.');
-                e.preventDefault();
-                return false;
-            }
-            
-            return true;
-        });
+        const form = document.querySelector('form');
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                const ownerId = document.getElementById('owner_id')?.value;
+                const productName = document.getElementById('product_name')?.value.trim();
+                const serialNumber = document.getElementById('serial_number')?.value.trim();
+                const metalType = document.getElementById('metal_type')?.value;
+                
+                if (!ownerId) {
+                    alert('لطفا مالک جواهر را انتخاب کنید.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                if (!productName) {
+                    alert('لطفا نام محصول را وارد کنید.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                if (!serialNumber) {
+                    alert('لطفا شماره سریال را وارد کنید.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                if (!metalType) {
+                    alert('لطفا نوع فلز را انتخاب کنید.');
+                    e.preventDefault();
+                    return false;
+                }
+                
+                return true;
+            });
+        }
     });
 </script>
-@endpush

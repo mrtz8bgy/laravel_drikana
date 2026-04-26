@@ -11,9 +11,17 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
+    {{-- فونت سیستمی جایگزین Nunito - بدون نیاز به اینترنت --}}
+    <style>
+        body, button, input, select, textarea {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Nunito", "Helvetica Neue", Arial, sans-serif;
+        }
+    </style>
+
+    {{-- لینک‌های فونت گوگل کاملاً حذف شدند
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    --}}
 
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">

@@ -46,23 +46,6 @@ class HomeController extends Controller
         return view('frontend.user_registration');
     }
 
-    // public function user_login(Request $request)
-    // {
-    //     $user = User::whereIn('user_type', ['customer', 'seller'])->where('email', $request->email)->first();
-    //     if($user != null){
-    //         if(Hash::check($request->password, $user->password)){
-    //             if($request->has('remember')){
-    //                 auth()->login($user, true);
-    //             }
-    //             else{
-    //                 auth()->login($user, false);
-    //             }
-    //             return redirect()->route('dashboard');
-    //         }
-    //     }
-    //     return back();
-    // }
-
     public function cart_login(Request $request)
     {
         $user = User::whereIn('user_type', ['customer', 'seller'])->where('email', $request->email)->first();
@@ -227,6 +210,162 @@ class HomeController extends Controller
         return view('frontend.partials.best_sellers_section');
     }
 
+    // ============================================
+    // 🆕 بخش‌های جدید محصولات (New Product Sections)
+    // ============================================
+
+    /**
+     * نمایش محصولات ویژه (Featured Products)
+     */
+    public function featured_products()
+    {
+        $products = filter_products(Product::where('published', 1)->where('featured', 1))->paginate(24);
+        return view('frontend.product_listing', compact('products'));
+    }
+
+    /**
+     * نمایش پرفروش‌ترین محصولات (Best Selling Products)
+     */
+    public function best_selling_products()
+    {
+        $products = filter_products(Product::where('published', 1)->orderBy('num_of_sale', 'desc'))->paginate(24);
+        return view('frontend.product_listing', compact('products'));
+    }
+
+    /**
+     * نمایش جدیدترین محصولات (New Arrivals)
+     */
+    public function new_products()
+    {
+        $products = filter_products(Product::where('published', 1)->orderBy('created_at', 'desc'))->paginate(24);
+        return view('frontend.product_listing', compact('products'));
+    }
+
+    /**
+     * نمایش محصولات با تخفیف (Discounted Products)
+     */
+    public function discounted_products()
+    {
+        $products = filter_products(Product::where('published', 1)->where('discount', '>', 0))->paginate(24);
+        return view('frontend.product_listing', compact('products'));
+    }
+
+    /**
+     * نمایش جواهرات مردانه (Men's Jewelry)
+     */
+    public function mens_jewelry()
+    {
+        // جستجو در دسته‌بندی‌ها و تگ‌های مرتبط با مردانه
+        $menCategory = Category::where('slug', 'like', '%men%')
+            ->orWhere('slug', 'like', '%male%')
+            ->orWhere('name', 'like', '%مردانه%')
+            ->first();
+        
+        if($menCategory){
+            $products = filter_products(Product::where('published', 1)->where('category_id', $menCategory->id))->paginate(24);
+        } else {
+            $products = filter_products(Product::where('published', 1)
+                ->where(function($q) {
+                    $q->where('tags', 'like', '%مردانه%')
+                      ->orWhere('tags', 'like', '%men%')
+                      ->orWhere('name', 'like', '%مردانه%');
+                }))->paginate(24);
+        }
+        return view('frontend.product_listing', compact('products'));
+    }
+
+    /**
+     * نمایش جواهرات زنانه (Women's Jewelry)
+     */
+    public function womens_jewelry()
+    {
+        // جستجو در دسته‌بندی‌ها و تگ‌های مرتبط با زنانه
+        $womenCategory = Category::where('slug', 'like', '%women%')
+            ->orWhere('slug', 'like', '%female%')
+            ->orWhere('name', 'like', '%زنانه%')
+            ->first();
+        
+        if($womenCategory){
+            $products = filter_products(Product::where('published', 1)->where('category_id', $womenCategory->id))->paginate(24);
+        } else {
+            $products = filter_products(Product::where('published', 1)
+                ->where(function($q) {
+                    $q->where('tags', 'like', '%زنانه%')
+                      ->orWhere('tags', 'like', '%women%')
+                      ->orWhere('name', 'like', '%زنانه%');
+                }))->paginate(24);
+        }
+        return view('frontend.product_listing', compact('products'));
+    }
+
+    /**
+     * نمایش محبوب‌ترین محصولات (Most Popular)
+     */
+    public function popular_products()
+    {
+        $products = filter_products(Product::where('published', 1)->orderBy('num_of_sale', 'desc'))->paginate(24);
+        return view('frontend.product_listing', compact('products'));
+    }
+
+    /**
+     * نمایش محصولات با بالاترین امتیاز (Top Rated)
+     */
+    public function top_rated_products()
+    {
+        $products = filter_products(Product::where('published', 1)->orderBy('rating', 'desc'))->paginate(24);
+        return view('frontend.product_listing', compact('products'));
+    }
+
+    /**
+     * بارگذاری بیشتر محصولات با AJAX (Load More)
+     */
+    public function loadMoreProducts(Request $request)
+    {
+        $page = $request->get('page', 1);
+        $type = $request->get('type', 'all');
+        
+        switch($type) {
+            case 'featured':
+                $products = filter_products(Product::where('published', 1)->where('featured', 1))->paginate(12, ['*'], 'page', $page);
+                break;
+            case 'best_selling':
+                $products = filter_products(Product::where('published', 1)->orderBy('num_of_sale', 'desc'))->paginate(12, ['*'], 'page', $page);
+                break;
+            case 'new':
+                $products = filter_products(Product::where('published', 1)->orderBy('created_at', 'desc'))->paginate(12, ['*'], 'page', $page);
+                break;
+            case 'discounted':
+                $products = filter_products(Product::where('published', 1)->where('discount', '>', 0))->paginate(12, ['*'], 'page', $page);
+                break;
+            case 'mens':
+                $menCategory = Category::where('slug', 'like', '%men%')->orWhere('name', 'like', '%مردانه%')->first();
+                if($menCategory){
+                    $products = filter_products(Product::where('published', 1)->where('category_id', $menCategory->id))->paginate(12, ['*'], 'page', $page);
+                } else {
+                    $products = filter_products(Product::where('published', 1)->where('tags', 'like', '%مردانه%'))->paginate(12, ['*'], 'page', $page);
+                }
+                break;
+            case 'womens':
+                $womenCategory = Category::where('slug', 'like', '%women%')->orWhere('name', 'like', '%زنانه%')->first();
+                if($womenCategory){
+                    $products = filter_products(Product::where('published', 1)->where('category_id', $womenCategory->id))->paginate(12, ['*'], 'page', $page);
+                } else {
+                    $products = filter_products(Product::where('published', 1)->where('tags', 'like', '%زنانه%'))->paginate(12, ['*'], 'page', $page);
+                }
+                break;
+            default:
+                $products = filter_products(Product::where('published', 1))->paginate(12, ['*'], 'page', $page);
+        }
+        
+        if ($request->ajax()) {
+            return view('frontend.partials.product_grid', compact('products'))->render();
+        }
+        
+        return $products;
+    }
+
+    // ============================================
+
     public function trackOrder(Request $request)
     {
         if($request->has('order_code')){
@@ -253,7 +392,6 @@ class HomeController extends Controller
             else {
                 return view('frontend.product_details', compact('detailedProduct'));
             }
-            // return view('frontend.product_details', compact('detailedProduct'));
         }
         abort(404);
     }
@@ -284,8 +422,6 @@ class HomeController extends Controller
 
     public function listing(Request $request)
     {
-        // $products = filter_products(Product::orderBy('created_at', 'desc'))->paginate(12);
-        // return view('frontend.product_listing', compact('products'));
         return $this->search($request);
     }
 
@@ -294,6 +430,7 @@ class HomeController extends Controller
         $categories = Category::all();
         return view('frontend.all_category', compact('categories'));
     }
+    
     public function all_brands(Request $request)
     {
         $categories = Category::all();
@@ -413,16 +550,13 @@ class HomeController extends Controller
                     $products->orderBy('unit_price', 'desc');
                     break;
                 default:
-                    // code...
                     break;
             }
         }
 
-
         $non_paginate_products = filter_products($products)->get();
 
         //Attribute Filter
-
         $attributes = array();
         foreach ($non_paginate_products as $key => $product) {
             if($product->attributes != null && is_array(json_decode($product->attributes))){
@@ -477,7 +611,6 @@ class HomeController extends Controller
             }
         }
 
-
         //Color Filter
         $all_colors = array();
 
@@ -498,7 +631,6 @@ class HomeController extends Controller
             $products = $products->where('colors', 'like', '%'.$str.'%');
             $selected_color = $request->color;
         }
-
 
         $products = filter_products($products)->paginate(12)->appends(request()->query());
 
@@ -567,8 +699,6 @@ class HomeController extends Controller
                 }
             }
         }
-
-
 
         if($str != null && $product->variant_product){
             $product_stock = $product->stocks->where('variant', $str)->first();
@@ -656,6 +786,7 @@ class HomeController extends Controller
         $products = Product::where('user_id', Auth::user()->id)->where('digital', 1)->orderBy('created_at', 'desc')->paginate(10);
         return view('frontend.seller.digitalproducts.products', compact('products'));
     }
+    
     public function show_digital_product_upload_form(Request $request)
     {
         $business_settings = BusinessSetting::where('type', 'digital_product_upload')->first();
@@ -670,5 +801,3 @@ class HomeController extends Controller
         return view('frontend.seller.digitalproducts.product_edit', compact('categories', 'product'));
     }
 }
-
-

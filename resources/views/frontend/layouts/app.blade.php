@@ -47,8 +47,16 @@
 <!-- Favicon -->
 <link type="image/x-icon" href="{{ asset(\App\GeneralSetting::first()->favicon) }}" rel="shortcut icon" />
 
-<!-- Fonts -->
+<!-- فونت سیستمی به جای فونت گوگل -->
+<style>
+    body, button, input, select, textarea {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "IranSans", Tahoma, sans-serif;
+    }
+</style>
+
+{{-- لینک فونت گوگل کامنت شد - برای رفع مشکل کندی سایت
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
+--}}
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}" type="text/css" media="all">
@@ -90,11 +98,14 @@
 <!-- jQuery -->
 <script src="{{ asset('frontend/js/vendor/jquery.min.js') }}"></script>
 
+{{-- =============================================== --}}
+{{-- بخش سرویس‌های خارجی - همگی غیرفعال شدند --}}
+{{-- برای فعال کردن مجدد، کامنت‌ها را بردارید --}}
+{{-- =============================================== --}}
 
+{{-- Google Analytics - غیرفعال شد
 @if (\App\BusinessSetting::where('type', 'google_analytics')->first()->value == 1)
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('TRACKING_ID') }}"></script>
-
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -102,9 +113,10 @@
       gtag('config', '{{ env('TRACKING_ID') }}');
     </script>
 @endif
+--}}
 
+{{-- Facebook Pixel - غیرفعال شد
 @if (\App\BusinessSetting::where('type', 'facebook_pixel')->first()->value == 1)
-<!-- Facebook Pixel Code -->
 <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -121,8 +133,8 @@
   <img height="1" width="1" style="display:none"
        src="https://www.facebook.com/tr?id={{ env('FACEBOOK_PIXEL_ID') }}/&ev=PageView&noscript=1"/>
 </noscript>
-<!-- End Facebook Pixel Code -->
 @endif
+--}}
 
 </head>
 <body>
@@ -140,14 +152,15 @@
 
     @include('frontend.partials.modal')
 
+    {{-- Facebook Chat - غیرفعال شد
     @if (\App\BusinessSetting::where('type', 'facebook_chat')->first()->value == 1)
         <div id="fb-root"></div>
-        <!-- Your customer chat code -->
         <div class="fb-customerchat"
           attribution=setup_tool
           page_id="{{ env('FACEBOOK_PAGE_ID') }}">
         </div>
     @endif
+    --}}
 
     <div class="modal fade" id="addToCart">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document">
@@ -209,7 +222,9 @@
 <script src="{{ asset('frontend/js/bootstrap-tagsinput.min.js') }}"></script>
 <script src="{{ asset('frontend/js/jodit.min.js') }}"></script>
 <script src="{{ asset('frontend/js/xzoom.min.js') }}"></script>
+{{-- Facebook script - غیرفعال شد
 <script src="{{ asset('frontend/js/fb-script.js') }}"></script>
+--}}
 <script src="{{ asset('frontend/js/lazysizes.min.js') }}"></script>
 <script src="{{ asset('frontend/js/intlTelInput.min.js') }}"></script>
 <script src="{{ asset('js/jquery.md.bootstrap.datetimepicker.js') }}"></script>
@@ -277,7 +292,7 @@
                 if(data == '0'){
                     // $('.typed-search-box').addClass('d-none');
                     $('#search-content').html(null);
-                    $('.typed-search-box .search-nothing').removeClass('d-none').html('"نتیجه ای برای جستجوی  <strong>"'+search+'"</strong> یافت نشد!');
+                    $('.typed-search-box .search-nothing').removeClass('d-none').html('"نتیجه ای برای جستجوی  <strong>"'+search+'</strong> یافت نشد!');
                     $('.search-preloader').addClass('d-none');
 
                 }

@@ -1,11 +1,11 @@
 <div style="margin-left:auto;margin-right:auto;">
 <style media="all">
-	@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+	/* فونت سیستمی جایگزین Open Sans - بدون نیاز به اینترنت */
 	*{
 		margin: 0;
 		padding: 0;
 		line-height: 1.5;
-		font-family: 'Open Sans', sans-serif;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", "Helvetica Neue", Arial, sans-serif;
 		color: #333542;
 	}
 	div{
@@ -53,7 +53,7 @@
 	@endphp
 
 	<div style="background: #eceff4;padding: 1.5rem;">
-		<table>
+		<tr>
 			<tr>
 				<td>
 					@if($generalsetting->logo != null)
@@ -64,7 +64,6 @@
 				</td>
 			</tr>
 		</table>
-
 	</div>
 
 	<div style="border-bottom:1px solid #eceff4;margin: 0 1.5rem;"></div>

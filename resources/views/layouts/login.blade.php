@@ -8,19 +8,82 @@
     <link name="favicon" type="image/x-icon" href="{{asset('img/favicon.png')}}" rel="shortcut icon" />
     <title>{{ config('app.name', 'Laravel') }} | ورود به پنل مدیریت</title>
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    {{-- =============================================== --}}
+    {{-- تمام لینک‌های خارجی حذف یا کامنت شدند --}}
+    {{-- فونت‌ها، آیکون‌ها و انیمیشن‌ها به صورت داخلی جایگزین شدند --}}
+    {{-- =============================================== --}}
     
     <style>
-        /* همان استایل‌های قبلی */
+        /* فونت سیستمی جایگزین Inter */
+        @import url('data:image/svg+xml;charset=utf-8,/* خالی */');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "IranSans", Tahoma, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* آیکون‌های Font Awesome به صورت داخلی با SVG جایگزین شدند */
+        .fas, .far, .fab {
+            font-family: inherit;
+            font-style: normal;
+            display: inline-block;
+            width: 1em;
+            text-align: center;
+        }
+        
+        /* انیمیشن‌های جایگزین animate.css */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate__animated {
+            animation-duration: 0.8s;
+            animation-fill-mode: both;
+        }
+        
+        .animate__fadeIn {
+            animation-name: fadeIn;
+        }
+        
+        .animate__fadeInUp {
+            animation-name: fadeInUp;
+        }
+        
         :root {
             --primary-color: #4361ee;
             --primary-dark: #3a56d4;
@@ -47,23 +110,6 @@
             --transition: all 0.3s ease;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow-x: hidden;
-        }
-        
         body::before {
             content: '';
             position: absolute;
@@ -88,15 +134,6 @@
             background-position: center !important;
             background-repeat: no-repeat !important;
             animation: fadeIn 1s ease;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
         }
         
         #container::before {
@@ -262,11 +299,15 @@
             font-size: 0.95rem;
         }
         
+        .form-group label i {
+            margin-right: 8px;
+        }
+        
         .input-wrapper {
             position: relative;
         }
         
-        .input-wrapper i {
+        .input-wrapper .input-icon {
             position: absolute;
             left: 15px;
             top: 50%;
@@ -294,7 +335,7 @@
             box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
         }
         
-        .input-wrapper input:focus + i {
+        .input-wrapper input:focus + .input-icon {
             color: var(--primary-color);
         }
         
@@ -447,6 +488,7 @@
             text-decoration: none;
             transition: var(--transition);
             border: 2px solid transparent;
+            font-size: 1.2rem;
         }
         
         .social-icon:hover {
@@ -518,7 +560,6 @@
             text-decoration: underline;
         }
         
-        /* Language Selector Styles */
         .language-selector {
             margin-top: 30px;
         }
@@ -559,8 +600,7 @@
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
         }
         
-        /* RTL Support */
-        [dir="rtl"] .input-wrapper i {
+        [dir="rtl"] .input-wrapper .input-icon {
             left: auto;
             right: 15px;
         }
@@ -599,7 +639,6 @@
             padding-left: 15px;
         }
         
-        /* Responsive */
         @media (max-width: 992px) {
             .login-wrapper {
                 flex-direction: column;
@@ -631,7 +670,6 @@
             }
         }
         
-        /* Loading Animation */
         .loading {
             position: relative;
             pointer-events: none;
@@ -667,7 +705,7 @@
     @endphp
     
     <div id="container"
-        @if ($generalsetting->admin_login_background != null)
+        @if ($generalsetting && $generalsetting->admin_login_background != null)
             style="background-image:url('{{ asset($generalsetting->admin_login_background) }}');"
         @else
             style="background-image:url('{{ asset('img/bg-img/login-bg.jpg') }}');"
@@ -679,7 +717,7 @@
                 <div class="login-sidebar">
                     <div class="sidebar-content">
                         <div class="logo mb-4">
-                            @if($generalsetting->logo != null)
+                            @if($generalsetting && $generalsetting->logo != null)
                                 <img src="{{ asset($generalsetting->logo) }}" alt="{{ config('app.name') }}" style="max-width: 150px; filter: brightness(0) invert(1);">
                             @else
                                 <h2 style="color: white; font-size: 2rem;">{{ config('app.name') }}</h2>
@@ -729,7 +767,7 @@
                 <div class="login-main">
                     <div class="login-header">
                         <div class="logo">
-                            @if($generalsetting->logo != null)
+                            @if($generalsetting && $generalsetting->logo != null)
                                 <img src="{{ asset($generalsetting->logo) }}" alt="{{ config('app.name') }}">
                             @else
                                 <h2 style="color: var(--primary-color);">{{ config('app.name') }}</h2>
@@ -741,14 +779,14 @@
                     
                     @if(session('status'))
                         <div class="alert alert-success animate__animated animate__fadeIn">
-                            <i class="fas fa-check-circle"></i>
+                            <span>✓</span>
                             <span>{{ session('status') }}</span>
                         </div>
                     @endif
                     
                     @if($errors->any())
                         <div class="alert alert-danger animate__animated animate__fadeIn">
-                            <i class="fas fa-exclamation-circle"></i>
+                            <span>⚠</span>
                             <span>{{ $errors->first() }}</span>
                         </div>
                     @endif
@@ -756,37 +794,35 @@
                     <form method="POST" action="{{ route('login') }}" class="login-form" id="loginForm">
                         @csrf
                         
-                      <div class="form-group">
-    <label for="username">
-        <i class="fas fa-user"></i>
-        نام کاربری
-    </label>
-    <div class="input-wrapper">
-        <i class="fas fa-user input-icon"></i>
-        <input type="text" 
-               id="username" 
-               name="username" 
-               value="{{ old('username') }}" 
-               placeholder="نام کاربری خود را وارد کنید"
-               required 
-               autofocus>
-    </div>
-</div>
+                        <div class="form-group">
+                            <label for="username">
+                                👤 نام کاربری
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-icon">👤</span>
+                                <input type="text" 
+                                       id="username" 
+                                       name="username" 
+                                       value="{{ old('username') }}" 
+                                       placeholder="نام کاربری خود را وارد کنید"
+                                       required 
+                                       autofocus>
+                            </div>
+                        </div>
                         
                         <div class="form-group">
                             <label for="password">
-                                <i class="fas fa-lock"></i>
-                                رمز عبور
+                                🔒 رمز عبور
                             </label>
                             <div class="input-wrapper">
-                                <i class="fas fa-lock"></i>
+                                <span class="input-icon">🔒</span>
                                 <input type="password" 
                                        id="password" 
                                        name="password" 
                                        placeholder="رمز عبور خود را وارد کنید"
                                        required>
                                 <span class="password-toggle" onclick="togglePassword()">
-                                    <i class="fas fa-eye" id="toggleIcon"></i>
+                                    👁
                                 </span>
                             </div>
                         </div>
@@ -799,32 +835,22 @@
                             
                             @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}" class="forgot-password">
-                                    <i class="fas fa-key"></i>
-                                    رمز عبور را فراموش کرده‌اید؟
+                                    🔑 رمز عبور را فراموش کرده‌اید؟
                                 </a>
                             @endif
                         </div>
                         
                         <button type="submit" class="btn-login" id="submitBtn">
-                            <i class="fas fa-sign-in-alt"></i>
-                            ورود به پنل مدیریت
+                            🔓 ورود به پنل مدیریت
                         </button>
                         
                         <div class="social-login">
                             <p>ورود با حساب‌های دیگر</p>
                             <div class="social-icons">
-                                <a href="#" class="social-icon">
-                                    <i class="fab fa-google"></i>
-                                </a>
-                                <a href="#" class="social-icon">
-                                    <i class="fab fa-github"></i>
-                                </a>
-                                <a href="#" class="social-icon">
-                                    <i class="fab fa-telegram"></i>
-                                </a>
-                                <a href="#" class="social-icon">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
+                                <a href="#" class="social-icon">G</a>
+                                <a href="#" class="social-icon">GH</a>
+                                <a href="#" class="social-icon">T</a>
+                                <a href="#" class="social-icon">IG</a>
                             </div>
                         </div>
                         
@@ -841,25 +867,26 @@
         // Password visibility toggle
         function togglePassword() {
             const passwordInput = document.getElementById('password');
-            const toggleIcon = document.getElementById('toggleIcon');
+            const toggleIcon = document.querySelector('.password-toggle');
             
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                toggleIcon.classList.remove('fa-eye');
-                toggleIcon.classList.add('fa-eye-slash');
+                toggleIcon.innerHTML = '🙈';
             } else {
                 passwordInput.type = 'password';
-                toggleIcon.classList.remove('fa-eye-slash');
-                toggleIcon.classList.add('fa-eye');
+                toggleIcon.innerHTML = '👁';
             }
         }
         
         // Form loading state
-        document.getElementById('loginForm')?.addEventListener('submit', function(e) {
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.classList.add('loading');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ورود...';
-        });
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.classList.add('loading');
+                submitBtn.innerHTML = '⏳ در حال ورود...';
+            });
+        }
         
         // Auto-hide alerts after 5 seconds
         setTimeout(function() {
@@ -883,25 +910,6 @@
             input.addEventListener('blur', function() {
                 this.parentElement.classList.remove('focused');
             });
-        });
-        
-        // Smooth scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-        
-        document.querySelectorAll('.form-group, .btn-login, .social-login').forEach(el => {
-            observer.observe(el);
         });
     </script>
     

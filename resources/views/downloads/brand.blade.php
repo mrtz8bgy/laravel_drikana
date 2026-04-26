@@ -1,11 +1,11 @@
 <div style="margin-left:auto;margin-right:auto;">
 <style media="all">
-	@import url('https://fonts.googleapis.com/css?family=Dejavu+Sans:400,700');
+	/* فونت سیستمی جایگزین Dejavu Sans */
 	*{
 		margin: 0;
 		padding: 0;
 		line-height: 1.5;
-		font-family: 'Dejavu Sans', sans-serif;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 		color: #333542;
 	}
 	div{
@@ -64,7 +64,6 @@
 				</td>
 			</tr>
 		</table>
-
 	</div>
 
 	<div style="border-bottom:1px solid #eceff4;margin: 0 1.5rem;"></div>

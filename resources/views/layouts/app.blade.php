@@ -11,9 +11,17 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
+    <!-- فونت سیستمی به جای فونت گوگل -->
+    <style>
+        body, button, input, select, textarea {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, Tahoma, sans-serif;
+        }
+    </style>
+
+    {{-- لینک‌های فونت گوگل - کاملاً غیرفعال شدند
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    --}}
 
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
     <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
@@ -154,7 +162,7 @@
 
     </script>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    {{-- Google Analytics - غیرفعال شد
     @if (\App\BusinessSetting::where('type', 'google_analytics')->first()->value == 1)
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133955404-1"></script>
 
@@ -165,7 +173,7 @@
           gtag('config', @php env('TRACKING_ID') @endphp);
         </script>
     @endif
-
+    --}}
 
 </head>
 <body>

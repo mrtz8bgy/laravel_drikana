@@ -6,100 +6,75 @@
    - دسترس‌پذیری: focus-visible
    - تصاویر پاسخگو و تنظیمات پایه فرم
    - سایه‌ی سطحی ملایم و اصلاح فونت-سایز
+   ==========================
 */
 
 :root {
-    /* رنگ‌ها */
+    /* رنگ‌ها - طلایی و آبی سلطنتی برای جواهرات */
     --gold: #D4AF37;
-    /* طلایی ملایم */
-    --bg: #ffffff;
-    --text: #222222;
-    /* متن اصلی */
-    --muted: #6b6b6b;
-    /* متن کم‌اهمیت */
-    --surface: #f8f8f8;
-    --border: #e9e9e9;
-    --elev-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    --gold-dark: #B8960C;
+    --gold-light: #F5E18B;
+    --navy: #121E3A;
+    --navy-dark: #0A1428;
+    --navy-light: #1A2A4F;
+    --bg: #121E3A;
+    --text: #F5E18B;
+    --muted: #A0A8B8;
+    --surface: #1A2A4F;
+    --border: rgba(212, 175, 55, 0.2);
+    --elev-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 
     /* فواصل و اندازه‌ها */
     --radius: 8px;
     --container-max: 98%;
 }
 
-.btn-primary {
-    /* دکمه اصلی طلایی‌تر برای خوانایی بهتر */
-    background: var(--gold);
-    background-image: linear-gradient(180deg, var(--gold), #b58f2a);
-    color: #111;
-    border: 0;
-    padding: .75rem 1rem;
-    border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    font-weight: 800;
-    min-width: 140px;
-    text-align: center;
-    transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+    transition-property: color, background-color, opacity, transform;
+    transition-duration: .18s;
+    transition-timing-function: cubic-bezier(.2, .9, .3, 1);
 }
 
-.btn-primary:hover {
-    filter: brightness(.95);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.12);
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 1px solid var(--border);
+body {
+    background-color: var(--navy);
     color: var(--text);
-    padding: .6rem .9rem;
-    border-radius: 8px;
+    font-family: 'Vazir', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
 }
 
-.btn-outline-gold {
-    background: transparent;
-    border: 1px solid rgba(212, 175, 55, 0.28);
-    color: var(--gold);
-    padding: .6rem .9rem;
-    border-radius: 8px;
+/* تایپوگرافی */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--gold-light);
 }
 
-.btn:focus-visible {
-    outline: 3px solid rgba(212, 175, 55, 0.18);
-    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.08);
-}
-
-margin: 0 0 .5rem 0;
-font-weight: 600;
-line-height: 1.2
-}
-
-h1 {
-    font-size: 1.75rem
-}
-
-h2 {
-    font-size: 1.375rem
-}
-
-h3 {
-    font-size: 1.125rem
-}
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.375rem; }
+h3 { font-size: 1.125rem; }
+h4 { font-size: 1rem; }
 
 p {
     margin: 0 0 1rem 0;
-    color: var(--muted)
+    color: var(--muted);
 }
 
 /* لینک‌ها */
 a {
     color: var(--gold);
     text-decoration: none;
-    transition: color .18s ease, opacity .18s ease
+    transition: color .18s ease, opacity .18s ease;
 }
-
 a:hover {
-    color: #b88f2a;
-    opacity: .95
+    color: var(--gold-light);
+    opacity: .95;
 }
 
 /* کانتینر */
@@ -107,7 +82,7 @@ a:hover {
     width: 100%;
     max-width: var(--container-max);
     margin: 0 auto;
-    padding: 0 1rem
+    padding: 0 1rem;
 }
 
 /* سطوح و کارت‌ها */
@@ -115,46 +90,99 @@ a:hover {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    box-shadow: var(--elev-shadow)
+    box-shadow: var(--elev-shadow);
 }
 
-/* دکمه پایه (جزئیات در مرحله 5) */
+/* دکمه پایه */
 .btn {
     display: inline-block;
-    padding: .6rem 1rem;
+    padding: 0.6rem 1rem;
     border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
-    text-align: center
+    text-align: center;
+    font-family: 'Vazir', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--navy-dark);
+    border: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.3);
+    font-weight: 800;
+    min-width: 140px;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    filter: brightness(0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(212, 175, 55, 0.4);
+    color: var(--navy-dark);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+}
+
+.btn-secondary:hover {
+    background: rgba(212, 175, 55, 0.1);
+    border-color: var(--gold);
+    color: var(--gold-light);
+}
+
+.btn-outline-gold {
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    color: var(--gold);
+    padding: 0.6rem 0.9rem;
+    border-radius: 8px;
+}
+
+.btn-outline-gold:hover {
+    background: var(--gold);
+    color: var(--navy-dark);
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgba(212, 175, 55, 0.18);
+    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.08);
 }
 
 /* عناصر تصویری و مدیا */
-img,
-svg,
-video,
-picture {
+img, svg, video, picture {
     max-width: 100%;
     height: auto;
-    display: block
+    display: block;
 }
 
 /* فرم‌ها: پایه‌ای و قابل خواندن */
-input,
-button,
-textarea,
-select {
+input, button, textarea, select {
     font-family: inherit;
-    font-size: 1rem
+    font-size: 1rem;
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.25);
 }
 
 /* دستورات کمکی */
-.muted {
-    color: var(--muted)
-}
-
-.text-center {
-    text-align: center
-}
+.muted { color: var(--muted); }
+.text-center { text-align: center; }
 
 .visually-hidden {
     position: absolute !important;
@@ -162,77 +190,43 @@ select {
     width: 1px;
     overflow: hidden;
     clip: rect(1px, 1px, 1px, 1px);
-    white-space: nowrap
+    white-space: nowrap;
 }
 
-.spacer-sm {
-    height: 8px
-}
-
-.spacer {
-    height: 16px
-}
-
-.spacer-lg {
-    height: 32px
-}
+.spacer-sm { height: 8px; }
+.spacer { height: 16px; }
+.spacer-lg { height: 32px; }
 
 /* دسترس‌پذیری فوکوس */
-:focus {
-    outline: none
-}
-
+:focus { outline: none; }
 :focus-visible {
     outline: 3px solid rgba(212, 175, 55, 0.14);
     box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.08);
-    border-radius: 6px
-}
-
-/* محدود کردن transition به خواص سبک و پرهیز از اعمال عمومی سنگین */
-*,
-:before,
-:after {
-    transition-property: color, background-color, opacity, transform;
-    transition-duration: .18s;
-    transition-timing-function: cubic-bezier(.2, .9, .3, 1)
+    border-radius: 6px;
 }
 
 /* کاربرانی که reduced motion را ترجیح می‌دهند */
 @media (prefers-reduced-motion: reduce) {
-
-    *,
-    :before,
-    :after {
+    *, *:before, *:after {
         transition: none !important;
-        animation: none !important
+        animation: none !important;
     }
 }
 
-/* تنظیمات ریسپانسیو — افزایش سایز فونت در تبلت/دسکتاپ */
-@media(min-width:768px) {
-    body {
-        font-size: 16px
-    }
-
-    h1 {
-        font-size: 2rem
-    }
+/* تنظیمات ریسپانسیو */
+@media (min-width: 768px) {
+    body { font-size: 16px; }
+    h1 { font-size: 2rem; }
 }
-
-/* پایان استایل پایه بهینه‌شده */
 
 /* ==========================
      هدر و منوی اصلی — مرحله 2️⃣
-     - موبایل‌اول، مینیمال، حس لوکس
-     - استفاده از متغیرهای تم
-     - دسترسی: اندازه کلیک مناسب و focus-visible
      ==========================
 */
 
-/* بخش کلی هدر */
 .site-header {
     width: 100%;
-    background: var(--bg);
+    background: var(--navy-dark);
     border-bottom: 1px solid var(--border);
     position: relative;
     z-index: 1200;
@@ -243,45 +237,43 @@ select {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding: .6rem 1rem;
+    padding: 0.6rem 1rem;
 }
 
-/* لوگو */
 .site-logo {
     display: flex;
     align-items: center;
-    gap: .5rem
+    gap: 0.5rem;
 }
 
 .site-logo img {
     height: 40px;
     width: auto;
-    display: block
+    display: block;
 }
 
 .site-logo .brand-name {
     font-weight: 700;
-    color: var(--text);
-    letter-spacing: .2px
+    color: var(--gold);
+    letter-spacing: 0.2px;
 }
 
-/* دکمه هَمبورگر برای موبایل */
 .nav-toggle {
     background: transparent;
     border: 0;
-    padding: .4rem;
+    padding: 0.4rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer
+    cursor: pointer;
 }
 
 .nav-toggle .icon {
     width: 22px;
     height: 2px;
-    background: var(--text);
+    background: var(--gold);
     display: block;
-    position: relative
+    position: relative;
 }
 
 .nav-toggle .icon:before,
@@ -291,20 +283,14 @@ select {
     left: 0;
     right: 0;
     height: 2px;
-    background: var(--text)
+    background: var(--gold);
 }
 
-.nav-toggle .icon:before {
-    top: -7px
-}
+.nav-toggle .icon:before { top: -7px; }
+.nav-toggle .icon:after { bottom: -7px; }
 
-.nav-toggle .icon:after {
-    bottom: -7px
-}
-
-/* ناوبری اصلی — موبایل: پنهان، دسکتاپ: افقی */
 .main-nav {
-    display: none
+    display: none;
 }
 
 .main-nav ul {
@@ -313,28 +299,27 @@ select {
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: .25rem
+    gap: 0.25rem;
 }
 
 .main-nav a {
     display: block;
-    padding: .6rem 1rem;
+    padding: 0.6rem 1rem;
     color: var(--text);
-    border-radius: 6px
+    border-radius: 6px;
 }
 
 .main-nav a:hover {
-    background: rgba(212, 175, 55, 0.06);
-    color: var(--text)
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold);
 }
 
-/* پنجره منوی موبایل (بک‌درپ) */
 .mobile-nav-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 1190;
-    display: none
+    display: none;
 }
 
 .mobile-nav-panel {
@@ -342,101 +327,100 @@ select {
     top: 0;
     right: 0;
     left: 0;
-    background: var(--bg);
+    background: var(--navy);
     z-index: 1200;
     padding: 1rem;
     box-shadow: var(--elev-shadow);
-    display: none
+    display: none;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.header-actions .icon-btn {
+    background: transparent;
+    border: 0;
+    padding: 0.45rem;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--gold);
+}
+
+.header-actions .icon-btn:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold-light);
 }
 
 /* ناوبری دسکتاپ */
-@media(min-width:768px) {
-    .nav-toggle {
-        display: none
-    }
-
-    .main-nav {
-        display: block
-    }
-
-    .main-nav ul {
-        flex-direction: row;
-        gap: 1rem
-    }
-
-    .main-nav a {
-        padding: .5rem .6rem
-    }
+@media (min-width: 768px) {
+    .nav-toggle { display: none; }
+    .main-nav { display: block; }
+    .main-nav ul { flex-direction: row; gap: 1rem; }
+    .main-nav a { padding: 0.5rem 0.6rem; }
 }
 
 /* dropdown سبک برای آیتم‌های منو */
-.main-nav .has-dropdown {
-    position: relative
-}
-
+.main-nav .has-dropdown { position: relative; }
 .main-nav .dropdown {
     position: absolute;
     top: calc(100% + 8px);
     left: 0;
     min-width: 180px;
-    background: var(--bg);
+    background: var(--navy-light);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: .5rem;
+    padding: 0.5rem;
     box-shadow: var(--elev-shadow);
-    display: none
+    display: none;
 }
-
-.main-nav .has-dropdown:focus-within>.dropdown,
-.main-nav .has-dropdown:hover>.dropdown {
-    display: block
+.main-nav .has-dropdown:hover > .dropdown,
+.main-nav .has-dropdown:focus-within > .dropdown {
+    display: block;
 }
-
 .main-nav .dropdown a {
-    padding: .45rem .75rem;
+    padding: 0.45rem 0.75rem;
     color: var(--text);
     display: block;
-    border-radius: 6px
+    border-radius: 6px;
 }
-
-/* عناصر کمکی در هدر */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: .5rem
+.main-nav .dropdown a:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--gold);
 }
 
 /* ==========================
      کارت محصولات — مرحله 3️⃣
-     - طرح مینیمال، تصاویر برجسته، تایپوگرافی واضح
-     - مناسب طلا و جواهر: فضای سفید، رنگ طلایی ملایم برای تاکید
-     - موبایل-اول و ریسپانسیو
      ==========================
 */
 
 .product-card-2 {
-    background: var(--bg);
-    border-radius: 12px;
+    background: var(--navy-light);
+    border-radius: 1px;
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.04);
-    transition: transform .18s ease, box-shadow .18s ease;
+    border: 1px solid var(--border);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+    height: 100%;
 }
 
 .product-card-2:hover {
     transform: translateY(-6px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08)
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+    border-color: var(--gold);
 }
 
 .product-card-2 .card-image {
     position: relative;
     padding-top: 75%;
-    background: var(--surface)
+    background: var(--navy-dark);
 }
 
 .product-card-2 .card-image a {
     position: absolute;
     inset: 0;
-    display: block
+    display: block;
 }
 
 .product-card-2 .card-image img {
@@ -445,54 +429,33 @@ select {
     left: 50%;
     transform: translate(-50%, -50%);
     max-height: 100%;
-    width: auto
-}
-
-.product-card-2 .p-md-3,
-.product-card-2 .p-2 {
-    padding: 12px
+    width: auto;
+    max-width: 90%;
+    border-radius: 50%;
 }
 
 .product-card-2 .price-box {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    color: var(--text)
+    color: var(--text);
 }
 
 .product-card-2 .old-product-price {
     color: var(--muted);
-    font-size: .9rem
+    font-size: 0.9rem;
+    text-decoration: line-through;
 }
 
 .product-card-2 .product-price {
-    color: var(--text);
-    font-size: 1.05rem
+    color: var(--gold);
+    font-size: 1.05rem;
+    font-weight: 700;
 }
 
 .product-card-2 .product-title {
     font-size: 0.98rem;
-    margin-top: 6px
-}
-
-.product-card-2 .product-title a {
-    color: var(--text);
-    text-decoration: none
-}
-
-.product-card-2 .product-title a:hover {
-    color: var(--gold)
-}
-
-.product-card-2 .badge-gold {
-    display: inline-block;
-    padding: .25rem .5rem;
-    border-radius: 999px;
-    background: linear-gradient(180deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.06));
-    color: var(--gold);
-    font-weight: 700;
-    font-size: .82rem;
-    border: 1px solid rgba(212, 175, 55, 0.12)
+    margin-top: 6px;
 }
 
 .product-card-2 .product-title a {
@@ -502,53 +465,48 @@ select {
 
 .product-card-2 .product-title a:hover {
     color: var(--gold);
-    text-decoration: underline;
 }
 
 .product-card-2 .badge-gold {
     display: inline-block;
-    padding: .25rem .5rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 999px;
-    background: var(--gold);
-    color: #111;
+    background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+    color: var(--navy-dark);
     font-weight: 800;
-    font-size: .82rem;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    font-size: 0.82rem;
 }
 
-/* action row */
 .product-card-2 .card-actions {
     display: flex;
-    gap: .5rem;
-    margin-top: .6rem;
-    align-items: center
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+    align-items: center;
 }
 
 .product-card-2 .card-actions .btn {
-    padding: .45rem .6rem;
-    font-size: .95rem
+    padding: 0.45rem 0.6rem;
+    font-size: 0.95rem;
 }
 
-/* کوچک‌سازی متن ستاره، برچسب‌ها */
 .product-card-2 .star-rating {
-    font-size: .85rem
+    font-size: 0.85rem;
+}
+
+.star-rating i {
+    color: var(--muted);
+}
+.star-rating .active {
+    color: #ffcc00;
 }
 
 /* ریسپانسیو کارت */
-@media(min-width:992px) {
-    .product-card-2 .card-image {
-        padding-top: 68%
-    }
+@media (min-width: 992px) {
+    .product-card-2 .card-image { padding-top: 68%; }
 }
-
-/* پایان کارت محصولات */
 
 /* ==========================
      صفحه جزئیات محصول — مرحله 4️⃣
-     - گالری تصویر با ستون thumbnails و ستون جزئیات
-     - تاکید روی تصویر محصول و اطلاعات قیمت/CTA
-     - فضای سفید برای جلوهٔ لوکس
      ==========================
 */
 
@@ -557,36 +515,37 @@ select {
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    background: var(--bg)
+    background: var(--navy);
 }
 
 .product-detail .gallery {
     width: 100%;
     display: flex;
     gap: 1rem;
-    flex-direction: column
+    flex-direction: column;
 }
 
 .product-detail .gallery .main-image {
-    background: var(--surface);
+    background: var(--navy-light);
     border-radius: 12px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 300px
+    min-height: 300px;
+    border: 1px solid var(--border);
 }
 
 .product-detail .gallery .main-image img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain
+    object-fit: contain;
 }
 
 .product-detail .gallery .thumbnails {
     display: flex;
-    gap: .5rem;
-    margin-top: .6rem
+    gap: 0.5rem;
+    margin-top: 0.6rem;
 }
 
 .product-detail .gallery .thumbnails img {
@@ -595,171 +554,96 @@ select {
     object-fit: cover;
     border-radius: 8px;
     cursor: pointer;
-    border: 1px solid var(--border)
+    border: 1px solid var(--border);
+}
+
+.product-detail .gallery .thumbnails img:hover {
+    border-color: var(--gold);
 }
 
 .product-detail .info {
     display: flex;
     flex-direction: column;
-    gap: .75rem
+    gap: 0.75rem;
 }
 
 .product-detail .title {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--text)
+    color: var(--gold-light);
 }
 
 .product-detail .sku {
     color: var(--muted);
-    font-size: .95rem
+    font-size: 0.95rem;
 }
 
 .product-detail .price-row {
     display: flex;
     flex-direction: column;
-    gap: .25rem
+    gap: 0.25rem;
 }
 
 .product-detail .price-row .current-price {
     font-size: 1.4rem;
     font-weight: 800;
-    color: var(--text)
+    color: var(--gold);
 }
 
 .product-detail .price-row .old-price {
     color: var(--muted);
-    text-decoration: line-through
+    text-decoration: line-through;
 }
 
 .product-detail .meta {
     display: flex;
-    gap: .75rem;
+    gap: 0.75rem;
     align-items: center;
     color: var(--muted);
-    font-size: .95rem
+    font-size: 0.95rem;
 }
 
 .product-detail .buy-actions {
     display: flex;
-    gap: .6rem;
+    gap: 0.6rem;
     align-items: center;
-    margin-top: .6rem
+    margin-top: 0.6rem;
 }
 
-/* ==========================
-     دکمه‌ها و CTA — مرحله 5️⃣
-     - دکمهٔ اصلی: طلایی ملایم با کنترست مناسب
-     - حالت hover و focus قابل لمس و ملایم
-     ==========================
-*/
-
-.btn-primary {
-    background: linear-gradient(180deg, var(--gold), #b88f2a);
-    color: #fff;
-    border: 0;
-    padding: .75rem 1rem;
-    border-radius: 8px;
-    box-shadow: 0 6px 18px rgba(212, 175, 55, 0.12);
-    font-weight: 700;
-    min-width: 140px;
-    text-align: center
+.product-attributes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 
-.btn-primary:hover {
-    filter: brightness(.96);
-    transform: translateY(-1px)
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: .6rem .9rem;
-    border-radius: 8px
-}
-
-.btn-outline-gold {
-    background: transparent;
-    border: 1px solid rgba(212, 175, 55, 0.22);
-    color: var(--gold);
-    padding: .6rem .9rem;
-    border-radius: 8px
-}
-
-.btn:focus-visible {
-    outline: 3px solid rgba(212, 175, 55, 0.12)
-}
-
-/* ==========================
-     ریسپانسیو موبایل — مرحله 6️⃣
-     - همهٔ بخش‌ها موبایل-اول تکمیل شوند
-     - افزایش اندازه لمسی و ستون‌بندی ساده
-     ==========================
-*/
-
-@media(max-width:767.98px) {
-    .product-detail {
-        padding: .8rem
-    }
-
-    .product-detail .gallery {
-        order: 1
-    }
-
-    .product-detail .info {
-        order: 2
-    }
-
-    .product-card-2 {
-        border-radius: 10px
-    }
-
-    .site-header .header-inner {
-        padding: .5rem
-    }
-
-    .site-logo img {
-        height: 36px
-    }
-}
-
-@media(min-width:768px) {
-    .product-detail {
-        flex-direction: row
-    }
-
-    .product-detail .gallery {
-        width: 48%
-    }
-
-    .product-detail .info {
-        width: 52%
-    }
-}
-
-/* ==========================
-     بهینه‌سازی نهایی — مرحله 7️⃣
-     - قوانین تکراری حذف شده‌اند
-     - transitionها محدود شدند
-     - کامنت‌ها جهت نگهداری اضافه شدند
-     ==========================
-*/
-
-/* نکته: برای تولید (production) پیشنهاد می‌شود فایل CSS فشرده شود (minify) و قوانین غیرقابل استفاده حذف شوند. */
-
-
-.header-actions .icon-btn {
-    background: transparent;
-    border: 0;
-    padding: .45rem;
+.product-attribute {
+    white-space: nowrap;
+    font-size: 14px;
+    padding: 0.3rem 0.6rem;
+    background: var(--navy-light);
     border-radius: 6px;
-    cursor: pointer;
-    color: var(--text)
+    border: 1px solid var(--border);
 }
 
-.header-actions .icon-btn:hover {
-    background: rgba(212, 175, 55, 0.06)
+/* ==========================
+     ریسپانسیو — مرحله 6️⃣
+     ==========================
+*/
+
+@media (max-width: 767.98px) {
+    .product-detail { padding: 0.8rem; }
+    .product-detail .gallery { order: 1; }
+    .product-detail .info { order: 2; }
+    .product-card-2 { border-radius: 10px; }
+    .site-header .header-inner { padding: 0.5rem; }
+    .site-logo img { height: 36px; }
+    .product-attribute { white-space: normal; }
+}
+
+@media (min-width: 768px) {
+    .product-detail { flex-direction: row; }
+    .product-detail .gallery { width: 48%; }
+    .product-detail .info { width: 52%; }
 }
 
 /* دسترس‌پذیری و لمس */
@@ -768,26 +652,31 @@ select {
 .nav-toggle {
     min-height: 44px;
     display: inline-flex;
-    align-items: center
+    align-items: center;
 }
 
 /* نمایش منوی موبایل وقتی فعال است */
-.mobile-open .mobile-nav-backdrop {
-    display: block
+.mobile-open .mobile-nav-backdrop { display: block; }
+.mobile-open .mobile-nav-panel { display: block; }
+
+/* اسکرول بار سفارشی */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--navy-light);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--gold);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-dark);
 }
 
-.mobile-open .mobile-nav-panel {
-    display: block
-}
-.product-attributes {
-    display: flex;
-    flex-wrap: wrap;      /* وقتی جا تموم شد بره خط بعد */
-    gap: 12px;            /* فاصله بین آیتم‌ها */
-}
-
-.product-attribute {
-    white-space: nowrap; /* هر آیتم نشکنه */
-    font-size: 14px;
-}
-
-/* تمام تغییرات هدر در این فایل مینیمال و قابل بازنویسی بوسیله فایل‌های اختصاصی */
+/* ==========================
+     بهینه‌سازی نهایی — مرحله 7️⃣
+     ==========================
+*/

@@ -6,7 +6,7 @@
     <title>چاپ شناسنامه: {{ $certificate->serial_number }}</title>
     <style>
         * {
-            font-family: 'Tahoma', 'Arial', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Tahoma", "Arial", sans-serif;
             box-sizing: border-box;
         }
         body {
@@ -259,8 +259,25 @@
             background-color: #fff3cd;
             color: #856404;
         }
+        
+        /* آیکون‌های ساده جایگزین Font Awesome */
+        .icon {
+            display: inline-block;
+            width: 16px;
+            text-align: center;
+            margin-right: 5px;
+        }
+        .icon-print:before { content: "🖨️"; }
+        .icon-back:before { content: "←"; }
+        .icon-download:before { content: "⬇️"; }
+        .icon-camera:before { content: "📷"; }
+        .icon-check:before { content: "✓"; }
+        .icon-warning:before { content: "⚠️"; }
+        .icon-bug:before { content: "🐛"; }
+        .icon-info:before { content: "ℹ️"; }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    {{-- حذف لینک خارجی Font Awesome - استفاده از آیکون‌های متنی ساده --}}
 </head>
 <body>
     <!-- کنترل‌های چاپ -->
@@ -279,13 +296,13 @@
         
         <div>
             <button onclick="printCertificate()" class="btn btn-print">
-                <i class="fas fa-print"></i> چاپ شناسنامه
+                <span class="icon icon-print"></span> چاپ شناسنامه
             </button>
             <button onclick="window.history.back()" class="btn btn-back">
-                <i class="fas fa-arrow-left"></i> بازگشت
+                <span class="icon icon-back"></span> بازگشت
             </button>
             <button onclick="downloadImage()" class="btn btn-download" id="downloadBtn">
-                <i class="fas fa-download"></i> دانلود عکس
+                <span class="icon icon-download"></span> دانلود عکس
             </button>
         </div>
         
@@ -379,7 +396,7 @@
                          data-path="{{ $imagePath }}"
                          data-url="{{ $imageUrl }}">
                 </div>
-                <div class="image-caption">عکس جواهر</div>
+                <div class="image-caption">📷 عکس جواهر</div>
                 <div class="image-description">
                     {{ $certificate->product_name }}
                     @if($imageExtension)
@@ -387,12 +404,12 @@
                             ({{ strtoupper($imageExtension) }})
                         </span>
                     @endif
-                    <span id="imageStatus" class="status-badge status-success">بارگذاری شد</span>
+                    <span id="imageStatus" class="status-badge status-success">✓ بارگذاری شد</span>
                 </div>
             @else
                 <div class="image-placeholder" id="imagePlaceholder">
                     <div class="image-placeholder-icon">
-                        <i class="fas fa-camera"></i>
+                        📷
                     </div>
                     <div style="color: #999; font-size: 14px; text-align: center; padding: 0 10px;">
                         @if($certificate->certificate_file)
@@ -409,7 +426,7 @@
                         @endif
                     </div>
                 </div>
-                <div class="image-caption">عکس جواهر</div>
+                <div class="image-caption">📷 عکس جواهر</div>
                 <div class="image-description">{{ $certificate->product_name }}</div>
             @endif
         </div>
@@ -579,7 +596,7 @@
         <!-- پانویس -->
         <div style="margin-top: 30px; font-size: 11px; color: #7f8c8d; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
             @if($hasImage)
-                <p><i class="fas fa-camera"></i> عکس جواهر ضمیمه شده است. برای مشاهده با کیفیت بالا، فایل اصلی را دانلود کنید.</p>
+                <p><span class="icon icon-camera"></span> عکس جواهر ضمیمه شده است. برای مشاهده با کیفیت بالا، فایل اصلی را دانلود کنید.</p>
             @endif
             <p>این شناسنامه به منزله گواهی اصالت و مالکیت جواهر می‌باشد. هرگونه کپی‌برداری و جعل پیگرد قانونی دارد.</p>
             <p>تاریخ چاپ: {{ date('Y/m/d ساعت H:i') }}</p>
@@ -774,7 +791,7 @@
             // نمایش وضعیت
             const statusElement = document.getElementById('imageStatus');
             if (statusElement) {
-                statusElement.textContent = 'بارگذاری شد';
+                statusElement.textContent = '✓ بارگذاری شد';
                 statusElement.className = 'status-badge status-success';
             }
             
@@ -794,7 +811,7 @@
             // نمایش وضعیت خطا
             const statusElement = document.getElementById('imageStatus');
             if (statusElement) {
-                statusElement.textContent = 'خطا در بارگذاری';
+                statusElement.textContent = '⚠️ خطا در بارگذاری';
                 statusElement.className = 'status-badge status-error';
             }
             
@@ -808,7 +825,7 @@
                 imageSection.innerHTML = `
                     <div class="image-placeholder" id="imagePlaceholder">
                         <div class="image-placeholder-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
+                            ⚠️
                         </div>
                         <div style="color: #e74c3c; font-size: 14px; text-align: center; padding: 0 10px;">
                             خطا در نمایش عکس<br>
@@ -818,10 +835,10 @@
                             </small>
                         </div>
                         <button onclick="testImageUrl('${url}', '${filename}')" class="btn" style="background-color: #e74c3c; color: white; padding: 5px 15px; font-size: 12px; margin-top: 10px;">
-                            <i class="fas fa-bug"></i> تست آدرس
+                            <span class="icon icon-bug"></span> تست آدرس
                         </button>
                     </div>
-                    <div class="image-caption">عکس جواهر</div>
+                    <div class="image-caption">📷 عکس جواهر</div>
                     <div class="image-description">{{ $certificate->product_name }}</div>
                 `;
             }
@@ -881,10 +898,8 @@
                     messageDiv.style.backgroundColor = '#3498db';
             }
             
-            messageDiv.innerHTML = `
-                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
-                ${message}
-            `;
+            const icon = type === 'success' ? '✓' : type === 'error' ? '⚠️' : 'ℹ️';
+            messageDiv.innerHTML = `${icon} ${message}`;
             
             document.body.appendChild(messageDiv);
             
