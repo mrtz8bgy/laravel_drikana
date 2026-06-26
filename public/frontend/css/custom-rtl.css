@@ -1,46 +1,46 @@
 /*---------------- Colors Variables -------------------*/
 :root {
-    /* رنگ‌های اصلی طلایی - برای جواهرات */
-    --gold-primary: #d4af37;      /* طلایی کلاسیک */
-    --gold-dark: #b8960c;         /* طلایی تیره */
-    --gold-light: #f5e18b;        /* طلایی روشن */
+    /* Ø±Ù†Ú¯â€ŒÙ‡Ø§ÛŒ Ø§ØµÙ„ÛŒ Ø·Ù„Ø§ÛŒÛŒ - Ø¨Ø±Ø§ÛŒ Ø¬ÙˆØ§Ù‡Ø±Ø§Øª */
+    --gold-primary: #d4af37;      /* Ø·Ù„Ø§ÛŒÛŒ Ú©Ù„Ø§Ø³ÛŒÚ© */
+    --gold-dark: #b8960c;         /* Ø·Ù„Ø§ÛŒÛŒ ØªÛŒØ±Ù‡ */
+    --gold-light: #f5e18b;        /* Ø·Ù„Ø§ÛŒÛŒ Ø±ÙˆØ´Ù† */
     --gold-gradient: linear-gradient(135deg, #d4af37 0%, #b8960c 100%);
     
-    /* رنگ‌های آبی سلطنتی - پس‌زمینه */
-    --navy-dark: #0a1428;         /* آبی خیلی تیره */
-    --navy-primary: #121e3a;      /* آبی اصلی */
-    --navy-light: #1a2a4f;        /* آبی روشن‌تر */
+    /* Ø±Ù†Ú¯â€ŒÙ‡Ø§ÛŒ Ø¢Ø¨ÛŒ Ø³Ù„Ø·Ù†ØªÛŒ - Ù¾Ø³â€ŒØ²Ù…ÛŒÙ†Ù‡ */
+    --navy-dark: #0a1428;         /* Ø¢Ø¨ÛŒ Ø®ÛŒÙ„ÛŒ ØªÛŒØ±Ù‡ */
+    --navy-primary: #121e3a;      /* Ø¢Ø¨ÛŒ Ø§ØµÙ„ÛŒ */
+    --navy-light: #1a2a4f;        /* Ø¢Ø¨ÛŒ Ø±ÙˆØ´Ù†â€ŒØªØ± */
     --navy-gradient: linear-gradient(135deg, #121e3a 0%, #0a1428 100%);
     
-    /* رنگ‌های جواهری */
-    --ruby: #e31b23;              /* یاقوت سرخ */
-    --emerald: #2e8b57;           /* زمرد سبز */
-    --sapphire: #0f52ba;          /* یاقوت کبود */
-    --amethyst: #9966cc;          /* آمیتیست بنفش */
+    /* Ø±Ù†Ú¯â€ŒÙ‡Ø§ÛŒ Ø¬ÙˆØ§Ù‡Ø±ÛŒ */
+    --ruby: #e31b23;              /* ÛŒØ§Ù‚ÙˆØª Ø³Ø±Ø® */
+    --emerald: #2e8b57;           /* Ø²Ù…Ø±Ø¯ Ø³Ø¨Ø² */
+    --sapphire: #0f52ba;          /* ÛŒØ§Ù‚ÙˆØª Ú©Ø¨ÙˆØ¯ */
+    --amethyst: #9966cc;          /* Ø¢Ù…ÛŒØªÛŒØ³Øª Ø¨Ù†ÙØ´ */
     
-    /* رنگ‌های کمکی */
+    /* Ø±Ù†Ú¯â€ŒÙ‡Ø§ÛŒ Ú©Ù…Ú©ÛŒ */
     --white: #ffffff;
     --black: #000000;
     --gray-light: #f8f9fa;
     --gray: #6c757d;
     --gray-dark: #343a40;
     
-    /* رنگ‌های وضعیت */
+    /* Ø±Ù†Ú¯â€ŒÙ‡Ø§ÛŒ ÙˆØ¶Ø¹ÛŒØª */
     --success: #28a745;
     --warning: #ffc107;
     --danger: #dc3545;
     --info: #17a2b8;
 }
 
-/*---------------- اعمال رنگ‌ها به المان‌ها -------------------*/
+/*---------------- Ø§Ø¹Ù…Ø§Ù„ Ø±Ù†Ú¯â€ŒÙ‡Ø§ Ø¨Ù‡ Ø§Ù„Ù…Ø§Ù†â€ŒÙ‡Ø§ -------------------*/
 
-/* بدنه اصلی */
+/* Ø¨Ø¯Ù†Ù‡ Ø§ØµÙ„ÛŒ */
 body {
     background-color: var(--navy-dark);
     color: var(--gray-light);
 }
 
-/* لینک‌ها */
+/* Ù„ÛŒÙ†Ú©â€ŒÙ‡Ø§ */
 a {
     color: var(--gold-primary);
     transition: all 0.3s ease;
@@ -50,7 +50,7 @@ a:hover {
     text-decoration: none;
 }
 
-/* دکمه اصلی */
+/* Ø¯Ú©Ù…Ù‡ Ø§ØµÙ„ÛŒ */
 .btn-primary {
     background: var(--gold-gradient);
     border: none;
@@ -67,7 +67,7 @@ a:hover {
     color: var(--white);
 }
 
-/* دکمه ثانویه */
+/* Ø¯Ú©Ù…Ù‡ Ø«Ø§Ù†ÙˆÛŒÙ‡ */
 .btn-secondary {
     background: var(--navy-gradient);
     border: 1px solid var(--gold-primary);
@@ -79,7 +79,7 @@ a:hover {
     color: var(--navy-dark);
 }
 
-/* دکمه‌های خطی */
+/* Ø¯Ú©Ù…Ù‡â€ŒÙ‡Ø§ÛŒ Ø®Ø·ÛŒ */
 .btn-outline-primary {
     border: 2px solid var(--gold-primary);
     color: var(--gold-primary);
@@ -91,7 +91,7 @@ a:hover {
     color: var(--navy-dark);
 }
 
-/* تاپ بار */
+/* ØªØ§Ù¾ Ø¨Ø§Ø± */
 .top-navbar {
     background: var(--navy-primary);
     border-bottom: 1px solid rgba(212, 175, 55, 0.3);
@@ -110,13 +110,13 @@ a:hover {
     color: var(--gold-primary);
 }
 
-/* لوگو بار */
+/* Ù„ÙˆÚ¯Ùˆ Ø¨Ø§Ø± */
 .logo-bar-area {
     background-color: var(--navy-dark);
     border-bottom: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-/* آیکون‌های هدر */
+/* Ø¢ÛŒÚ©ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ù‡Ø¯Ø± */
 .logo-bar-icons .nav-search-box .nav-box-icon,
 .logo-bar-icons .nav-compare-box .nav-box-icon,
 .logo-bar-icons .nav-wishlist-box .nav-box-icon,
@@ -139,15 +139,15 @@ a:hover {
     color: var(--navy-dark);
 }
 
-/* بخش بنر اصلی */
+/* Ø¨Ø®Ø´ Ø¨Ù†Ø± Ø§ØµÙ„ÛŒ */
 section.home-banner-area {
     background: var(--navy-gradient);
 }
 
-/* سایدبار دسته‌بندی */
+/* Ø³Ø§ÛŒØ¯Ø¨Ø§Ø± Ø¯Ø³ØªÙ‡â€ŒØ¨Ù†Ø¯ÛŒ */
 .category-sidebar {
     background-color: var(--navy-primary);
-    border-radius: 12px;
+    /*! border-radius: 12px; */
     overflow: hidden;
 }
 .category-sidebar .all-category {
@@ -172,7 +172,7 @@ section.home-banner-area {
     color: var(--gold-light);
 }
 
-/* محصولات */
+/* Ù…Ø­ØµÙˆÙ„Ø§Øª */
 .product-title a {
     font-family: 'Yekan', sans-serif !important;
     font-size: 12px;
@@ -207,13 +207,13 @@ section.home-banner-area {
     font-size: 16px;
 }
 
-/* برچسب تخفیف */
+/* Ø¨Ø±Ú†Ø³Ø¨ ØªØ®ÙÛŒÙ */
 .product-label.label-hot {
     background: var(--gold-gradient);
     color: var(--navy-dark);
 }
 
-/* بخش عنوان */
+/* Ø¨Ø®Ø´ Ø¹Ù†ÙˆØ§Ù† */
 .section-title-1 {
     border-bottom-color: rgba(212, 175, 55, 0.3);
 }
@@ -231,7 +231,7 @@ section.home-banner-area {
     color: #f8f9fa !important;
 }
 
-/* فلش دیل */
+/* ÙÙ„Ø´ Ø¯ÛŒÙ„ */
 .flash-deal-box {
     background: var(--navy-primary);
     border-radius: 12px;
@@ -254,7 +254,7 @@ section.home-banner-area {
     color: var(--gray);
 }
 
-/* بنرهای تبلیغاتی */
+/* Ø¨Ù†Ø±Ù‡Ø§ÛŒ ØªØ¨Ù„ÛŒØºØ§ØªÛŒ */
 .mobile-icons-section {
     background: var(--navy-gradient);
     border-radius: 12px;
@@ -270,7 +270,7 @@ section.home-banner-area {
     color: var(--gold-light);
 }
 
-/* مگا منو */
+/* Ù…Ú¯Ø§ Ù…Ù†Ùˆ */
 .mega-menu-section {
     background: var(--navy-primary);
 }
@@ -287,7 +287,7 @@ section.home-banner-area {
     color: var(--navy-dark);
 }
 
-/* فوتر */
+/* ÙÙˆØªØ± */
 .footer {
     background: var(--navy-primary);
     border-top: 1px solid rgba(212, 175, 55, 0.3);
@@ -305,7 +305,7 @@ section.home-banner-area {
     color: var(--gold-primary);
 }
 
-/* دکمه‌های عملیات محصول */
+/* Ø¯Ú©Ù…Ù‡â€ŒÙ‡Ø§ÛŒ Ø¹Ù…Ù„ÛŒØ§Øª Ù…Ø­ØµÙˆÙ„ */
 button.paction.add-wishlist,
 button.paction.add-compare {
     background: var(--navy-light);
@@ -319,7 +319,7 @@ button.paction.add-compare:hover {
     color: var(--navy-dark);
 }
 
-/* استار ریتینگ */
+/* Ø§Ø³ØªØ§Ø± Ø±ÛŒØªÛŒÙ†Ú¯ */
 .star-rating i {
     color: var(--gray);
 }
@@ -327,7 +327,7 @@ button.paction.add-compare:hover {
     color: #ffcc00;
 }
 
-/* فرم‌ها و اینپوت‌ها */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ Ùˆ Ø§ÛŒÙ†Ù¾ÙˆØªâ€ŒÙ‡Ø§ */
 .form-control {
     background: var(--navy-light);
     border: 1px solid rgba(212, 175, 55, 0.3);
@@ -343,12 +343,12 @@ button.paction.add-compare:hover {
     color: var(--gray);
 }
 
-/* سوییچ‌ها */
+/* Ø³ÙˆÛŒÛŒÚ†â€ŒÙ‡Ø§ */
 input:checked + .slider {
     background-color: var(--gold-primary);
 }
 
-/* اسکرول بار */
+/* Ø§Ø³Ú©Ø±ÙˆÙ„ Ø¨Ø§Ø± */
 .c-scrollbar::-webkit-scrollbar-thumb {
     background: var(--gold-primary);
     border-radius: 10px;
@@ -357,7 +357,7 @@ input:checked + .slider {
     background: var(--navy-light);
 }
 
-/* دکمه بازگشت به بالا */
+/* Ø¯Ú©Ù…Ù‡ Ø¨Ø§Ø²Ú¯Ø´Øª Ø¨Ù‡ Ø¨Ø§Ù„Ø§ */
 .btn-back-to-top {
     background: var(--gold-gradient);
     color: var(--navy-dark);
@@ -374,9 +374,9 @@ input:checked + .slider {
     color: var(--white);
 }
 
-/* دراپ داون منو */
+/* Ø¯Ø±Ø§Ù¾ Ø¯Ø§ÙˆÙ† Ù…Ù†Ùˆ */
 .dropdown-menu {
-    background: var(--navy-light);
+    background: #c6cedf;
     border: 1px solid var(--gold-primary);
     border-top: 3px solid var(--gold-primary);
 }
@@ -388,7 +388,7 @@ input:checked + .slider {
     color: var(--gold-primary);
 }
 
-/* اسلایدر */
+/* Ø§Ø³Ù„Ø§ÛŒØ¯Ø± */
 .slick-dots li button {
     background: var(--gray);
 }
@@ -403,7 +403,7 @@ input:checked + .slider {
     background: var(--gold-gradient);
 }
 
-/* جدول‌ها */
+/* Ø¬Ø¯ÙˆÙ„â€ŒÙ‡Ø§ */
 .table {
     color: var(--gold-light);
 }
@@ -414,7 +414,7 @@ input:checked + .slider {
     border-top-color: rgba(212, 175, 55, 0.2);
 }
 
-/* آیکون‌های شبکه‌های اجتماعی */
+/* Ø¢ÛŒÚ©ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø´Ø¨Ú©Ù‡â€ŒÙ‡Ø§ÛŒ Ø§Ø¬ØªÙ…Ø§Ø¹ÛŒ */
 .social-nav a {
     background: var(--gold-primary);
     color: var(--navy-dark);
@@ -424,7 +424,7 @@ input:checked + .slider {
     color: var(--white);
 }
 
-/* پیام‌های آلرت */
+/* Ù¾ÛŒØ§Ù…â€ŒÙ‡Ø§ÛŒ Ø¢Ù„Ø±Øª */
 .alert-success {
     background: rgba(40, 167, 69, 0.2);
     border-color: var(--success);
@@ -441,7 +441,7 @@ input:checked + .slider {
     color: var(--warning);
 }
 
-/* صفحه محصول */
+/* ØµÙØ­Ù‡ Ù…Ø­ØµÙˆÙ„ */
 .product-description {
     text-align: justify;
     line-height: 2;
@@ -457,7 +457,7 @@ input:checked + .slider {
     color: var(--gold-primary);
 }
 
-/* سبد خرید */
+/* Ø³Ø¨Ø¯ Ø®Ø±ÛŒØ¯ */
 .table-cart thead th {
     color: var(--gold-primary);
 }
@@ -466,7 +466,7 @@ input:checked + .slider {
     border-radius: 12px;
 }
 
-/* مودال */
+/* Ù…ÙˆØ¯Ø§Ù„ */
 .modal-content {
     background: var(--navy-primary);
     border: 1px solid var(--gold-primary);
@@ -484,7 +484,7 @@ input:checked + .slider {
     color: var(--gold-primary);
 }
 
-/* تب‌ها */
+/* ØªØ¨â€ŒÙ‡Ø§ */
 .nav-tabs {
     border-bottom-color: rgba(212, 175, 55, 0.3);
 }
@@ -497,14 +497,14 @@ input:checked + .slider {
     color: var(--gold-primary);
 }
 
-/* صفحه لاگین */
+/* ØµÙØ­Ù‡ Ù„Ø§Ú¯ÛŒÙ† */
 .card-header {
     background: var(--navy-light);
     border-bottom-color: var(--gold-primary);
     color: var(--gold-primary);
 }
 
-/* وضعیت موجودی */
+/* ÙˆØ¶Ø¹ÛŒØª Ù…ÙˆØ¬ÙˆØ¯ÛŒ */
 .in-stock {
     color: var(--success);
 }
@@ -512,7 +512,7 @@ input:checked + .slider {
     color: var(--danger);
 }
 
-/* دکمه افزایش/کاهش تعداد */
+/* Ø¯Ú©Ù…Ù‡ Ø§ÙØ²Ø§ÛŒØ´/Ú©Ø§Ù‡Ø´ ØªØ¹Ø¯Ø§Ø¯ */
 .plus-minus .input-group-addon {
     background: var(--navy-light);
     border-color: rgba(212, 175, 55, 0.3);
@@ -524,7 +524,7 @@ input:checked + .slider {
     color: var(--navy-dark);
 }
 
-/* انتخاب رنگ و سایز */
+/* Ø§Ù†ØªØ®Ø§Ø¨ Ø±Ù†Ú¯ Ùˆ Ø³Ø§ÛŒØ² */
 .color-option {
     border: 2px solid transparent;
     border-radius: 50%;
@@ -535,7 +535,7 @@ input:checked + .slider {
     box-shadow: 0 0 0 2px var(--navy-dark), 0 0 0 4px var(--gold-primary);
 }
 
-/* صفحه پرداخت */
+/* ØµÙØ­Ù‡ Ù¾Ø±Ø¯Ø§Ø®Øª */
 .payment-option {
     background: var(--navy-light);
     border: 1px solid rgba(212, 175, 55, 0.3);
@@ -547,7 +547,7 @@ input:checked + .slider {
     background: rgba(212, 175, 55, 0.1);
 }
 
-/* ریسپانسیو */
+/* Ø±ÛŒØ³Ù¾Ø§Ù†Ø³ÛŒÙˆ */
 @media (max-width: 768px) {
     .product-card-2 {
         height: auto;

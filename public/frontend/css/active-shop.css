@@ -8766,10 +8766,10 @@ svg#bigTriangleColor {
 }
 
 /* ============================================
-   استایل‌های جدید برای فوتر زیبا
+   Ø§Ø³ØªØ§ÛŒÙ„â€ŒÙ‡Ø§ÛŒ Ø¬Ø¯ÛŒØ¯ Ø¨Ø±Ø§ÛŒ ÙÙˆØªØ± Ø²ÛŒØ¨Ø§
    ============================================ */
 
-/* بخش بالایی فوتر */
+/* Ø¨Ø®Ø´ Ø¨Ø§Ù„Ø§ÛŒÛŒ ÙÙˆØªØ± */
 .slice-sm.footer-top-bar {
   background: #00014b;
   padding: 30px 0;
@@ -8816,7 +8816,7 @@ svg#bigTriangleColor {
   color: white;
 }
 
-/* بخش اصلی فوتر */
+/* Ø¨Ø®Ø´ Ø§ØµÙ„ÛŒ ÙÙˆØªØ± */
 #footer.footer {
   background: #161f3a;
   color: #fff;
@@ -8839,7 +8839,7 @@ svg#bigTriangleColor {
   padding: 60px 0 40px;
 }
 
-/* بخش لوگو و توضیحات */
+/* Ø¨Ø®Ø´ Ù„ÙˆÚ¯Ùˆ Ùˆ ØªÙˆØ¶ÛŒØ­Ø§Øª */
 #footer .col p {
   color: #b0b7c3;
   line-height: 1.6;
@@ -8854,7 +8854,7 @@ svg#bigTriangleColor {
   color: #667eea;
 }
 
-/* فرم عضویت در خبرنامه */
+/* ÙØ±Ù… Ø¹Ø¶ÙˆÛŒØª Ø¯Ø± Ø®Ø¨Ø±Ù†Ø§Ù…Ù‡ */
 #footer .form-inline {
   display: flex;
   gap: 10px;
@@ -8895,7 +8895,7 @@ svg#bigTriangleColor {
   box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
 }
 
-/* هدینگ‌های فوتر */
+/* Ù‡Ø¯ÛŒÙ†Ú¯â€ŒÙ‡Ø§ÛŒ ÙÙˆØªØ± */
 #footer .heading {
   color: white;
   font-size: 18px;
@@ -8916,7 +8916,7 @@ svg#bigTriangleColor {
   border-radius: 2px;
 }
 
-/* لیست‌های فوتر */
+/* Ù„ÛŒØ³Øªâ€ŒÙ‡Ø§ÛŒ ÙÙˆØªØ± */
 .footer-links {
   list-style: none;
   padding: 0;
@@ -8937,7 +8937,7 @@ svg#bigTriangleColor {
 }
 
 .footer-links a::before {
-  content: '›';
+  content: 'â€º';
   position: absolute;
   left: 0;
   opacity: 0;
@@ -8954,7 +8954,7 @@ svg#bigTriangleColor {
   left: -10px;
 }
 
-/* بخش اطلاعات تماس */
+/* Ø¨Ø®Ø´ Ø§Ø·Ù„Ø§Ø¹Ø§Øª ØªÙ…Ø§Ø³ */
 .contact-widget li {
   margin-bottom: 20px;
 }
@@ -8971,7 +8971,7 @@ svg#bigTriangleColor {
   margin-bottom: 5px;
 }
 
-/* دکمه فروشنده شوید */
+/* Ø¯Ú©Ù…Ù‡ ÙØ±ÙˆØ´Ù†Ø¯Ù‡ Ø´ÙˆÛŒØ¯ */
 .btn-base-1.btn-icon-left {
   background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%);
   border: none;
@@ -8986,7 +8986,7 @@ svg#bigTriangleColor {
   box-shadow: 0 10px 20px rgba(0, 176, 155, 0.3);
 }
 
-/* بخش پایینی فوتر */
+/* Ø¨Ø®Ø´ Ù¾Ø§ÛŒÛŒÙ†ÛŒ ÙÙˆØªØ± */
 .footer-bottom {
   background: rgba(0, 0, 0, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -9017,7 +9017,7 @@ svg#bigTriangleColor {
   color: #667eea;
 }
 
-/* آیکون‌های شبکه‌های اجتماعی */
+/* Ø¢ÛŒÚ©ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø´Ø¨Ú©Ù‡â€ŒÙ‡Ø§ÛŒ Ø§Ø¬ØªÙ…Ø§Ø¹ÛŒ */
 .social-nav.model-2 {
   list-style: none;
   padding: 0;
@@ -9087,7 +9087,7 @@ svg#bigTriangleColor {
   transform: translateY(-3px);
 }
 
-/* آیکون‌های روش‌های پرداخت */
+/* Ø¢ÛŒÚ©ÙˆÙ†â€ŒÙ‡Ø§ÛŒ Ø±ÙˆØ´â€ŒÙ‡Ø§ÛŒ Ù¾Ø±Ø¯Ø§Ø®Øª */
 .inline-links {
   list-style: none;
   padding: 0;
@@ -9115,7 +9115,7 @@ svg#bigTriangleColor {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* ریسپانسیو */
+/* Ø±ÛŒØ³Ù¾Ø§Ù†Ø³ÛŒÙˆ */
 @media (max-width: 992px) {
   .footer-top-box {
     margin-bottom: 20px;
@@ -9185,12 +9185,12 @@ svg#bigTriangleColor {
   }
 }
 
-/* بهبود کلی فرم‌ها */
+/* Ø¨Ù‡Ø¨ÙˆØ¯ Ú©Ù„ÛŒ ÙØ±Ù…â€ŒÙ‡Ø§ */
 /* ============================================= */
-/* استایل مدرن برای فرم‌ها - سازگار با کدهای موجود */
+/* Ø§Ø³ØªØ§ÛŒÙ„ Ù…Ø¯Ø±Ù† Ø¨Ø±Ø§ÛŒ ÙØ±Ù…â€ŒÙ‡Ø§ - Ø³Ø§Ø²Ú¯Ø§Ø± Ø¨Ø§ Ú©Ø¯Ù‡Ø§ÛŒ Ù…ÙˆØ¬ÙˆØ¯ */
 /* ============================================= */
 
-/* بهبود کلی فرم‌ها */
+/* Ø¨Ù‡Ø¨ÙˆØ¯ Ú©Ù„ÛŒ ÙØ±Ù…â€ŒÙ‡Ø§ */
 .form-control,
 .form-control>.btn {
   font-size: 0.875rem;
@@ -9200,7 +9200,7 @@ svg#bigTriangleColor {
   border-width: 1px;
   border-color: #e6e6e6;
   border-radius: 8px;
-  /* افزایش radius */
+  /* Ø§ÙØ²Ø§ÛŒØ´ radius */
   -webkit-box-shadow: none;
   box-shadow: none;
   -webkit-transition: all 0.3s ease;
@@ -9215,7 +9215,7 @@ svg#bigTriangleColor {
   background-color: #f8f9fa;
 }
 
-/* لیبل‌های فرم */
+/* Ù„ÛŒØ¨Ù„â€ŒÙ‡Ø§ÛŒ ÙØ±Ù… */
 label {
   font-weight: 500;
   font-size: 0.9rem;
@@ -9225,7 +9225,7 @@ label {
   display: block;
 }
 
-/* فرم‌گروه */
+/* ÙØ±Ù…â€ŒÚ¯Ø±ÙˆÙ‡ */
 .form-group {
   margin-bottom: 1.5rem;
   position: relative;
@@ -9250,7 +9250,7 @@ textarea.form-control:focus {
   background-color: #f8f9fa;
 }
 
-/* input group بهبود یافته */
+/* input group Ø¨Ù‡Ø¨ÙˆØ¯ ÛŒØ§ÙØªÙ‡ */
 .input-group {
   position: relative;
   display: flex;
@@ -9294,7 +9294,7 @@ textarea.form-control:focus {
   border-radius: 8px;
 }
 
-/* استایل‌های خاص input-group */
+/* Ø§Ø³ØªØ§ÛŒÙ„â€ŒÙ‡Ø§ÛŒ Ø®Ø§Øµ input-group */
 .input-group--style-1 {
   border-radius: 8px;
   overflow: hidden;
@@ -9345,7 +9345,7 @@ textarea.form-control:focus {
   transform: translateX(2px);
 }
 
-/* فرم‌های مختلف */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ Ù…Ø®ØªÙ„Ù */
 .form-default .form-control {
   background: #d8d8d8;
   border-color: #e6e6e6;
@@ -9424,7 +9424,7 @@ textarea.form-control:focus {
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* فرم متریال */
+/* ÙØ±Ù… Ù…ØªØ±ÛŒØ§Ù„ */
 .form-material .form-control {
   background: transparent;
   border: none;
@@ -9503,7 +9503,7 @@ select.form-control option {
   color: #333;
 }
 
-/* چک‌باکس و رادیو */
+/* Ú†Ú©â€ŒØ¨Ø§Ú©Ø³ Ùˆ Ø±Ø§Ø¯ÛŒÙˆ */
 .form-check {
   position: relative;
   display: block;
@@ -9541,7 +9541,7 @@ input[type="radio"]:checked {
   border-color: #1a237e;
 }
 
-/* فرم‌های غیرفعال */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ ØºÛŒØ±ÙØ¹Ø§Ù„ */
 .form-control:disabled,
 .form-control[readonly] {
   background-color: #f8f9fa;
@@ -9594,7 +9594,7 @@ input[type="radio"]:disabled {
   display: block;
 }
 
-/* فرم‌های inline */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ inline */
 .form-inline {
   display: flex;
   flex-flow: row wrap;
@@ -9611,7 +9611,7 @@ input[type="radio"]:disabled {
   margin-left: 0.5rem;
 }
 
-/* فرم‌های بزرگ */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ Ø¨Ø²Ø±Ú¯ */
 .form-control-lg {
   padding: 1rem 1.25rem;
   font-size: 1rem;
@@ -9626,7 +9626,7 @@ input[type="radio"]:disabled {
   border-radius: 12px;
 }
 
-/* فرم‌های کوچک */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ Ú©ÙˆÚ†Ú© */
 .form-control-sm {
   padding: 0.5rem 0.75rem;
   font-size: 0.75rem;
@@ -9634,7 +9634,7 @@ input[type="radio"]:disabled {
   border-radius: 6px;
 }
 
-/* فرم‌های ریسپانسیو */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ Ø±ÛŒØ³Ù¾Ø§Ù†Ø³ÛŒÙˆ */
 @media (max-width: 768px) {
   .form-inline {
     flex-direction: column;
@@ -9671,7 +9671,7 @@ input[type="radio"]:disabled {
   }
 }
 
-/* انیمیشن‌های فرم */
+/* Ø§Ù†ÛŒÙ…ÛŒØ´Ù†â€ŒÙ‡Ø§ÛŒ ÙØ±Ù… */
 @keyframes formShake {
 
   0%,
@@ -9699,7 +9699,7 @@ input[type="radio"]:disabled {
   animation: formShake 0.5s ease-in-out;
 }
 
-/* فرم‌های زیبا برای دکمه‌ها */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ Ø²ÛŒØ¨Ø§ Ø¨Ø±Ø§ÛŒ Ø¯Ú©Ù…Ù‡â€ŒÙ‡Ø§ */
 .btn {
   border-radius: 8px;
   font-weight: 500;
@@ -9730,7 +9730,7 @@ input[type="radio"]:disabled {
   box-shadow: 0 5px 20px rgba(108, 117, 125, 0.3);
 }
 
-/* فرم‌های خاص */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ Ø®Ø§Øµ */
 .form-subscribe {
   max-width: 500px;
   margin: 0 auto;
@@ -9754,7 +9754,7 @@ input[type="radio"]:disabled {
   background: linear-gradient(135deg, #1a237e 0%, #0c2461 100%);
 }
 
-/* فرم جستجو */
+/* ÙØ±Ù… Ø¬Ø³ØªØ¬Ùˆ */
 .form-search {
   position: relative;
 }
@@ -9782,7 +9782,7 @@ input[type="radio"]:disabled {
   transform: translateY(-50%) scale(1.1);
 }
 
-/* فرم‌های لاگین و ثبت‌نام */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ Ù„Ø§Ú¯ÛŒÙ† Ùˆ Ø«Ø¨Øªâ€ŒÙ†Ø§Ù… */
 .form-auth {
   max-width: 400px;
   margin: 0 auto;
@@ -9812,7 +9812,7 @@ input[type="radio"]:disabled {
   font-weight: 600;
 }
 
-/* فرم‌های فیلتر */
+/* ÙØ±Ù…â€ŒÙ‡Ø§ÛŒ ÙÛŒÙ„ØªØ± */
 .form-filter {
   background: #f8f9fa;
   padding: 1.5rem;
@@ -9835,7 +9835,7 @@ input[type="radio"]:disabled {
   margin-top: 1rem;
 }
 
-/* بهبود focus برای دسترسی */
+/* Ø¨Ù‡Ø¨ÙˆØ¯ focus Ø¨Ø±Ø§ÛŒ Ø¯Ø³ØªØ±Ø³ÛŒ */
 .form-control:focus {
   outline: 2px solid transparent;
 }
@@ -9845,7 +9845,7 @@ input[type="radio"]:disabled {
   outline-offset: 2px;
 }
 
-/* رنگ‌های سفارشی برای states */
+/* Ø±Ù†Ú¯â€ŒÙ‡Ø§ÛŒ Ø³ÙØ§Ø±Ø´ÛŒ Ø¨Ø±Ø§ÛŒ states */
 .form-control:required {
   border-left: 3px solid #ffc107;
 }
@@ -9854,7 +9854,7 @@ input[type="radio"]:disabled {
   border-left: 3px solid #28a745;
 }
 
-/* tooltip برای فرم‌ها */
+/* tooltip Ø¨Ø±Ø§ÛŒ ÙØ±Ù…â€ŒÙ‡Ø§ */
 .form-tooltip {
   position: relative;
   display: inline-block;
@@ -11493,7 +11493,7 @@ ul.inline-links>li {
   display: inline-block;
   padding: 0 .4em 0 .4em;
   position: relative;
-  font-size: 0.75rem;
+  font-size: 1.1rem;
 }
 
 ul.inline-links>li:first-child {
@@ -17787,7 +17787,7 @@ span.flatpickr-weekday {
 .select2-container--default .select2-selection--single {
   border-radius: 2px;
   border: 1px solid #e6e6e6;
-  background-color: #FFF;
+  background-color: #ffffff;
   font-size: 0.875rem;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.4);

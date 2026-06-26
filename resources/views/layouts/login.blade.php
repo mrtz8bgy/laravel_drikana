@@ -8,14 +8,11 @@
     <link name="favicon" type="image/x-icon" href="{{asset('img/favicon.png')}}" rel="shortcut icon" />
     <title>{{ config('app.name', 'Laravel') }} | ورود به پنل مدیریت</title>
     
-    {{-- =============================================== --}}
-    {{-- تمام لینک‌های خارجی حذف یا کامنت شدند --}}
-    {{-- فونت‌ها، آیکون‌ها و انیمیشن‌ها به صورت داخلی جایگزین شدند --}}
-    {{-- =============================================== --}}
-    
     <style>
-        /* فونت سیستمی جایگزین Inter */
-        @import url('data:image/svg+xml;charset=utf-8,/* خالی */');
+        /* ================================================
+           فونت و استایل‌های پایه – هماهنگ با قالب دریکانا
+           ================================================ */
+        @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
         
         * {
             margin: 0;
@@ -23,47 +20,63 @@
             box-sizing: border-box;
         }
         
+        :root {
+            --gold-primary: #c8a951;
+            --gold-light: #f5d77b;
+            --gold-gradient: linear-gradient(135deg, #f5d77b, #c8a951);
+            --bg-deep: #02042d;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --text-light: #e6dcc8;
+            --text-muted: #b0a68e;
+            --border-gold: rgba(196, 169, 90, 0.25);
+            --shadow-gold: 0 20px 40px -8px rgba(0,0,0,0.6);
+            --radius-xl: 28px;
+            --radius-lg: 20px;
+            --transition: all 0.3s ease;
+        }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "IranSans", Tahoma, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, sans-serif;
+            background: var(--bg-deep);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow-x: hidden;
+            color: var(--text-light);
         }
         
-        /* آیکون‌های Font Awesome به صورت داخلی با SVG جایگزین شدند */
-        .fas, .far, .fab {
-            font-family: inherit;
-            font-style: normal;
-            display: inline-block;
-            width: 1em;
-            text-align: center;
+        /* ================================================
+           پس‌زمینه پویا با المان‌های طلایی
+           ================================================ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(196, 169, 90, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(196, 169, 90, 0.05) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(196, 169, 90, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
         }
         
-        /* انیمیشن‌های جایگزین animate.css */
+        /* ================================================
+           انیمیشن‌ها
+           ================================================ */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(40px);
             }
             to {
                 opacity: 1;
@@ -71,57 +84,27 @@
             }
         }
         
-        .animate__animated {
-            animation-duration: 0.8s;
-            animation-fill-mode: both;
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
         
-        .animate__fadeIn {
-            animation-name: fadeIn;
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         
-        .animate__fadeInUp {
-            animation-name: fadeInUp;
+        @keyframes pulse-gold {
+            0%, 100% { box-shadow: 0 0 20px rgba(196, 169, 90, 0.15); }
+            50% { box-shadow: 0 0 40px rgba(196, 169, 90, 0.3); }
         }
         
-        :root {
-            --primary-color: #4361ee;
-            --primary-dark: #3a56d4;
-            --primary-light: #4895ef;
-            --secondary-color: #4cc9f0;
-            --success-color: #4ade80;
-            --warning-color: #fbbf24;
-            --danger-color: #f87171;
-            --dark-color: #1e293b;
-            --light-color: #f8fafc;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #94a3b8;
-            --gray-500: #64748b;
-            --gray-600: #475569;
-            --gray-700: #334155;
-            --gray-800: #1e293b;
-            --gray-900: #0f172a;
-            --border-radius: 16px;
-            --border-radius-sm: 12px;
-            --box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            --box-shadow-hover: 0 30px 50px rgba(67, 97, 238, 0.15);
-            --transition: all 0.3s ease;
-        }
+        .animate__fadeIn { animation: fadeIn 0.8s ease; }
+        .animate__slideUp { animation: slideUp 0.8s ease; }
         
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        
+        /* ================================================
+           کانتینر اصلی
+           ================================================ */
         #container {
             width: 100%;
             min-height: 100vh;
@@ -130,107 +113,125 @@
             justify-content: center;
             padding: 20px;
             position: relative;
-            background-size: cover !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-            animation: fadeIn 1s ease;
-        }
-        
-        #container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(67, 97, 238, 0.9) 0%, rgba(76, 201, 240, 0.9) 100%);
-            backdrop-filter: blur(10px);
+            z-index: 1;
         }
         
         .cls-content {
-            position: relative;
-            z-index: 1;
             width: 100%;
             max-width: 1200px;
+            position: relative;
+            z-index: 1;
         }
         
+        /* ================================================
+           کارت لاگین – شیشه‌ای با حاشیه طلایی
+           ================================================ */
         .login-wrapper {
             display: flex;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-radius: var(--radius-xl);
             overflow: hidden;
-            box-shadow: var(--box-shadow);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow-gold);
+            border: 1px solid var(--border-gold);
             animation: slideUp 0.8s ease;
+            position: relative;
         }
         
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .login-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: var(--radius-xl);
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(196, 169, 90, 0.3), transparent 40%, transparent 60%, rgba(196, 169, 90, 0.2));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
         
+        /* ================================================
+           سایدبار – با گرادیانت طلایی
+           ================================================ */
         .login-sidebar {
             flex: 1;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            padding: 60px 40px;
+            background: linear-gradient(145deg, rgba(196, 169, 90, 0.12), rgba(196, 169, 90, 0.04));
+            padding: 50px 40px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             overflow: hidden;
+            border-left: 1px solid var(--border-gold);
+        }
+        
+        [dir="rtl"] .login-sidebar {
+            border-left: none;
+            border-right: 1px solid var(--border-gold);
         }
         
         .login-sidebar::before {
-            content: '';
+            content: '◆';
             position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-            animation: rotate 20s linear infinite;
+            top: -50px;
+            right: -50px;
+            font-size: 300px;
+            color: rgba(196, 169, 90, 0.04);
+            pointer-events: none;
         }
         
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+        .login-sidebar::after {
+            content: '◇';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            font-size: 200px;
+            color: rgba(196, 169, 90, 0.03);
+            pointer-events: none;
         }
         
         .sidebar-content {
             position: relative;
             z-index: 1;
-            color: white;
+        }
+        
+        .sidebar-content .logo {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-content .logo img {
+            max-width: 160px;
+            height: auto;
+            filter: brightness(1.1);
         }
         
         .sidebar-content h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 20px;
-            line-height: 1.3;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            line-height: 1.2;
         }
         
         .sidebar-content p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+            font-size: 1rem;
+            color: var(--text-muted);
             margin-bottom: 30px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
         
         .sidebar-stats {
             display: flex;
             gap: 30px;
-            margin-top: 40px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-gold);
         }
         
         .stat-item {
@@ -238,68 +239,89 @@
         }
         
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
         
         .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
+            font-size: 0.85rem;
+            color: var(--text-muted);
         }
         
+        /* ================================================
+           بخش اصلی فرم
+           ================================================ */
         .login-main {
-            flex: 1;
-            padding: 60px 50px;
-            background: white;
+            flex: 1.2;
+            padding: 50px 45px;
+            background: rgba(255, 255, 255, 0.02);
         }
         
         .login-header {
             text-align: center;
-            margin-bottom: 40px;
-        }
-        
-        .login-header .logo {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
         
         .login-header .logo img {
-            max-width: 180px;
+            max-width: 140px;
             height: auto;
+            margin-bottom: 20px;
         }
         
         .login-header h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--gray-800);
-            margin-bottom: 10px;
+            color: var(--text-light);
+            margin-bottom: 8px;
         }
         
         .login-header p {
-            color: var(--gray-500);
-            font-size: 1rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
         }
         
+        .login-header .gold-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--gold-gradient);
+            margin: 12px auto 0;
+            border-radius: 10px;
+        }
+        
+        /* ================================================
+           فرم
+           ================================================ */
         .login-form {
             max-width: 400px;
             margin: 0 auto;
         }
         
         .form-group {
-            margin-bottom: 25px;
-            position: relative;
+            margin-bottom: 22px;
         }
         
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 500;
-            color: var(--gray-700);
-            font-size: 0.95rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
         }
         
         .form-group label i {
+            margin-left: 8px;
+            color: var(--gold-primary);
+        }
+        
+        [dir="rtl"] .form-group label i {
+            margin-left: 0;
             margin-right: 8px;
         }
         
@@ -309,56 +331,88 @@
         
         .input-wrapper .input-icon {
             position: absolute;
-            left: 15px;
+            right: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--gray-400);
+            color: var(--text-muted);
             font-size: 1.1rem;
             transition: var(--transition);
             z-index: 1;
+            opacity: 0.6;
+        }
+        
+        [dir="rtl"] .input-wrapper .input-icon {
+            right: auto;
+            left: 16px;
         }
         
         .input-wrapper input {
             width: 100%;
-            padding: 15px 15px 15px 45px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--border-radius);
+            padding: 14px 16px 14px 48px;
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
             font-size: 1rem;
+            font-family: inherit;
             transition: var(--transition);
-            background: var(--gray-100);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-light);
+        }
+        
+        [dir="rtl"] .input-wrapper input {
+            padding: 14px 48px 14px 16px;
+        }
+        
+        .input-wrapper input::placeholder {
+            color: var(--text-muted);
+            opacity: 0.6;
         }
         
         .input-wrapper input:focus {
             outline: none;
-            border-color: var(--primary-color);
-            background: white;
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+            border-color: var(--gold-primary);
+            background: rgba(255, 255, 255, 0.07);
+            box-shadow: 0 0 0 4px rgba(196, 169, 90, 0.08);
         }
         
+        .input-wrapper input:focus ~ .input-icon,
         .input-wrapper input:focus + .input-icon {
-            color: var(--primary-color);
+            color: var(--gold-light);
+            opacity: 1;
         }
         
         .password-toggle {
             position: absolute;
-            right: 15px;
+            left: 16px;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            color: var(--gray-400);
+            color: var(--text-muted);
             transition: var(--transition);
             z-index: 1;
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+        
+        [dir="rtl"] .password-toggle {
+            left: auto;
+            right: 16px;
         }
         
         .password-toggle:hover {
-            color: var(--primary-color);
+            color: var(--gold-light);
+            opacity: 1;
         }
         
+        /* ================================================
+           گزینه‌های فرم
+           ================================================ */
         .form-options {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         
         .remember-me {
@@ -366,89 +420,148 @@
             align-items: center;
             gap: 8px;
             cursor: pointer;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+        
+        .remember-me:hover {
+            color: var(--text-light);
         }
         
         .remember-me input[type="checkbox"] {
             width: 18px;
             height: 18px;
-            accent-color: var(--primary-color);
+            accent-color: var(--gold-primary);
             cursor: pointer;
-        }
-        
-        .remember-me span {
-            color: var(--gray-600);
-            font-size: 0.95rem;
+            border-radius: 4px;
         }
         
         .forgot-password {
-            color: var(--primary-color);
+            color: var(--gold-primary);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: var(--transition);
         }
         
         .forgot-password:hover {
-            color: var(--primary-dark);
+            color: var(--gold-light);
             text-decoration: underline;
         }
         
+        /* ================================================
+           دکمه ورود – طلایی با انیمیشن
+           ================================================ */
         .btn-login {
             width: 100%;
             padding: 16px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            background: var(--gold-gradient);
+            color: var(--bg-deep);
             border: none;
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: var(--radius-lg);
+            font-size: 1.05rem;
+            font-weight: 700;
+            font-family: inherit;
             cursor: pointer;
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            letter-spacing: 0.5px;
         }
         
         .btn-login::before {
             content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .btn-login:hover::before {
+            left: 100%;
         }
         
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: var(--box-shadow-hover);
+            box-shadow: 0 12px 30px rgba(196, 169, 90, 0.3);
         }
         
-        .btn-login:hover::before {
-            width: 300px;
-            height: 300px;
+        .btn-login:active {
+            transform: translateY(0);
         }
         
         .btn-login i {
-            margin-right: 8px;
+            margin-left: 8px;
             transition: var(--transition);
         }
         
-        .btn-login:hover i {
-            transform: translateX(5px);
+        [dir="rtl"] .btn-login i {
+            margin-left: 0;
+            margin-right: 8px;
         }
         
+        .btn-login:hover i {
+            transform: translateX(4px);
+        }
+        
+        [dir="rtl"] .btn-login:hover i {
+            transform: translateX(-4px);
+        }
+        
+        /* ================================================
+           خطا و پیام‌ها
+           ================================================ */
+        .alert {
+            padding: 14px 18px;
+            border-radius: var(--radius-lg);
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid transparent;
+            font-size: 0.95rem;
+        }
+        
+        .alert-success {
+            background: rgba(74, 222, 128, 0.08);
+            border-color: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+        }
+        
+        .alert-danger {
+            background: rgba(248, 113, 113, 0.08);
+            border-color: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+        }
+        
+        .alert-warning {
+            background: rgba(251, 191, 36, 0.08);
+            border-color: rgba(251, 191, 36, 0.2);
+            color: #fbbf24;
+        }
+        
+        .alert i {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        /* ================================================
+           بخش اجتماعی
+           ================================================ */
         .social-login {
-            margin-top: 30px;
+            margin-top: 28px;
             text-align: center;
         }
         
         .social-login p {
-            color: var(--gray-500);
-            font-size: 0.95rem;
-            margin-bottom: 15px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 14px;
             position: relative;
         }
         
@@ -457,223 +570,130 @@
             content: '';
             position: absolute;
             top: 50%;
-            width: 30%;
+            width: 25%;
             height: 1px;
-            background: var(--gray-200);
+            background: var(--border-gold);
         }
         
-        .social-login p::before {
-            left: 0;
-        }
+        .social-login p::before { left: 0; }
+        .social-login p::after { right: 0; }
         
-        .social-login p::after {
-            right: 0;
-        }
+        [dir="rtl"] .social-login p::before { left: auto; right: 0; }
+        [dir="rtl"] .social-login p::after { right: auto; left: 0; }
         
         .social-icons {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 14px;
         }
         
         .social-icon {
-            width: 45px;
-            height: 45px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: var(--gray-100);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-gold);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--gray-600);
+            color: var(--text-muted);
             text-decoration: none;
             transition: var(--transition);
-            border: 2px solid transparent;
-            font-size: 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
         }
         
         .social-icon:hover {
-            background: white;
-            border-color: var(--primary-color);
-            color: var(--primary-color);
+            background: rgba(196, 169, 90, 0.12);
+            border-color: var(--gold-primary);
+            color: var(--gold-light);
             transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(196, 169, 90, 0.15);
         }
         
-        .alert {
-            padding: 15px 20px;
-            border-radius: var(--border-radius);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            animation: slideIn 0.5s ease;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        .alert-success {
-            background: rgba(74, 222, 128, 0.1);
-            border: 1px solid var(--success-color);
-            color: var(--success-color);
-        }
-        
-        .alert-danger {
-            background: rgba(248, 113, 113, 0.1);
-            border: 1px solid var(--danger-color);
-            color: var(--danger-color);
-        }
-        
-        .alert-warning {
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid var(--warning-color);
-            color: var(--warning-color);
-        }
-        
-        .alert i {
-            font-size: 1.2rem;
-        }
-        
+        /* ================================================
+           فوتر و لینک‌ها
+           ================================================ */
         .footer-text {
             text-align: center;
-            margin-top: 30px;
-            color: var(--gray-500);
+            margin-top: 28px;
+            color: var(--text-muted);
             font-size: 0.9rem;
         }
         
         .footer-text a {
-            color: var(--primary-color);
+            color: var(--gold-primary);
             text-decoration: none;
             font-weight: 500;
             transition: var(--transition);
         }
         
         .footer-text a:hover {
-            color: var(--primary-dark);
+            color: var(--gold-light);
             text-decoration: underline;
         }
         
-        .language-selector {
+        .sidebar-footer {
             margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-gold);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.7;
+        }
+        
+        /* ================================================
+           انتخابگر زبان
+           ================================================ */
+        .language-selector {
+            margin-top: 25px;
         }
         
         .language-selector select {
             width: 100%;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: white;
-            font-size: 1rem;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            color: var(--text-light);
+            font-size: 0.95rem;
+            font-family: inherit;
             cursor: pointer;
             transition: var(--transition);
             appearance: none;
             -webkit-appearance: none;
-            -moz-appearance: none;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23c8a951' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
             background-repeat: no-repeat;
-            background-position: left 15px center;
-            padding-left: 45px;
-        }
-        
-        .language-selector select option {
-            background: white;
-            color: var(--gray-800);
-            padding: 10px;
-        }
-        
-        .language-selector select:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .language-selector select:focus {
-            outline: none;
-            border-color: white;
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
-        }
-        
-        [dir="rtl"] .input-wrapper .input-icon {
-            left: auto;
-            right: 15px;
-        }
-        
-        [dir="rtl"] .input-wrapper input {
-            padding: 15px 45px 15px 15px;
-        }
-        
-        [dir="rtl"] .password-toggle {
-            right: auto;
-            left: 15px;
-        }
-        
-        [dir="rtl"] .btn-login i {
-            margin-right: 0;
-            margin-left: 8px;
-        }
-        
-        [dir="rtl"] .btn-login:hover i {
-            transform: translateX(-5px);
-        }
-        
-        [dir="rtl"] .social-login p::before {
-            left: auto;
-            right: 0;
-        }
-        
-        [dir="rtl"] .social-login p::after {
-            right: auto;
-            left: 0;
+            background-position: left 16px center;
+            padding-left: 48px;
         }
         
         [dir="rtl"] .language-selector select {
-            background-position: right 15px center;
-            padding-right: 45px;
-            padding-left: 15px;
+            background-position: right 16px center;
+            padding-right: 48px;
+            padding-left: 16px;
         }
         
-        @media (max-width: 992px) {
-            .login-wrapper {
-                flex-direction: column;
-            }
-            
-            .login-sidebar {
-                padding: 40px;
-            }
-            
-            .login-main {
-                padding: 40px;
-            }
+        .language-selector select option {
+            background: var(--bg-deep);
+            color: var(--text-light);
+            padding: 10px;
         }
         
-        @media (max-width: 576px) {
-            .login-main {
-                padding: 30px 20px;
-            }
-            
-            .form-options {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
-            }
-            
-            .sidebar-stats {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+        .language-selector select:hover,
+        .language-selector select:focus {
+            background-color: rgba(255, 255, 255, 0.06);
+            border-color: var(--gold-primary);
+            outline: none;
         }
         
+        /* ================================================
+           حالت بارگذاری
+           ================================================ */
         .loading {
             position: relative;
             pointer-events: none;
-            opacity: 0.7;
+            opacity: 0.8;
         }
         
         .loading::after {
@@ -681,18 +701,75 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 20px;
-            height: 20px;
-            margin: -10px 0 0 -10px;
-            border: 2px solid white;
+            width: 22px;
+            height: 22px;
+            margin: -11px 0 0 -11px;
+            border: 2px solid var(--bg-deep);
             border-top-color: transparent;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
         
         @keyframes spin {
-            to {
-                transform: rotate(360deg);
+            to { transform: rotate(360deg); }
+        }
+        
+        /* ================================================
+           واکنشگرایی
+           ================================================ */
+        @media (max-width: 992px) {
+            .login-wrapper {
+                flex-direction: column;
+                max-width: 500px;
+            }
+            
+            .login-sidebar {
+                border-left: none;
+                border-right: none;
+                border-bottom: 1px solid var(--border-gold);
+            }
+            
+            [dir="rtl"] .login-sidebar {
+                border-left: none;
+                border-right: none;
+            }
+            
+            .login-sidebar {
+                padding: 35px 30px;
+            }
+            
+            .login-main {
+                padding: 35px 30px;
+            }
+            
+            .sidebar-stats {
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .login-main {
+                padding: 25px 18px;
+            }
+            
+            .login-sidebar {
+                padding: 25px 18px;
+            }
+            
+            .sidebar-content h1 {
+                font-size: 1.6rem;
+            }
+            
+            .form-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .social-login p::before,
+            .social-login p::after {
+                width: 15%;
             }
         }
     </style>
@@ -704,40 +781,34 @@
         $currentLocale = Session::get('locale', Config::get('app.locale'));
     @endphp
     
-    <div id="container"
-        @if ($generalsetting && $generalsetting->admin_login_background != null)
-            style="background-image:url('{{ asset($generalsetting->admin_login_background) }}');"
-        @else
-            style="background-image:url('{{ asset('img/bg-img/login-bg.jpg') }}');"
-        @endif>
-        
+    <div id="container">
         <div class="cls-content">
-            <div class="login-wrapper animate__animated animate__fadeIn">
-                <!-- Sidebar -->
+            <div class="login-wrapper">
+                <!-- ===== سایدبار ===== -->
                 <div class="login-sidebar">
                     <div class="sidebar-content">
-                        <div class="logo mb-4">
+                        <div class="logo">
                             @if($generalsetting && $generalsetting->logo != null)
-                                <img src="{{ asset($generalsetting->logo) }}" alt="{{ config('app.name') }}" style="max-width: 150px; filter: brightness(0) invert(1);">
+                                <img src="{{ asset($generalsetting->logo) }}" alt="{{ config('app.name') }}">
                             @else
-                                <h2 style="color: white; font-size: 2rem;">{{ config('app.name') }}</h2>
+                                <h2 style="color: var(--gold-primary); font-size: 2rem;">دریکانا</h2>
                             @endif
                         </div>
                         
                         <h1>به پنل مدیریت خوش آمدید</h1>
-                        <p>سیستم مدیریت محتوای حرفه‌ای با امکانات پیشرفته و رابط کاربری زیبا</p>
+                        <p>سیستم جامع مدیریت و فروش طلا و جواهر با معماری امن و پیشرفته</p>
                         
                         <div class="sidebar-stats">
                             <div class="stat-item">
-                                <span class="stat-number">15k+</span>
+                                <span class="stat-number">۱۰۰۰+</span>
+                                <span class="stat-label">قطعه ثبت‌شده</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">۵۰۰+</span>
                                 <span class="stat-label">کاربر فعال</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">50+</span>
-                                <span class="stat-label">ماژول</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-number">24/7</span>
+                                <span class="stat-number">۲۴/۷</span>
                                 <span class="stat-label">پشتیبانی</span>
                             </div>
                         </div>
@@ -758,35 +829,36 @@
                         @endif
                     </div>
                     
-                    <div class="sidebar-footer text-white">
-                        <p style="font-size: 0.9rem; opacity: 0.7;">© {{ date('Y') }} {{ config('app.name') }}. تمامی حقوق محفوظ است.</p>
+                    <div class="sidebar-footer">
+                        <p>© {{ date('Y') }} {{ config('app.name') }}. تمامی حقوق محفوظ است.</p>
                     </div>
                 </div>
                 
-                <!-- Main Content -->
+                <!-- ===== بخش اصلی فرم ===== -->
                 <div class="login-main">
                     <div class="login-header">
                         <div class="logo">
                             @if($generalsetting && $generalsetting->logo != null)
                                 <img src="{{ asset($generalsetting->logo) }}" alt="{{ config('app.name') }}">
                             @else
-                                <h2 style="color: var(--primary-color);">{{ config('app.name') }}</h2>
+                                <h2 style="color: var(--gold-primary);">دریکانا</h2>
                             @endif
                         </div>
                         <h2>ورود به پنل مدیریت</h2>
+                        <div class="gold-divider"></div>
                         <p>برای دسترسی به داشبورد مدیریت وارد شوید</p>
                     </div>
                     
                     @if(session('status'))
-                        <div class="alert alert-success animate__animated animate__fadeIn">
-                            <span>✓</span>
+                        <div class="alert alert-success animate__fadeIn">
+                            <i>✓</i>
                             <span>{{ session('status') }}</span>
                         </div>
                     @endif
                     
                     @if($errors->any())
-                        <div class="alert alert-danger animate__animated animate__fadeIn">
-                            <span>⚠</span>
+                        <div class="alert alert-danger animate__fadeIn">
+                            <i>✕</i>
                             <span>{{ $errors->first() }}</span>
                         </div>
                     @endif
@@ -796,7 +868,7 @@
                         
                         <div class="form-group">
                             <label for="username">
-                                👤 نام کاربری
+                                <i>👤</i> نام کاربری
                             </label>
                             <div class="input-wrapper">
                                 <span class="input-icon">👤</span>
@@ -812,7 +884,7 @@
                         
                         <div class="form-group">
                             <label for="password">
-                                🔒 رمز عبور
+                                <i>🔒</i> رمز عبور
                             </label>
                             <div class="input-wrapper">
                                 <span class="input-icon">🔒</span>
@@ -821,9 +893,7 @@
                                        name="password" 
                                        placeholder="رمز عبور خود را وارد کنید"
                                        required>
-                                <span class="password-toggle" onclick="togglePassword()">
-                                    👁
-                                </span>
+                                <span class="password-toggle" onclick="togglePassword()">👁</span>
                             </div>
                         </div>
                         
@@ -841,7 +911,7 @@
                         </div>
                         
                         <button type="submit" class="btn-login" id="submitBtn">
-                            🔓 ورود به پنل مدیریت
+                            ✦ ورود به پنل مدیریت
                         </button>
                         
                         <div class="social-login">
@@ -864,7 +934,9 @@
     </div>
     
     <script>
-        // Password visibility toggle
+        // =============================================
+        // نمایش/مخفی کردن رمز عبور
+        // =============================================
         function togglePassword() {
             const passwordInput = document.getElementById('password');
             const toggleIcon = document.querySelector('.password-toggle');
@@ -878,7 +950,9 @@
             }
         }
         
-        // Form loading state
+        // =============================================
+        // حالت بارگذاری هنگام ارسال فرم
+        // =============================================
         const loginForm = document.getElementById('loginForm');
         if (loginForm) {
             loginForm.addEventListener('submit', function(e) {
@@ -888,7 +962,9 @@
             });
         }
         
-        // Auto-hide alerts after 5 seconds
+        // =============================================
+        // بستن خودکار پیام‌ها بعد از ۵ ثانیه
+        // =============================================
         setTimeout(function() {
             const alerts = document.querySelectorAll('.alert');
             alerts.forEach(alert => {
@@ -900,15 +976,17 @@
             });
         }, 5000);
         
-        // Input focus effects
+        // =============================================
+        // افکت فوکوس روی ورودی‌ها
+        // =============================================
         const inputs = document.querySelectorAll('.input-wrapper input');
         inputs.forEach(input => {
             input.addEventListener('focus', function() {
-                this.parentElement.classList.add('focused');
+                this.parentElement.style.borderColor = 'var(--gold-primary)';
             });
             
             input.addEventListener('blur', function() {
-                this.parentElement.classList.remove('focused');
+                this.parentElement.style.borderColor = '';
             });
         });
     </script>

@@ -45,6 +45,21 @@
 @endsection
 
 @section('content')
+@php
+    // مقداردهی پیش‌فرض برای همه متغیرها در صورت نبودن
+    if(!isset($all_colors)) {
+        $all_colors = collect([]);
+    }
+    if(!isset($attributes)) {
+        $attributes = collect([]);
+    }
+    if(!isset($selected_attributes)) {
+        $selected_attributes = [];
+    }
+    if(!isset($products)) {
+        $products = collect([]);
+    }
+@endphp
 
     <div class="breadcrumb-area">
         <div class="container">
@@ -129,7 +144,7 @@
                             <div class="box-content">
                                 <div class="range-slider-wrapper mt-3">
                                     <!-- Range slider container -->
-                                    <div id="input-slider-range" data-range-value-min="{{ $products->min('unit_price') }}" data-range-value-max="{{ $products->max('unit_price') }}"></div>
+                                    <div id="input-slider-range" data-range-value-min="{{ $products->min('unit_price') ?? 0 }}" data-range-value-max="{{ $products->max('unit_price') ?? 1000000 }}"></div>
 
                                     <!-- Range slider values -->
                                     <div class="row">
@@ -137,7 +152,7 @@
                                             <span class="range-slider-value value-high"
                                                 @if (isset($max_price))
                                                     data-range-value-high="{{ $max_price }}"
-                                                @elseif($products->max('unit_price') > 0)
+                                                @elseif(isset($products) && $products->max('unit_price') > 0)
                                                     data-range-value-high="{{ $products->max('unit_price') }}"
                                                 @else
                                                     data-range-value-high="0"
@@ -148,7 +163,7 @@
                                             <span class="range-slider-value value-low"
                                                 @if (isset($min_price))
                                                     data-range-value-low="{{ $min_price }}"
-                                                @elseif($products->min('unit_price') > 0)
+                                                @elseif(isset($products) && $products->min('unit_price') > 0)
                                                     data-range-value-low="{{ $products->min('unit_price') }}"
                                                 @else
                                                     data-range-value-low="0"
@@ -167,51 +182,55 @@
                             <div class="box-content">
                                 <!-- Filter by color -->
                                 <ul class="list-inline checkbox-color checkbox-color-circle mb-0">
-                                    @foreach ($all_colors as $key => $color)
+                                    @forelse ($all_colors as $key => $color)
                                         <li>
                                             <input type="radio" id="color-{{ $key }}" name="color" value="{{ $color }}" @if(isset($selected_color) && $selected_color == $color) checked @endif onchange="filter()">
-                                            <label style="background: {{ $color }};" for="color-{{ $key }}" data-toggle="tooltip" data-original-title="{{ \App\Color::where('code', $color)->first()->name }}"></label>
+                                            <label style="background: {{ $color }};" for="color-{{ $key }}" data-toggle="tooltip" data-original-title="{{ optional(\App\Color::where('code', $color)->first())->name }}"></label>
                                         </li>
-                                    @endforeach
+                                    @empty
+                                        <li class="text-muted">رنگی برای فیلتر وجود ندارد</li>
+                                    @endforelse
                                 </ul>
                             </div>
                         </div>
 
-                        @foreach ($attributes as $key => $attribute)
-                            @if (\App\Attribute::find($attribute['id']) != null)
-                                <div class="bg-white sidebar-box mb-3">
-                                    <div class="box-title text-center">
-                                        فیلتر بر اساس {{ \App\Attribute::find($attribute['id'])->name }}
-                                    </div>
-                                    <div class="box-content">
-                                        <!-- Filter by others -->
-                                        <div class="filter-checkbox">
-                                            @if(array_key_exists('values', $attribute))
-                                                @foreach ($attribute['values'] as $key => $value)
-                                                    @php
-                                                        $flag = false;
-                                                        if(isset($selected_attributes)){
-                                                            foreach ($selected_attributes as $key => $selected_attribute) {
-                                                                if($selected_attribute['id'] == $attribute['id']){
-                                                                    if(in_array($value, $selected_attribute['values'])){
-                                                                        $flag = true;
-                                                                        break;
+                        @if(isset($attributes) && count($attributes) > 0)
+                            @foreach ($attributes as $key => $attribute)
+                                @if(is_array($attribute) && isset($attribute['id']) && \App\Attribute::find($attribute['id']) != null)
+                                    <div class="bg-white sidebar-box mb-3">
+                                        <div class="box-title text-center">
+                                            فیلتر بر اساس {{ \App\Attribute::find($attribute['id'])->name }}
+                                        </div>
+                                        <div class="box-content">
+                                            <!-- Filter by others -->
+                                            <div class="filter-checkbox">
+                                                @if(array_key_exists('values', $attribute) && is_array($attribute['values']))
+                                                    @foreach ($attribute['values'] as $key => $value)
+                                                        @php
+                                                            $flag = false;
+                                                            if(isset($selected_attributes) && is_array($selected_attributes)){
+                                                                foreach ($selected_attributes as $key => $selected_attribute) {
+                                                                    if(is_array($selected_attribute) && isset($selected_attribute['id']) && $selected_attribute['id'] == $attribute['id']){
+                                                                        if(in_array($value, $selected_attribute['values'])){
+                                                                            $flag = true;
+                                                                            break;
+                                                                        }
                                                                     }
                                                                 }
                                                             }
-                                                        }
-                                                    @endphp
-                                                    <div class="checkbox">
-                                                        <input type="checkbox" id="attribute_{{ $attribute['id'] }}_value_{{ $value }}" name="attribute_{{ $attribute['id'] }}[]" value="{{ $value }}" @if ($flag) checked @endif onchange="filter()">
-                                                        <label for="attribute_{{ $attribute['id'] }}_value_{{ $value }}">{{ $value }}</label>
-                                                    </div>
-                                                @endforeach
-                                            @endif
+                                                        @endphp
+                                                        <div class="checkbox">
+                                                            <input type="checkbox" id="attribute_{{ $attribute['id'] }}_value_{{ $value }}" name="attribute_{{ $attribute['id'] }}[]" value="{{ $value }}" @if ($flag) checked @endif onchange="filter()">
+                                                            <label for="attribute_{{ $attribute['id'] }}_value_{{ $value }}">{{ $value }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            @endif
-                        @endforeach
+                                @endif
+                            @endforeach
+                        @endif
 
                         {{-- <button type="submit" class="btn btn-styled btn-block btn-base-4">Apply filter</button> --}}
                     </div>
@@ -298,7 +317,7 @@
                         <!-- <hr class=""> -->
                         <div class="products-box-bar p-3 bg-white">
                             <div class="row sm-no-gutters gutters-5">
-                                @foreach ($products as $key => $product)
+                                @forelse ($products as $key => $product)
                                     <div class="col-xxl-3 col-xl-4 col-lg-3 col-md-4 col-6">
                                         <div class="product-box-2 bg-white alt-box my-md-2">
                                             <div class="position-relative overflow-hidden">
@@ -339,7 +358,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                @endforeach
+                                @empty
+                                    <div class="col-12 text-center py-5">
+                                        <h4 class="text-muted">محصولی یافت نشد!</h4>
+                                    </div>
+                                @endforelse
                             </div>
                         </div>
                         <div class="products-pagination bg-white p-3">

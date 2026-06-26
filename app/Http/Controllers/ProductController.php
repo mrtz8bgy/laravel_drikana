@@ -6,9 +6,10 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\ProductStock;
 use App\Category;
+use App\SubCategory;
+use App\SubSubCategory;
 use App\Language;
 use Auth;
-use App\SubSubCategory;
 use Session;
 use ImageOptimizer;
 use DB;
@@ -701,6 +702,69 @@ class ProductController extends Controller
         return view('partials.sku_combinations_edit', compact('combinations', 'unit_price', 'colors_active', 'product_name', 'product'));
     }
 
+    // ================ متدهای ویژه صفحه اصلی ================
+
+    public function featured_products()
+    {
+        $products = filter_products(Product::where('published', 1)->where('featured', 1))->paginate(12);
+        $all_colors = collect([]);
+        $attributes = \App\Attribute::all();
+        $selected_attributes = [];
+        return view('frontend.product_listing', compact('products', 'all_colors', 'attributes', 'selected_attributes'));
+    }
+
+    public function best_selling_products()
+    {
+        $products = filter_products(Product::where('published', 1)->orderBy('num_of_sale', 'desc'))->paginate(12);
+        $all_colors = collect([]);
+        $attributes = \App\Attribute::all();
+        $selected_attributes = [];
+        return view('frontend.product_listing', compact('products', 'all_colors', 'attributes', 'selected_attributes'));
+    }
+
+    public function new_products()
+    {
+        $products = filter_products(Product::where('published', 1)->orderBy('created_at', 'desc'))->paginate(12);
+        $all_colors = collect([]);
+        $attributes = \App\Attribute::all();
+        $selected_attributes = [];
+        return view('frontend.product_listing', compact('products', 'all_colors', 'attributes', 'selected_attributes'));
+    }
+
+    public function discounted_products()
+    {
+        $products = filter_products(Product::where('published', 1)->where('discount', '>', 0))->paginate(12);
+        $all_colors = collect([]);
+        $attributes = \App\Attribute::all();
+        $selected_attributes = [];
+        return view('frontend.product_listing', compact('products', 'all_colors', 'attributes', 'selected_attributes'));
+    }
+
+    public function mens_jewelry()
+    {
+        $products = filter_products(Product::where('published', 1)
+            ->where(function($query) {
+                $query->where('category_id', function($q) {
+                    $q->select('id')->from('categories')->where('name', 'like', '%مردانه%');
+                })->orWhere('tags', 'like', '%مردانه%');
+            }))->paginate(12);
+        $all_colors = collect([]);
+        $attributes = \App\Attribute::all();
+        $selected_attributes = [];
+        return view('frontend.product_listing', compact('products', 'all_colors', 'attributes', 'selected_attributes'));
+    }
+
+    public function womens_jewelry()
+    {
+        $products = filter_products(Product::where('published', 1)
+            ->where(function($query) {
+                $query->where('category_id', function($q) {
+                    $q->select('id')->from('categories')->where('name', 'like', '%زنانه%');
+                })->orWhere('tags', 'like', '%زنانه%');
+            }))->paginate(12);
+        $all_colors = collect([]);
+        $attributes = \App\Attribute::all();
+        $selected_attributes = [];
+        return view('frontend.product_listing', compact('products', 'all_colors', 'attributes', 'selected_attributes'));
+    }
 }
-
-

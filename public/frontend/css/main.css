@@ -2442,7 +2442,7 @@ ul.seller-brand-list .brand-item {
 
 .all-category-menu ul li {
     float: left;
-    width: 16.667%;
+    width: 95%;
     padding: 12px 10px;
     position: relative;
     transition: all 0.3s;

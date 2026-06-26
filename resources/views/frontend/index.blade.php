@@ -15,38 +15,436 @@
 
 <style>
 /* ============================================ */
-/* استایل اسلایدر تمام عرض */
+/* تم سرمه‌ای، طلایی و سفید - طراحی لوکس و حرفه‌ای */
 /* ============================================ */
+:root {
+    --color-navy: #0f0e1a;
+    --color-navy-light: #1a1735;
+    --color-navy-card: #1e1b3a;
+    --color-gold: #d4af37;
+    --color-gold-light: #f0d080;
+    --color-gold-glow: #e8c547;
+    --color-white: #ffffff;
+    --color-white-smoke: #f5f5f7;
+    --color-gray: #b0aec0;
+    --color-gray-dark: #6b6980;
+    --color-shadow: rgba(212, 175, 55, 0.15);
+    --shadow-gold: 0 4px 25px rgba(212, 175, 55, 0.25);
+    --shadow-gold-hover: 0 8px 40px rgba(212, 175, 55, 0.4);
+    --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0d080 50%, #b8962e 100%);
+    --gradient-navy: linear-gradient(135deg, #0f0e1a 0%, #1a1735 50%, #2a2555 100%);
+    --font-base: 'Vazirmatn', 'Segoe UI', sans-serif;
+}
 
+/* ===== ریست کلی و بدنه ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-base);
+    background: ##020544;
+    color: var(--color-white);
+    line-height: 1.8;
+    direction: rtl;
+}
+
+a {
+    color: var(--color-gold);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-gold-light);
+    text-decoration: none;
+}
+
+/* ===== کانتینر ===== */
+.container {
+    max-width: 1400px;
+    padding: 0 15px;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+/* ============================================ */
+/* استایل‌های مستقل مگا منو - بدون تداخل با سایر استایل‌ها */
+/* ============================================ */
+.mega-menu-section {
+    background: var(--color-gold);
+    border-bottom: 2px solid var(--color-gold);
+    position: relative;
+   /* z-index: 1000;*/
+    width: 100%;
+}
+
+.mega-menu-wrapper {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.mega-menu-nav {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.mega-menu-trigger {
+    position: relative;
+    width: 100%;
+}
+
+.mega-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background:var(--gradient-gold);
+    color: var(--color-navy);
+    padding: 14px 28px;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    width: 100%;
+    justify-content: center;
+    font-family: var(--font-base);
+}
+
+.mega-menu-btn:hover {
+    background: var(--color-gold-light);
+    color: var(--color-navy);
+}
+
+.mega-menu-btn i {
+    font-size: 20px;
+}
+
+/* ===== لیست اصلی دسته‌بندی‌ها ===== */
+.mega-menu-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-navy-card);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-top: none;
+    max-height: 80vh;
+    overflow-y: auto;
+    min-width: 280px;
+    z-index: 999;
+}
+
+.mega-menu-trigger:hover .mega-menu-list,
+.mega-menu-trigger.active .mega-menu-list {
+    display: block;
+}
+
+.mega-menu-item {
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    list-style: none;
+}
+
+.mega-menu-item:last-child {
+    border-bottom: none;
+}
+
+.mega-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 20px;
+    color: var(--color-white-smoke);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: var(--font-base);
+}
+
+.mega-menu-link:hover {
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--color-gold);
+    padding-right: 28px;
+}
+
+.mega-cat-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0.8);
+    transition: all 0.3s ease;
+}
+
+.mega-menu-link:hover .mega-cat-icon {
+    filter: brightness(1);
+}
+
+.mega-arrow {
+    margin-right: auto;
+    font-size: 16px;
+    color: var(--color-gray);
+    transition: all 0.3s ease;
+}
+
+.mega-menu-link:hover .mega-arrow {
+    color: var(--color-gold);
+}
+
+/* ============================================ */
+/* مگا ساب منو (زیردسته‌ها) - کاملاً مستقل */
+/* ============================================ */
+.mega-sub-menu {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: 650px;
+    background: var(--color-navy-card);
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    padding: 20px;
+    max-height: 500px;
+    overflow-y: auto;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.mega-menu-item:hover .mega-sub-menu {
+    opacity: 1;
+    visibility: visible;
+    right: calc(100% + 2px);
+    pointer-events: auto;
+}
+
+/* جلوگیری از بسته شدن منو هنگام حرکت موس */
+.mega-sub-menu:hover {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+.mega-sub-container {
+    padding: 5px;
+    width: 100%;
+}
+
+.mega-sub-container .row {
+    margin: 0;
+}
+
+.mega-sub-container [class*="col-"] {
+    padding: 5px;
+}
+
+.mega-sub-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    color: var(--color-white-smoke);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: var(--font-base);
+}
+
+.mega-sub-link:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--color-gold);
+}
+
+.mega-sub-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.mega-sub-icon i {
+    font-size: 20px;
+    color: var(--color-gold);
+}
+
+/* ===== سطح سوم (زیرزیردسته‌ها) ===== */
+.mega-sub-sub-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 12px 8px 12px;
+}
+
+.mega-sub-sub-list li {
+    padding: 2px 0;
+    list-style: none;
+}
+
+.mega-sub-sub-list li a {
+    color: var(--color-gray);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 3px 12px;
+    display: block;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-family: var(--font-base);
+}
+
+.mega-sub-sub-list li a:hover {
+    color: var(--color-gold);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+/* ===== لینک مشاهده همه ===== */
+.mega-view-all .mega-menu-link {
+    color: var(--color-gold);
+    font-weight: 700;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mega-view-all .mega-menu-link:hover {
+    background: rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================ */
+/* استایل اسکرول مگا منو */
+/* ============================================ */
+.mega-menu-list::-webkit-scrollbar,
+.mega-sub-menu::-webkit-scrollbar {
+    width: 4px;
+}
+
+.mega-menu-list::-webkit-scrollbar-track,
+.mega-sub-menu::-webkit-scrollbar-track {
+    background: var(--color-navy);
+    border-radius: 4px;
+}
+
+.mega-menu-list::-webkit-scrollbar-thumb,
+.mega-sub-menu::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+}
+
+/* ============================================ */
+/* ریسپانسیو مگا منو */
+/* ============================================ */
+@media (max-width: 1200px) {
+    .mega-sub-menu {
+        width: 550px;
+    }
+}
+
+@media (max-width: 992px) {
+    .mega-sub-menu {
+        display: none !important;
+        position: static !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 5px 15px !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        max-height: none !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-radius: 0 !important;
+    }
+    
+    .mega-menu-item.active .mega-sub-menu {
+        display: block !important;
+    }
+    
+    .mega-menu-item.active .mega-arrow {
+        transform: rotate(180deg);
+    }
+    
+    .mega-menu-list {
+        position: static;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .mega-menu-trigger:hover .mega-menu-list {
+        display: none;
+    }
+    
+    .mega-menu-trigger.active .mega-menu-list {
+        display: block;
+    }
+    
+    .mega-sub-sub-list {
+        padding-right: 20px;
+    }
+    
+    .mega-sub-container [class*="col-"] {
+        padding: 3px 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .mega-sub-container [class*="col-"] {
+        padding: 2px 5px;
+    }
+    
+    .mega-sub-link {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+    
+    .mega-sub-sub-list li a {
+        font-size: 12px;
+        padding: 2px 10px;
+    }
+}
+
+/* ============================================ */
+/* اسلایدر تمام عرض (۱۰۰٪) - با Slick */
+/* ============================================ */
 .fullwidth-slider-section {
     width: 100%;
     position: relative;
-    margin-bottom: 20px;
+    margin: 0;
+    padding: 0;
     overflow: hidden;
 }
 
-.slider-container {
-    position: relative;
+.fullwidth-slider-section .slick-carousel {
     width: 100%;
-    overflow: hidden;
 }
 
-.slider-track {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-}
-
-.slider-slide {
-    min-width: 100%;
+.fullwidth-slider-section .slick-slide {
     position: relative;
-    height: 550px;
-    flex-shrink: 0;
+    height: 520px;
 }
 
-.slider-slide img {
+.fullwidth-slider-section .slick-slide img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.fullwidth-slider-section .slick-slide > div {
+    height: 100%;
 }
 
 .slide-content-overlay {
@@ -55,79 +453,124 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%);
+    background: linear-gradient(90deg, rgba(15, 14, 26, 0.85) 0%, rgba(15, 14, 26, 0.4) 60%, rgba(15, 14, 26, 0.1) 100%);
     display: flex;
     align-items: center;
+    padding: 50px;
+    pointer-events: none;
 }
 
-.slide-content-overlay h2 {
-    color: white;
+.slide-content-overlay a {
+    pointer-events: auto;
+}
+
+.slide-content {
+    max-width: 600px;
+}
+
+.slide-content h2 {
+    color: var(--color-white);
     font-size: 48px;
-    font-weight: 800;
-    margin-bottom: 15px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-weight: 900;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
-.slide-content-overlay p {
-    color: white;
+.slide-content h2 span {
+    color: var(--color-gold);
+}
+
+.slide-content p {
+    color: rgba(255, 255, 255, 0.9);
     font-size: 18px;
-    margin-bottom: 20px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    margin-bottom: 25px;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
 }
 
 .slide-btn-custom {
     display: inline-block;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 12px 30px;
-    border-radius: 30px;
+    background: var(--gradient-gold);
+    color: var(--color-navy);
+    padding: 14px 38px;
+    border-radius: 50px;
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s ease;
+    box-shadow: var(--shadow-gold);
+    font-size: 15px;
+    pointer-events: auto;
 }
 
 .slide-btn-custom:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    color: white;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow-gold-hover);
+    color: var(--color-navy);
 }
 
-/* دکمه‌های ناوبری */
-.slider-prev, .slider-next {
+/* استایل‌های Slick برای اسلایدر */
+.fullwidth-slider-section .slick-prev,
+.fullwidth-slider-section .slick-next {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 45px;
-    height: 45px;
-    background: rgba(255,255,255,0.8);
+    width: 48px;
+    height: 48px;
+    background: rgba(15, 14, 26, 0.8);
     border-radius: 50%;
     z-index: 100;
     cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    border: 2px solid var(--color-gold);
+    box-shadow: var(--shadow-gold);
     transition: all 0.3s ease;
-    font-size: 24px;
-    color: #667eea;
-    display: flex;
+    font-size: 0;
+    color: var(--color-gold);
+    display: flex !important;
     align-items: center;
     justify-content: center;
+    backdrop-filter: blur(8px);
 }
 
-.slider-prev {
+.fullwidth-slider-section .slick-prev {
     left: 20px;
 }
 
-.slider-next {
+.fullwidth-slider-section .slick-next {
     right: 20px;
 }
 
-.slider-prev:hover, .slider-next:hover {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+.fullwidth-slider-section .slick-prev:hover,
+.fullwidth-slider-section .slick-next:hover {
+    background: var(--gradient-gold);
+    color: var(--color-navy);
 }
 
-/* دات‌های ناوبری */
-.slider-dots {
+.fullwidth-slider-section .slick-prev::before,
+.fullwidth-slider-section .slick-next::before {
+    display: none;
+}
+
+.fullwidth-slider-section .slick-prev::after {
+    content: '\f104';
+    font-family: 'FontAwesome';
+    font-size: 22px;
+    color: var(--color-gold);
+}
+
+.fullwidth-slider-section .slick-next::after {
+    content: '\f105';
+    font-family: 'FontAwesome';
+    font-size: 22px;
+    color: var(--color-gold);
+}
+
+.fullwidth-slider-section .slick-prev:hover::after,
+.fullwidth-slider-section .slick-next:hover::after {
+    color: var(--color-navy);
+}
+
+/* دات‌های اسلایدر */
+.fullwidth-slider-section .slick-dots {
     position: absolute;
     bottom: 20px;
     left: 0;
@@ -136,95 +579,282 @@
     z-index: 20;
 }
 
-.slider-dot {
+.fullwidth-slider-section .slick-dots li {
     display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.5);
     margin: 0 5px;
+}
+
+.fullwidth-slider-section .slick-dots li button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.3);
     cursor: pointer;
+    font-size: 0;
+    padding: 0;
     transition: all 0.3s ease;
 }
 
-.slider-dot.active {
-    background: #667eea;
+.fullwidth-slider-section .slick-dots li.slick-active button {
+    background: var(--color-gold);
     width: 30px;
-    border-radius: 10px;
+    border-radius: 6px;
+    border-color: var(--color-gold);
 }
 
 /* ============================================ */
-/* مگا منوی خطی زیر اسلایدر */
+/* فلش دیل - اسکرول افقی زیر بنر */
 /* ============================================ */
-
-.mega-menu-section {
-    background: white;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+.flash-deal-section {
+    background: var(--color-navy-card);
     padding: 15px 0;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
     margin-bottom: 30px;
-    position: relative;
-    z-index: 50;
 }
 
-.mega-menu-wrapper {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    max-width: 1200px;
+.flash-deal-wrapper {
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 15px;
 }
 
-.mega-menu-item {
-    text-align: center;
-    padding: 10px 20px;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    background: #f8f9fa;
-    min-width: 100px;
+.flash-deal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 10px 0;
 }
 
-.mega-menu-item:hover {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    transform: translateY(-5px);
+.flash-deal-header h4 {
+    color: var(--color-gold);
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0;
 }
 
-.mega-menu-link {
+.flash-deal-header h4 i {
+    margin-left: 8px;
+}
+
+.flash-deal-header .badge-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 8px;
+}
+
+.flash-deal-view-all {
+    color: var(--color-gray);
+    font-size: 14px;
+    font-weight: 500;
     text-decoration: none;
-    color: #333;
+    transition: all 0.3s ease;
+}
+
+.flash-deal-view-all:hover {
+    color: var(--color-gold);
+}
+
+.flash-deal-scroll {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 10px 0 5px 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.flash-deal-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.flash-deal-scroll::-webkit-scrollbar-track {
+    background: var(--color-navy);
+    border-radius: 4px;
+}
+
+.flash-deal-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+}
+
+.flash-deal-item-horizontal {
+    flex: 0 0 140px;
+    background: var(--color-navy);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+.flash-deal-item-horizontal:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.flash-deal-item-horizontal img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.flash-deal-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
 }
 
-.mega-menu-item:hover .mega-menu-link {
-    color: white;
+.flash-deal-price {
+    color: var(--color-gold);
+    font-weight: 700;
+    font-size: 15px;
 }
 
-.mega-menu-icon {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    border-radius: 10px;
+.flash-deal-old-price {
+    color: var(--color-gray-dark);
+    font-size: 12px;
+    text-decoration: line-through;
 }
 
-.mega-menu-title {
+/* ============================================ */
+/* کارت محصولات - با max-lines برای متن بلند */
+/* ============================================ */
+
+.product-card-2 {
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--color-navy-card);
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.product-card-2:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-gold-hover);
+    border-color: var(--color-gold);
+}
+
+.card-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: var(--color-navy);
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card-2:hover .card-image img {
+    transform: scale(1.06);
+}
+
+/* ===== عنوان محصول با max-lines ===== */
+.product-title {
+    height: auto;
+    min-height: 48px;
+    margin: 8px 0 4px;
+    overflow: hidden;
+}
+
+.product-title a {
     font-size: 14px;
+    font-weight: 600;
+    color: var(--color-white-smoke);
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+    max-height: 3em;
+    word-break: break-word;
+}
+
+.product-title a:hover {
+    color: var(--color-gold);
+}
+
+.price-box {
+    min-height: 52px;
+    margin-bottom: 4px;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-gold);
+}
+
+.old-product-price {
+    font-size: 13px;
+    color: var(--color-gray-dark);
+    text-decoration: line-through;
+}
+
+/* ===== ستاره‌های امتیاز ===== */
+.star-rating {
+    color: var(--color-gold);
+    font-size: 13px;
+}
+
+.text-success {
+    color: #4ade80 !important;
     font-weight: 500;
 }
 
-/* ============================================ */
-/* بخش آیکون‌های موبایلی */
-/* ============================================ */
+/* ===== نشان تخفیف ===== */
+.discount-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    z-index: 2;
+    box-shadow: 0 2px 12px rgba(239, 68, 68, 0.4);
+}
 
+/* ============================================ */
+/* بخش آیکون‌های تبلیغاتی */
+/* ============================================ */
 .mobile-icons-section {
     width: 100%;
     margin-bottom: 40px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px 0;
-    border-radius: 0;
+    background: var(--gradient-navy);
+    padding: 30px 0;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.mobile-icons-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
+    pointer-events: none;
 }
 
 .mobile-icons-container {
@@ -247,160 +877,681 @@
 }
 
 .mobile-icon-circle {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 8px;
-    background: rgba(255,255,255,0.2);
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 10px;
+    background: rgba(212, 175, 55, 0.12);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
 .mobile-icon-item:hover .mobile-icon-circle {
-    transform: scale(1.1);
-    background: rgba(255,255,255,0.4);
+    transform: scale(1.12) translateY(-3px);
+    background: rgba(212, 175, 55, 0.25);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold);
 }
 
 .mobile-icon-emoji {
-    font-size: 28px;
+    font-size: 30px;
 }
 
 .mobile-icon-title {
-    font-size: 12px;
-    font-weight: 500;
-    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-white-smoke);
     margin: 0;
+    letter-spacing: 0.3px;
 }
 
 /* ============================================ */
-/* ریسپانسیو */
+/* عنوان‌های بخش‌ها */
+/* ============================================ */
+.section-title-1 {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.section-title-1 h3 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-white);
+    letter-spacing: -0.3px;
+}
+
+.section-title-1 h3 i {
+    color: var(--color-gold);
+    margin-left: 8px;
+}
+
+.section-title-1 .inline-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.section-title-1 .inline-links li {
+    display: inline-block;
+}
+
+.section-title-1 .inline-links li a {
+    color: var(--color-gray);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.section-title-1 .inline-links li a:hover {
+    color: var(--color-gold);
+}
+
+.section-title-1 .inline-links li a i {
+    margin-right: 4px;
+}
+
+/* ============================================ */
+/* دسته بندی و برند - اسکرول افقی */
 /* ============================================ */
 
+.categories-section,
+.brands-section {
+    position: relative;
+}
+
+.categories-scroll-wrapper,
+.brands-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 10px 0 20px;
+    margin-bottom: 5px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.categories-scroll-wrapper::-webkit-scrollbar,
+.brands-scroll-wrapper::-webkit-scrollbar {
+    height: 4px;
+}
+
+.categories-scroll-wrapper::-webkit-scrollbar-track,
+.brands-scroll-wrapper::-webkit-scrollbar-track {
+    background: var(--color-navy);
+    border-radius: 4px;
+}
+
+.categories-scroll-wrapper::-webkit-scrollbar-thumb,
+.brands-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+}
+
+.categories-scroll-container,
+.brands-scroll-container {
+    display: inline-flex;
+    gap: 15px;
+    white-space: nowrap;
+    padding: 0 5px;
+}
+
+.category-scroll-item,
+.brand-scroll-item {
+    display: inline-block;
+    width: 140px;
+    flex-shrink: 0;
+}
+
+/* ===== کارت دسته‌بندی با فونت بزرگتر ===== */
+.category-card-horizontal,
+.brand-card-horizontal {
+    display: block;
+    background: var(--color-navy-card);
+    border-radius: 16px;
+    padding: 18px 12px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(212, 175, 55, 0.08);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+.category-card-horizontal:hover,
+.brand-card-horizontal:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-gold);
+    border-color: var(--color-gold);
+}
+
+.category-icon-box,
+.brand-icon-box {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(212, 175, 55, 0.08);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.category-card-horizontal:hover .category-icon-box,
+.brand-card-horizontal:hover .brand-icon-box {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.category-icon-img,
+.brand-icon-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.category-icon-default,
+.brand-icon-default {
+    font-size: 30px;
+    color: var(--color-gold);
+}
+
+/* ===== نام دسته‌بندی با فونت بزرگتر و max-lines ===== */
+.category-name-horizontal,
+.brand-name-horizontal {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-white-smoke);
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    max-height: 2.8em;
+    word-break: break-word;
+    white-space: normal;
+    max-width: 120px;
+    margin: 0 auto;
+}
+
+.category-card-horizontal:hover .category-name-horizontal,
+.brand-card-horizontal:hover .brand-name-horizontal {
+    color: var(--color-gold);
+}
+
+/* ===== دکمه‌های ناوبری اسکرول ===== */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    background: var(--color-navy-card);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-gold);
+    transition: all 0.3s ease;
+    z-index: 10;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.scroll-btn:hover {
+    background: var(--gradient-gold);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.scroll-btn:hover i {
+    color: var(--color-navy);
+}
+
+.scroll-btn i {
+    font-size: 18px;
+    color: var(--color-gold);
+    transition: all 0.3s ease;
+}
+
+.scroll-left {
+    left: 5px;
+}
+
+.scroll-right {
+    right: 5px;
+}
+
+/* ============================================ */
+/* باکس‌های سفید داخل سایت */
+/* ============================================ */
+.bg-white.shadow-sm.rounded-3 {
+    background: var(--color-navy-card) !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(212, 175, 55, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ============================================ */
+/* ریسپانسیو کامل */
+/* ============================================ */
+
+@media (max-width: 1200px) {
+    .card-image { height: 190px; }
+    .slide-content h2 { font-size: 40px; }
+    .fullwidth-slider-section .slick-slide { height: 420px; }
+}
+
 @media (max-width: 992px) {
-    .slider-slide { height: 400px; }
-    .slide-content-overlay h2 { font-size: 32px; }
-    .slide-content-overlay p { font-size: 14px; }
-    .slider-prev, .slider-next { width: 35px; height: 35px; font-size: 18px; }
-    .mega-menu-item { min-width: 80px; padding: 8px 12px; }
-    .mega-menu-icon { width: 30px; height: 30px; }
-    .mega-menu-title { font-size: 12px; }
+    .fullwidth-slider-section .slick-slide { height: 380px; }
+    .slide-content h2 { font-size: 32px; }
+    .slide-content p { font-size: 15px; }
+    .fullwidth-slider-section .slick-prev,
+    .fullwidth-slider-section .slick-next { width: 40px; height: 40px; }
+    .card-image { height: 170px; }
+    .category-scroll-item,
+    .brand-scroll-item { width: 125px; }
+    .scroll-btn { width: 34px; height: 34px; }
+    .scroll-btn i { font-size: 16px; }
+    .scroll-left { left: 0; }
+    .scroll-right { right: 0; }
+    .product-title a { font-size: 13px; }
 }
 
 @media (max-width: 768px) {
-    .slider-slide { height: 280px; }
-    .slide-content-overlay h2 { font-size: 24px; }
-    .slide-content-overlay p { font-size: 12px; }
-    .slide-btn-custom { padding: 8px 20px; font-size: 12px; }
-    .mega-menu-item { min-width: calc(25% - 10px); }
-    .mobile-icon-circle { width: 50px; height: 50px; }
+    .fullwidth-slider-section .slick-slide { height: 300px; }
+    .slide-content-overlay { padding: 30px; }
+    .slide-content h2 { font-size: 26px; margin-bottom: 12px; }
+    .slide-content p { font-size: 13px; margin-bottom: 18px; }
+    .slide-btn-custom { padding: 10px 24px; font-size: 13px; }
+    .mobile-icon-circle { width: 52px; height: 52px; }
     .mobile-icon-emoji { font-size: 24px; }
-    .mobile-icon-title { font-size: 10px; }
+    .mobile-icon-title { font-size: 12px; }
+    .card-image { height: 150px; }
+    .product-title a { font-size: 13px; }
+    .product-price { font-size: 16px; }
+    .section-title-1 h3 { font-size: 20px; }
+    .category-scroll-item,
+    .brand-scroll-item { width: 115px; }
+    .category-name-horizontal,
+    .brand-name-horizontal { font-size: 14px; }
+    .category-icon-box,
+    .brand-icon-box { width: 60px; height: 60px; }
+    .category-icon-default,
+    .brand-icon-default { font-size: 26px; }
+    .scroll-btn { width: 30px; height: 30px; }
+    .scroll-btn i { font-size: 14px; }
+    .flash-deal-item-horizontal { flex: 0 0 120px; }
+    .fullwidth-slider-section .slick-prev,
+    .fullwidth-slider-section .slick-next { width: 36px; height: 36px; }
 }
 
-@media (max-width: 480px) {
-    .slider-slide { height: 200px; }
-    .slide-content-overlay h2 { font-size: 18px; }
-    .slide-btn-custom { padding: 6px 12px; font-size: 10px; }
-    .mega-menu-item { min-width: calc(33.33% - 10px); }
-    .mega-menu-icon { width: 25px; height: 25px; }
-    .mega-menu-title { font-size: 10px; }
-    .mobile-icon-circle { width: 45px; height: 45px; }
+@media (max-width: 576px) {
+    .fullwidth-slider-section .slick-slide { height: 230px; }
+    .slide-content-overlay { padding: 20px; }
+    .slide-content h2 { font-size: 20px; margin-bottom: 8px; }
+    .slide-content p { font-size: 11px; margin-bottom: 12px; display: none; }
+    .slide-btn-custom { padding: 8px 16px; font-size: 11px; }
+    .mega-menu-btn { padding: 10px 14px; font-size: 12px; }
+    .mega-menu-btn i { font-size: 16px; }
+    .mega-menu-link { padding: 10px 14px; font-size: 13px; }
+    .mobile-icon-circle { width: 46px; height: 46px; }
     .mobile-icon-emoji { font-size: 20px; }
-    .mobile-icon-title { font-size: 9px; }
+    .mobile-icon-title { font-size: 10px; }
+    .card-image { height: 130px; }
+    .product-title a { font-size: 12px; }
+    .product-price { font-size: 14px; }
+    .section-title-1 h3 { font-size: 17px; }
+    .category-scroll-item,
+    .brand-scroll-item { width: 100px; }
+    .category-name-horizontal,
+    .brand-name-horizontal { font-size: 13px; max-width: 90px; }
+    .category-icon-box,
+    .brand-icon-box { width: 52px; height: 52px; }
+    .category-icon-default,
+    .brand-icon-default { font-size: 22px; }
+    .category-icon-img,
+    .brand-icon-img { width: 32px; height: 32px; }
+    .flash-deal-item-horizontal { flex: 0 0 100px; }
+    .flash-deal-item-horizontal img { width: 60px; height: 60px; }
+    .flash-deal-price { font-size: 13px; }
+    .fullwidth-slider-section .slick-prev,
+    .fullwidth-slider-section .slick-next { width: 30px; height: 30px; }
+    .fullwidth-slider-section .slick-prev::after,
+    .fullwidth-slider-section .slick-next::after { font-size: 16px; }
+    .fullwidth-slider-section .slick-prev { left: 10px; }
+    .fullwidth-slider-section .slick-next { right: 10px; }
+    .fullwidth-slider-section .slick-dots li button { width: 8px; height: 8px; }
+    .fullwidth-slider-section .slick-dots li.slick-active button { width: 20px; }
+}
+
+@media (max-width: 420px) {
+    .fullwidth-slider-section .slick-slide { height: 180px; }
+    .slide-content h2 { font-size: 16px; }
+    .slide-btn-custom { padding: 6px 12px; font-size: 10px; }
+    .card-image { height: 110px; }
+    .product-title a { font-size: 11px; }
+    .category-scroll-item,
+    .brand-scroll-item { width: 85px; }
+    .category-name-horizontal,
+    .brand-name-horizontal { font-size: 11px; max-width: 75px; }
+    .category-icon-box,
+    .brand-icon-box { width: 44px; height: 44px; }
+    .category-icon-default,
+    .brand-icon-default { font-size: 18px; }
+    .category-icon-img,
+    .brand-icon-img { width: 28px; height: 28px; }
+    .scroll-btn { width: 26px; height: 26px; }
+    .scroll-btn i { font-size: 12px; }
+    .scroll-left { left: -2px; }
+    .scroll-right { right: -2px; }
+}
+
+/* ============================================ */
+/* انیمیشن‌ها */
+/* ============================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card-2 {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes pulseGold {
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+    }
+}
+
+.category-card-horizontal:hover {
+    animation: pulseGold 1.5s ease-in-out infinite;
+}
+
+/* ===== استایل اسکرول ===== */
+.c-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.c-scrollbar::-webkit-scrollbar-track {
+    background: var(--color-navy);
+    border-radius: 4px;
+}
+
+.c-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+}
+
+/* ===== متن‌های اضافی ===== */
+.text-muted {
+    color: var(--color-gray-dark) !important;
+}
+
+.gry-bg {
+    background:#02042d !important;
+}
+
+.heading-6 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.strong-400 {
+    font-weight: 400;
+}
+
+.strong-600 {
+    font-weight: 600;
+}
+
+.strong-700 {
+    font-weight: 700;
+}
+
+/* ===== برچسب محصول ===== */
+.product-label.label-hot {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ============================================ */
+/* بنرهای تبلیغاتی پایین صفحه */
+/* ============================================ */
+.media-banner {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.media-banner:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-gold);
+}
+
+.media-banner img {
+    width: 100%;
+    border-radius: 16px;
 }
 </style>
 
 <!-- ============================================ -->
-<!-- اسلایدر تمام عرض -->
+<!-- مگا منوی دسته‌بندی - کاملاً مستقل -->
 <!-- ============================================ -->
+<section class="mega-menu-section">
+    <div class="container-fluid px-0">
+        <div class="mega-menu-wrapper">
+            <nav class="mega-menu-nav">
+                <div class="mega-menu-trigger" id="megaMenuTrigger">
+                    <a href="#" class="mega-menu-btn" id="megaMenuBtn">
+                        <i class="la la-bars"></i>
+                        <span>{{__('همه دسته‌بندی‌ها')}}</span>
+                        <i class="la la-angle-down"></i>
+                    </a>
+                    
+                    <ul class="mega-menu-list" id="megaMenuList">
+                        @foreach (\App\Category::all()->take(11) as $key => $category)
+                            <li class="mega-menu-item">
+                                <a href="{{ route('products.category', $category->slug) }}" class="mega-menu-link">
+                                    <img class="mega-cat-icon lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($category->icon) }}" width="30" alt="{{ __($category->name) }}">
+                                    <span>{{ __($category->name) }}</span>
+                                    @if(isset($category->subcategories) && count($category->subcategories) > 0)
+                                        <i class="la la-angle-left mega-arrow"></i>
+                                    @endif
+                                </a>
+                                
+                                @if(isset($category->subcategories) && count($category->subcategories) > 0)
+                                    <div class="mega-sub-menu">
+                                        <div class="mega-sub-container">
+                                            <div class="row">
+                                                @foreach ($category->subcategories as $subcategory)
+                                                    <div class="col-lg-4 col-md-6 col-12">
+                                                        <a href="{{ route('products.category', $subcategory->slug) }}" class="mega-sub-link">
+                                                            @if($subcategory->icon && file_exists(public_path($subcategory->icon)))
+                                                                <img class="mega-sub-icon lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($subcategory->icon) }}" width="24" alt="{{ __($subcategory->name) }}">
+                                                            @else
+                                                                <i class="la la-folder-o" style="font-size:20px;color:var(--color-gold);width:24px;text-align:center;"></i>
+                                                            @endif
+                                                            <span>{{ __($subcategory->name) }}</span>
+                                                        </a>
+                                                        
+                                                        @if(isset($subcategory->subcategories) && count($subcategory->subcategories) > 0)
+                                                            <ul class="mega-sub-sub-list">
+                                                                @foreach ($subcategory->subcategories as $subSubCategory)
+                                                                    <li>
+                                                                        <a href="{{ route('products.category', $subSubCategory->slug) }}">
+                                                                            {{ __($subSubCategory->name) }}
+                                                                        </a>
+                                                                    </li>
+                                                                @endforeach
+                                                            </ul>
+                                                        @endif
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </li>
+                        @endforeach
+                        
+                        <li class="mega-menu-item mega-view-all">
+                            <a href="{{ route('categories.all') }}" class="mega-menu-link">
+                                <i class="la la-plus-circle"></i>
+                                <span>{{__('مشاهده همه دسته‌بندی‌ها')}}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</section>
 
+<!-- ============================================ -->
+<!-- اسلایدر تمام عرض (۱۰۰٪) -->
+<!-- ============================================ -->
 <section class="fullwidth-slider-section">
-    <div class="slider-container">
-        <div class="slider-track" id="sliderTrack">
-            @php
-                $sliders = Slider::where('published', 1)->get();
-            @endphp
-            @if(count($sliders) > 0)
-                @foreach ($sliders as $key => $slider)
-                    <div class="slider-slide">
-                        <a href="{{ $slider->link }}" target="_blank">
-                            <img src="{{ asset($slider->photo) }}" alt="{{ env('APP_NAME')}} promo">
+    <div class="slick-carousel" data-slick-arrows="true" data-slick-dots="true" data-slick-autoplay="true">
+        @foreach (\App\Slider::where('published', 1)->get() as $key => $slider)
+            <div>
+                <a href="{{ $slider->link }}" target="_blank">
+                    <img class="d-block w-100 h-100 lazyload" src="{{ asset('frontend/images/placeholder-rect.jpg') }}" data-src="{{ asset($slider->photo) }}" alt="{{ env('APP_NAME')}} promo">
+                </a>
+                <div class="slide-content-overlay">
+                    <div class="slide-content">
+                        <h2>خرید <span>طلایی</span><br>با بهترین قیمت</h2>
+                        <p>کیفیت را با قیمت مناسب تجربه کنید</p>
+                        <a href="{{ $slider->link }}" target="_blank" class="slide-btn-custom">
+                            مشاهده و خرید <i class="la la-angle-left"></i>
                         </a>
-                        <div class="slide-content-overlay">
-                            <div class="container">
-                                <h2>تخفیف‌های ویژه</h2>
-                                <p>بهترین جواهرات با بهترین قیمت</p>
-                                <a href="{{ $slider->link }}" target="_blank" class="slide-btn-custom">مشاهده بیشتر →</a>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            @else
-                <div class="slider-slide">
-                    <img src="{{ asset('frontend/images/placeholder-rect.jpg') }}" alt="placeholder">
-                    <div class="slide-content-overlay">
-                        <div class="container">
-                            <h2>خوش آمدید</h2>
-                            <p>به فروشگاه جواهرات ما خوش آمدید</p>
-                        </div>
                     </div>
                 </div>
-            @endif
-        </div>
-        
-        <button class="slider-prev" id="sliderPrev">←</button>
-        <button class="slider-next" id="sliderNext">→</button>
-        
-        <div class="slider-dots" id="sliderDots"></div>
-    </div>
-</section>
-
-<!-- ============================================ -->
-<!-- مگا منوی خطی دسته‌بندی‌ها -->
-<!-- ============================================ -->
-
-<section class="mega-menu-section">
-    <div class="mega-menu-wrapper">
-        @php
-            $categories = Category::where('featured', 1)->take(12)->get();
-            if(count($categories) == 0){
-                $categories = Category::take(12)->get();
-            }
-        @endphp
-        
-        @foreach ($categories as $category)
-            <div class="mega-menu-item">
-                <a href="{{ route('products.category', $category->slug) }}" class="mega-menu-link">
-                    @if($category->icon)
-                        <img class="mega-menu-icon" src="{{ asset($category->icon) }}" alt="{{ __($category->name) }}">
-                    @else
-                        <div class="mega-menu-icon" style="background: #667eea; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">📁</div>
-                    @endif
-                    <span class="mega-menu-title">{{ __($category->name) }}</span>
-                </a>
             </div>
         @endforeach
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- فلش دیل (تخفیف امروز) - زیر بنر -->
+<!-- ============================================ -->
+@php
+    $num_todays_deal = count(filter_products(\App\Product::where('published', 1)->where('todays_deal', 1))->get());
+@endphp
+
+@if($num_todays_deal > 0)
+<section class="flash-deal-section">
+    <div class="flash-deal-wrapper">
+        <div class="flash-deal-header">
+            <h4><i class="la la-bolt"></i> {{ __('تخفیف امروز') }} <span class="badge badge-danger">{{__('داغ')}}</span></h4>
+            <a href="{{ route('products.todays_deal') }}" class="flash-deal-view-all">{{__('مشاهده همه')}} <i class="la la-angle-left"></i></a>
+        </div>
+        <div class="flash-deal-scroll">
+            @foreach (filter_products(\App\Product::where('published', 1)->where('todays_deal', '1'))->get() as $key => $product)
+                @if ($product != null)
+                    <a href="{{ route('product', $product->slug) }}" class="flash-deal-item-horizontal">
+                        <img class="lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($product->flash_deal_img) }}" alt="{{ __($product->name) }}">
+                        <div class="flash-deal-info">
+                            <span class="flash-deal-price">{{ home_discounted_base_price($product->id) }}</span>
+                            @if(home_base_price($product->id) != home_discounted_base_price($product->id))
+                                <del class="flash-deal-old-price">{{ home_base_price($product->id) }}</del>
+                            @endif
+                        </div>
+                    </a>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- ============================================ -->
+<!-- دسته بندی های معروف - اسکرول افقی -->
+<!-- ============================================ -->
+<section class="mb-5 categories-section">
+    <div class="container">
+        <div class="section-title-1">
+            <h3><i class="la la-tags"></i> {{__('دسته بندی های معروف')}}</h3>
+            <ul class="inline-links">
+                <li>
+                    <a href="{{ route('categories.all') }}">{{__('نمایش همه')}} <i class="la la-angle-left"></i></a>
+                </li>
+            </ul>
+        </div>
         
-        <div class="mega-menu-item">
-            <a href="{{ route('categories.all') }}" class="mega-menu-link">
-                <div class="mega-menu-icon" style="background: #764ba2; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">➕</div>
-                <span class="mega-menu-title">همه</span>
-            </a>
+        <div class="scroll-btn scroll-left" id="categoriesScrollLeft">
+            <i class="la la-angle-right"></i>
+        </div>
+        <div class="scroll-btn scroll-right" id="categoriesScrollRight">
+            <i class="la la-angle-left"></i>
+        </div>
+        
+        <div class="categories-scroll-wrapper" id="categoriesScrollWrapper">
+            <div class="categories-scroll-container">
+                @php
+                    $topCategories = Category::where('top', 1)->take(15)->get();
+                    if(count($topCategories) < 8){
+                        $topCategories = Category::take(12)->get();
+                    }
+                @endphp
+                @foreach ($topCategories as $category)
+                    <div class="category-scroll-item">
+                        <a href="{{ route('products.category', $category->slug) }}" class="category-card-horizontal">
+                            <div class="category-icon-box">
+                                @if($category->icon && file_exists(public_path($category->icon)))
+                                    <img src="{{ asset($category->icon) }}" alt="{{ __($category->name) }}" class="category-icon-img">
+                                @else
+                                    <div class="category-icon-default">
+                                        <i class="fa fa-tag"></i>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="category-name-horizontal">
+                                {{ __($category->name) }}
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 </section>
 
 <!-- ============================================ -->
-<!-- آیکون‌های موبایلی (بنرهای تبلیغاتی) -->
+<!-- آیکون‌های تبلیغاتی -->
 <!-- ============================================ -->
-
 <div class="mobile-icons-section">
     <div class="mobile-icons-container">
         @php
             $banners = App\Banner::where('position', 1)->where('published', 1)->get();
-            $icons = ['🛍️', '💎', '🎁', '🔥', '✨', '👑', '💍', '⌚', '📿', '💼'];
+            $icons = ['💎', '👑', '🎁', '🔥', '✨', '💍', '⌚', '📿', '💼', '🛍️'];
         @endphp
         
         @if(count($banners) > 0)
@@ -417,19 +1568,67 @@
 </div>
 
 <!-- ============================================ -->
-<!-- ادامه بخش‌های قبلی -->
+<!-- برند های معروف - اسکرول افقی -->
 <!-- ============================================ -->
-
-<!-- بخش محصولات ویژه -->
-<section class="mb-4">
+<section class="mb-5 brands-section">
     <div class="container">
-        <div class="px-2 py-4 p-md-4 bg-white shadow-sm">
-            <div class="section-title-1 clearfix">
-                <h3 class="heading-5 strong-700 mb-0 float-left">
-                    ⭐ {{__('محصولات ویژه')}}
-                </h3>
-                <ul class="inline-links float-right">
-                    <li><a href="{{ route('products.featured') }}" class="active">{{__('مشاهده همه')}}</a></li>
+        <div class="section-title-1">
+            <h3><i class="la la-building"></i> {{__('برند های معروف')}}</h3>
+            <ul class="inline-links">
+                <li>
+                    <a href="{{ route('brands.all') }}">{{__('نمایش همه')}} <i class="la la-angle-left"></i></a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="scroll-btn scroll-left" id="brandsScrollLeft">
+            <i class="la la-angle-right"></i>
+        </div>
+        <div class="scroll-btn scroll-right" id="brandsScrollRight">
+            <i class="la la-angle-left"></i>
+        </div>
+        
+        <div class="brands-scroll-wrapper" id="brandsScrollWrapper">
+            <div class="brands-scroll-container">
+                @php
+                    $topBrands = Brand::where('top', 1)->take(15)->get();
+                    if(count($topBrands) < 9){
+                        $topBrands = Brand::take(12)->get();
+                    }
+                @endphp
+                @foreach ($topBrands as $brand)
+                    <div class="brand-scroll-item">
+                        <a href="{{ route('products.brand', $brand->slug) }}" class="brand-card-horizontal">
+                            <div class="brand-icon-box">
+                                @if($brand->logo && file_exists(public_path($brand->logo)))
+                                    <img src="{{ asset($brand->logo) }}" alt="{{ __($brand->name) }}" class="brand-icon-img">
+                                @else
+                                    <div class="brand-icon-default">
+                                        <i class="fa fa-building-o"></i>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="brand-name-horizontal">
+                                {{ __($brand->name) }}
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- بخش محصولات ویژه -->
+<!-- ============================================ -->
+<section class="mb-5">
+    <div class="container">
+        <div class="px-3 py-4 p-md-4 bg-white shadow-sm rounded-3">
+            <div class="section-title-1">
+                <h3><i class="la la-star"></i> {{__('محصولات ویژه')}}</h3>
+                <ul class="inline-links">
+                    <li><a href="{{ route('products.featured') }}">{{__('مشاهده همه')}} <i class="la la-angle-left"></i></a></li>
                 </ul>
             </div>
             <div class="caorusel-box arrow-round gutters-5">
@@ -458,7 +1657,7 @@
                                             {{ renderStarRating($product->rating) }}
                                         </div>
                                         <h2 class="product-title p-0">
-                                            <a href="{{ route('product', $product->slug) }}" class="text-truncate">{{ __($product->name) }}</a>
+                                            <a href="{{ route('product', $product->slug) }}">{{ __($product->name) }}</a>
                                         </h2>
                                     </div>
                                 </div>
@@ -471,16 +1670,16 @@
     </div>
 </section>
 
+<!-- ============================================ -->
 <!-- بخش پرفروش‌ترین محصولات -->
-<section class="mb-4">
+<!-- ============================================ -->
+<section class="mb-5">
     <div class="container">
-        <div class="px-2 py-4 p-md-4 bg-white shadow-sm">
-            <div class="section-title-1 clearfix">
-                <h3 class="heading-5 strong-700 mb-0 float-left">
-                    🔥 {{__('پرفروش‌ترین محصولات')}}
-                </h3>
-                <ul class="inline-links float-right">
-                    <li><a href="{{ route('products.best_selling') }}" class="active">{{__('مشاهده همه')}}</a></li>
+        <div class="px-3 py-4 p-md-4 bg-white shadow-sm rounded-3">
+            <div class="section-title-1">
+                <h3><i class="la la-fire"></i> {{__('پرفروش‌ترین محصولات')}}</h3>
+                <ul class="inline-links">
+                    <li><a href="{{ route('products.best_selling') }}">{{__('مشاهده همه')}} <i class="la la-angle-left"></i></a></li>
                 </ul>
             </div>
             <div class="caorusel-box arrow-round gutters-5">
@@ -509,9 +1708,9 @@
                                             {{ renderStarRating($product->rating) }}
                                         </div>
                                         <h2 class="product-title p-0">
-                                            <a href="{{ route('product', $product->slug) }}" class="text-truncate">{{ __($product->name) }}</a>
+                                            <a href="{{ route('product', $product->slug) }}">{{ __($product->name) }}</a>
                                         </h2>
-                                        <div class="text-success small">
+                                        <div class="text-success small mt-1">
                                             <i class="la la-shopping-cart"></i> {{ $product->num_of_sale }} فروش
                                         </div>
                                     </div>
@@ -525,128 +1724,16 @@
     </div>
 </section>
 
-<!-- بخش جواهرات مردانه -->
-<section class="mb-4">
-    <div class="container">
-        <div class="px-2 py-4 p-md-4 bg-white shadow-sm">
-            <div class="section-title-1 clearfix">
-                <h3 class="heading-5 strong-700 mb-0 float-left">
-                    👔 {{__('جواهرات مردانه')}}
-                </h3>
-                <ul class="inline-links float-right">
-                    <li><a href="{{ route('products.mens') }}" class="active">{{__('مشاهده همه')}}</a></li>
-                </ul>
-            </div>
-            <div class="caorusel-box arrow-round gutters-5">
-                <div class="slick-carousel" data-slick-items="6" data-slick-xl-items="5" data-slick-lg-items="4" data-slick-md-items="3" data-slick-sm-items="2" data-slick-xs-items="2">
-                    @php
-                        $menCategory = Category::where('slug', 'like', '%men%')->orWhere('name', 'like', '%مردانه%')->first();
-                        if($menCategory){
-                            $men_products = filter_products(Product::where('published', 1)->where('category_id', $menCategory->id))->take(12)->get();
-                        } else {
-                            $men_products = filter_products(Product::where('published', 1)->where('tags', 'like', '%مردانه%'))->take(12)->get();
-                        }
-                    @endphp
-                    @foreach ($men_products as $product)
-                        <div class="caorusel-card">
-                            <div class="product-card-2 card card-product shop-cards">
-                                <div class="card-body p-0">
-                                    <div class="card-image">
-                                        <a href="{{ route('product', $product->slug) }}" class="d-block">
-                                            <img class="img-fit lazyload mx-auto" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($product->featured_img) }}" alt="{{ __($product->name) }}">
-                                        </a>
-                                    </div>
-                                    <div class="p-md-3 p-2">
-                                        <div class="price-box">
-                                            @if(home_base_price($product->id) != home_discounted_base_price($product->id))
-                                                <del class="old-product-price strong-400">{{ home_base_price($product->id) }}</del>
-                                            @endif
-                                            <br>
-                                            <span class="product-price strong-600">{{ home_discounted_base_price($product->id) }}</span>
-                                        </div>
-                                        <div class="star-rating star-rating-sm mt-1">
-                                            {{ renderStarRating($product->rating) }}
-                                        </div>
-                                        <h2 class="product-title p-0">
-                                            <a href="{{ route('product', $product->slug) }}" class="text-truncate">{{ __($product->name) }}</a>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- بخش جواهرات زنانه -->
-<section class="mb-4">
-    <div class="container">
-        <div class="px-2 py-4 p-md-4 bg-white shadow-sm">
-            <div class="section-title-1 clearfix">
-                <h3 class="heading-5 strong-700 mb-0 float-left">
-                    💍 {{__('جواهرات زنانه')}}
-                </h3>
-                <ul class="inline-links float-right">
-                    <li><a href="{{ route('products.womens') }}" class="active">{{__('مشاهده همه')}}</a></li>
-                </ul>
-            </div>
-            <div class="caorusel-box arrow-round gutters-5">
-                <div class="slick-carousel" data-slick-items="6" data-slick-xl-items="5" data-slick-lg-items="4" data-slick-md-items="3" data-slick-sm-items="2" data-slick-xs-items="2">
-                    @php
-                        $womenCategory = Category::where('slug', 'like', '%women%')->orWhere('name', 'like', '%زنانه%')->first();
-                        if($womenCategory){
-                            $women_products = filter_products(Product::where('published', 1)->where('category_id', $womenCategory->id))->take(12)->get();
-                        } else {
-                            $women_products = filter_products(Product::where('published', 1)->where('tags', 'like', '%زنانه%'))->take(12)->get();
-                        }
-                    @endphp
-                    @foreach ($women_products as $product)
-                        <div class="caorusel-card">
-                            <div class="product-card-2 card card-product shop-cards">
-                                <div class="card-body p-0">
-                                    <div class="card-image">
-                                        <a href="{{ route('product', $product->slug) }}" class="d-block">
-                                            <img class="img-fit lazyload mx-auto" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($product->featured_img) }}" alt="{{ __($product->name) }}">
-                                        </a>
-                                    </div>
-                                    <div class="p-md-3 p-2">
-                                        <div class="price-box">
-                                            @if(home_base_price($product->id) != home_discounted_base_price($product->id))
-                                                <del class="old-product-price strong-400">{{ home_base_price($product->id) }}</del>
-                                            @endif
-                                            <br>
-                                            <span class="product-price strong-600">{{ home_discounted_base_price($product->id) }}</span>
-                                        </div>
-                                        <div class="star-rating star-rating-sm mt-1">
-                                            {{ renderStarRating($product->rating) }}
-                                        </div>
-                                        <h2 class="product-title p-0">
-                                            <a href="{{ route('product', $product->slug) }}" class="text-truncate">{{ __($product->name) }}</a>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
+<!-- ============================================ -->
 <!-- بخش جدیدترین محصولات -->
-<section class="mb-4">
+<!-- ============================================ -->
+<section class="mb-5">
     <div class="container">
-        <div class="px-2 py-4 p-md-4 bg-white shadow-sm">
-            <div class="section-title-1 clearfix">
-                <h3 class="heading-5 strong-700 mb-0 float-left">
-                    🆕 {{__('جدیدترین محصولات')}}
-                </h3>
-                <ul class="inline-links float-right">
-                    <li><a href="{{ route('products.new') }}" class="active">{{__('مشاهده همه')}}</a></li>
+        <div class="px-3 py-4 p-md-4 bg-white shadow-sm rounded-3">
+            <div class="section-title-1">
+                <h3><i class="la la-clock-o"></i> {{__('جدیدترین محصولات')}}</h3>
+                <ul class="inline-links">
+                    <li><a href="{{ route('products.new') }}">{{__('مشاهده همه')}} <i class="la la-angle-left"></i></a></li>
                 </ul>
             </div>
             <div class="caorusel-box arrow-round gutters-5">
@@ -675,9 +1762,9 @@
                                             {{ renderStarRating($product->rating) }}
                                         </div>
                                         <h2 class="product-title p-0">
-                                            <a href="{{ route('product', $product->slug) }}" class="text-truncate">{{ __($product->name) }}</a>
+                                            <a href="{{ route('product', $product->slug) }}">{{ __($product->name) }}</a>
                                         </h2>
-                                        <div class="text-muted small">
+                                        <div class="text-muted small mt-1">
                                             <i class="la la-calendar"></i> {{ date('Y/m/d', strtotime($product->created_at)) }}
                                         </div>
                                     </div>
@@ -691,16 +1778,16 @@
     </div>
 </section>
 
+<!-- ============================================ -->
 <!-- بخش محصولات با تخفیف ویژه -->
-<section class="mb-4">
+<!-- ============================================ -->
+<section class="mb-5">
     <div class="container">
-        <div class="px-2 py-4 p-md-4 bg-white shadow-sm">
-            <div class="section-title-1 clearfix">
-                <h3 class="heading-5 strong-700 mb-0 float-left">
-                    🎁 {{__('تخفیف ویژه')}}
-                </h3>
-                <ul class="inline-links float-right">
-                    <li><a href="{{ route('products.discounted') }}" class="active">{{__('مشاهده همه')}}</a></li>
+        <div class="px-3 py-4 p-md-4 bg-white shadow-sm rounded-3">
+            <div class="section-title-1">
+                <h3><i class="la la-gift"></i> {{__('تخفیف ویژه')}}</h3>
+                <ul class="inline-links">
+                    <li><a href="{{ route('products.discounted') }}">{{__('مشاهده همه')}} <i class="la la-angle-left"></i></a></li>
                 </ul>
             </div>
             <div class="caorusel-box arrow-round gutters-5">
@@ -713,7 +1800,7 @@
                             <div class="product-card-2 card card-product shop-cards">
                                 <div class="card-body p-0">
                                     <div class="card-image">
-                                        <span class="discount-badge" style="position: absolute; top: 10px; left: 10px; background: #e74c3c; color: white; padding: 3px 8px; border-radius: 5px; font-size: 12px; z-index: 1;">
+                                        <span class="discount-badge">
                                             -{{ $product->discount }}%
                                         </span>
                                         <a href="{{ route('product', $product->slug) }}" class="d-block">
@@ -730,7 +1817,7 @@
                                             {{ renderStarRating($product->rating) }}
                                         </div>
                                         <h2 class="product-title p-0">
-                                            <a href="{{ route('product', $product->slug) }}" class="text-truncate">{{ __($product->name) }}</a>
+                                            <a href="{{ route('product', $product->slug) }}">{{ __($product->name) }}</a>
                                         </h2>
                                     </div>
                                 </div>
@@ -752,15 +1839,13 @@
         $customer_products = CustomerProduct::where('status', '1')->where('published', '1')->take(16)->get();
     @endphp
    @if (count($customer_products) > 0)
-       <section class="mb-4">
+       <section class="mb-5">
            <div class="container">
-               <div class="px-2 py-4 p-md-4 bg-white shadow-sm">
-                   <div class="section-title-1 clearfix">
-                       <h3 class="heading-5 strong-700 mb-0 float-left">
-                           <span class="mr-4">{{__('تبلیغات')}}</span>
-                       </h3>
-                       <ul class="inline-links float-right">
-                           <li><a href="{{ route('customer.products') }}" class="active">{{__('مشاهده همه')}}</a></li>
+               <div class="px-3 py-4 p-md-4 bg-white shadow-sm rounded-3">
+                   <div class="section-title-1">
+                       <h3><i class="la la-bullhorn"></i> {{__('تبلیغات')}}</h3>
+                       <ul class="inline-links">
+                           <li><a href="{{ route('customer.products') }}">{{__('مشاهده همه')}} <i class="la la-angle-left"></i></a></li>
                        </ul>
                    </div>
                    <div class="caorusel-box arrow-round">
@@ -773,7 +1858,6 @@
                                                <img class="img-fit lazyload mx-auto" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($customer_product->thumbnail_img) }}" alt="{{ __($customer_product->name) }}">
                                            </a>
                                        </div>
-
                                        <div class="p-sm-3 p-2">
                                            <div class="price-box">
                                                <span class="product-price strong-600">{{ single_price($customer_product->unit_price) }}</span>
@@ -783,9 +1867,9 @@
                                            </h2>
                                            <div>
                                                @if($customer_product->conditon == 'new')
-                                                   <span class="product-label label-hot">{{__('new')}}</span>
+                                                   <span class="product-label label-hot">{{__('جدید')}}</span>
                                                @elseif($customer_product->conditon == 'used')
-                                                   <span class="product-label label-hot">{{__('Used')}}</span>
+                                                   <span class="product-label label-hot">{{__('دست دوم')}}</span>
                                                @endif
                                            </div>
                                        </div>
@@ -800,7 +1884,7 @@
    @endif
 @endif
 
-<div class="mb-4">
+<div class="mb-5">
     <div class="container">
         <div class="row gutters-10">
             @foreach (App\Banner::where('position', 2)->where('published', 1)->get() as $key => $banner)
@@ -818,177 +1902,154 @@
 
 <div id="section_best_sellers"></div>
 
-<section class="mb-3">
-    <div class="container">
-        <div class="row gutters-10">
-            <div class="col-lg-6">
-                <div class="section-title-1 clearfix">
-                    <h3 class="heading-5 strong-700 mb-0 float-left">
-                        <span class="mr-4">{{__('دسته بندی های معروف')}}</span>
-                    </h3>
-                    <ul class="float-right inline-links">
-                        <li>
-                            <a href="{{ route('categories.all') }}" class="active">{{__('نمایش همه دسته بندی ها')}}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="row gutters-5">
-                    @php
-                        $topCategories = Category::where('top', 1)->take(9)->get();
-                        if(count($topCategories) < 8){
-                            $topCategories = Category::take(8)->get();
-                        }
-                    @endphp
-                    @foreach ($topCategories as $category)
-                        <div class="mb-3 col-6">
-                            <a href="{{ route('products.category', $category->slug) }}" class="bg-white border d-block c-base-2 box-2 icon-anim pl-2">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col-3 text-center">
-                                        <img src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($category->banner) }}" alt="{{ __($category->name) }}" class="img-fluid img lazyload">
-                                    </div>
-                                    <div class="info col-7">
-                                        <div class="name text-truncate pr-3 py-4">{{ __($category->name) }}</div>
-                                    </div>
-                                    <div class="col-2 text-center">
-                                        <i class="la la-angle-left c-base-1"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="section-title-1 clearfix">
-                    <h3 class="heading-5 strong-700 mb-0 float-left">
-                        <span class="mr-4">{{__('برند های معروف')}}</span>
-                    </h3>
-                    <ul class="float-right inline-links">
-                        <li>
-                            <a href="{{ route('brands.all') }}" class="active">{{__('نمایش همه برند ها')}}</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="row gutters-5">
-                    @php
-                        $topBrands = Brand::where('top', 1)->take(11)->get();
-                        if(count($topBrands) < 9){
-                            $topBrands = Brand::take(9)->get();
-                        }
-                    @endphp
-                    @foreach ($topBrands as $brand)
-                        <div class="mb-3 col-6">
-                            <a href="{{ route('products.brand', $brand->slug) }}" class="bg-white border d-block c-base-2 box-2 icon-anim pl-2">
-                                <div class="row align-items-center no-gutters">
-                                    <div class="col-3 text-center">
-                                        <img src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($brand->logo) }}" alt="{{ __($brand->name) }}" class="img-fluid img lazyload">
-                                    </div>
-                                    <div class="info col-7">
-                                        <div class="name text-truncate pr-3 py-4">{{ __($brand->name) }}</div>
-                                    </div>
-                                    <div class="col-2 text-center">
-                                        <i class="la la-angle-left c-base-1"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
+<!-- ============================================ -->
+<!-- اسکریپت‌های جاوااسکریپت -->
+<!-- ============================================ -->
 <script>
-    // اسلایدر ساده و مستقل - فقط یک بار
+    // ===== اسکرول دسته‌بندی‌ها و برندها =====
+    function setupScrollButtons(wrapperId, leftBtnId, rightBtnId) {
+        const wrapper = document.getElementById(wrapperId);
+        const leftBtn = document.getElementById(leftBtnId);
+        const rightBtn = document.getElementById(rightBtnId);
+        
+        if (!wrapper) return;
+        
+        const scrollAmount = 280;
+        
+        if (leftBtn) {
+            leftBtn.addEventListener('click', function() {
+                wrapper.scrollBy({
+                    left: -scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+        }
+        
+        if (rightBtn) {
+            rightBtn.addEventListener('click', function() {
+                wrapper.scrollBy({
+                    left: scrollAmount,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    }
+    
+    setupScrollButtons('categoriesScrollWrapper', 'categoriesScrollLeft', 'categoriesScrollRight');
+    setupScrollButtons('brandsScrollWrapper', 'brandsScrollLeft', 'brandsScrollRight');
+    
+    // ===== مگا منو - کنترل کامل با هاور و کلیک =====
     (function() {
-        function initSlider() {
-            const track = document.getElementById('sliderTrack');
-            const slides = document.querySelectorAll('.slider-slide');
-            const prevBtn = document.getElementById('sliderPrev');
-            const nextBtn = document.getElementById('sliderNext');
-            const dotsContainer = document.getElementById('sliderDots');
+        var megaTrigger = document.getElementById('megaMenuTrigger');
+        var megaBtn = document.getElementById('megaMenuBtn');
+        var megaItems = document.querySelectorAll('.mega-menu-item');
+        var isMobile = window.innerWidth <= 992;
+        
+        // تابع برای تنظیم رویدادها بر اساس سایز صفحه
+        function setupMegaMenu() {
+            isMobile = window.innerWidth <= 992;
             
-            if (!track || slides.length === 0) {
-                console.log('❌ اسلایدر پیدا نشد');
-                return;
-            }
-            
-            let currentIndex = 0;
-            const totalSlides = slides.length;
-            let autoPlayInterval;
-            
-            console.log('✅ اسلایدر راه‌اندازی شد. تعداد اسلایدها:', totalSlides);
-            
-            if (totalSlides > 1) {
-                // ایجاد دات‌ها
-                function createDots() {
-                    if (!dotsContainer) return;
-                    dotsContainer.innerHTML = '';
-                    for (let i = 0; i < totalSlides; i++) {
-                        const dot = document.createElement('span');
-                        dot.classList.add('slider-dot');
-                        if (i === currentIndex) dot.classList.add('active');
-                        dot.addEventListener('click', function() {
-                            goToSlide(i);
-                            resetAutoPlay();
-                        });
-                        dotsContainer.appendChild(dot);
-                    }
+            if (isMobile) {
+                // حالت موبایل - فقط کلیک
+                megaTrigger.removeEventListener('mouseenter', onMouseEnter);
+                megaTrigger.removeEventListener('mouseleave', onMouseLeave);
+                
+                if (megaBtn) {
+                    megaBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        megaTrigger.classList.toggle('active');
+                    });
                 }
                 
-                function goToSlide(index) {
-                    if (index < 0) index = totalSlides - 1;
-                    if (index >= totalSlides) index = 0;
-                    currentIndex = index;
-                    track.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+                // کلیک روی آیتم‌های دارای زیرمنو
+                megaItems.forEach(function(item) {
+                    var link = item.querySelector('.mega-menu-link');
+                    var hasSubMenu = item.querySelector('.mega-sub-menu');
                     
-                    const dots = document.querySelectorAll('.slider-dot');
-                    for (let i = 0; i < dots.length; i++) {
-                        dots[i].classList.toggle('active', i === currentIndex);
+                    if (link && hasSubMenu) {
+                        link.removeEventListener('click', onItemClick);
+                        link.addEventListener('click', onItemClick);
                     }
+                });
+            } else {
+                // حالت دسکتاپ - هاور
+                megaTrigger.addEventListener('mouseenter', onMouseEnter);
+                megaTrigger.addEventListener('mouseleave', onMouseLeave);
+                
+                // حذف رویدادهای کلیک در دسکتاپ
+                if (megaBtn) {
+                    megaBtn.removeEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        megaTrigger.classList.toggle('active');
+                    });
                 }
                 
-                function nextSlide() {
-                    goToSlide(currentIndex + 1);
-                }
-                
-                function prevSlide() {
-                    goToSlide(currentIndex - 1);
-                }
-                
-                function resetAutoPlay() {
-                    if (autoPlayInterval) clearInterval(autoPlayInterval);
-                    autoPlayInterval = setInterval(nextSlide, 5000);
-                }
-                
-                if (prevBtn) prevBtn.addEventListener('click', function() { prevSlide(); resetAutoPlay(); });
-                if (nextBtn) nextBtn.addEventListener('click', function() { nextSlide(); resetAutoPlay(); });
-                
-                createDots();
-                resetAutoPlay();
-                
-                const container = document.querySelector('.slider-container');
-                if (container) {
-                    container.addEventListener('mouseenter', function() { if (autoPlayInterval) clearInterval(autoPlayInterval); });
-                    container.addEventListener('mouseleave', function() { resetAutoPlay(); });
-                }
-            } else if (totalSlides === 1) {
-                if (prevBtn) prevBtn.style.display = 'none';
-                if (nextBtn) nextBtn.style.display = 'none';
-                if (dotsContainer) dotsContainer.style.display = 'none';
+                megaItems.forEach(function(item) {
+                    var link = item.querySelector('.mega-menu-link');
+                    if (link) {
+                        link.removeEventListener('click', onItemClick);
+                    }
+                });
             }
         }
         
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initSlider);
-        } else {
-            initSlider();
+        function onMouseEnter() {
+            this.classList.add('active');
         }
+        
+        function onMouseLeave() {
+            this.classList.remove('active');
+            megaItems.forEach(function(item) {
+                item.classList.remove('active');
+            });
+        }
+        
+        function onItemClick(e) {
+            if (window.innerWidth <= 992) {
+                e.preventDefault();
+                var parent = this.closest('.mega-menu-item');
+                if (parent) {
+                    // بستن سایر آیتم‌ها
+                    megaItems.forEach(function(other) {
+                        if (other !== parent) {
+                            other.classList.remove('active');
+                        }
+                    });
+                    parent.classList.toggle('active');
+                }
+            }
+        }
+        
+        // بستن منو با کلیک خارج
+        document.addEventListener('click', function(e) {
+            if (megaTrigger && !megaTrigger.contains(e.target)) {
+                megaTrigger.classList.remove('active');
+                megaItems.forEach(function(item) {
+                    item.classList.remove('active');
+                });
+            }
+        });
+        
+        // تنظیم مجدد در تغییر سایز
+        window.addEventListener('resize', function() {
+            setupMegaMenu();
+            // بستن منو در تغییر سایز
+            if (megaTrigger) {
+                megaTrigger.classList.remove('active');
+                megaItems.forEach(function(item) {
+                    item.classList.remove('active');
+                });
+            }
+        });
+        
+        // اجرای اولیه
+        setupMegaMenu();
     })();
     
+    // ===== بارگذاری بخش‌های داینامیک =====
     $(document).ready(function(){
-        // بخش‌های AJAX
         $.post('{{ route('home.section.featured') }}', {_token:'{{ csrf_token() }}'}, function(data){
             $('#section_featured').html(data);
             if(typeof slickInit === 'function') slickInit();

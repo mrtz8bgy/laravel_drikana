@@ -79,7 +79,7 @@ a:hover {
 
 /* کانتینر */
 .container {
-    width: 100%;
+    width: 89%;
     max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 1rem;
@@ -167,7 +167,7 @@ img, svg, video, picture {
 input, button, textarea, select {
     font-family: inherit;
     font-size: 1rem;
-    background: var(--navy-light);
+    background: #ffffff;
     border: 1px solid var(--border);
     color: var(--text);
     border-radius: 6px;
@@ -669,7 +669,7 @@ input:focus, textarea:focus, select:focus {
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--gold);
+    background: #121e3a;
     border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {

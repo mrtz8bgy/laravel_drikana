@@ -349,37 +349,31 @@
                 if ($certificate->certificate_file) {
                     $imageFilename = basename($certificate->certificate_file);
                     $imagePath = $certificate->certificate_file;
+                    $extension = strtolower(pathinfo($imageFilename, PATHINFO_EXTENSION));
+                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
                     
-                        // تلاش برای ساخت URL یا درون‌ریزی تصویر به عنوان data-uri
+                    if (in_array($extension, $imageExtensions)) {
+                        $hasImage = true;
+                        $imageExtension = $extension;
+                    }
+
+                    if ($hasImage) {
                         try {
                             if (\Illuminate\Support\Facades\Storage::disk('public')->exists($imagePath)) {
-                                // مسیر قابل دسترس از طریق دیسک public (معمولاً /storage/...)
                                 $imageUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($imagePath);
                             } elseif (file_exists(public_path('storage/' . $imagePath))) {
-                                // اگر لینک سمبولیک ساخته شده باشد
                                 $imageUrl = asset('storage/' . $imagePath);
                             } else {
-                                // تلاش برای خواندن فایل و درون‌ریزی به عنوان data-uri (قابل استفاده حتی بدون لینک سمبولیک)
                                 $physicalPath = storage_path('app/public/' . $imagePath);
                                 if (file_exists($physicalPath) && is_readable($physicalPath)) {
                                     $contents = file_get_contents($physicalPath);
                                     $base64 = base64_encode($contents);
                                     $imageUrl = 'data:image/' . $extension . ';base64,' . $base64;
-                                } else {
-                                    $imageUrl = null; // نمی‌توان تصویر را پیدا کرد
                                 }
                             }
                         } catch (\Exception $e) {
                             $imageUrl = null;
                         }
-                    
-                        // بررسی فرمت فایل
-                    $extension = pathinfo($imageFilename, PATHINFO_EXTENSION);
-                    $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
-                    
-                    if (in_array(strtolower($extension), $imageExtensions)) {
-                        $hasImage = true;
-                        $imageExtension = $extension;
                     }
                 }
             @endphp
