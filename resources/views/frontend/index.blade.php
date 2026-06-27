@@ -13,6 +13,12 @@
 
 @section('content')
 
+@php
+    $megaCategories = \App\Category::with(['subcategories' => function($query) {
+        $query->with('subsubcategories');
+    }])->take(11)->get();
+@endphp
+
 <style>
 /* ============================================ */
 /* تم سرمه‌ای، طلایی و سفید - طراحی لوکس و حرفه‌ای */
@@ -45,7 +51,7 @@
 
 body {
     font-family: var(--font-base);
-    background: ##020544;
+    background: #020544;
     color: var(--color-white);
     line-height: 1.8;
     direction: rtl;
@@ -78,8 +84,10 @@ a:hover {
     background: var(--color-gold);
     border-bottom: 2px solid var(--color-gold);
     position: relative;
-   /* z-index: 1000;*/
+    z-index: 1100;
     width: 100%;
+    direction: rtl;
+    
 }
 
 .mega-menu-wrapper {
@@ -98,6 +106,8 @@ a:hover {
 .mega-menu-trigger {
     position: relative;
     width: 100%;
+    display: block;
+    text-align: right;
 }
 
 .mega-menu-btn {
@@ -131,21 +141,24 @@ a:hover {
 /* ===== لیست اصلی دسته‌بندی‌ها ===== */
 .mega-menu-list {
     position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
+    top: calc(100% + 0px);
+    right: 0 !important;
+    left: auto !important;
+    width: min(360px, 92vw);
     background: var(--color-navy-card);
     list-style: none;
     margin: 0;
     padding: 0;
     display: none;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.85);
     border: 1px solid rgba(212, 175, 55, 0.2);
-    border-top: none;
-    max-height: 80vh;
+    border-radius: 0 0 14px 14px;
+    max-height: min(78vh, 680px);
     overflow-y: auto;
+    overflow-x: visible;
     min-width: 280px;
-    z-index: 999;
+    z-index: 1200;
+    text-align: right;
 }
 
 .mega-menu-trigger:hover .mega-menu-list,
@@ -157,6 +170,7 @@ a:hover {
     position: relative;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     list-style: none;
+    overflow: visible;
 }
 
 .mega-menu-item:last-child {
@@ -211,28 +225,57 @@ a:hover {
 /* ============================================ */
 .mega-sub-menu {
     position: absolute;
-    top: 0;
-    right: 100%;
-    width: 650px;
+    top: -1px;
+    right: calc(100% + 4px) !important;
+    left: auto !important;
+    width: min(720px, calc(100vw - 390px));
     background: var(--color-navy-card);
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+    border-radius: 14px;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.92);
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(212, 175, 55, 0.15);
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(212, 175, 55, 0.18);
     padding: 20px;
-    max-height: 500px;
+    max-height: min(78vh, 680px);
     overflow-y: auto;
-    z-index: 1000;
+    overflow-x: visible;
+    z-index: 1300;
     pointer-events: none;
+    display: none;
+    min-width: 280px;
 }
 
-.mega-menu-item:hover .mega-sub-menu {
+/* Ensure columns and submenu don't clip third-level lists */
+.mega-sub-container [class*="col-"] {
+    overflow: visible;
+}
+.mega-sub-menu {
+    overflow: visible;
+}
+
+/* Show third-level lists when submenu is open */
+.mega-menu-item:hover .mega-sub-menu .mega-sub-sub-list,
+.mega-menu-item.active .mega-sub-menu .mega-sub-sub-list,
+.mega-menu-item:focus-within .mega-sub-menu .mega-sub-sub-list {
+    display: block !important;
+    max-height: none !important;
+}
+
+.mega-menu-item:hover > .mega-sub-menu,
+.mega-menu-item.active > .mega-sub-menu,
+.mega-menu-item:focus-within > .mega-sub-menu {
+    display: block !important;
     opacity: 1;
     visibility: visible;
-    right: calc(100% + 2px);
+    right: calc(100% + 4px) !important;
+    left: auto !important;
     pointer-events: auto;
+    transform: translateX(0);
+}
+
+.mega-menu-item > .mega-sub-menu {
+    transform: translateX(6px);
 }
 
 /* جلوگیری از بسته شدن منو هنگام حرکت موس */
@@ -290,11 +333,21 @@ a:hover {
     list-style: none;
     margin: 0;
     padding: 0 12px 8px 12px;
+    display: none;
+    transition: max-height 0.22s ease;
+    max-height: 0;
 }
 
 .mega-sub-sub-list li {
     padding: 2px 0;
     list-style: none;
+}
+
+/* نمایش زیرزیر دسته در هاور زیرلینک */
+.mega-sub-link:hover + .mega-sub-sub-list,
+.mega-sub-sub-list:hover {
+    display: block;
+    max-height: 400px;
 }
 
 .mega-sub-sub-list li a {
@@ -355,7 +408,7 @@ a:hover {
     }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 767px) {
     .mega-sub-menu {
         display: none !important;
         position: static !important;
@@ -511,7 +564,7 @@ a:hover {
 /* استایل‌های Slick برای اسلایدر */
 .fullwidth-slider-section .slick-prev,
 .fullwidth-slider-section .slick-next {
-    position: absolute;
+    position: absolute; /* مشکل دقیقا اینجاست وقتی پوزیشن غیر فعال شود زیر منو ها نمایش داده میشوند بررسی کن که چرا این اتفاق میافتد*/
     top: 50%;
     transform: translateY(-50%);
     width: 48px;
@@ -1377,7 +1430,7 @@ a:hover {
                     </a>
                     
                     <ul class="mega-menu-list" id="megaMenuList">
-                        @foreach (\App\Category::all()->take(11) as $key => $category)
+                        @foreach ($megaCategories as $key => $category)
                             <li class="mega-menu-item">
                                 <a href="{{ route('products.category', $category->slug) }}" class="mega-menu-link">
                                     <img class="mega-cat-icon lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($category->icon) }}" width="30" alt="{{ __($category->name) }}">
@@ -1393,7 +1446,7 @@ a:hover {
                                             <div class="row">
                                                 @foreach ($category->subcategories as $subcategory)
                                                     <div class="col-lg-4 col-md-6 col-12">
-                                                        <a href="{{ route('products.category', $subcategory->slug) }}" class="mega-sub-link">
+                                                        <a href="{{ route('products.subcategory', $subcategory->slug) }}" class="mega-sub-link">
                                                             @if($subcategory->icon && file_exists(public_path($subcategory->icon)))
                                                                 <img class="mega-sub-icon lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($subcategory->icon) }}" width="24" alt="{{ __($subcategory->name) }}">
                                                             @else
@@ -1401,12 +1454,12 @@ a:hover {
                                                             @endif
                                                             <span>{{ __($subcategory->name) }}</span>
                                                         </a>
-                                                        
-                                                        @if(isset($subcategory->subcategories) && count($subcategory->subcategories) > 0)
+
+                                                        @if(isset($subcategory->subsubcategories) && count($subcategory->subsubcategories) > 0)
                                                             <ul class="mega-sub-sub-list">
-                                                                @foreach ($subcategory->subcategories as $subSubCategory)
+                                                                @foreach ($subcategory->subsubcategories as $subSubCategory)
                                                                     <li>
-                                                                        <a href="{{ route('products.category', $subSubCategory->slug) }}">
+                                                                        <a href="{{ route('products.subsubcategory', $subSubCategory->slug) }}">
                                                                             {{ __($subSubCategory->name) }}
                                                                         </a>
                                                                     </li>
@@ -1971,6 +2024,10 @@ a:hover {
                         link.removeEventListener('click', onItemClick);
                         link.addEventListener('click', onItemClick);
                     }
+
+                    item.removeEventListener('mouseover', onItemMouseEnter);
+                    item.removeEventListener('mouseleave', onItemMouseLeave);
+                    item.classList.remove('active');
                 });
             } else {
                 // حالت دسکتاپ - هاور
@@ -1991,6 +2048,11 @@ a:hover {
                     if (link) {
                         link.removeEventListener('click', onItemClick);
                     }
+
+                    item.removeEventListener('mouseover', onItemMouseEnter);
+                    item.removeEventListener('mouseleave', onItemMouseLeave);
+                    item.addEventListener('mouseover', onItemMouseEnter);
+                    item.addEventListener('mouseleave', onItemMouseLeave);
                 });
             }
         }
@@ -2004,6 +2066,17 @@ a:hover {
             megaItems.forEach(function(item) {
                 item.classList.remove('active');
             });
+        }
+
+        function onItemMouseEnter() {
+            megaItems.forEach(function(item) {
+                item.classList.remove('active');
+            });
+            this.classList.add('active');
+        }
+
+        function onItemMouseLeave() {
+            this.classList.remove('active');
         }
         
         function onItemClick(e) {
