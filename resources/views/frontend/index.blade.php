@@ -252,9 +252,6 @@ a:hover {
 .mega-sub-container [class*="col-"] {
     overflow: visible;
 }
-.mega-sub-menu {
-    overflow: visible;
-}
 
 /* Show third-level lists when submenu is open */
 .mega-menu-item:hover .mega-sub-menu .mega-sub-sub-list,
@@ -429,20 +426,30 @@ a:hover {
 @media (max-width: 767px) {
     .mega-sub-menu {
         display: none !important;
-        position: static !important;
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
         width: 100% !important;
         box-shadow: none !important;
-        border: none !important;
-        padding: 5px 15px !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        max-height: none !important;
+        border: 1px solid rgba(212, 175, 55, 0.12) !important;
+        padding: 8px 10px 10px !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        max-height: 0 !important;
         background: rgba(255, 255, 255, 0.03) !important;
-        border-radius: 0 !important;
+        border-radius: 10px !important;
+        margin-top: 6px;
+        min-width: 100% !important;
     }
     
-    .mega-menu-item.active .mega-sub-menu {
+    .mega-menu-item:hover > .mega-sub-menu,
+    .mega-menu-item.active > .mega-sub-menu,
+    .mega-menu-item:focus-within > .mega-sub-menu {
         display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        max-height: 2000px !important;
     }
     
     .mega-menu-item.active .mega-arrow {
