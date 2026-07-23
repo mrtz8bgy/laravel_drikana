@@ -15,8 +15,10 @@
 
 @php
     $megaCategories = \App\Category::with(['subcategories' => function($query) {
-        $query->with('subsubcategories');
-    }])->take(11)->get();
+        $query->orderBy('name')->with(['subsubcategories' => function($subQuery) {
+            $subQuery->orderBy('name');
+        }]);
+    }])->whereHas('subcategories')->orderBy('name')->take(11)->get();
 @endphp
 
 <style>
@@ -288,6 +290,22 @@ a:hover {
 .mega-sub-container {
     padding: 5px;
     width: 100%;
+}
+
+/* Fix: ensure mega submenu sits above other page elements (slider, arrows) and is not clipped */
+.mega-menu-section {
+    z-index: 99999 !important;
+}
+
+.mega-menu-list {
+    /* allow submenu to extend without being clipped by parent */
+    overflow: visible !important;
+}
+
+.mega-sub-menu {
+    z-index: 100000 !important;
+    /* make sure the submenu is positioned above transforms/backdrop-filters */
+    position: absolute !important;
 }
 
 .mega-sub-container .row {
@@ -1288,6 +1306,118 @@ a:hover {
     .fullwidth-slider-section .slick-next { right: 10px; }
     .fullwidth-slider-section .slick-dots li button { width: 8px; height: 8px; }
     .fullwidth-slider-section .slick-dots li.slick-active button { width: 20px; }
+
+    /* Mobile-specific mega menu tweaks */
+    .mega-menu-btn {
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        margin: 0 10px 10px;
+        justify-content: space-between;
+    }
+
+    .mega-menu-list {
+        position: fixed !important;
+        top: 64px !important;
+        right: 8px !important;
+        left: 8px !important;
+        width: auto !important;
+        max-height: calc(100vh - 90px) !important;
+        background: linear-gradient(180deg, #17152f 0%, #10111d 100%) !important;
+        border-radius: 14px !important;
+        padding: 8px 6px 10px !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        border: 1px solid rgba(212, 175, 55, 0.16) !important;
+        z-index: 2000 !important;
+    }
+
+    .mega-menu-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+        margin: 2px 0;
+    }
+
+    .mega-menu-item:last-child {
+        border-bottom: none !important;
+    }
+
+    .mega-menu-link {
+        padding: 12px 14px !important;
+        font-size: 14.5px !important;
+        color: var(--color-white-smoke) !important;
+        background: transparent !important;
+        border-radius: 10px;
+        min-height: 46px;
+    }
+
+    .mega-menu-link:hover,
+    .mega-menu-item.active > .mega-menu-link {
+        background: rgba(212, 175, 55, 0.15) !important;
+        color: var(--color-gold) !important;
+    }
+
+    .mega-menu-link .mega-cat-icon {
+        width: 28px;
+        height: 28px;
+        opacity: 0.95;
+    }
+
+    .mega-arrow {
+        color: var(--color-gold);
+        font-size: 16px;
+    }
+
+    .mega-sub-menu {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        box-shadow: none !important;
+        border-radius: 10px !important;
+        padding: 0 !important;
+        margin-top: 4px;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+        border: 1px solid rgba(212, 175, 55, 0.08) !important;
+    }
+
+    .mega-menu-item.active > .mega-sub-menu {
+        max-height: 2000px;
+        padding: 6px 0 4px 0 !important;
+    }
+
+    .mega-sub-link {
+        padding: 10px 12px !important;
+        font-size: 13.5px !important;
+        color: var(--color-white-smoke) !important;
+        border-radius: 8px;
+    }
+
+    .mega-sub-link:hover {
+        background: rgba(212, 175, 55, 0.12) !important;
+        color: var(--color-gold) !important;
+    }
+
+    .mega-sub-sub-list {
+        padding: 2px 0 4px 12px !important;
+        display: block !important;
+    }
+
+    .mega-sub-sub-list li a {
+        color: var(--color-gray) !important;
+        font-size: 12.5px !important;
+        padding: 4px 10px !important;
+    }
+
+    .mega-sub-sub-list li a:hover {
+        color: var(--color-gold) !important;
+        background: rgba(212, 175, 55, 0.08) !important;
+    }
 }
 
 @media (max-width: 420px) {
@@ -1417,6 +1547,9 @@ a:hover {
 
 <!-- ============================================ -->
 <!-- مگا منوی دسته‌بندی - کاملاً مستقل -->
+
+<!-- مگا منوی  من در اینجا زیر دسته بندیها را نشان نمیدهد از تو میخواهم این قسمت را برام تکمیل کنی به طوری که زیر دسته بندی ها نمایش داده شوند -->
+
 <!-- ============================================ -->
 <section class="mega-menu-section">
     <div class="container-fluid px-0">
@@ -1433,14 +1566,18 @@ a:hover {
                         @foreach ($megaCategories as $key => $category)
                             <li class="mega-menu-item">
                                 <a href="{{ route('products.category', $category->slug) }}" class="mega-menu-link">
-                                    <img class="mega-cat-icon lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($category->icon) }}" width="30" alt="{{ __($category->name) }}">
+                                    @if($category->icon && file_exists(public_path($category->icon)))
+                                        <img class="mega-cat-icon lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($category->icon) }}" width="30" alt="{{ __($category->name) }}">
+                                    @else
+                                        <i class="la la-folder-open" style="font-size:20px;color:var(--color-gold);width:30px;text-align:center;"></i>
+                                    @endif
                                     <span>{{ __($category->name) }}</span>
-                                    @if(isset($category->subcategories) && count($category->subcategories) > 0)
+                                    @if($category->subcategories && $category->subcategories->isNotEmpty())
                                         <i class="la la-angle-left mega-arrow"></i>
                                     @endif
                                 </a>
-                                
-                                @if(isset($category->subcategories) && count($category->subcategories) > 0)
+
+                                @if($category->subcategories && $category->subcategories->isNotEmpty())
                                     <div class="mega-sub-menu">
                                         <div class="mega-sub-container">
                                             <div class="row">
@@ -1455,15 +1592,22 @@ a:hover {
                                                             <span>{{ __($subcategory->name) }}</span>
                                                         </a>
 
-                                                        @if(isset($subcategory->subsubcategories) && count($subcategory->subsubcategories) > 0)
+                                                        @if($subcategory->subsubcategories && $subcategory->subsubcategories->isNotEmpty())
                                                             <ul class="mega-sub-sub-list">
-                                                                @foreach ($subcategory->subsubcategories as $subSubCategory)
+                                                                @foreach ($subcategory->subsubcategories->take(8) as $subSubCategory)
                                                                     <li>
                                                                         <a href="{{ route('products.subsubcategory', $subSubCategory->slug) }}">
                                                                             {{ __($subSubCategory->name) }}
                                                                         </a>
                                                                     </li>
                                                                 @endforeach
+                                                                @if($subcategory->subsubcategories->count() > 8)
+                                                                    <li>
+                                                                        <a href="{{ route('products.subcategory', $subcategory->slug) }}">
+                                                                            {{ __('مشاهده بیشتر') }}
+                                                                        </a>
+                                                                    </li>
+                                                                @endif
                                                             </ul>
                                                         @endif
                                                     </div>
@@ -2057,6 +2201,15 @@ a:hover {
             }
         }
         
+        function setMobileSubmenuState(item, isOpen) {
+            if (!item) return;
+            if (isOpen) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        }
+
         function onMouseEnter() {
             this.classList.add('active');
         }
@@ -2082,14 +2235,24 @@ a:hover {
         function onItemClick(e) {
             if (window.innerWidth <= 992) {
                 e.preventDefault();
+                e.stopPropagation();
                 var parent = this.closest('.mega-menu-item');
                 if (parent) {
-                    // بستن سایر آیتم‌ها
+                    var hasSubMenu = parent.querySelector('.mega-sub-menu');
+                    if (!hasSubMenu) {
+                        // آیتم زیرمنو ندارد، صفحه را بارگذاری کن
+                        window.location.href = this.href;
+                        return;
+                    }
+
+                    // بستن تمام آیتم‌های دیگر
                     megaItems.forEach(function(other) {
                         if (other !== parent) {
                             other.classList.remove('active');
                         }
                     });
+
+                    // تبدیل وضعیت آیتم فعلی
                     parent.classList.toggle('active');
                 }
             }
@@ -2108,7 +2271,6 @@ a:hover {
         // تنظیم مجدد در تغییر سایز
         window.addEventListener('resize', function() {
             setupMegaMenu();
-            // بستن منو در تغییر سایز
             if (megaTrigger) {
                 megaTrigger.classList.remove('active');
                 megaItems.forEach(function(item) {

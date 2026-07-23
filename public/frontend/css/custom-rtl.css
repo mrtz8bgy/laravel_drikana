@@ -278,7 +278,7 @@ section.home-banner-area {
     background: var(--navy-light);
 }
 .mega-menu-item:hover {
-    background: var(--gold-gradient);
+    background: #0d2656;
 }
 .mega-menu-item .mega-menu-link {
     color: var(--gold-light);

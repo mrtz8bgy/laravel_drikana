@@ -656,9 +656,9 @@ section.home-banner-area {
     background: #02042d;
 }
 
-.category-sidebar { 
+.category-sidebar {
     background-color: #02042d;
-    height: 400px;
+    min-height: 400px;
 }
 .category-sidebar .all-category {
     height: 49px;
@@ -3008,7 +3008,6 @@ ul.seller-brand-list .brand-item {
     .side-menu-overlay.opacity-1 {
         opacity: 1;
         visibility: visible;
-        z-index: 1500;
     }
 
     .side-menu {
@@ -3024,7 +3023,7 @@ ul.seller-brand-list .brand-item {
         -ms-webkit-transition: left 0.4s cubic-bezier(0.77, 0, 0.175, 1);
         background: #fff;
         color: #777;
-        /* z-index: 1500; */
+        z-index: 99;
         box-shadow: 5px 0 10px rgba(37, 53, 92, 0.2);
         overflow-y: auto;
     }

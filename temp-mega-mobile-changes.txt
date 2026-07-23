@@ -1,0 +1,1 @@
+(temporary note) Mobile CSS changes added to resources/views/frontend/index.blade.php under @media (max-width:576px).
