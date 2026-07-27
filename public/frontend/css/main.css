@@ -3008,6 +3008,7 @@ ul.seller-brand-list .brand-item {
     .side-menu-overlay.opacity-1 {
         opacity: 1;
         visibility: visible;
+        z-index: 999991;
     }
 
     .side-menu {

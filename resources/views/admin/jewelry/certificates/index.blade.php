@@ -220,7 +220,7 @@
                                 <th>مالک</th>
                                 <th>تاریخ صدور</th>
                                 <th>عکس</th>
-                                <th width="150">عملیات</th>
+                                <th width="200"><td>عملیات</td></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -291,15 +291,15 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td>
+                                <td><th>
                                     <div class="btn-group btn-group-sm">
                                         <a href="{{ route('admin.jewelry.certificates.show', $certificate) }}" 
                                            class="btn btn-info" title="مشاهده">
-                                            <i class="fas fa-eye"></i>
+                                            <i class="fas fa-eye"></i>مشاهده
                                         </a>
                                         <a href="{{ route('admin.jewelry.certificates.edit', $certificate) }}" 
                                            class="btn btn-warning" title="ویرایش">
-                                            <i class="fas fa-edit"></i>
+                                            <i class="fas fa-edit"></i>ویرایش
                                         </a>
                                         <a href="{{ route('admin.jewelry.certificates.print', $certificate) }}" 
                                            class="btn btn-outline-info" title="چاپ" target="_blank">
@@ -313,10 +313,11 @@
                                                     class="btn btn-danger" 
                                                     title="حذف"
                                                     onclick="return confirm('آیا از حذف شناسنامه «{{ $certificate->serial_number }}» مطمئن هستید؟')">
-                                                <i class="fas fa-trash"></i>
+                                                <i class="fas fa-trash"></i>حذف
                                             </button>
                                         </form>
                                     </div>
+</th>
                                 </td>
                             </tr>
                             @endforeach

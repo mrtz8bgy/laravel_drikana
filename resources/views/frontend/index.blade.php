@@ -246,6 +246,7 @@ a:hover {
     pointer-events: none;
     display: none;
     min-width: 280px;
+    margin-right: -4px;
 }
 
 /* Ensure columns and submenu don't clip third-level lists */
@@ -1320,6 +1321,7 @@ a:hover {
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         margin: 0 10px 10px;
         justify-content: space-between;
+        direction:rtl;
     }
 
     .mega-menu-list {
