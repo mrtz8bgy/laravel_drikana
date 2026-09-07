@@ -1,3 +1,4 @@
+@if(safe_table_exists('home_categories') && safe_table_exists('products'))
 @foreach (\App\HomeCategory::where('status', 1)->get() as $key => $homeCategory)
     @if ($homeCategory->category != null)
         <section class="mb-4">
@@ -62,3 +63,5 @@
         </section>
     @endif
 @endforeach
+
+@endif

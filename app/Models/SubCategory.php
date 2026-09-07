@@ -40,4 +40,8 @@ class SubCategory extends Model
     {
         return $this->hasMany(SubSubCategory::class);
     }
+
+    // lowercase alias
+    public function subsubcategories() { return $this->subSubCategories(); }
+
 }

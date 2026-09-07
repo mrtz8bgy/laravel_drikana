@@ -1,4 +1,11 @@
-@if (\App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
+@php
+    $__vendorOn = false;
+    try {
+        $__bs = \Illuminate\Support\Facades\DB::table('business_settings')->where('type','vendor_system_activation')->first();
+        $__vendorOn = $__bs && $__bs->value == 1 && \Illuminate\Support\Facades\Schema::hasTable('sellers');
+    } catch (\Exception $e) { $__vendorOn = false; }
+@endphp
+@if ($__vendorOn)
     @php
         $array = array();
         foreach (\App\Seller::where('verification_status', 1)->get() as $key => $seller) {

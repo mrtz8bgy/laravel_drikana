@@ -14,11 +14,29 @@
 @section('content')
 
 @php
-    $megaCategories = \App\Category::with(['subcategories' => function($query) {
-        $query->orderBy('name')->with(['subsubcategories' => function($subQuery) {
-            $subQuery->orderBy('name');
-        }]);
-    }])->whereHas('subcategories')->orderBy('name')->take(11)->get();
+    // ═══ حفاظت در برابر جدول‌های نصب‌نشده ═══
+    try {
+        $megaCategories = \Illuminate\Support\Facades\Schema::hasTable('categories')
+            ? \App\Category::with(['subcategories' => function($query) {
+                $query->where('published', 1)->with(['subsubcategories' => function($q){
+                    $q->where('published', 1);
+                }]);
+            }])->where('top', 1)->where('published', 1)->get()
+            : collect();
+    } catch (\Exception $e) { $megaCategories = collect(); }
+
+    // ایمن‌سازی سایر متغیرهای صفحه اصلی
+    try {
+        $num_todays_deal = \Illuminate\Support\Facades\Schema::hasTable('products')
+            ? count(filter_products(\App\Product::where('published', 1)->where('todays_deal', 1))->get())
+            : 0;
+    } catch (\Exception $e) { $num_todays_deal = 0; }
+
+    try {
+        $total_customers = \Illuminate\Support\Facades\Schema::hasTable('users')
+            ? \App\User::where('user_type','customer')->orWhereNull('user_type')->count()
+            : 0;
+    } catch (\Exception $e) { $total_customers = 0; }
 @endphp
 
 <style>

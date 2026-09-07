@@ -1,3 +1,4 @@
+@if(safe_table_exists('products'))
 @if (\App\BusinessSetting::where('type', 'best_selling')->first()->value == 1)
     <section class="mb-4">
         <div class="container">
@@ -65,4 +66,6 @@
             </div>
         </div>
     </section>
+@endif
+
 @endif

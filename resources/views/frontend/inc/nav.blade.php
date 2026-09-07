@@ -111,9 +111,13 @@
 </header>
 
 @php
-    $luxMegaCategories = \App\Category::with(['subcategories' => function($q){
-        $q->orderBy('name')->with(['subsubcategories' => function($sq){ $sq->orderBy('name')->take(8); }]);
-    }])->whereHas('subcategories')->orderBy('order_level','asc')->orderBy('name')->take(11)->get();
+    try {
+        $luxMegaCategories = \Illuminate\Support\Facades\Schema::hasTable('categories')
+            ? \App\Category::with(['subCategories' => function($q){
+                $q->orderBy('name')->with(['subSubCategories' => function($sq){ $sq->orderBy('name')->take(8); }]);
+            }])->whereHas('subCategories')->orderBy('name')->take(11)->get()
+            : collect();
+    } catch (\Exception $e) { $luxMegaCategories = collect(); }
     $luxCatIcons = [
         'انگشتر' => 'drikana/ring.svg', 'حلقه' => 'drikana/ring.svg', 'ring' => 'drikana/ring.svg',
         'گردنبند' => 'drikana/necklace.svg', 'ساعت' => 'drikana/watch.svg', 'watch' => 'drikana/watch.svg',

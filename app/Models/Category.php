@@ -56,4 +56,9 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    // lowercase aliases for Blade templates
+    public function subcategories() { return $this->subCategories(); }
+    public function subsubcategories() { return $this->subSubCategories(); }
+
 }

@@ -1,3 +1,4 @@
+@if(safe_table_exists('products'))
 <section class="mb-4">
     <div class="container">
         <div class="px-2 py-4 p-md-4 bg-white shadow-sm">
@@ -49,3 +50,5 @@
         </div>
     </div>
 </section>
+
+@endif
