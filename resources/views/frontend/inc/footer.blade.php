@@ -54,7 +54,7 @@
                 <ul class="d-footer-links">
                     <li><a href="{{ route('orders.track') }}">رهگیری سفارش</a></li>
                     <li><a href="{{ route('jewelry.certificates.verify_page') }}">استعلام شناسنامه طلا</a></li>
-                    <li><a href="{{ route('jewelry.missing_reports.create') }}">اعلام سرقت / مفقودی</a></li>
+                    <li><a href="{{ route('jewelry.missing_reports.create_public') }}">اعلام سرقت / مفقودی</a></li>
                     <li><a href="{{ route('sellerpolicy') }}">قوانین فروشندگان</a></li>
                     <li><a href="{{ route('returnpolicy') }}">شرایط بازگشت کالا</a></li>
                     <li><a href="{{ route('supportpolicy') }}">پشتیبانی</a></li>

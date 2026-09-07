@@ -29,7 +29,7 @@
                     <li><a href="{{ route('categories.all') }}"><i class="la la-th-large"></i> دسته‌بندی‌ها</a></li>
                     <li><a href="{{ route('products.featured') }}"><i class="la la-star"></i> محصولات ویژه</a></li>
                     <li><a href="{{ route('jewelry.certificates.verify_page') }}"><i class="la la-certificate"></i> استعلام شناسنامه</a></li>
-                    <li><a href="{{ route('jewelry.missing_reports.create') }}"><i class="la la-bullhorn"></i> اعلام سرقت/مفقودی</a></li>
+                    <li><a href="{{ route('jewelry.missing_reports.create_public') }}"><i class="la la-bullhorn"></i> اعلام سرقت/مفقودی</a></li>
                     <li><a href="{{ route('orders.track') }}"><i class="la la-map-pin"></i> رهگیری سفارش</a></li>
                     <li><a href="{{ route('cart') }}"><i class="la la-shopping-cart"></i> سبد خرید
                         @if(Session::has('cart'))<span class="badge">{{ count(Session::get('cart')) }}</span>@endif</a></li>

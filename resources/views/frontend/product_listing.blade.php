@@ -23,7 +23,8 @@
 @else
     @php
         $meta_title = env('APP_NAME');
-        $meta_description = \App\SeoSetting::first()->description;
+        $seo_setting = \Illuminate\Support\Facades\Schema::hasTable('seo_settings') ? \App\SeoSetting::first() : null;
+        $meta_description = $seo_setting && $seo_setting->description ? $seo_setting->description : $meta_title;
     @endphp
 @endif
 

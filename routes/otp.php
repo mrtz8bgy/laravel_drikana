@@ -32,7 +32,9 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 	Route::post('/otp-configuration/update/activation', 'OTPController@updateActivationSettings')->name('otp_configurations.update.activation');
 	Route::post('/otp-credentials-update', 'OTPController@update_credentials')->name('update_credentials');
 
-    //Messaging
-    Route::get('/sms', 'SmsController@index')->name('sms.index');
-    Route::post('/sms-send', 'SmsController@send')->name('sms.send');
+    // Messaging is optional; do not register these routes if the addon is absent.
+    if (class_exists('App\\Http\\Controllers\\SmsController')) {
+        Route::get('/sms', 'SmsController@index')->name('sms.index');
+        Route::post('/sms-send', 'SmsController@send')->name('sms.send');
+    }
 });

@@ -490,6 +490,18 @@
     </div>
 @endif
 
+@php
+    $vendor_system_enabled = false;
+    try {
+        $vendor_setting = \Illuminate\Support\Facades\Schema::hasTable('business_settings')
+            ? \App\BusinessSetting::where('type', 'vendor_system_activation')->first()
+            : null;
+        $vendor_system_enabled = $vendor_setting && $vendor_setting->value == 1;
+    } catch (\Exception $e) {
+        $vendor_system_enabled = false;
+    }
+@endphp
+
 @if(Auth::user()->user_type == 'admin' || in_array('1', json_decode(Auth::user()->staff->role->permissions)))
 <div class="dashboard-stats">
     <div class="row">
@@ -503,10 +515,10 @@
                     <span class="stat-label">محصولات منتشر شده</span>
                     <div class="stat-value">{{ \App\Product::where('published', 1)->get()->count() }}</div>
                     
-                    @if (\App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
+                    @if ($vendor_system_enabled)
                         <div class="stat-sub">
                             <span class="emoji-icon" style="color: var(--success-color);">🏪</span>
-                            فروشندگان: {{ \App\Product::where('published', 1)->where('added_by', 'seller')->get()->count() }}
+                            فروشندگان: {{ \Illuminate\Support\Facades\Schema::hasTable('products') ? \App\Product::where('published', 1)->where('added_by', 'seller')->get()->count() : 0 }}
                         </div>
                     @endif
                     
@@ -583,7 +595,7 @@
 </div>
 @endif
 
-@if((Auth::user()->user_type == 'admin' || in_array('5', json_decode(Auth::user()->staff->role->permissions))) && \App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
+@if((Auth::user()->user_type == 'admin' || in_array('5', json_decode(Auth::user()->staff->role->permissions))) && $vendor_system_enabled && \Illuminate\Support\Facades\Schema::hasTable('sellers'))
     <div class="row">
         <div class="col-md-4">
             <div class="stat-card">
@@ -609,7 +621,7 @@
                 </div>
                 <div class="stat-content">
                     <span class="stat-label">فروشندگان تایید شده</span>
-                    <div class="stat-value">{{ \App\Seller::where('verification_status', 1)->get()->count() }}</div>
+                    <div class="stat-value">{{ \App\Seller::where('verification_status', 1)->count() }}</div>
                     <br>
                     <a href="{{ route('sellers.index') }}" class="btn-link">
                         مدیریت فروشندگان

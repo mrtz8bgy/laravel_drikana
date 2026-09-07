@@ -11,7 +11,7 @@
  Target Server Version : 100411 (10.4.11-MariaDB)
  File Encoding         : 65001
 
- Date: 15/05/2026 16:08:25
+ Date: 07/09/2026 13:16:15
 */
 
 SET NAMES utf8mb4;
@@ -280,7 +280,7 @@ CREATE TABLE `categories`  (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of categories
@@ -295,16 +295,6 @@ INSERT INTO `categories` VALUES (12, 'سنگ‌های قیمتی', 0.00, 'upload
 INSERT INTO `categories` VALUES (13, 'اکسسوری‌های طلا', 0.00, 'uploads/categories/banner/aAez1ZdsnsiHFRSS7GthaiqUyq9X5ABRYDIuliYI.webp', 'uploads/categories/icon/JSCDczuWKJNOci9TqVedirSeFMzNFfnzRKYKKvBA.webp', 0, 1, 0, '---qY463', 'اکسسوری‌های طلا', 'اکسسوری‌های طلا', '2025-12-31 17:24:00', '2025-12-31 13:54:00');
 INSERT INTO `categories` VALUES (14, 'هدیه و اقلام لوکس', 0.00, 'uploads/categories/banner/2IGukVvYsDBhnkgwoxEKPn7ETmhlmdyUMx8McWII.webp', 'uploads/categories/icon/kQXDntLy2tQOVBdnIDPpK49MlRzLwNbKdFKBHfSl.webp', 0, 1, 0, '-----H1Zlr', 'هدیه و اقلام لوکس', 'هدیه و اقلام لوکس', '2025-12-31 17:24:26', '2025-12-31 13:54:26');
 INSERT INTO `categories` VALUES (15, 'لوازم جانبی ساعت و جواهر', 0.00, 'uploads/categories/banner/RshhhluhMFk5vPFAqTrjgyl3o5RRmjmuq5wMrWHo.webp', 'uploads/categories/icon/h5ZlxaLSRWMRhGqVSMddb7sgZVMUUgMwBp69BhJ3.webp', 0, 1, 0, '--o65zD', 'لوازم جانبی ساعت و جواهر', 'لوازم جانبی ساعت و جواهر', '2025-12-31 17:25:36', '2025-12-31 13:55:36');
-INSERT INTO `categories` VALUES (100, 'لوازم آرایشی و بهداشتی', 0.00, NULL, NULL, 1, 1, 0, 'beauty-cosmetics', 'لوازم آرایشی و بهداشتی', 'خرید لوازم آرایشی و بهداشتی اصل', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (101, 'ابزارآلات و یراق آلات', 0.00, NULL, NULL, 1, 1, 0, 'tools-hardware', 'ابزارآلات و یراق آلات', 'خرید انواع ابزارآلات صنعتی و یراق آلات', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (102, 'لوازم خانگی', 0.00, NULL, NULL, 1, 1, 0, 'home-appliances', 'لوازم خانگی', 'خرید لوازم خانگی برند با گارانتی', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (103, 'لوازم دیجیتال', 0.00, NULL, NULL, 1, 1, 0, 'digital-electronics', 'لوازم دیجیتال', 'خرید انواع گوشی موبایل، تبلت، لپ تاپ', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (104, 'مد و پوشاک', 0.00, NULL, NULL, 1, 1, 0, 'fashion-clothing', 'مد و پوشاک', 'خرید انواع پوشاک مردانه و زنانه با کیفیت', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (105, 'ورزش و سفر', 0.00, NULL, NULL, 1, 1, 0, 'sports-travel', 'ورزش و سفر', 'لوازم ورزشی و سفر با بهترین قیمت', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (106, 'کتاب و لوازم تحریر', 0.00, NULL, NULL, 1, 1, 0, 'books-stationery', 'کتاب و لوازم تحریر', 'خرید کتاب و لوازم تحریر ارزان', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (107, 'اسباب بازی و کودک', 0.00, NULL, NULL, 1, 1, 0, 'toys-kids', 'اسباب بازی و کودک', 'خرید اسباب بازی و لوازم کودک', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (108, 'مادر و کودک', 0.00, NULL, NULL, 1, 1, 0, 'mother-baby', 'مادر و کودک', 'لوازم بارداری و کودک', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
-INSERT INTO `categories` VALUES (109, 'صنایع دستی و هنری', 0.00, NULL, NULL, 1, 1, 0, 'handicrafts-art', 'صنایع دستی و هنری', 'خرید صنایع دستی و محصولات هنری', '2026-05-15 13:31:39', '2026-05-15 13:31:39');
 
 -- ----------------------------
 -- Table structure for colors
@@ -1068,7 +1058,7 @@ CREATE TABLE `jewelry_certificates`  (
   UNIQUE INDEX `serial_number`(`serial_number` ASC) USING BTREE,
   INDEX `owner_id`(`owner_id` ASC) USING BTREE,
   CONSTRAINT `jewelry_certificates_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `jewelry_owners` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jewelry_certificates
@@ -1076,8 +1066,6 @@ CREATE TABLE `jewelry_certificates`  (
 INSERT INTO `jewelry_certificates` VALUES (1, 4, 'انگشتر طلای مصری', 'طلا', '18', 100.00, NULL, '202020', '2026-02-02', 'jewelry-certificates/hX14111HOQ24K6MF3q0p4DGCRjHg8qnBD5v7SXCp.jpg', NULL, 0, NULL, '2026-02-02 19:45:33', '2026-02-04 23:12:28');
 INSERT INTO `jewelry_certificates` VALUES (2, 5, 'دستبند پلاتین', 'پلاتین', '26', 40.00, 'سایر', '202210', '2026-02-02', 'jewelry-certificates/pCZppsVdq5XoLlqe18qNFtadREogR3uN7CQHvI5B.jpg', 'این یک دستبند عتیقه هست', 0, NULL, '2026-02-02 20:11:22', '2026-02-04 23:36:38');
 INSERT INTO `jewelry_certificates` VALUES (3, 3, 'گردنبند پلاتین نقره ای زنانه', 'پلاتین', '26', 10.00, 'الماس', '042101010', '2026-02-04', 'jewelry-certificates/hTiFsHoN8yhoSB7vB7CRYHvMPDobLeRcuz8gZ1TK.jpg', 'این گردنبند عتیقه هست', 0, NULL, '2026-02-04 23:17:10', '2026-02-04 23:17:10');
-INSERT INTO `jewelry_certificates` VALUES (4, 4, 'النگو طلای عتیقه مادر بزرگ', 'طلا', '18', 20.00, 'سایر', '101412', '2026-02-20', 'jewelry-certificates/ZgSuL7odC7BC9yOle3Rfhex6OuedoCbF0pWxRYZK.jpg', 'تست', 0, NULL, '2026-02-20 13:32:46', '2026-02-20 13:32:46');
-INSERT INTO `jewelry_certificates` VALUES (5, 4, 'تست سریال طلا', 'طلا', '26', 10.00, 'سایر', 'wb101010', '2026-02-20', 'jewelry-certificates/a1T3wb3dQy0T6wYbNZdsRsWUcnUq5obPQNlNXJSN.jpg', 'تست سریال طلا بر مبنای عددی', 0, NULL, '2026-02-20 14:20:50', '2026-02-20 14:20:50');
 
 -- ----------------------------
 -- Table structure for jewelry_owners
@@ -1088,25 +1076,19 @@ CREATE TABLE `jewelry_owners`  (
   `user_id` int UNSIGNED NOT NULL,
   `full_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `national_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `address` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  CONSTRAINT `jewelry_owners_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `jewelry_owners_user_id_national_id_unique`(`user_id` ASC, `national_id` ASC) USING BTREE,
+  INDEX `jewelry_owners_user_id_index`(`user_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jewelry_owners
 -- ----------------------------
-INSERT INTO `jewelry_owners` VALUES (1, 12, 'morteza', '0421088273', '02136735582', 'ورامین میدان رازی', 'mrtz8bgy@gmail.com', '2026-02-02 16:09:50', '2026-02-02 19:37:09');
-INSERT INTO `jewelry_owners` VALUES (2, 12, 'علی محمد قادسی', '0421088283', '09205050221', 'تهران خیابان جمهوری پاساژ امجد', 'edeban.almas@gmail.com', '2026-02-02 16:14:37', '2026-02-02 19:43:12');
-INSERT INTO `jewelry_owners` VALUES (3, 12, 'رضا الهی', '0421088275', '02136735590', 'ورامین میدان رازی', 'morteza@gmail.com', '2026-02-02 16:42:08', '2026-02-02 16:42:08');
-INSERT INTO `jewelry_owners` VALUES (4, 12, 'امیر بوجاری', '0411097237', '09926008650', 'ورامین میدان رازی', 'm.amir2211381@gmail.com', '2026-02-02 16:43:27', '2026-02-02 16:43:27');
-INSERT INTO `jewelry_owners` VALUES (5, 12, 'حسن مهاجری', '0215586255', '09128754129', 'ورامین میدان رازی خ احمد مقیسه', 'hasan@gmail.com', '2026-02-02 19:07:07', '2026-02-02 19:07:07');
-INSERT INTO `jewelry_owners` VALUES (6, 12, 'حسین مهاجری', '0421852525', '09128754128', 'ورامین میدان رازی خ احمد مقیسه', 'hasan@gmail.com', '2026-02-02 19:12:29', '2026-02-02 21:18:17');
 
 -- ----------------------------
 -- Table structure for jewelry_transfers
@@ -1122,14 +1104,8 @@ CREATE TABLE `jewelry_transfers`  (
   `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `certificate_id`(`certificate_id` ASC) USING BTREE,
-  INDEX `from_owner_id`(`from_owner_id` ASC) USING BTREE,
-  INDEX `to_owner_id`(`to_owner_id` ASC) USING BTREE,
-  CONSTRAINT `jewelry_transfers_ibfk_1` FOREIGN KEY (`certificate_id`) REFERENCES `jewelry_certificates` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `jewelry_transfers_ibfk_2` FOREIGN KEY (`from_owner_id`) REFERENCES `jewelry_owners` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `jewelry_transfers_ibfk_3` FOREIGN KEY (`to_owner_id`) REFERENCES `jewelry_owners` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of jewelry_transfers
@@ -1144,55 +1120,33 @@ CREATE TABLE `languages`  (
   `name` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `code` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `rtl` int NOT NULL DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of languages
 -- ----------------------------
-INSERT INTO `languages` VALUES (1, 'English', 'en', 0, '2019-01-20 15:43:20', '2019-01-20 15:43:20');
-INSERT INTO `languages` VALUES (5, 'فارسی', 'ir', 1, '2020-06-27 13:22:41', '2020-07-14 12:44:47');
+INSERT INTO `languages` VALUES (1, 'فارسی', 'ir', 1, '2026-08-22 21:38:12', '2026-08-22 21:38:12');
+INSERT INTO `languages` VALUES (2, 'English', 'en', 0, '2026-08-22 21:38:12', '2026-08-22 21:38:12');
 
 -- ----------------------------
 -- Table structure for links
 -- ----------------------------
 DROP TABLE IF EXISTS `links`;
 CREATE TABLE `links`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `url` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `position` int NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of links
--- ----------------------------
-INSERT INTO `links` VALUES (1, 'سایت گوگل', 'https://www.google.com', '2026-02-16 17:34:05', '2026-02-16 14:04:05');
-INSERT INTO `links` VALUES (2, 'لینک دوم', '#', '2020-07-19 06:22:07', '2020-07-19 06:22:07');
-INSERT INTO `links` VALUES (3, 'لینک سوم', '#', '2020-07-19 06:22:24', '2020-07-19 06:22:24');
-INSERT INTO `links` VALUES (4, 'لینک چهارم', '#', '2020-07-19 06:22:36', '2020-07-19 06:22:36');
-INSERT INTO `links` VALUES (5, 'لینک پنجم', '#', '2020-07-19 06:31:11', '2020-07-19 06:31:11');
-
--- ----------------------------
--- Table structure for messages
--- ----------------------------
-DROP TABLE IF EXISTS `messages`;
-CREATE TABLE `messages`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `conversation_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `message` text CHARACTER SET utf32 COLLATE utf32_unicode_ci NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf32 COLLATE = utf32_unicode_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of messages
 -- ----------------------------
 
 -- ----------------------------
@@ -1201,21 +1155,31 @@ CREATE TABLE `messages`  (
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `migration` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of migrations
 -- ----------------------------
-INSERT INTO `migrations` VALUES (1, '2014_10_12_000000_create_users_table', 1);
-INSERT INTO `migrations` VALUES (2, '2014_10_12_100000_create_password_resets_table', 1);
-INSERT INTO `migrations` VALUES (3, '2016_06_01_000001_create_oauth_auth_codes_table', 2);
-INSERT INTO `migrations` VALUES (4, '2016_06_01_000002_create_oauth_access_tokens_table', 2);
-INSERT INTO `migrations` VALUES (5, '2016_06_01_000003_create_oauth_refresh_tokens_table', 2);
-INSERT INTO `migrations` VALUES (6, '2016_06_01_000004_create_oauth_clients_table', 2);
-INSERT INTO `migrations` VALUES (7, '2016_06_01_000005_create_oauth_personal_access_clients_table', 2);
+INSERT INTO `migrations` VALUES (1, '2026_09_07_100001_create_drikana_core_ecommerce_tables', 1);
+INSERT INTO `migrations` VALUES (2, '2026_09_07_100002_align_seo_settings_columns', 2);
+INSERT INTO `migrations` VALUES (3, '2014_10_12_000000_create_users_table', 3);
+INSERT INTO `migrations` VALUES (4, '2026_02_16_151319_create_missing_reports_table', 3);
+INSERT INTO `migrations` VALUES (5, '2026_02_16_165127_create_repair_status_histories_table', 3);
+INSERT INTO `migrations` VALUES (6, '2026_02_16_165329_create_repair_orders_table', 3);
+INSERT INTO `migrations` VALUES (7, '2026_02_16_171033_add_role_to_users_table', 3);
+INSERT INTO `migrations` VALUES (8, '2026_02_16_183253_fix_repair_status_histories_foreign_keys', 3);
+INSERT INTO `migrations` VALUES (9, '2026_02_16_202821_create_repair_technicians_table', 3);
+INSERT INTO `migrations` VALUES (10, '2026_09_07_100000_add_ecommerce_fields_to_users_table', 3);
+INSERT INTO `migrations` VALUES (11, '2014_10_12_100000_create_password_resets_table', 4);
+INSERT INTO `migrations` VALUES (12, '2016_06_01_000001_create_oauth_auth_codes_table', 4);
+INSERT INTO `migrations` VALUES (13, '2016_06_01_000002_create_oauth_access_tokens_table', 4);
+INSERT INTO `migrations` VALUES (14, '2016_06_01_000003_create_oauth_refresh_tokens_table', 4);
+INSERT INTO `migrations` VALUES (15, '2016_06_01_000004_create_oauth_clients_table', 4);
+INSERT INTO `migrations` VALUES (16, '2016_06_01_000005_create_oauth_personal_access_clients_table', 4);
+INSERT INTO `migrations` VALUES (17, '2026_09_07_100003_create_jewelry_owners_table', 5);
 
 -- ----------------------------
 -- Table structure for missing_reports
@@ -1232,15 +1196,11 @@ CREATE TABLE `missing_reports`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of missing_reports
 -- ----------------------------
-INSERT INTO `missing_reports` VALUES (1, 12, 1, 'lost', 'تهران نرسیده به تقاطع', 'چیزی یادم نیست', 'found', '2026-02-16 15:55:00', '2026-02-16 15:55:24');
-INSERT INTO `missing_reports` VALUES (2, 12, 3, 'theft', 'ورامین', 'با پلیس هماهنگ شده', 'pending', '2026-02-16 15:56:44', '2026-02-16 15:56:44');
-INSERT INTO `missing_reports` VALUES (3, 12, 2, 'theft', 'تهران نرسیده به تقاطع ولیعصر', 'با پلیس هماهنگ شده', 'pending', '2026-02-16 16:07:37', '2026-02-16 16:07:37');
-INSERT INTO `missing_reports` VALUES (4, 12, 4, 'theft', 'تهران میدان شوش', 'منطقه نزدیک مولوی', 'found', '2026-02-20 13:34:23', '2026-02-20 13:35:12');
 
 -- ----------------------------
 -- Table structure for oauth_access_tokens
@@ -1248,9 +1208,9 @@ INSERT INTO `missing_reports` VALUES (4, 12, 4, 'theft', 'تهران میدان 
 DROP TABLE IF EXISTS `oauth_access_tokens`;
 CREATE TABLE `oauth_access_tokens`  (
   `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int NULL DEFAULT NULL,
+  `user_id` bigint NULL DEFAULT NULL,
   `client_id` int UNSIGNED NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `revoked` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1258,29 +1218,11 @@ CREATE TABLE `oauth_access_tokens`  (
   `expires_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oauth_access_tokens_user_id_index`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of oauth_access_tokens
 -- ----------------------------
-INSERT INTO `oauth_access_tokens` VALUES ('125ce8289850f80d9fea100325bf892fbd0deba1f87dbfc2ab81fb43d57377ec24ed65f7dc560e46', 1, 1, 'Personal Access Token', '[]', 0, '2019-07-30 08:21:13', '2019-07-30 08:21:13', '2020-07-30 10:51:13');
-INSERT INTO `oauth_access_tokens` VALUES ('293d2bb534220c070c4e90d25b5509965d23d3ddbc05b1e29fb4899ae09420ff112dbccab1c6f504', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 09:30:04', '2019-08-04 09:30:04', '2020-08-04 12:00:04');
-INSERT INTO `oauth_access_tokens` VALUES ('5363e91c7892acdd6417aa9c7d4987d83568e229befbd75be64282dbe8a88147c6c705e06c1fb2bf', 1, 1, 'Personal Access Token', '[]', 0, '2019-07-13 10:14:28', '2019-07-13 10:14:28', '2020-07-13 12:44:28');
-INSERT INTO `oauth_access_tokens` VALUES ('681b4a4099fac5e12517307b4027b54df94cbaf0cbf6b4bf496534c94f0ccd8a79dd6af9742d076b', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 10:53:06', '2019-08-04 10:53:06', '2020-08-04 13:23:06');
-INSERT INTO `oauth_access_tokens` VALUES ('6d229e3559e568df086c706a1056f760abc1370abe74033c773490581a042442154afa1260c4b6f0', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 11:02:12', '2019-08-04 11:02:12', '2020-08-04 13:32:12');
-INSERT INTO `oauth_access_tokens` VALUES ('6efc0f1fc3843027ea1ea7cd35acf9c74282f0271c31d45a164e7b27025a315d31022efe7bb94aaa', 1, 1, 'Personal Access Token', '[]', 0, '2019-08-08 06:05:26', '2019-08-08 06:05:26', '2020-08-08 08:35:26');
-INSERT INTO `oauth_access_tokens` VALUES ('7745b763da15a06eaded371330072361b0524c41651cf48bf76fc1b521a475ece78703646e06d3b0', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 10:59:44', '2019-08-04 10:59:44', '2020-08-04 13:29:44');
-INSERT INTO `oauth_access_tokens` VALUES ('815b625e239934be293cd34479b0f766bbc1da7cc10d464a2944ddce3a0142e943ae48be018ccbd0', 1, 1, 'Personal Access Token', '[]', 1, '2019-07-22 05:37:47', '2019-07-22 05:37:47', '2020-07-22 08:07:47');
-INSERT INTO `oauth_access_tokens` VALUES ('8921a4c96a6d674ac002e216f98855c69de2568003f9b4136f6e66f4cb9545442fb3e37e91a27cad', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 09:35:05', '2019-08-04 09:35:05', '2020-08-04 12:05:05');
-INSERT INTO `oauth_access_tokens` VALUES ('8d8b85720304e2f161a66564cec0ecd50d70e611cc0efbf04e409330086e6009f72a39ce2191f33a', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 10:14:35', '2019-08-04 10:14:35', '2020-08-04 12:44:35');
-INSERT INTO `oauth_access_tokens` VALUES ('bcaaebdead4c0ef15f3ea6d196fd80749d309e6db8603b235e818cb626a5cea034ff2a55b66e3e1a', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 10:44:32', '2019-08-04 10:44:32', '2020-08-04 13:14:32');
-INSERT INTO `oauth_access_tokens` VALUES ('c25417a5c728073ca8ba57058ded43d496a9d2619b434d2a004dd490a64478c08bc3e06ffc1be65d', 1, 1, 'Personal Access Token', '[]', 1, '2019-07-30 05:15:31', '2019-07-30 05:15:31', '2020-07-30 07:45:31');
-INSERT INTO `oauth_access_tokens` VALUES ('c7423d85b2b5bdc5027cb283be57fa22f5943cae43f60b0ed27e6dd198e46f25e3501b3081ed0777', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-05 08:32:59', '2019-08-05 08:32:59', '2020-08-05 11:02:59');
-INSERT INTO `oauth_access_tokens` VALUES ('e76f19dbd5c2c4060719fb1006ac56116fd86f7838b4bf74e2c0a0ac9696e724df1e517dbdb357f4', 1, 1, 'Personal Access Token', '[]', 1, '2019-07-15 06:23:40', '2019-07-15 06:23:40', '2020-07-15 08:53:40');
-INSERT INTO `oauth_access_tokens` VALUES ('ed7c269dd6f9a97750a982f62e0de54749be6950e323cdfef892a1ec93f8ddbacf9fe26e6a42180e', 1, 1, 'Personal Access Token', '[]', 1, '2019-07-13 10:06:45', '2019-07-13 10:06:45', '2020-07-13 12:36:45');
-INSERT INTO `oauth_access_tokens` VALUES ('f6d1475bc17a27e389000d3df4da5c5004ce7610158b0dd414226700c0f6db48914637b4c76e1948', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 10:52:01', '2019-08-04 10:52:01', '2020-08-04 13:22:01');
-INSERT INTO `oauth_access_tokens` VALUES ('f85e4e444fc954430170c41779a4238f84cd6fed905f682795cd4d7b6a291ec5204a10ac0480eb30', 1, 1, 'Personal Access Token', '[]', 1, '2019-07-30 10:08:49', '2019-07-30 10:08:49', '2020-07-30 12:38:49');
-INSERT INTO `oauth_access_tokens` VALUES ('f8bf983a42c543b99128296e4bc7c2d17a52b5b9ef69670c629b93a653c6a4af27be452e0c331f79', 1, 1, 'Personal Access Token', '[]', 1, '2019-08-04 10:58:55', '2019-08-04 10:58:55', '2020-08-04 13:28:55');
 
 -- ----------------------------
 -- Table structure for oauth_auth_codes
@@ -1288,13 +1230,13 @@ INSERT INTO `oauth_access_tokens` VALUES ('f8bf983a42c543b99128296e4bc7c2d17a52b
 DROP TABLE IF EXISTS `oauth_auth_codes`;
 CREATE TABLE `oauth_auth_codes`  (
   `id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int NOT NULL,
+  `user_id` bigint NOT NULL,
   `client_id` int UNSIGNED NOT NULL,
   `scopes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `revoked` tinyint(1) NOT NULL,
   `expires_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of oauth_auth_codes
@@ -1306,8 +1248,8 @@ CREATE TABLE `oauth_auth_codes`  (
 DROP TABLE IF EXISTS `oauth_clients`;
 CREATE TABLE `oauth_clients`  (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `user_id` int NULL DEFAULT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint NULL DEFAULT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `secret` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `redirect` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `personal_access_client` tinyint(1) NOT NULL,
@@ -1317,13 +1259,11 @@ CREATE TABLE `oauth_clients`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oauth_clients_user_id_index`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of oauth_clients
 -- ----------------------------
-INSERT INTO `oauth_clients` VALUES (1, NULL, 'Laravel Personal Access Client', 'eR2y7WUuem28ugHKppFpmss7jPyOHZsMkQwBo1Jj', 'http://localhost', 1, 0, 0, '2019-07-13 09:47:34', '2019-07-13 09:47:34');
-INSERT INTO `oauth_clients` VALUES (2, NULL, 'Laravel Password Grant Client', 'WLW2Ol0GozbaXEnx1NtXoweYPuKEbjWdviaUgw77', 'http://localhost', 0, 1, 0, '2019-07-13 09:47:34', '2019-07-13 09:47:34');
 
 -- ----------------------------
 -- Table structure for oauth_personal_access_clients
@@ -1336,12 +1276,11 @@ CREATE TABLE `oauth_personal_access_clients`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oauth_personal_access_clients_client_id_index`(`client_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of oauth_personal_access_clients
 -- ----------------------------
-INSERT INTO `oauth_personal_access_clients` VALUES (1, 1, '2019-07-13 09:47:34', '2019-07-13 09:47:34');
 
 -- ----------------------------
 -- Table structure for oauth_refresh_tokens
@@ -1354,7 +1293,7 @@ CREATE TABLE `oauth_refresh_tokens`  (
   `expires_at` datetime NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oauth_refresh_tokens_access_token_id_index`(`access_token_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of oauth_refresh_tokens
@@ -1365,115 +1304,57 @@ CREATE TABLE `oauth_refresh_tokens`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `order_details`;
 CREATE TABLE `order_details`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `order_id` int NOT NULL,
-  `seller_id` int NULL DEFAULT NULL,
-  `product_id` int NOT NULL,
-  `variation` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `price` double(12, 0) NULL DEFAULT NULL,
-  `tax` double(12, 2) NOT NULL DEFAULT 0.00,
-  `shipping_cost` double(12, 2) NOT NULL DEFAULT 0.00,
-  `quantity` int NULL DEFAULT NULL,
-  `payment_status` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'unpaid',
-  `delivery_status` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT 'pending',
-  `shipping_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `pickup_point_id` int NULL DEFAULT NULL,
-  `product_referral_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `order_id` int UNSIGNED NOT NULL,
+  `seller_id` int UNSIGNED NULL DEFAULT NULL,
+  `product_id` int UNSIGNED NOT NULL,
+  `variation` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `price` double(20, 2) NOT NULL DEFAULT 0.00,
+  `tax` double(20, 2) NOT NULL DEFAULT 0.00,
+  `shipping_cost` double(20, 2) NOT NULL DEFAULT 0.00,
+  `quantity` int NOT NULL DEFAULT 1,
+  `delivery_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `payment_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of order_details
 -- ----------------------------
-INSERT INTO `order_details` VALUES (1, 1, 15, 16, 'FloralWhite', 19600000, 0.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2025-12-22 15:44:43', '2025-12-22 15:44:43');
-INSERT INTO `order_details` VALUES (2, 1, 15, 14, 'White', 10500000, 0.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2025-12-22 15:44:43', '2025-12-22 15:44:43');
-INSERT INTO `order_details` VALUES (3, 2, 14, 12, '41', 9900, 0.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 09:46:11', '2026-01-01 09:46:11');
-INSERT INTO `order_details` VALUES (4, 2, 14, 9, '0421055885', 4200000, 0.00, 8000.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 09:46:11', '2026-01-01 09:46:11');
-INSERT INTO `order_details` VALUES (5, 3, 14, 12, '41', 9900, 0.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 09:50:04', '2026-01-01 09:50:04');
-INSERT INTO `order_details` VALUES (6, 3, 14, 9, '0421055885', 4200000, 0.00, 8000.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 09:50:04', '2026-01-01 09:50:04');
-INSERT INTO `order_details` VALUES (7, 4, 12, 1, 'Black-0421088-18', 38000000, 0.00, 0.00, 4, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 10:06:54', '2026-01-01 10:06:54');
-INSERT INTO `order_details` VALUES (8, 5, 12, 1, 'Black-0421088-18', 38000000, 0.00, 0.00, 4, 'paid', 'delivered', 'home_delivery', NULL, NULL, '2026-01-01 10:07:08', '2026-01-02 11:33:01');
-INSERT INTO `order_details` VALUES (9, 6, 15, 19, '0421802222-18-1404', 2744000, 274400.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 10:12:50', '2026-01-01 10:12:50');
-INSERT INTO `order_details` VALUES (10, 7, 12, 2, 'DarkSeaGreen', 4899000, 0.00, 0.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-01-01 23:27:41', '2026-01-01 23:27:41');
-INSERT INTO `order_details` VALUES (11, 8, 14, 7, 'AliceBlue-36565', 9500000, 0.00, 10000.00, 1, 'unpaid', 'pending', 'home_delivery', NULL, NULL, '2026-02-21 14:01:02', '2026-02-21 14:01:02');
 
 -- ----------------------------
 -- Table structure for orders
 -- ----------------------------
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NULL DEFAULT NULL,
-  `guest_id` int NULL DEFAULT NULL,
-  `shipping_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
-  `payment_type` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `payment_status` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT 'unpaid',
-  `payment_details` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `grand_total` double(12, 0) NULL DEFAULT NULL,
-  `coupon_discount` double(8, 2) NOT NULL DEFAULT 0.00,
-  `code` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `date` int NOT NULL,
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int UNSIGNED NULL DEFAULT NULL,
+  `seller_id` int UNSIGNED NULL DEFAULT NULL,
+  `payment_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `payment_status` tinyint NOT NULL DEFAULT 0,
+  `payment_status_string` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
+  `delivery_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
+  `shipping_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'home_delivery',
+  `grand_total` double(20, 2) NOT NULL DEFAULT 0.00,
+  `coupon_discount` double(20, 2) NOT NULL DEFAULT 0.00,
+  `shipping_address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `pickup_point_id` int NULL DEFAULT NULL,
+  `note` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `viewed` int NOT NULL DEFAULT 0,
-  `delivery_viewed` int NOT NULL DEFAULT 1,
-  `payment_status_viewed` int NULL DEFAULT 1,
-  `commission_calculated` int NOT NULL DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `delivery_viewed` int NOT NULL DEFAULT 0,
+  `payment_status_viewed` int NOT NULL DEFAULT 0,
+  `commission_calculated` tinyint NOT NULL DEFAULT 0,
+  `trx_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of orders
--- ----------------------------
-INSERT INTO `orders` VALUES (1, NULL, 221543, '{\"name\":\"morteza\",\"email\":\"mrtz8bgy@gmail.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"09306060331\",\"checkout_type\":\"guest\"}', 'cash_on_delivery', 'unpaid', NULL, 30100000, 0.00, '20251222-15444268', 1766418282, 0, 0, 0, 0, '2025-12-22 15:44:42', '2025-12-22 15:44:43');
-INSERT INTO `orders` VALUES (2, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'unpaid', NULL, 4217900, 0.00, '20260101-09461158', 1767260771, 1, 0, 0, 0, '2026-01-01 09:46:11', '2026-02-20 12:27:23');
-INSERT INTO `orders` VALUES (3, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'unpaid', NULL, 4217900, 0.00, '20260101-09500431', 1767261004, 1, 0, 0, 0, '2026-01-01 09:50:04', '2026-02-20 12:27:23');
-INSERT INTO `orders` VALUES (4, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'zarinpal', 'unpaid', NULL, 38000000, 0.00, '20260101-10065426', 1767262014, 0, 0, 0, 0, '2026-01-01 10:06:54', '2026-01-01 10:06:54');
-INSERT INTO `orders` VALUES (5, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'paid', NULL, 38000000, 0.00, '20260101-10070899', 1767262028, 1, 0, 0, 1, '2026-01-01 10:07:08', '2026-01-02 11:33:01');
-INSERT INTO `orders` VALUES (6, 12, NULL, '{\"name\":\"admin\",\"email\":\"admin@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"+989306060331\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'unpaid', NULL, 3018400, 0.00, '20260101-10125063', 1767262370, 0, 0, 0, 0, '2026-01-01 10:12:50', '2026-01-01 10:12:50');
-INSERT INTO `orders` VALUES (8, 8, NULL, '{\"name\":\"\\u0639\\u0644\\u06cc \\u0627\\u062d\\u0645\\u062f\\u06cc\",\"email\":\"customer@example.com\",\"address\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646 \\u0645\\u06cc\\u062f\\u0627\\u0646 \\u0631\\u0627\\u0632\\u06cc\",\"country\":\"Iran (Islamic Republic of)\",\"city\":\"\\u0648\\u0631\\u0627\\u0645\\u06cc\\u0646\",\"postal_code\":\"3371745768\",\"phone\":\"02136725581\",\"checkout_type\":\"logged\"}', 'cash_on_delivery', 'unpaid', NULL, 9510000, 0.00, '20260221-14010249', 1771682462, 0, 1, 1, 0, '2026-02-21 14:01:02', '2026-02-21 14:01:34');
-
--- ----------------------------
--- Table structure for otp_configurations
--- ----------------------------
-DROP TABLE IF EXISTS `otp_configurations`;
-CREATE TABLE `otp_configurations`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `type` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `value` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 60 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of otp_configurations
--- ----------------------------
-INSERT INTO `otp_configurations` VALUES (1, 'melipayamak', '1', '2018-10-16 05:05:52', '2019-01-28 04:56:53');
-INSERT INTO `otp_configurations` VALUES (2, 'farazsms', '1', '2018-10-16 05:06:58', '2020-01-26 07:52:13');
-
--- ----------------------------
--- Table structure for pages
--- ----------------------------
-DROP TABLE IF EXISTS `pages`;
-CREATE TABLE `pages`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `slug` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `meta_title` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `meta_description` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `keywords` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `meta_image` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of pages
 -- ----------------------------
 
 -- ----------------------------
@@ -1481,11 +1362,11 @@ CREATE TABLE `pages`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `password_resets`;
 CREATE TABLE `password_resets`  (
-  `email` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `token` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   INDEX `password_resets_email_index`(`email` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of password_resets
@@ -1496,136 +1377,60 @@ CREATE TABLE `password_resets`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `payments`;
 CREATE TABLE `payments`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `seller_id` int NOT NULL,
-  `amount` double(8, 2) NOT NULL DEFAULT 0.00,
-  `payment_details` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `payment_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `txn_code` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `payment_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order_id` int NULL DEFAULT NULL,
+  `amount` double(20, 2) NOT NULL DEFAULT 0.00,
+  `payment_status` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'due',
+  `payment_details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `txn_code` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `method` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of payments
 -- ----------------------------
-INSERT INTO `payments` VALUES (2, 1, 500000.00, NULL, 'cash', NULL, '2020-07-13 07:05:22', '2020-07-13 07:05:22');
-INSERT INTO `payments` VALUES (3, 3, 56000.00, NULL, 'cash', NULL, '2020-07-25 05:11:07', '2020-07-25 05:11:07');
-
--- ----------------------------
--- Table structure for pickup_points
--- ----------------------------
-DROP TABLE IF EXISTS `pickup_points`;
-CREATE TABLE `pickup_points`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `staff_id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `phone` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `pick_up_status` int NULL DEFAULT NULL,
-  `cash_on_pickup_status` int NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of pickup_points
--- ----------------------------
-INSERT INTO `pickup_points` VALUES (1, 1, 'مرکز دریافت حضوری ...', 'تهران خیابان جمهوری', '09104927131', 1, NULL, '2020-07-20 15:24:35', '2025-12-22 12:09:55');
 
 -- ----------------------------
 -- Table structure for policies
 -- ----------------------------
 DROP TABLE IF EXISTS `policies`;
 CREATE TABLE `policies`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(35) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `content` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of policies
 -- ----------------------------
-INSERT INTO `policies` VALUES (1, 'support_policy', NULL, '2019-10-29 12:54:45', '2019-01-22 05:13:15');
-INSERT INTO `policies` VALUES (2, 'return_policy', NULL, '2019-10-29 12:54:47', '2019-01-24 05:40:11');
-INSERT INTO `policies` VALUES (4, 'seller_policy', NULL, '2019-10-29 12:54:49', '2019-02-04 17:50:15');
-INSERT INTO `policies` VALUES (5, 'terms', NULL, '2019-10-29 12:54:51', '2019-10-28 18:00:00');
-INSERT INTO `policies` VALUES (6, 'privacy_policy', NULL, '2019-10-29 12:54:54', '2019-10-28 18:00:00');
 
 -- ----------------------------
 -- Table structure for product_stocks
 -- ----------------------------
 DROP TABLE IF EXISTS `product_stocks`;
 CREATE TABLE `product_stocks`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `product_id` int NOT NULL,
-  `variant` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `sku` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `price` double(12, 0) NOT NULL DEFAULT 0,
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `product_id` int UNSIGNED NOT NULL,
+  `variant` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `sku` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `price` double(20, 2) NOT NULL DEFAULT 0.00,
   `qty` int NOT NULL DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 102 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of product_stocks
 -- ----------------------------
-INSERT INTO `product_stocks` VALUES (14, 6, 'M', '799702', 26800, 9, '2020-07-18 06:05:08', '2020-07-20 15:26:53');
-INSERT INTO `product_stocks` VALUES (15, 6, 'L', '799702', 26000, 10, '2020-07-18 06:05:08', '2020-07-18 06:05:08');
-INSERT INTO `product_stocks` VALUES (16, 6, 'XL', '799702', 24500, 10, '2020-07-18 06:05:08', '2020-07-18 06:05:08');
-INSERT INTO `product_stocks` VALUES (17, 6, 'XXL', '799702', 29000, 10, '2020-07-18 06:05:08', '2020-07-18 06:05:08');
-INSERT INTO `product_stocks` VALUES (18, 7, 'M', '919013', 36800, 10, '2020-07-18 07:21:16', '2020-07-18 07:21:16');
-INSERT INTO `product_stocks` VALUES (19, 7, 'L', '919013', 36800, 10, '2020-07-18 07:21:17', '2020-07-18 07:21:17');
-INSERT INTO `product_stocks` VALUES (20, 7, 'XL', '919013', 36800, 10, '2020-07-18 07:21:17', '2020-07-18 07:21:17');
-INSERT INTO `product_stocks` VALUES (21, 7, 'XXL', '919013', 36800, 10, '2020-07-18 07:21:17', '2020-07-18 07:21:17');
-INSERT INTO `product_stocks` VALUES (22, 8, 'L', '2113732', 36700, -1, '2020-07-18 07:51:32', '2020-08-09 11:42:34');
-INSERT INTO `product_stocks` VALUES (23, 8, 'XL', '2113732', 36700, 10, '2020-07-18 07:51:32', '2020-07-18 07:51:32');
-INSERT INTO `product_stocks` VALUES (24, 8, 'XXL', '2113732', 36900, 10, '2020-07-18 07:51:32', '2020-07-18 07:51:32');
-INSERT INTO `product_stocks` VALUES (25, 9, 'M', 'dkp-429276', 82000, 8, '2020-07-18 07:55:15', '2020-07-24 13:38:08');
-INSERT INTO `product_stocks` VALUES (26, 9, 'L', 'dkp-429276', 82000, 10, '2020-07-18 07:55:16', '2020-07-18 07:55:16');
-INSERT INTO `product_stocks` VALUES (27, 9, 'XL', 'dkp-429276', 82000, 10, '2020-07-18 07:55:16', '2020-07-18 07:55:16');
-INSERT INTO `product_stocks` VALUES (28, 10, 'L', 'dkp-2036633', 48900, 6, '2020-07-18 09:59:36', '2020-08-09 06:15:50');
-INSERT INTO `product_stocks` VALUES (29, 10, 'XL', 'dkp-2036633', 48900, 10, '2020-07-18 09:59:36', '2020-07-18 09:59:36');
-INSERT INTO `product_stocks` VALUES (30, 10, 'XXL', 'dkp-2036633', 48900, 10, '2020-07-18 09:59:36', '2020-07-18 09:59:36');
-INSERT INTO `product_stocks` VALUES (34, 12, '41', 'dkp-2560578', 9900, 8, '2020-07-18 10:27:30', '2026-01-01 09:50:04');
-INSERT INTO `product_stocks` VALUES (35, 12, '42', 'dkp-2560578', 110000, 9, '2020-07-18 10:27:30', '2020-08-09 15:51:31');
-INSERT INTO `product_stocks` VALUES (36, 12, '43', 'dkp-2560578', 120000, 10, '2020-07-18 10:27:30', '2020-07-18 10:27:30');
-INSERT INTO `product_stocks` VALUES (65, 4, 'Lavender-0421088273-کلمبیایی-سفید-18-برلیان-زنانه-3گرم-1398', '0421088', 12500000, 10, '2025-12-31 14:28:01', '2025-12-31 14:28:01');
-INSERT INTO `product_stocks` VALUES (66, 4, 'LavenderBlush-0421088273-کلمبیایی-سفید-18-برلیان-زنانه-3گرم-1398', '0421088', 12500000, 10, '2025-12-31 14:28:01', '2025-12-31 14:28:01');
-INSERT INTO `product_stocks` VALUES (74, 25, '0421500255-26', '10101010', 333000000, 10, '2026-01-01 09:11:20', '2026-01-01 09:11:20');
-INSERT INTO `product_stocks` VALUES (75, 5, 'Azure', NULL, 28000000, 10, '2026-01-01 09:15:59', '2026-01-01 09:15:59');
-INSERT INTO `product_stocks` VALUES (76, 5, 'Beige', NULL, 28000000, 10, '2026-01-01 09:15:59', '2026-01-01 09:15:59');
-INSERT INTO `product_stocks` VALUES (77, 9, '0421055885', NULL, 4200000, 8, '2026-01-01 09:42:26', '2026-01-01 09:50:04');
-INSERT INTO `product_stocks` VALUES (78, 22, '0421088269', NULL, 12500000, 10, '2026-01-01 09:44:15', '2026-01-01 09:44:15');
-INSERT INTO `product_stocks` VALUES (79, 2, 'DarkSeaGreen', NULL, 4899000, 8, '2026-01-01 10:04:46', '2026-01-01 23:27:41');
-INSERT INTO `product_stocks` VALUES (80, 2, 'GhostWhite', NULL, 4899000, 10, '2026-01-01 10:04:46', '2026-01-01 10:04:46');
-INSERT INTO `product_stocks` VALUES (81, 1, 'Black-0421088-18', NULL, 9500000, 2, '2026-01-01 10:05:59', '2026-01-01 10:07:08');
-INSERT INTO `product_stocks` VALUES (82, 1, 'DarkOrange-0421088-18', NULL, 9500000, 10, '2026-01-01 10:05:59', '2026-01-01 10:05:59');
-INSERT INTO `product_stocks` VALUES (83, 19, '0421802222-18-1404', '10101010', 2800000, 9, '2026-01-01 10:11:39', '2026-01-01 10:12:50');
-INSERT INTO `product_stocks` VALUES (84, 21, '0425885255', NULL, 19500000, 10, '2026-01-01 10:21:30', '2026-01-01 10:21:30');
-INSERT INTO `product_stocks` VALUES (85, 18, '58622434-18', NULL, 42000000, 10, '2026-01-01 10:26:36', '2026-01-01 10:26:36');
-INSERT INTO `product_stocks` VALUES (86, 17, '55617-24', NULL, 18500000, 10, '2026-01-01 10:35:39', '2026-01-01 10:35:39');
-INSERT INTO `product_stocks` VALUES (87, 16, 'DodgerBlue-200439-18', NULL, 16500000, 10, '2026-01-01 10:42:54', '2026-01-01 10:42:54');
-INSERT INTO `product_stocks` VALUES (88, 16, 'FloralWhite-200439-18', NULL, 16500000, 10, '2026-01-01 10:42:54', '2026-01-01 10:42:54');
-INSERT INTO `product_stocks` VALUES (89, 15, 'Khaki-2567-26', NULL, 7500000, 10, '2026-01-01 10:48:32', '2026-01-01 10:48:32');
-INSERT INTO `product_stocks` VALUES (90, 14, 'White-5678-18', NULL, 28500000, 10, '2026-01-01 10:51:40', '2026-01-01 10:51:40');
-INSERT INTO `product_stocks` VALUES (91, 13, '425558555-18-طلا', NULL, 3200000, 10, '2026-01-01 10:54:25', '2026-01-01 10:54:25');
-INSERT INTO `product_stocks` VALUES (92, 26, 'Silver-25525522-20251500-2025', '102202', 200000000, 10, '2026-01-01 11:05:14', '2026-01-01 11:05:14');
-INSERT INTO `product_stocks` VALUES (93, 12, '04585258', NULL, 15500000, 10, '2026-01-01 12:06:16', '2026-01-01 12:06:16');
-INSERT INTO `product_stocks` VALUES (94, 11, '18-4', NULL, 6800000, 10, '2026-01-01 12:12:10', '2026-01-01 12:12:10');
-INSERT INTO `product_stocks` VALUES (95, 10, '5003365', NULL, 5200000, 10, '2026-01-01 12:14:18', '2026-01-01 12:14:18');
-INSERT INTO `product_stocks` VALUES (96, 8, '25477', NULL, 7800000, 10, '2026-01-01 12:18:27', '2026-01-01 12:18:27');
-INSERT INTO `product_stocks` VALUES (97, 7, 'AliceBlue-36565', NULL, 9500000, 9, '2026-01-01 12:23:36', '2026-02-21 14:01:02');
-INSERT INTO `product_stocks` VALUES (98, 6, '56468', NULL, 18500000, 10, '2026-01-01 12:26:38', '2026-01-01 12:26:38');
-INSERT INTO `product_stocks` VALUES (99, 3, 'Black', NULL, 32000000, 10, '2026-01-01 12:31:03', '2026-01-01 12:31:03');
-INSERT INTO `product_stocks` VALUES (100, 3, 'Blue', NULL, 32000000, 10, '2026-01-01 12:31:03', '2026-01-01 12:31:03');
-INSERT INTO `product_stocks` VALUES (101, 3, 'GhostWhite', NULL, 32000000, 10, '2026-01-01 12:31:03', '2026-01-01 12:31:03');
 
 -- ----------------------------
 -- Table structure for products
@@ -1686,9 +1491,6 @@ CREATE TABLE `products`  (
 -- Records of products
 -- ----------------------------
 INSERT INTO `products` VALUES (1, 'گردنبند طلای 24 عیار | طرح ابدی سلطنتی', 'admin', 12, 104, 1043, NULL, 6, '[\"uploads\\/products\\/photos\\/Z4E6qsPrDR545IKbRYG0qUsxrDAILjXSxIy4gyvv.jpg\",\"uploads\\/products\\/photos\\/aHJcGqGInVJYjtiMLm3qunZoqnrAJQupn2Lcqo4W.jpg\"]', 'uploads/products/thumbnail/jUANPNxmrIQyD5fOnHP6V3Ce3IROYdhu7urmKTNN.jpg', 'uploads/products/featured/hEh2nBd1iw4caSZqEwIReFOFb7lgYTKklmtRYbJF.jpg', 'uploads/products/flash_deal/7cTZHv7B529r7xKKWNczxTRV6Mykelg7ipkDAjIu.jpg', 'youtube', NULL, 'گردنبند', 'گردنبندی از طلای خالص 24 عیار با طراحی کلاسیک سلطنتی. هر گلبرگ دست‌ساز این قطعه، نور را به شیوه‌ای منحصر به فرد بازمی‌تاباند. مناسب مراسم عروسی، مهمانی‌های لوکس و به عنوان سرمایه‌ای ماندگار.', 9500000, 7500000, 1, '[\"1\",\"3\"]', '[{\"attribute_id\":\"1\",\"values\":[\"0421088\"]},{\"attribute_id\":\"3\",\"values\":[\"18\"]}]', '[\"#000000\",\"#FF8C00\"]', NULL, 0, 1, 1, 0, 'انس', 0.00, NULL, 0.00, NULL, 'free', 0.00, 3, 'گردنبند طلای 24 عیار سلطنتی | سرمایه ماندگار', 'خرید گردنبند طلای خالص 24 عیار با طراحی دست‌ساز سلطنتی. مناسب سرمایه‌گذاری و مراسم خاص.', 'uploads/products/meta/K0j3z2jbqBsPEP8iqkWPP1IVTkdpZCMMxZLEiHWA.jpg', NULL, 'گردنبند-طلای-24-عیار-|-طرح-ابدی-سلطنتی-HjVn1', 0.00, NULL, 0, NULL, NULL, '2020-07-07 13:38:21', '2026-01-01 10:07:08');
-INSERT INTO `products` VALUES (2, 'انگشتر طلا با یاقوت برمه‌ای | آتش دریا', 'admin', 12, 104, 1043, NULL, 6, '[\"uploads\\/products\\/photos\\/D6vxSqjBVBJ3J15rgtq9mJky8LrCR2ehv9aIFnj2.jpg\",\"uploads\\/products\\/photos\\/puXkf5ZjQEfMDYliGDLUMITEtMDuu2szk8NPpb0P.jpg\"]', 'uploads/products/thumbnail/mdeIxTUn5V2i872kMVsjaXlNzn5WJgkzIHxvcyJU.jpg', 'uploads/products/featured/aV4sIBkPlO7EXvbystyopDiQTUf5R9ytZwTam9fg.jpg', 'uploads/products/flash_deal/xbLThsl88J58cn9NJyGwEjogPlGiAqEzReEjl56g.jpg', 'youtube', NULL, 'انگشتر', 'یاقوت سرخ برمه‌ای اصل با درخششی افسانه‌ای، در قابی از طلای 18 عیار. این سنگ نادر نماد عشق ابدی و شجاعت است. وزن سنگ: 1.5 قیراط، تراش کابوشون.', 18500000, 15000000, 1, '[]', '[]', '[\"#8FBC8F\",\"#F8F8FF\"]', NULL, 0, 1, 1, 0, 'انس', 0.00, NULL, 0.00, NULL, 'free', 0.00, 2, 'انگشتر یاقوت برمه‌ای اصل | سنگ نادر و ارزشمند', 'خرید انگشتر طلا با یاقوت سرخ برمه‌ای اصل 1.5 قیراط. سرمایه‌گذاری در گوهرهای نادر.', 'uploads/products/meta/9jVMoUzesW4HegYsEpmIL3FxDU0xIJ4O5vm0Crz2.jpg', NULL, 'انگشتر-طلا-با-یاقوت-برمه‌ای-|-آتش-دریا-pCVCn', 0.00, NULL, 0, NULL, NULL, '2020-07-07 13:42:50', '2026-01-01 23:27:41');
-INSERT INTO `products` VALUES (3, 'دستبند الماس کلوش | حلقه‌های نور', 'admin', 12, 104, 1043, NULL, 6, '[\"uploads\\/products\\/photos\\/rKGSRCVCN1KlxQzJTblkWGpJw2THEM96sZ1OsajG.jpg\",\"uploads\\/products\\/photos\\/kFXXxnqxVnfldypzCcQIMC4wpGFmqNtuROfpMC0r.jpg\"]', 'uploads/products/thumbnail/4DGUzj9DnWaaYugkARl5taN9ykfsj7uA9Jh2EVwP.jpg', 'uploads/products/featured/nXeLAkZJGcESuC12vCcXB3X4cAYVgy6ROHiJy9SN.jpg', 'uploads/products/flash_deal/aFGXSH1jqdLEQeIutcK1mHgFTNMR8zfFIdAOCdWw.jpg', 'youtube', NULL, 'دستبند', 'دستبندی از الماس‌های برلیان تراش‌خورده با درجه خلوص VS1، بر بستری از طلای سفید 18 عیار. 25 قطعه الماس با وزن کل 3 قیراط که حلقه‌ای از نور را دور مچ شما ایجاد می‌کنند.', 32000000, 25000000, 1, '[]', '[]', '[\"#000000\",\"#0000FF\",\"#F8F8FF\"]', NULL, 0, 1, 1, 0, 'انس', 0.00, NULL, 0.00, NULL, 'free', 0.00, 1, 'دستبند الماس کلوش | 3 قیراط الماس برلیان', 'خرید دستبند الماس با 25 قطعه الماس برلیان VS1. طراحی کلوش مدرن و درخشان.', 'uploads/products/meta/G6eoC1nWmbpUBNL8J4AP57SIwCa6hgQOLqBGesnZ.jpg', NULL, 'دستبند-الماس-کلوش-|-حلقه‌های-نور-w7spY', 0.00, NULL, 0, NULL, NULL, '2020-07-08 04:50:33', '2026-01-01 12:31:03');
-INSERT INTO `products` VALUES (4, 'گوشواره زمرد کلمبیایی | قطره جنگل', 'admin', 12, 104, 1043, 141, 5, '[\"uploads\\/products\\/photos\\/xT9pxR1qHJt82iQbnVRO95mEWOe2TowdoCzpymQf.jpg\",\"uploads\\/products\\/photos\\/tmfnWU35C7WfrRdYhXjNwZevD68u83HQJlumc9lg.jpg\"]', 'uploads/products/thumbnail/pRo18mlUvp2pOrLAMGvpmOfqmDMJSXh65yGwXYiD.jpg', 'uploads/products/featured/lQNtgBj3dU5CEMjFltyZcg9YfjET4d2AZG9oWvpb.jpg', 'uploads/products/flash_deal/hHhreYYyYZxFICQkucv4rn8eDIiHK8XNkewH6fzm.jpg', 'youtube', NULL, 'earing', 'زمردهای کلمبیایی اصل با رنگ سبز عمیق و درخشان، در طراحی قطره‌ای. هر زمرد (0.75 قیراط) از معادن موزو بوده و گواهی اصالت دارد. قاب از طلای زرد 21 عیار.', 12500000, 9800000, 1, '[\"1\",\"2\",\"4\",\"3\",\"5\",\"7\",\"8\",\"9\"]', '[{\"attribute_id\":\"1\",\"values\":[\"0421088273\"]},{\"attribute_id\":\"2\",\"values\":[\"\\u06a9\\u0644\\u0645\\u0628\\u06cc\\u0627\\u06cc\\u06cc\"]},{\"attribute_id\":\"4\",\"values\":[\"\\u0633\\u0641\\u06cc\\u062f\"]},{\"attribute_id\":\"3\",\"values\":[\"18\"]},{\"attribute_id\":\"5\",\"values\":[\"\\u0628\\u0631\\u0644\\u06cc\\u0627\\u0646\"]},{\"attribute_id\":\"7\",\"values\":[\"\\u0632\\u0646\\u0627\\u0646\\u0647\"]},{\"attribute_id\":\"8\",\"values\":[\"3 \\u06af\\u0631\\u0645\"]},{\"attribute_id\":\"9\",\"values\":[\"1398\"]}]', '[\"#E6E6FA\",\"#FFF0F5\"]', NULL, 0, 1, 0, 0, 'انس', 10.00, 'percent', 9.00, 'percent', 'free', 0.00, 0, 'گوشواره زمرد کلمبیایی اصل | رنگ سبز موزو', 'خرید گوشواره زمرد کلمبیایی با گواهی اصالت. رنگ سبز عمیق و درخشان مناسب سرمایه‌گذاری.', 'uploads/products/meta/CkBC3L2pLk5v27H1W6W7NFTPpSybKzsEhwf0pwYm.jpg', 'uploads/products/pdf/zPQScVHujhlV9yprcru5NvyQ72MoU5vm1w3jT4h2.pdf', 'گوشواره زمرد کلمبیایی | قطره جنگل', 0.00, NULL, 0, NULL, NULL, '2020-07-08 05:05:15', '2025-12-31 14:28:01');
 INSERT INTO `products` VALUES (5, 'حلقه نامزدی الماس | وعده ابدی', 'seller', 3, 104, 1043, 132, 7, '[\"uploads\\/products\\/photos\\/Wbyo7C7FOOLev0NYmWKsu9rm1WUikg6kZGcBeomf.jpg\"]', 'uploads/products/thumbnail/lyyPJrjtLP1n9c1vlMlXfaFBkyoJUbZgfTjSG8Kp.jpg', 'uploads/products/featured/Q1zLSzK1Upa2Zrc7N8apmemaTSJRbEwsO2up9bct.jpg', 'uploads/products/flash_deal/xozcjkNOK763TZenugvOnl5a7h3grtA5sDM6kgF7.jpg', 'youtube', NULL, 'حلقه', 'حلقه‌ای از الماس تک‌قطعه 2 قیراطی با تراش پرنسس، بر بستری از طلای سفید 18 عیار. طراحی سه‌نگین (Three-stone) نماد گذشته، حال و آینده. همراه با گواهی GIA.', 28000000, 22000000, 1, '[]', '[]', '[\"#F0FFFF\",\"#F5F5DC\"]', NULL, 0, 1, 0, 0, NULL, 0.00, 'amount', 0.00, 'amount', 'flat_rate', 10000.00, 2, 'حلقه نامزدی الماس 2 قیراط | تراش پرنسس', 'خرید حلقه نامزدی با الماس 2 قیراطی و گواهی GIA. طراحی سه‌نگین نمادین.', 'uploads/products/meta/6UKdzChPM5B9XNeHEJnPOddhuCCzPxm6y7TW6qR5.jpg', NULL, '------?اط', 0.00, NULL, 0, NULL, NULL, '2020-07-12 15:50:04', '2026-01-01 09:15:59');
 INSERT INTO `products` VALUES (6, 'ساعت  طلای سوئیسی | کلاسیک همیشگی', 'seller', 14, 104, 1043, NULL, 9, '[\"uploads\\/products\\/photos\\/UOmrmUMlwwa40da1kLm9gtuijQrBpOtuifiZTMzw.png\"]', 'uploads/products/thumbnail/jXd2695MMTH6P9wR95jPwkgdCVQ2V2r0uqVLIo9t.png', 'uploads/products/featured/aPbRhjRDjnQCF8zn8hMwAfQAekiXubYwRoDsArLz.png', 'uploads/products/flash_deal/cfkVAJSs9GLf7DRsuKEow6lScr9M4hCAGJTI3Cv1.png', 'youtube', NULL, 'ساعت  طلای سوئیس', 'ساعت مچی مردانه از طلای 18 عیار با موتور سوئیسی اتوماتیک. صفحه میناکاری شده با اعداد رومی، شمارشگر تاریخ و ضد آب تا 50 متر. ترکیبی از هنر جواهرسازی و ساعت‌سازی اصیل.', 18500000, 14500000, 1, '[\"1\"]', '[{\"attribute_id\":\"1\",\"values\":[\"56468\"]}]', '[]', NULL, 0, 1, 0, 0, 'دستگاه', 0.00, 'amount', 0.00, 'amount', 'flat_rate', 10000.00, 1, 'ساعت مچی طلای سوئیسی | موتور اتوماتیک', 'خرید ساعت مچی طلای 18 عیار با موتور سوئیسی. طراحی کلاسیک و ارزشمند.', 'uploads/products/meta/lnBz0lfpaCCAoAkrGgLMhs9VoQLqr7dodPYO4fNL.png', NULL, 'ساعت--طلای-سوئیسی-|-کلاسیک-همیشگی-kQyp8', 0.00, NULL, 0, NULL, NULL, '2020-07-18 06:05:07', '2026-01-01 12:26:38');
 INSERT INTO `products` VALUES (7, 'النگو مروارید تاهیتی | اشک ماه', 'seller', 14, 104, 1043, NULL, 9, '[\"uploads\\/products\\/photos\\/OFBMUpQr1Yadx0Cy3sqgq9O52FdU8UBAfxceiK6U.jpg\"]', 'uploads/products/thumbnail/htElFRruPNVNhYW2spJnBVXfX60rGxEPppdkWtE8.jpg', 'uploads/products/featured/1v33QXNnwjuEGNSMphYQ7KlpfFUnbge8vuwlArXQ.jpg', 'uploads/products/flash_deal/PkyMpIkWR99qC787zG0MSCISfWIX5u7dIQqOMFUW.jpg', 'youtube', NULL, 'النگو مروارید', 'مرواریدهای سیاه تاهیتی طبیعی با درخشش آینه‌ای، بر نخ ابریشمی و با فاصله‌اندازهای طلای 14 عیار. قطر مرواریدها: 10-12 میلی‌متر. هدیه‌ای اشرافی برای بانوان خوش‌سلیقه.', 9500000, 7200000, 1, '[\"1\"]', '[{\"attribute_id\":\"1\",\"values\":[\"36565\"]}]', '[\"#F0F8FF\"]', NULL, 0, 1, 0, 0, 'انس', 0.00, 'amount', 0.00, 'amount', 'flat_rate', 10000.00, 1, 'النگو مروارید تاهیتی طبیعی | مروارید سیاه', 'خرید النگوی مروارید تاهیتی طبیعی با قطر 10-12 میلی‌متر. هدیه‌ای لوکس و ماندگار.', 'uploads/products/meta/vxiaripoywZuDahhuXRyAV1TazfxTt5b9Y1mUlVP.jpg', NULL, 'النگو-مروارید-تاهیتی-|-اشک-ماه-NPiq4', 0.00, NULL, 0, NULL, NULL, '2020-07-18 07:21:16', '2026-02-21 14:01:02');
@@ -1748,45 +1550,30 @@ CREATE TABLE `repair_orders`  (
   `user_id` int UNSIGNED NOT NULL,
   `jewelry_certificate_id` int UNSIGNED NULL DEFAULT NULL,
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `repair_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `scheduled_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `estimated_delivery_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `estimated_cost` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `final_cost` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `assigned_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `priority` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `notes` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `status` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'در انتظار',
-  `completion_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `delivery_date` varbinary(255) NULL DEFAULT NULL,
-  `cancelled_at` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `cancelled_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `repair_type` enum('cleaning','restoration','resizing','other') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `location` enum('workshop','customer') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'workshop',
+  `scheduled_date` date NULL DEFAULT NULL,
+  `estimated_delivery_date` date NULL DEFAULT NULL,
+  `estimated_cost` decimal(15, 2) NULL DEFAULT NULL,
+  `final_cost` decimal(15, 2) NULL DEFAULT NULL,
+  `assigned_to` int UNSIGNED NULL DEFAULT NULL,
+  `priority` enum('normal','urgent') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'normal',
+  `photo` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `status` enum('pending','in_progress','completed','delivered','cancelled') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT 'pending',
+  `completion_date` date NULL DEFAULT NULL,
+  `delivery_date` date NULL DEFAULT NULL,
+  `cancelled_at` timestamp NULL DEFAULT NULL,
+  `cancelled_by` int UNSIGNED NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `user_id`(`user_id` ASC) USING BTREE,
-  INDEX `jewelry_certificate_id`(`jewelry_certificate_id` ASC) USING BTREE,
-  CONSTRAINT `repair_orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT,
-  CONSTRAINT `repair_orders_ibfk_2` FOREIGN KEY (`jewelry_certificate_id`) REFERENCES `jewelry_certificates` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `repair_orders_order_number_unique`(`order_number` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of repair_orders
 -- ----------------------------
-INSERT INTO `repair_orders` VALUES (1, 'REP-140411-0001', 12, NULL, 'رنگ پریدگی جواهر', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 18:10:59', '2026-02-16 18:10:59');
-INSERT INTO `repair_orders` VALUES (2, 'REP-140411-0001', 12, NULL, 'رنگ پریدگی جواهر', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 18:12:52', '2026-02-16 18:12:52');
-INSERT INTO `repair_orders` VALUES (3, 'REP-140411-0001', 12, NULL, 'رنگ پریدگی جواهر', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 18:12:57', '2026-02-16 18:12:57');
-INSERT INTO `repair_orders` VALUES (4, 'REP-140411-0001', 12, NULL, 'رنگ پریدگی جواهر', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 18:13:10', '2026-02-16 18:13:10');
-INSERT INTO `repair_orders` VALUES (5, NULL, 12, NULL, 'تست', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 19:02:27', '2026-02-16 19:02:27');
-INSERT INTO `repair_orders` VALUES (6, NULL, 12, NULL, 'تغییر اندازه', 'resizing', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'pending', NULL, NULL, NULL, NULL, '2026-02-16 19:06:40', '2026-02-16 19:06:40');
-INSERT INTO `repair_orders` VALUES (8, NULL, 12, 1, 'بازسازی انگشتر اینجانب', 'restoration', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 19:50:23', '2026-02-16 19:50:23');
-INSERT INTO `repair_orders` VALUES (9, NULL, 12, 2, 'ندارد فقط بازسازی', 'restoration', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 19:57:15', '2026-02-16 19:57:15');
-INSERT INTO `repair_orders` VALUES (10, NULL, 12, 2, 'نیاز به تمیز کاری و تعمیر دارد', 'cleaning', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 20:06:47', '2026-02-16 20:06:47');
-INSERT INTO `repair_orders` VALUES (11, 'REP-202602-0010', 12, 2, 'تست تغییر اندازه', 'resizing', 'workshop', '2026-03-01 00:00:00', NULL, '300000', NULL, NULL, 'urgent', NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 20:20:12', '2026-02-16 20:20:12');
-INSERT INTO `repair_orders` VALUES (12, 'REP-202602-0011', 12, 1, 'test tala va javaherat', 'cleaning', 'customer', '2026-02-17 00:00:00', NULL, '200000', NULL, NULL, 'urgent', NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 21:17:32', '2026-02-16 21:17:32');
-INSERT INTO `repair_orders` VALUES (13, 'REP-202602-0012', 12, 3, 'baz sazi asli', 'restoration', 'workshop', '2026-02-25 00:00:00', NULL, '600000', NULL, NULL, 'normal', NULL, NULL, 'در انتظار', NULL, NULL, NULL, NULL, '2026-02-16 21:19:20', '2026-02-16 21:19:20');
 
 -- ----------------------------
 -- Table structure for repair_status_histories
@@ -1800,16 +1587,12 @@ CREATE TABLE `repair_status_histories`  (
   `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `repair_status_histories_repair_order_id_index`(`repair_order_id` ASC) USING BTREE,
-  INDEX `repair_status_histories_updated_by_index`(`updated_by` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of repair_status_histories
 -- ----------------------------
-INSERT INTO `repair_status_histories` VALUES (1, 5, 'pending', 12, 'ثبت اولیه سفارش', '2026-02-16 19:02:27', '2026-02-16 19:02:27');
-INSERT INTO `repair_status_histories` VALUES (2, 6, 'pending', 12, 'ثبت اولیه سفارش', '2026-02-16 19:06:40', '2026-02-16 19:06:40');
 
 -- ----------------------------
 -- Table structure for repair_technicians
@@ -1826,33 +1609,29 @@ CREATE TABLE `repair_technicians`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `repair_technicians_user_id_unique`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of repair_technicians
 -- ----------------------------
-INSERT INTO `repair_technicians` VALUES (1, 1, 'طلاسازی', 5, '1', 1, '2026-02-17 00:12:00', '2026-02-17 00:12:00');
-INSERT INTO `repair_technicians` VALUES (2, 2, 'ابکاری', 10, '1', 1, '2026-02-17 00:31:21', '2026-02-17 00:31:26');
-INSERT INTO `repair_technicians` VALUES (3, 3, 'تعمیرات', 20, '2', 1, NULL, NULL);
-INSERT INTO `repair_technicians` VALUES (4, 32, 'gold', 5, NULL, 1, '2026-02-17 00:38:59', '2026-02-17 00:38:59');
-INSERT INTO `repair_technicians` VALUES (5, 33, 'silver', 3, NULL, 1, '2026-02-17 00:38:59', '2026-02-17 00:38:59');
+INSERT INTO `repair_technicians` VALUES (1, 2, 'طلاسازی', 5, NULL, 1, '2026-08-22 21:38:12', '2026-08-22 21:38:12');
 
 -- ----------------------------
 -- Table structure for reviews
 -- ----------------------------
 DROP TABLE IF EXISTS `reviews`;
 CREATE TABLE `reviews`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `product_id` int NOT NULL,
-  `user_id` int NOT NULL,
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `product_id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
   `rating` int NOT NULL DEFAULT 0,
-  `comment` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   `status` int NOT NULL DEFAULT 1,
-  `viewed` int NOT NULL DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `viewed` tinyint NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of reviews
@@ -1863,154 +1642,132 @@ CREATE TABLE `reviews`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `roles`;
 CREATE TABLE `roles`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `permissions` mediumtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `permissions` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES (1, 'مدیر', '[\"1\",\"2\",\"4\"]', '2018-10-10 08:09:47', '2020-07-16 09:58:31');
-INSERT INTO `roles` VALUES (2, 'اپراتور سایت', '[\"2\",\"3\"]', '2018-10-10 08:22:09', '2020-07-16 09:58:55');
-INSERT INTO `roles` VALUES (3, 'اپراتور سفارشات حضوری', '[\"14\"]', '2020-07-20 15:11:42', '2020-07-20 15:11:42');
 
 -- ----------------------------
 -- Table structure for searches
 -- ----------------------------
 DROP TABLE IF EXISTS `searches`;
 CREATE TABLE `searches`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `query` varchar(1000) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `query` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `count` int NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of searches
 -- ----------------------------
-INSERT INTO `searches` VALUES (2, 'dcs', 1, '2020-03-08 03:59:09', '2020-03-08 03:59:09');
-INSERT INTO `searches` VALUES (3, 'das', 3, '2020-03-08 03:59:15', '2020-03-08 03:59:50');
-INSERT INTO `searches` VALUES (4, 'spring', 1, '2025-12-22 18:43:07', '2025-12-22 18:43:07');
-INSERT INTO `searches` VALUES (5, 'گوشواره', 9, '2025-12-31 14:15:57', '2025-12-31 15:32:13');
-INSERT INTO `searches` VALUES (6, '0421088273', 1, '2025-12-31 14:30:23', '2025-12-31 14:30:23');
-INSERT INTO `searches` VALUES (7, '25525522', 3, '2026-01-01 11:58:52', '2026-01-01 11:59:01');
-
--- ----------------------------
--- Table structure for seller_withdraw_requests
--- ----------------------------
-DROP TABLE IF EXISTS `seller_withdraw_requests`;
-CREATE TABLE `seller_withdraw_requests`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NULL DEFAULT NULL,
-  `amount` double(8, 2) NULL DEFAULT NULL,
-  `message` longtext CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL,
-  `status` int NULL DEFAULT NULL,
-  `viewed` int NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of seller_withdraw_requests
--- ----------------------------
-INSERT INTO `seller_withdraw_requests` VALUES (4, 1, 500000.00, NULL, 1, 1, '2020-07-13 06:57:50', '2020-07-13 07:05:22');
-INSERT INTO `seller_withdraw_requests` VALUES (5, 3, 56000.00, NULL, 1, 1, '2020-07-24 14:33:03', '2020-07-25 05:11:07');
 
 -- ----------------------------
 -- Table structure for sellers
 -- ----------------------------
 DROP TABLE IF EXISTS `sellers`;
 CREATE TABLE `sellers`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `verification_status` int NOT NULL DEFAULT 0,
-  `verification_info` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `cash_on_delivery_status` int NOT NULL DEFAULT 0,
-  `admin_to_pay` double(12, 0) NOT NULL DEFAULT 0,
-  `bank_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `bank_acc_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `bank_acc_no` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `bank_routing_no` int NULL DEFAULT NULL,
-  `bank_payment_status` int NOT NULL DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int UNSIGNED NOT NULL,
+  `verification_status` tinyint(1) NOT NULL DEFAULT 0,
+  `verification_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `cash_on_delivery_status` tinyint(1) NOT NULL DEFAULT 0,
+  `sslcommerz_status` tinyint(1) NOT NULL DEFAULT 0,
+  `stripe_status` tinyint(1) NOT NULL DEFAULT 0,
+  `paypal_client_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `paypal_client_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `ssl_store_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `ssl_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `stripe_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `stripe_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `instamojo_status` tinyint(1) NOT NULL DEFAULT 0,
+  `instamojo_api_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `instamojo_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `razorpay_status` tinyint(1) NOT NULL DEFAULT 0,
+  `razorpay_api_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `razorpay_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `paypal_status` tinyint(1) NOT NULL DEFAULT 0,
+  `admin_to_pay` double(20, 2) NOT NULL DEFAULT 0.00,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sellers
 -- ----------------------------
-INSERT INTO `sellers` VALUES (1, 3, 1, '[{\"type\":\"text\",\"label\":\"Name\",\"value\":\"Mr. Seller\"},{\"type\":\"select\",\"label\":\"Marital Status\",\"value\":\"Married\"},{\"type\":\"multi_select\",\"label\":\"Company\",\"value\":\"[\\\"Company\\\"]\"},{\"type\":\"select\",\"label\":\"Gender\",\"value\":\"Male\"},{\"type\":\"file\",\"label\":\"Image\",\"value\":\"uploads\\/verification_form\\/CRWqFifcbKqibNzllBhEyUSkV6m1viknGXMEhtiW.png\"}]', 1, 7800, NULL, NULL, NULL, NULL, 0, '2018-10-07 08:12:57', '2020-07-13 07:05:22');
-INSERT INTO `sellers` VALUES (2, 13, 1, '[{\"type\":\"text\",\"label\":\"\\u0646\\u0627\\u0645 \\u0648 \\u0646\\u0627\\u0645 \\u062e\\u0627\\u0646\\u0648\\u0627\\u062f\\u06af\\u06cc\",\"value\":\"\\u0645\\u062a\\u06cc\\u0646 \\u062c\\u0648\\u0627\\u0646\"},{\"type\":\"text\",\"label\":\"\\u0646\\u0627\\u0645 \\u067e\\u062f\\u0631\",\"value\":\"\\u0645\\u062d\\u0645\\u062f\"},{\"type\":\"text\",\"label\":\"\\u0634\\u0645\\u0627\\u0631\\u0647 \\u0634\\u0646\\u0627\\u0633\\u0646\\u0627\\u0645\\u0647\",\"value\":\"1234\"},{\"type\":\"text\",\"label\":\"\\u06a9\\u062f\\u0645\\u0644\\u06cc\",\"value\":\"0010010011\"},{\"type\":\"text\",\"label\":\"\\u0634\\u0645\\u0627\\u0631\\u0647 \\u067e\\u0631\\u0648\\u0627\\u0646\\u0647 \\u06a9\\u0633\\u0628\",\"value\":\"1133889998\"},{\"type\":\"text\",\"label\":\"\\u0634\\u0645\\u0627\\u0631\\u0647 \\u062a\\u0644\\u0641\\u0646 \\u0647\\u0645\\u0631\\u0627\\u0647\",\"value\":\"0912998877\"},{\"type\":\"text\",\"label\":\"\\u0634\\u0645\\u0627\\u0631\\u0647 \\u062a\\u0644\\u0641\\u0646 \\u062b\\u0627\\u0628\\u062a\",\"value\":\"02122334455\"},{\"type\":\"text\",\"label\":\"\\u0622\\u062f\\u0631\\u0633\",\"value\":\"\\u062a\\u0647\\u0631\\u0627\\u0646\"}]', 0, 0, NULL, NULL, NULL, NULL, 0, '2020-07-13 10:08:56', '2020-07-13 11:27:40');
-INSERT INTO `sellers` VALUES (3, 14, 1, '[{\"type\":\"text\",\"label\":\"\\u0646\\u0627\\u0645 \\u0648 \\u0646\\u0627\\u0645 \\u062e\\u0627\\u0646\\u0648\\u0627\\u062f\\u06af\\u06cc\",\"value\":\"\\u0631\\u0636\\u0627 \\u0631\\u062d\\u0645\\u062a\\u06cc\"},{\"type\":\"text\",\"label\":\"\\u0646\\u0627\\u0645 \\u067e\\u062f\\u0631\",\"value\":\"\\u062d\\u0633\\u0646\"},{\"type\":\"text\",\"label\":\"\\u0634\\u0645\\u0627\\u0631\\u0647 \\u0634\\u0646\\u0627\\u0633\\u0646\\u0627\\u0645\\u0647\",\"value\":\"0010010011\"},{\"type\":\"text\",\"label\":\"\\u06a9\\u062f\\u0645\\u0644\\u06cc\",\"value\":\"0010010011\"},{\"type\":\"text\",\"label\":\"\\u0634\\u0645\\u0627\\u0631\\u0647 \\u067e\\u0631\\u0648\\u0627\\u0646\\u0647 \\u06a9\\u0633\\u0628\",\"value\":\"1002001002020\"},{\"type\":\"text\",\"label\":\"\\u0634\\u0645\\u0627\\u0631\\u0647 \\u062a\\u0644\\u0641\\u0646 \\u0647\\u0645\\u0631\\u0627\\u0647\",\"value\":\"09125566778\"},{\"type\":\"text\",\"label\":\"\\u0634\\u0645\\u0627\\u0631\\u0647 \\u062a\\u0644\\u0641\\u0646 \\u062b\\u0627\\u0628\\u062a\",\"value\":\"02166775588\"},{\"type\":\"text\",\"label\":\"\\u0622\\u062f\\u0631\\u0633\",\"value\":\"\\u062a\\u0647\\u0631\\u0627\\u0646\"}]', 0, 73340, NULL, NULL, NULL, NULL, 0, '2020-07-18 03:31:11', '2020-08-09 11:44:09');
-INSERT INTO `sellers` VALUES (4, 15, 1, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, '2020-07-18 11:09:46', '2020-07-18 11:09:59');
-INSERT INTO `sellers` VALUES (5, 16, 1, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, '2020-07-19 05:18:09', '2020-07-19 05:18:17');
-INSERT INTO `sellers` VALUES (6, 17, 1, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, '2020-07-19 05:51:12', '2020-07-19 05:52:57');
-INSERT INTO `sellers` VALUES (7, 19, 1, NULL, 0, 400, NULL, NULL, NULL, NULL, 0, '2020-08-09 16:05:08', '2020-08-10 03:56:08');
 
 -- ----------------------------
 -- Table structure for seo_settings
 -- ----------------------------
 DROP TABLE IF EXISTS `seo_settings`;
 CREATE TABLE `seo_settings`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `keyword` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `revisit` int NOT NULL,
-  `sitemap_link` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `description` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `meta_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `meta_keywords` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `og_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `og_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `og_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `twitter_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `twitter_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `twitter_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `keyword` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `author` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `revisit` int UNSIGNED NOT NULL DEFAULT 7,
+  `sitemap_link` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of seo_settings
 -- ----------------------------
-INSERT INTO `seo_settings` VALUES (1, 'پلتفرم اختصاصی طلا و جواهرات', 'morteza behnami', 11, 'drikana.com', 'پلتفرم اختصاصی طلا و جواهرات', '2025-12-22 20:00:07', '2025-12-22 12:07:35');
+INSERT INTO `seo_settings` VALUES (1, 'پلتفرم اختصاصی طلا و جواهرات', 'پلتفرم اختصاصی طلا و جواهرات', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2026-09-07 09:06:26', '2026-09-07 09:06:26', '', 'پلتفرم اختصاصی طلا و جواهرات', 7, NULL, 'پلتفرم اختصاصی طلا و جواهرات');
 
 -- ----------------------------
 -- Table structure for shops
 -- ----------------------------
 DROP TABLE IF EXISTS `shops`;
 CREATE TABLE `shops`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `logo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `sliders` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `address` varchar(500) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `facebook` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `google` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `twitter` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `youtube` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `slug` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `meta_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `meta_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `pick_up_point_id` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `shipping_cost` double(8, 2) NOT NULL DEFAULT 0.00,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `sliders` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `facebook` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `google` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `twitter` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `youtube` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `instagram` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `meta_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `delivery_pickup_latitude` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `delivery_pickup_longitude` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `shops_slug_unique`(`slug` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of shops
 -- ----------------------------
-INSERT INTO `shops` VALUES (1, 3, 'طلا فروشی علیخواه', 'uploads/shop/logo/th8yKNuqJ3Lkv29veKS6UdTNpmDsOFoeuF1LfLJD.png', '[\"uploads\\/shop\\/sliders\\/1fO3T8tckQQfX9D6FtIyMeiebYbKr8S3us1DmfBl.jpeg\",\"uploads\\/shop\\/sliders\\/E9n3Hg9kS3fy1zrYUx9frwk5nr7sGsJJHN2epeph.jpeg\"]', 'تهران، میدان ولیعصر، پاساژ رضا، پلاک 1298', 'www.facebook.com', 'www.google.com', 'www.twitter.com', 'www.youtube.com', 'آریا-سیستم-1', 'آریا سیستم', 'فروشگاه لوازم جانبی کامپیوتر آریا سیستم', '[]', 0.00, '2018-11-27 13:53:13', '2020-07-17 07:46:38');
-INSERT INTO `shops` VALUES (2, 13, 'طلا فروشی سید موسوی', 'uploads/shop/logo/zVRCuPuZTvKXkPv3g8JLaGejd9J1bzBpqyYfGMzB.png', '[\"uploads\\/shop\\/sliders\\/UKDqjKtB4VIdWjpzXBq3i7M8D9rkd72lVDRt2el7.jpeg\",\"uploads\\/shop\\/sliders\\/uPXOrTgkSXAvH3RZojMsEON0TlG34UqDz0MGAh9j.jpeg\"]', 'تهران، میدان ولیعصر، پاساژ رضا، پلاک 12', NULL, NULL, NULL, NULL, 'آرشام-رایانه-2', 'آرشام رایانه', 'آرشام رایانه', '[\"1\"]', 0.00, '2020-07-13 10:08:57', '2020-08-10 05:19:33');
-INSERT INTO `shops` VALUES (3, 14, 'جواهرات مالکی', 'uploads/shop/logo/CvipIUuIZDAso5d39H9uCFuZ36fZYR1v8xNFQeZB.png', '[\"uploads\\/shop\\/sliders\\/OMIf8ikvMcyid5tQ9GkiK5vgIwZkICSK88ZQCt40.jpeg\",\"uploads\\/shop\\/sliders\\/paxPfweCBcmtCSMfNY4yJ7dZxRTSAKY33dVCck0A.jpeg\"]', 'تهران، میدان منیریه، پلاک 1', NULL, NULL, NULL, NULL, 'تاپ-کالا-3', 'تاپ کالا', 'تاپ کالا', '[\"1\"]', 0.00, '2020-07-18 03:31:12', '2020-08-10 05:18:58');
-INSERT INTO `shops` VALUES (4, 15, 'سنگ فروشی آزادی', 'uploads/shop/logo/Tr47b9a4ZbePrymejo7scpQOm7wlGTOLULlbMNpg.png', '[\"uploads\\/shop\\/sliders\\/x4lGb74O6tClA3U3tlZwpP5aalBydIUSx1msr3Jk.jpeg\"]', 'کردستان، بانه، مرکز تجاری گلدیس', NULL, NULL, NULL, NULL, 'پخش-بانه-4', 'پخش بانه', 'پخش بانه', '[\"1\"]', 0.00, '2020-07-18 11:09:47', '2020-08-10 05:19:59');
-INSERT INTO `shops` VALUES (5, 16, 'ساعت انتیک کده', 'uploads/shop/logo/mMQEcxd1mRfPGGrc3sRRwfaaQJAoKrJg3z6TIBmx.png', '[\"uploads\\/shop\\/sliders\\/KLUWCQSbYnYQoyPLEZuOMcSsUaRXtZZ5qHZaJ8Gm.jpeg\"]', 'تهران، سیدخندان خیابان کابلی پلاک 1', NULL, NULL, NULL, NULL, 'داروکده-5', 'داروکده', 'داروکده', '[\"1\"]', 0.00, '2020-07-19 05:18:10', '2020-08-10 05:20:22');
-INSERT INTO `shops` VALUES (6, 17, 'سرمایه گذاران طلا', 'uploads/shop/logo/itU1VvL2XiKdK7CxJjHsE6TWs6R20jiAHEamnTkH.png', '[\"uploads\\/shop\\/sliders\\/8JjrgXObzNilQqDcU6CLF8yl8Yx5txZwjjywG0Jx.jpeg\"]', 'تهران، بلوار اندرزگو، پلاک 1', NULL, NULL, NULL, NULL, 'سازینو-6', 'سازینو', 'سازینو', '[\"1\"]', 0.00, '2020-07-19 05:51:12', '2020-08-10 05:20:52');
-INSERT INTO `shops` VALUES (7, 19, 'گلد مال ', NULL, NULL, 'تهران، بلوار اندرزگو، پلاک 1', NULL, NULL, NULL, NULL, 'سوپر-مارکت-دریانی-7', 'خوردنی و آشامیدنی', 'خوردنی و آشامیدنی', '[\"1\"]', 0.00, '2020-08-09 16:05:08', '2020-08-10 03:26:02');
 
 -- ----------------------------
 -- Table structure for sliders
@@ -2021,36 +1778,36 @@ CREATE TABLE `sliders`  (
   `photo` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `published` int NOT NULL DEFAULT 1,
   `link` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sliders
 -- ----------------------------
-INSERT INTO `sliders` VALUES (16, 'uploads/sliders/06YvFXfjwym5KfSB3khMgWmXY84HkKZJUJiBnKTm.png', 0, '#', '2026-01-01 11:41:43', '2026-04-18 19:09:23');
-INSERT INTO `sliders` VALUES (17, 'uploads/sliders/xZBVjVVrtvjQYzAIefpXH53gEJU2u4BnxgLqAsYl.png', 1, '#', '2026-01-01 11:41:59', '2026-01-01 11:41:59');
-INSERT INTO `sliders` VALUES (18, 'uploads/sliders/ubvXwl2bgdFRh8N5JPWBolZUEAKklTQUgJtrgidi.png', 1, '#', '2026-01-01 11:42:22', '2026-01-01 11:42:22');
-INSERT INTO `sliders` VALUES (20, 'uploads/sliders/PJf7q31pOSoBXl5ZNMNBna4sCxeroAtM6Vjv8yWT.png', 1, 'http://samaticket.ir', '2026-04-18 18:01:42', '2026-04-18 18:01:42');
+INSERT INTO `sliders` VALUES (1, 'uploads/sliders/slider-1.jpg', 1, '#', '2026-08-22 21:38:12', '2026-08-22 21:38:12');
+INSERT INTO `sliders` VALUES (2, 'uploads/sliders/slider-2.jpg', 1, '#', '2026-08-22 21:38:12', '2026-08-22 21:38:12');
+INSERT INTO `sliders` VALUES (3, 'uploads/sliders/slider-3.jpg', 1, '#', '2026-08-22 21:38:12', '2026-08-22 21:38:12');
+INSERT INTO `sliders` VALUES (4, 'uploads/sliders/slider-4.jpg', 1, '#', '2026-08-22 21:38:12', '2026-08-22 21:38:12');
+INSERT INTO `sliders` VALUES (5, 'uploads/sliders/slider-5.jpg', 1, '#', '2026-08-22 21:38:12', '2026-08-22 21:38:12');
 
 -- ----------------------------
 -- Table structure for staff
 -- ----------------------------
 DROP TABLE IF EXISTS `staff`;
 CREATE TABLE `staff`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `role_id` int NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int UNSIGNED NOT NULL,
+  `role_id` int UNSIGNED NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of staff
 -- ----------------------------
-INSERT INTO `staff` VALUES (1, 18, 3, '2020-07-20 15:12:24', '2020-07-20 15:12:24');
 
 -- ----------------------------
 -- Table structure for sub_categories
@@ -2313,66 +2070,63 @@ INSERT INTO `sub_sub_categories` VALUES (283, 1062, 'کیف و جامدادی', 
 -- ----------------------------
 DROP TABLE IF EXISTS `subscribers`;
 CREATE TABLE `subscribers`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `email`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+  UNIQUE INDEX `subscribers_email_unique`(`email` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of subscribers
 -- ----------------------------
-INSERT INTO `subscribers` VALUES (1, 'mrtz8bgy@gmail.com', '2025-12-28 17:14:41', '2025-12-28 17:14:41');
-INSERT INTO `subscribers` VALUES (2, 'edeban.almas@gmail.com', '2025-12-28 17:56:15', '2025-12-28 17:56:15');
-INSERT INTO `subscribers` VALUES (3, 'edeban.almasa@gmail.com', '2026-02-16 14:09:40', '2026-02-16 14:09:40');
 
 -- ----------------------------
 -- Table structure for ticket_replies
 -- ----------------------------
 DROP TABLE IF EXISTS `ticket_replies`;
 CREATE TABLE `ticket_replies`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `ticket_id` int NOT NULL,
-  `user_id` int NOT NULL,
-  `reply` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `files` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ticket_id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
+  `reply` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `files` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `viewed` tinyint NOT NULL DEFAULT 0,
+  `client_viewed` tinyint NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ticket_replies
 -- ----------------------------
-INSERT INTO `ticket_replies` VALUES (8, 8, 12, '<p>با سلام و احترام</p><p>این مورد در دست پیگیری است.</p><p><br></p>', NULL, '2020-07-20 12:57:52', '2020-07-20 12:57:52');
-INSERT INTO `ticket_replies` VALUES (9, 8, 12, 'اوکی پس میگیریم&nbsp;', NULL, '2025-12-28 19:06:09', '2025-12-28 19:06:09');
-INSERT INTO `ticket_replies` VALUES (10, 8, 12, 'حالا خوب شد', NULL, '2025-12-28 19:10:16', '2025-12-28 19:10:16');
 
 -- ----------------------------
 -- Table structure for tickets
 -- ----------------------------
 DROP TABLE IF EXISTS `tickets`;
 CREATE TABLE `tickets`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `code` int NOT NULL,
-  `user_id` int NOT NULL,
-  `subject` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `details` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `files` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL,
-  `status` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'pending',
-  `viewed` int NOT NULL DEFAULT 0,
-  `client_viewed` int NOT NULL DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `user_id` int UNSIGNED NOT NULL,
+  `order_id` int NULL DEFAULT NULL,
+  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `files` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `viewed` tinyint NOT NULL DEFAULT 0,
+  `status` tinyint NOT NULL DEFAULT 0,
+  `client_viewed` tinyint NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `tickets_code_unique`(`code` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of tickets
 -- ----------------------------
-INSERT INTO `tickets` VALUES (8, 10000054, 8, 'درخواست بازگشت محصول', '<p>با سلام</p><p>تقاضا دارم محصول خریداری شده را پس بگیرید</p><p>با تشکر<br></p>', NULL, 'open', 1, 1, '2026-02-20 15:56:40', '2026-02-20 12:26:40');
 
 -- ----------------------------
 -- Table structure for users
@@ -2406,41 +2160,30 @@ CREATE TABLE `users`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (3, NULL, NULL, 'seller', 'آرمین رحیمی', 'seller@example.com', 'customer', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'ne8qEnuHh0AqRDV297wUyqViP45M1dr5JcEr217O0NL5nqH4vK3bIR4Hz8AO', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/9XPIm6rto3nggN0zgBx32dHYQi5DyU1SRrYxOa0s.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '3dLUoHsR1l', NULL, NULL, '2018-10-07 08:12:57', '2020-07-12 15:25:49');
-INSERT INTO `users` VALUES (8, NULL, NULL, 'customer', 'علی احمدی', 'customer@example.com', 'customer', '2018-12-11 21:30:00', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', 'f1AEJSNAUnoHzovGF3V9OUe7hTR3l4yyxTOunhELrrKVDfVKrqZcgTj8BZJD', 'https://lh3.googleusercontent.com/-7OnRtLyua5Q/AAAAAAAAAAI/AAAAAAAADRk/VqWKMl4f8CI/photo.jpg?sz=50', 'uploads/users/jo3EHt8rbcdfprb6sw74GKYK2iQyc5jmxVfd3vEj.jpeg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, '8zJTyXTlTT', NULL, NULL, '2018-10-07 08:12:57', '2020-07-24 06:24:26');
-INSERT INTO `users` VALUES (12, NULL, NULL, 'admin', 'admin', 'admin@example.com', 'customer', '2020-06-25 10:06:33', '$2y$10$eUKRlkmm2TAug75cfGQ4i.WoUbcJ2uVPqUlVkox.cv4CCyGEIMQEm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-06-25 10:08:33', '2020-06-25 10:08:33');
-INSERT INTO `users` VALUES (13, NULL, NULL, 'seller', 'متین جوان', 'seller2@example.com', 'customer', '2020-07-13 10:07:56', '$2y$10$mnzXF29.dVrSzL/zy3dKF.Xt0koaOJ2wQs5APOYfdJkf3ZrEXzAGi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-13 09:55:49', '2020-07-13 10:08:56');
-INSERT INTO `users` VALUES (14, NULL, NULL, 'seller', 'رضا رحمتی', 'seller3@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$hA0vvwR/Rx5KSieJ9/xaL.O1GYaIQORu9zScwzrhtIER4ILzXTjHu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-18 03:07:32', '2020-07-18 03:31:11');
-INSERT INTO `users` VALUES (15, NULL, NULL, 'seller', 'علی همتی', 'seller4@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$ichl8tRniAkh76QYF5npmOh629z6n/IYrj59zN/lvSE9hxEFBYArK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-18 11:09:46', '2020-07-18 11:09:46');
-INSERT INTO `users` VALUES (16, NULL, NULL, 'seller', 'الهام جابری', 'seller5@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$MB6TzZZi8vfBqReeqj8ndemsLeQARD4a3yDA2AvW9IyT4pQjpnj4S', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-19 05:18:09', '2020-07-19 05:18:09');
-INSERT INTO `users` VALUES (17, NULL, NULL, 'seller', 'علی سلطانی', 'seller6@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$.8SzfNdSupTjXwb/dFGkt.e7MxGp7fIhAQd02t82H60sFRH9Pj2u6', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-19 05:51:12', '2020-07-19 05:51:12');
-INSERT INTO `users` VALUES (18, NULL, NULL, 'staff', 'اپراتور سفارشات حضوری', 'inhouse_orders@example.com', 'customer', NULL, '$2y$10$4kWT7UZSvGLc0b.UT1MS4.rLVk2daB5iUB9wzCX3mMWBbtN3XuxpK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09121111111', NULL, NULL, 0.00, NULL, NULL, 0, '2020-07-20 15:12:24', '2020-07-20 15:12:24');
-INSERT INTO `users` VALUES (19, NULL, NULL, 'seller', 'یوسف ابراهیمی', 'seller7@example.com', 'customer', '2020-07-18 03:07:11', '$2y$10$boTae38mLpu10h7dVecfjuulM4zbthdFskY9zZ7bb1PxHgNGMfQvy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2020-08-09 16:05:08', '2020-08-09 16:05:08');
-INSERT INTO `users` VALUES (23, NULL, NULL, 'customer', 'احمد کریمی', 'ahmad@gmail.com', 'customer', '2026-01-01 21:01:16', '$2y$10$P3ckpHolKl.2.nd8X2bbK.8V2uURZYvPcXfkE/Hb4C45hQJvFT0Gm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-01-01 21:52:16', '2026-01-01 21:52:16');
-INSERT INTO `users` VALUES (30, NULL, NULL, 'customer', 'امیر حسین بهنامی', NULL, 'customer', NULL, '$2y$10$y3YKcuXKDeSft1AA0XsSOek97lnKVdy4oflRIXMzwMTbDrWxFesf.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '09021313131', '2026-01-01 23:35:39', '213877', 0.00, NULL, NULL, 0, '2026-01-01 23:35:30', '2026-01-01 23:52:21');
-INSERT INTO `users` VALUES (31, NULL, NULL, 'customer', 'morteza', 'aliw@gmail.com', 'customer', '2026-01-06 19:01:06', '$2y$10$xiHrfWnEEFifOJ2hQKjfKesfjPwE8GhaItXDogrlAJp4WYT67RYRu', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-01-06 19:02:06', '2026-01-06 19:02:06');
-INSERT INTO `users` VALUES (32, NULL, NULL, 'customer', 'احمد رضایی', 'ahmad@example.com', 'technician', NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-02-17 00:38:24', '2026-02-17 00:38:24');
-INSERT INTO `users` VALUES (33, NULL, NULL, 'customer', 'محمد کریمی', 'mohammad@example.com', 'technician', NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-02-17 00:38:24', '2026-02-17 00:38:24');
+INSERT INTO `users` VALUES (1, NULL, NULL, 'admin', 'مدیر سیستم', 'admin@example.com', 'admin', NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-08-22 21:38:12', '2026-08-22 21:38:12');
+INSERT INTO `users` VALUES (2, NULL, NULL, 'customer', 'تکنسین نمونه', 'tech@example.com', 'technician', NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-08-22 21:38:12', '2026-08-22 21:38:12');
+INSERT INTO `users` VALUES (3, NULL, NULL, 'customer', 'مشتری نمونه', 'customer@example.com', 'customer', NULL, '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, 0, '2026-08-22 21:38:12', '2026-08-22 21:38:12');
+INSERT INTO `users` VALUES (4, NULL, NULL, 'admin', 'مدیریت دریکانا', 'admin@drikana.com', 'admin', '2026-09-07 03:55:52', '$2y$10$vyiEytr3RPcwh.VE/DrqQOcHwi9lJr/0wc0eoIowXfDgPxkMZdYCG', NULL, NULL, NULL, 'تهران، بازار بزرگ طلا و جواهر', NULL, 'تهران', NULL, '09120000000', NULL, NULL, 0.00, NULL, NULL, 0, '2026-09-07 03:55:52', '2026-09-07 03:55:52');
 
 -- ----------------------------
 -- Table structure for wallets
 -- ----------------------------
 DROP TABLE IF EXISTS `wallets`;
 CREATE TABLE `wallets`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `amount` double(8, 2) NOT NULL,
-  `payment_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `payment_details` longtext CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` int UNSIGNED NOT NULL,
+  `amount` double(20, 2) NOT NULL DEFAULT 0.00,
+  `payment_method` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `payment_details` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wallets
@@ -2451,18 +2194,16 @@ CREATE TABLE `wallets`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `wishlists`;
 CREATE TABLE `wishlists`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `product_id` int UNSIGNED NOT NULL,
+  `user_id` int UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of wishlists
 -- ----------------------------
-INSERT INTO `wishlists` VALUES (2, 8, 23, '2020-07-20 06:05:13', '2020-07-20 06:05:13');
-INSERT INTO `wishlists` VALUES (5, 8, 7, '2026-02-21 14:00:02', '2026-02-21 14:00:02');
 
 SET FOREIGN_KEY_CHECKS = 1;

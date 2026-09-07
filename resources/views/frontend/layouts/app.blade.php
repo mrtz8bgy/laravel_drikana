@@ -7,45 +7,50 @@
 <head>
 
 @php
-    $seosetting = \App\SeoSetting::first();
+    $generalSetting = \Illuminate\Support\Facades\Schema::hasTable('general_settings') ? \App\GeneralSetting::first() : null;
+    $seoSetting = \Illuminate\Support\Facades\Schema::hasTable('seo_settings') ? \App\SeoSetting::first() : null;
+    $seoDescription = $seoSetting && $seoSetting->description ? $seoSetting->description : config('app.name', 'Laravel');
+    $seoKeyword = $seoSetting && $seoSetting->keyword ? $seoSetting->keyword : '';
+    $seoAuthor = $seoSetting && $seoSetting->author ? $seoSetting->author : config('app.name', 'Laravel');
+    $seoSitemap = $seoSetting && $seoSetting->sitemap_link ? $seoSetting->sitemap_link : '';
 @endphp
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <title>@yield('meta_title', config('app.name', 'Laravel'))</title>
-<meta name="description" content="@yield('meta_description', $seosetting->description)" />
-<meta name="keywords" content="@yield('meta_keywords', $seosetting->keyword)">
-<meta name="author" content="{{ $seosetting->author }}">
-<meta name="sitemap_link" content="{{ $seosetting->sitemap_link }}">
+<meta name="description" content="@yield('meta_description', $seoDescription)" />
+<meta name="keywords" content="@yield('meta_keywords', $seoKeyword)">
+<meta name="author" content="{{ $seoAuthor }}">
+<meta name="sitemap_link" content="{{ $seoSitemap }}">
 
 @yield('meta')
 
 @if(!isset($detailedProduct))
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="{{ config('app.name', 'Laravel') }}">
-    <meta itemprop="description" content="{{ $seosetting->description }}">
-    <meta itemprop="image" content="{{ asset(\App\GeneralSetting::first()->logo) }}">
+    <meta itemprop="description" content="{{ $seoDescription }}">
+    <meta itemprop="image" content="{{ asset(($generalSetting && $generalSetting->logo) ? $generalSetting->logo : 'frontend/images/logo/drikana-logo.svg') }}">
 
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="product">
     <meta name="twitter:site" content="@publisher_handle">
     <meta name="twitter:title" content="{{ config('app.name', 'Laravel') }}">
-    <meta name="twitter:description" content="{{ $seosetting->description }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
     <meta name="twitter:creator" content="@author_handle">
-    <meta name="twitter:image" content="{{ asset(\App\GeneralSetting::first()->logo) }}">
+    <meta name="twitter:image" content="{{ asset(($generalSetting && $generalSetting->logo) ? $generalSetting->logo : 'frontend/images/logo/drikana-logo.svg') }}">
 
     <!-- Open Graph data -->
     <meta property="og:title" content="{{ config('app.name', 'Laravel') }}" />
     <meta property="og:type" content="Ecommerce Site" />
     <meta property="og:url" content="{{ route('home') }}" />
-    <meta property="og:image" content="{{ asset(\App\GeneralSetting::first()->logo) }}" />
-    <meta property="og:description" content="{{ $seosetting->description }}" />
+    <meta property="og:image" content="{{ asset(($generalSetting && $generalSetting->logo) ? $generalSetting->logo : 'frontend/images/logo/drikana-logo.svg') }}" />
+    <meta property="og:description" content="{{ $seoDescription }}" />
     <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
 @endif
 
 <!-- Favicon -->
-<link type="image/x-icon" href="{{ asset(\App\GeneralSetting::first()->favicon) }}" rel="shortcut icon" />
+<link type="image/x-icon" href="{{ asset(($generalSetting && $generalSetting->favicon) ? $generalSetting->favicon : 'frontend/images/logo/favicon.svg') }}" rel="shortcut icon" />
 
 <!-- فونت فارسی لوکس Vazirmatn -->
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -87,7 +92,8 @@
 <link href="{{ asset('frontend/css/fb-style.css')}}" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
 
 <!-- color theme -->
-<link href="{{ asset('frontend/css/colors/'.\App\GeneralSetting::first()->frontend_color.'.css')}}" rel="stylesheet" media="all">
+@php $frontendColor = ($generalSetting && $generalSetting->frontend_color) ? $generalSetting->frontend_color : 'default'; @endphp
+<link href="{{ asset('frontend/css/colors/'.$frontendColor.'.css')}}" rel="stylesheet" media="all">
 
 <!-- Custom style -->
 <link type="text/css" href="{{ asset('frontend/css/custom-style.css') }}" rel="stylesheet" media="all">

@@ -16,7 +16,7 @@ class JewelryCertificateController extends Controller
     
     public function __construct()
     {
-        $this->middleware('auth')->except([publicVerify, verifyPage]);
+        $this->middleware('auth')->except(['publicVerify', 'verifyPage']);
     }
     
     /**

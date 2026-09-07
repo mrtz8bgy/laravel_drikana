@@ -2157,7 +2157,18 @@ a:hover {
 <div id="section_best_selling"></div>
 <div id="section_home_categories"></div>
 
-@if(BusinessSetting::where('type', 'classified_product')->first()->value == 1)
+@php
+    $classified_product_enabled = false;
+    try {
+        $classified_product_enabled = \Illuminate\Support\Facades\Schema::hasTable('business_settings')
+            && \App\BusinessSetting::where('type', 'classified_product')->first()
+            && \App\BusinessSetting::where('type', 'classified_product')->first()->value == 1;
+    } catch (\Exception $e) {
+        $classified_product_enabled = false;
+    }
+@endphp
+
+@if($classified_product_enabled)
     @php
         $customer_products = CustomerProduct::where('status', '1')->where('published', '1')->take(16)->get();
     @endphp

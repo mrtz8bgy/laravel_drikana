@@ -35,6 +35,8 @@ class RouteServiceProvider extends ServiceProvider
    */
   public function map()
   {
+    $this->loadAddonControllerClasses();
+
     $this->mapApiRoutes();
 
     $this->mapAdminRoutes();
@@ -67,11 +69,34 @@ class RouteServiceProvider extends ServiceProvider
    *
    * @return void
    */
+  protected function loadAddonControllerClasses()
+  {
+    $addonControllers = [
+      'addons/affiliate_system/controllers/AffiliateController.php',
+      'addons/club_point/controllers/ClubPointController.php',
+      'addons/offline_payment/controllers/ManualPaymentMethodController.php',
+      'addons/seller_subscription/controllers/SellerPackageController.php',
+      'addons/seller_subscription/controllers/SellerPackagePaymentController.php',
+      'addons/auction/controllers/AuctionProductController.php',
+      'addons/auction/controllers/AuctionProductBidController.php',
+    ];
+
+    foreach ($addonControllers as $controller) {
+      $path = base_path($controller);
+      if (file_exists($path)) {
+        require_once $path;
+      }
+    }
+  }
+
   protected function mapAffiliateRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/affiliate.php'));
+    $path = base_path('routes/affiliate.php');
+    if ($this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\AffiliateController'])) {
+      Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
   }
 
   /**
@@ -83,9 +108,17 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapOfflinePaymentRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/offline_payment.php'));
+    $path = base_path('routes/offline_payment.php');
+    if ($this->canRegisterRouteGroup($path, [
+      'App\\Http\\Controllers\\ManualPaymentMethodController',
+      'App\\Http\\Controllers\\SellerPackagePaymentController',
+      'App\\Http\\Controllers\\CustomerPackagePaymentController',
+      'App\\Http\\Controllers\\WalletController',
+    ])) {
+      Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
   }
 
 
@@ -98,9 +131,12 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapPaytmRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/paytm.php'));
+    $path = base_path('routes/paytm.php');
+    if (file_exists($path) && file_exists(app_path('Http/Controllers/PaytmController.php'))) {
+      Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
   }
 
   /**
@@ -112,9 +148,12 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapRefundRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/refund_request.php'));
+    $path = base_path('routes/refund_request.php');
+    if ($this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\RefundRequestController'])) {
+      Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
   }
 
   /**
@@ -126,9 +165,12 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapClubPointsRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/club_points.php'));
+    $path = base_path('routes/club_points.php');
+    if ($this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\ClubPointController'])) {
+      Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
   }
 
   /**
@@ -140,9 +182,12 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapOtpRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/otp.php'));
+    $path = base_path('routes/otp.php');
+    if (file_exists($path) && file_exists(app_path('Http/Controllers/OTPController.php')) && file_exists(app_path('Http/Controllers/OTPVerificationController.php'))) {
+      Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
   }
 
   /**
@@ -154,9 +199,12 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapPosRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/pos.php'));
+    $path = base_path('routes/pos.php');
+    if (file_exists($path) && file_exists(app_path('Http/Controllers/PosController.php'))) {
+      Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
   }
 
   /**
@@ -196,9 +244,7 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapWebRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/web.php'));
+    $this->registerRouteFileIfAvailable(base_path('routes/web.php'));
   }
 
   /**
@@ -210,9 +256,7 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapAdminRoutes()
   {
-    Route::middleware('web')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/admin.php'));
+    $this->registerRouteFileIfAvailable(base_path('routes/admin.php'));
   }
 
   /**
@@ -224,9 +268,67 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapApiRoutes()
   {
-    Route::prefix('api')
-       ->middleware('api')
-       ->namespace($this->namespace)
-       ->group(base_path('routes/api.php'));
+    $path = base_path('routes/api.php');
+    if ($this->canRegisterRouteGroup($path, [])) {
+      Route::prefix('api')
+         ->middleware('api')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
+  }
+
+  protected function registerRouteFileIfAvailable($path, $middleware = 'web')
+  {
+    if (!$this->canRegisterRouteGroup($path, [])) {
+      return;
+    }
+
+    $route = Route::middleware($middleware)->namespace($this->namespace);
+
+    if ($middleware === 'api') {
+      $route = Route::prefix('api')->middleware('api')->namespace($this->namespace);
+    }
+
+    $route->group($path);
+  }
+
+  protected function canRegisterRouteGroup($path, array $controllers)
+  {
+    if (!file_exists($path)) {
+      return false;
+    }
+
+    $required = $controllers;
+    $content = file_get_contents($path);
+
+    if ($content !== false) {
+      preg_match_all('/[\'\"]([A-Za-z0-9_]+Controller)[\'\"]/', $content, $matches);
+
+      foreach ($matches[1] as $controller) {
+        $required[] = 'App\\Http\\Controllers\\' . $controller;
+      }
+    }
+
+    foreach (array_unique($required) as $controller) {
+      if ($controller === '') {
+        continue;
+      }
+      if (class_exists($controller)) {
+        continue;
+      }
+
+      $baseClass = str_replace('App\\Http\\Controllers\\', '', $controller);
+      if (file_exists(app_path('Http/Controllers/' . $baseClass . '.php'))) {
+        continue;
+      }
+
+      if (class_exists('App\\' . $baseClass) || file_exists(app_path($baseClass . '.php'))) {
+        continue;
+      }
+
+      return false;
+    }
+
+    return true;
   }
 }

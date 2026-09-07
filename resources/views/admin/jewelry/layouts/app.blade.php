@@ -675,7 +675,7 @@
         }
     </style>
 
-
+    <style>
         /* ====== تم طلایی-سرمه‌ای دریکانا برای پنل جواهرات ====== */
         @import url('https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css');
         :root { --jg:#d4af37; --jg-light:#f4d47c; --jg-dark:#07091a; --jg-navy:#12173a; }
@@ -712,6 +712,7 @@
         a.text-danger { color:#e53e3e !important; }
         .sidebar a.text-danger:hover { background:rgba(229,62,62,.12) !important; color:#fca5a5 !important; border-right-color:#e53e3e !important; }
         @media (max-width:768px){ .sidebar { min-height:auto; } }
+    </style>
 
     @stack('styles')
 </head>

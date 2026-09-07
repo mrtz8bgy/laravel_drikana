@@ -60,7 +60,7 @@
                     <a href="{{ route('jewelry.certificates.verify_page') }}" class="d-icon-btn" title="استعلام شناسنامه" style="text-decoration:none;">
                         <i class="la la-certificate"></i>
                     </a>
-                    <a href="{{ route('jewelry.missing_reports.create') }}" class="d-icon-btn hide-sm" title="اعلام سرقت/مفقودی" style="text-decoration:none;">
+                    <a href="{{ route('jewelry.missing_reports.create_public') }}" class="d-icon-btn hide-sm" title="اعلام سرقت/مفقودی" style="text-decoration:none;">
                         <i class="la la-shield"></i>
                     </a>
                     <a href="{{ route('compare') }}" class="d-icon-btn hide-sm" title="مقایسه" style="text-decoration:none;">
@@ -95,7 +95,7 @@
                     <li><a href="#"><i class="la la-clock-o"></i> ساعت</a></li>
                     <li><a href="#"><i class="la la-gem"></i> سنگ‌های قیمتی</a></li>
                     <li><a href="{{ route('jewelry.certificates.verify_page') }}"><i class="la la-certificate"></i> استعلام شناسنامه</a></li>
-                    <li><a href="{{ route('jewelry.missing_reports.create') }}"><i class="la la-bullhorn"></i> اعلام سرقت</a></li>
+                    <li><a href="{{ route('jewelry.missing_reports.create_public') }}"><i class="la la-bullhorn"></i> اعلام سرقت</a></li>
                     <li><a href="#"><i class="la la-phone"></i> تماس با ما</a></li>
                 </ul>
                 <div class="d-nav-cta">
