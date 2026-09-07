@@ -113,9 +113,9 @@
 @php
     try {
         $luxMegaCategories = \Illuminate\Support\Facades\Schema::hasTable('categories')
-            ? \App\Category::with(['subCategories' => function($q){
-                $q->orderBy('name')->with(['subSubCategories' => function($sq){ $sq->orderBy('name')->take(8); }]);
-            }])->whereHas('subCategories')->orderBy('name')->take(11)->get()
+            ? \App\Category::with(['subcategories' => function($q){
+                $q->orderBy('name')->with(['subsubcategories' => function($sq){ $sq->orderBy('name')->take(8); }]);
+            }])->whereHas('subcategories')->orderBy('name')->take(11)->get()
             : collect();
     } catch (\Exception $e) { $luxMegaCategories = collect(); }
     $luxCatIcons = [
