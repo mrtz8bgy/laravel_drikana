@@ -73,7 +73,7 @@
                     <div class="d-user-dropdown">
                         <a href="{{ route('cart') }}" class="d-icon-btn" title="سبد خرید" style="text-decoration:none;" id="cart_items_sidenav_box">
                             <i class="la la-shopping-cart"></i>
-                            @if(Session::has('cart'))<span class="badge">{{ count(Session::get('cart')) }}</span>@else<span class="badge">0</span>@endif
+                            @if(Session::has('cart'))<span class="badge" id="cart_items_sidenav">{{ count(Session::get('cart')) }}</span>@else<span class="badge" id="cart_items_sidenav">0</span>@endif
                         </a>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
 <section class="lux-mega-section">
     <div class="lux-mega-container">
         <div class="lux-mega-trigger" id="luxMegaTrigger">
-            <a href="#" class="lux-cat-btn" onclick="return false;">
+            <a href="#" class="lux-cat-btn" aria-expanded="false">
                 <i class="la la-bars"></i>
                 <span>همه دسته‌بندی‌های طلا و جواهر</span>
                 <i class="la la-angle-down"></i>
@@ -218,8 +218,12 @@
     // Toggle root list on mobile
     if(btn) btn.addEventListener('click', function(e){
         e.preventDefault();
-        if(!isMobile()) return;
-        trigger.classList.toggle('open');
+        if(isMobile()) {
+            trigger.classList.toggle('open');
+        } else {
+            trigger.classList.toggle('force-open');
+        }
+        btn.setAttribute('aria-expanded', trigger.classList.contains('open') || trigger.classList.contains('force-open') ? 'true' : 'false');
     });
 
     items.forEach(function(item){
@@ -244,7 +248,9 @@
         if(!trigger) return;
         if(!trigger.contains(e.target)){
             trigger.classList.remove('open');
+            trigger.classList.remove('force-open');
             items.forEach(function(i){ i.classList.remove('open'); });
+            if(btn) btn.setAttribute('aria-expanded', 'false');
         }
     });
 

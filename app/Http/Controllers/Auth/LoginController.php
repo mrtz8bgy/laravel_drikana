@@ -129,9 +129,9 @@ class LoginController extends Controller
      * Check user's role and redirect user based on their role
      * @return
      */
-    public function authenticated()
+    public function authenticated(Request $request, $user)
     {
-        if (auth()->user()->user_type == 'admin' || auth()->user()->user_type == 'staff') {
+        if ($user->user_type == 'admin' || $user->user_type == 'staff') {
             CoreComponentRepository::instantiateShopRepository();
             return redirect()->route('admin.dashboard');
         } elseif (session('link') != null) {

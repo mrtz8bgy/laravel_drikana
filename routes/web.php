@@ -189,7 +189,7 @@ Route::get('/privacypolicy', 'HomeController@privacypolicy')->name('privacypolic
 // ============================================
 # بخش کاربران (User Area)
 // ============================================
-Route::group(['middleware' => ['user', 'verification']], function(){
+Route::group(['middleware' => ['user']], function(){
     Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
     Route::get('/profile', 'HomeController@profile')->name('profile');
     Route::post('/customer/update-profile', 'HomeController@customer_update_profile')->name('customer.profile.update');

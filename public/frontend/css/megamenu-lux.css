@@ -69,6 +69,13 @@
 .lux-mega-trigger:hover > .lux-mega-list,
 .lux-mega-list.show { display: block; }
 
+@media (min-width: 993px) {
+    .lux-mega-list {
+        max-height: none;
+        overflow: visible;
+    }
+}
+
 .lux-mega-item {
     position: relative;
     border-bottom: 1px solid rgba(255,255,255,.04);

@@ -21,7 +21,7 @@ class CartController extends Controller
 
     public function showCartModal(Request $request)
     {
-        $product = Product::find($request->id);
+        $product = Product::findOrFail($request->id);
         return view('frontend.partials.addToCart', compact('product'));
     }
 
@@ -32,7 +32,8 @@ class CartController extends Controller
 
     public function addToCart(Request $request)
     {
-        $product = Product::find($request->id);
+        $product = Product::findOrFail($request->id);
+        $quantityRequested = max(1, (int) $request->input('quantity', 1));
 
         $data = array();
         $data['id'] = $product->id;
@@ -42,17 +43,22 @@ class CartController extends Controller
         //check the color enabled or disabled for the product
         if($request->has('color')){
             $data['color'] = $request['color'];
-            $str = Color::where('code', $request['color'])->first()->name;
+            $color = Color::where('code', $request['color'])->first();
+            $str = $color ? $color->name : str_replace(' ', '', $request['color']);
         }
 
         if ($product->digital != 1) {
             //Gets all the choice values of customer choice option and generate a string like Black-S-Cotton
-            foreach (json_decode(Product::find($request->id)->choice_options) as $key => $choice) {
+            foreach (json_decode($product->choice_options, true) ?: [] as $choice) {
+                $choiceValue = $request->input('attribute_id_' . $choice['attribute_id']);
+                if ($choiceValue === null) {
+                    return response()->json(['message' => 'لطفاً همه گزینه‌های محصول را انتخاب کنید.'], 422);
+                }
                 if($str != null){
-                    $str .= '-'.str_replace(' ', '', $request['attribute_id_'.$choice->attribute_id]);
+                    $str .= '-'.str_replace(' ', '', $choiceValue);
                 }
                 else{
-                    $str .= str_replace(' ', '', $request['attribute_id_'.$choice->attribute_id]);
+                    $str .= str_replace(' ', '', $choiceValue);
                 }
             }
         }
@@ -61,16 +67,19 @@ class CartController extends Controller
 
         if($str != null && $product->variant_product){
             $product_stock = $product->stocks->where('variant', $str)->first();
+            if (!$product_stock) {
+                return response()->json(['message' => 'ترکیب انتخاب‌شده موجود نیست.'], 422);
+            }
             $price = $product_stock->price;
             $quantity = $product_stock->qty;
 
-            if($quantity >= $request['quantity']){
+            if($quantity >= $quantityRequested){
                 // $variations->$str->qty -= $request['quantity'];
                 // $product->variations = json_encode($variations);
                 // $product->save();
             }
             else{
-                return view('frontend.partials.outOfStockCart');
+                return response()->json(['message' => 'موجودی این محصول کافی نیست.'], 422);
             }
         }
         else{
@@ -110,16 +119,12 @@ class CartController extends Controller
             $tax = $product->tax;
         }
 
-        $data['quantity'] = $request['quantity'];
+        $data['quantity'] = $quantityRequested;
         $data['price'] = $price;
         $data['tax'] = $tax;
         $data['shipping'] = $product->shipping_cost;
         $data['product_referral_code'] = null;
         $data['digital'] = $product->digital;
-
-        if ($request['quantity'] == null){
-            $data['quantity'] = 1;
-        }
 
         if(Cookie::has('referred_product_id') && Cookie::get('referred_product_id') == $product->id) {
             $data['product_referral_code'] = Cookie::get('product_referral_code');
@@ -133,7 +138,7 @@ class CartController extends Controller
                 if($cartItem['id'] == $request->id){
                     if($cartItem['variant'] == $str){
                         $foundInCart = true;
-                        $cartItem['quantity'] += $request['quantity'];
+                        $cartItem['quantity'] += $quantityRequested;
                     }
                 }
                 $cart->push($cartItem);

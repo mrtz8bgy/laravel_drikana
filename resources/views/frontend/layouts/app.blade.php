@@ -314,6 +314,8 @@
 
     function updateNavCart(){
         $.post('{{ route('cart.nav_cart') }}', {_token:'{{ csrf_token() }}'}, function(data){
+            var count = $('<div>').html(data).find('.nav-box-number').first().text().trim();
+            $('#cart_items_sidenav').text(count || '0');
             $('#cart_items').html(data);
         });
     }
@@ -368,6 +370,9 @@
                 defaultScale: -1
             });
             getVariantPrice();
+        }).fail(function(xhr){
+            $('.c-preloader').hide();
+            showFrontendAlert('danger', xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'نمایش فرم محصول با خطا مواجه شد');
         });
     }
 
@@ -432,6 +437,10 @@
                    $('#addToCart-modal-body').html(data);
                    updateNavCart();
                    $('#cart_items_sidenav').html(parseInt($('#cart_items_sidenav').html())+1);
+               },
+               error: function(xhr){
+                   $('.c-preloader').hide();
+                   showFrontendAlert('danger', xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'افزودن محصول به سبد خرید انجام نشد');
                }
            });
         }
@@ -456,6 +465,10 @@
                    updateNavCart();
                    $('#cart_items_sidenav').html(parseInt($('#cart_items_sidenav').html())+1);
                    window.location.replace("{{ route('cart') }}");
+               },
+               error: function(xhr){
+                   $('.c-preloader').hide();
+                   showFrontendAlert('danger', xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'افزودن محصول به سبد خرید انجام نشد');
                }
            });
         }

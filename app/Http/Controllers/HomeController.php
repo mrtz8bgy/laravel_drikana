@@ -680,13 +680,13 @@ class HomeController extends Controller
 
     public function variant_price(Request $request)
     {
-        $product = Product::find($request->id);
+        $product = Product::findOrFail($request->id);
         $str = '';
         $quantity = 0;
 
         if($request->has('color')){
-            $data['color'] = $request['color'];
-            $str = Color::where('code', $request['color'])->first()->name;
+            $color = Color::where('code', $request['color'])->first();
+            $str = $color ? $color->name : str_replace(' ', '', $request['color']);
         }
 
         if(json_decode(Product::find($request->id)->choice_options) != null){
@@ -702,8 +702,8 @@ class HomeController extends Controller
 
         if($str != null && $product->variant_product){
             $product_stock = $product->stocks->where('variant', $str)->first();
-            $price = $product_stock->price;
-            $quantity = $product_stock->qty;
+            $price = $product_stock ? $product_stock->price : 0;
+            $quantity = $product_stock ? $product_stock->qty : 0;
         }
         else{
             $price = $product->unit_price;

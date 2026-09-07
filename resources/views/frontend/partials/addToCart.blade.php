@@ -109,25 +109,29 @@
                 <form id="option-choice-form">
                     @csrf
                     <input type="hidden" name="id" value="{{ $product->id }}">
+                    @php
+                        $choiceOptions = json_decode($product->choice_options, true) ?: [];
+                        $productColors = json_decode($product->colors, true) ?: [];
+                    @endphp
 
                     <!-- Quantity + Add to cart -->
                     @if($product->digital !=1)
-                        @if ($product->choice_options != null)
-                            @foreach (json_decode($product->choice_options) as $key => $choice)
+                        @if (count($choiceOptions) > 0)
+                            @foreach ($choiceOptions as $key => $choice)
 
                                 <div class="row no-gutters">
                                     <div class="col-2">
                                         <div
-                                            class="product-description-label mt-2 ">{{ \App\Attribute::find($choice->attribute_id)->name }}
+                                            class="product-description-label mt-2 ">{{ optional(\App\Attribute::find($choice['attribute_id']))->name }}
                                             :
                                         </div>
                                     </div>
                                     <div class="col-10">
                                         <ul class="list-inline checkbox-alphanumeric checkbox-alphanumeric--style-1 mb-2">
-                                            @foreach ($choice->values as $key => $value)
+                                            @foreach ($choice['values'] as $key => $value)
                                                 <li>
-                                                    <input type="radio" id="{{ $choice->attribute_id }}-{{ $value }}"
-                                                           name="attribute_id_{{ $choice->attribute_id }}"
+                                                    <input type="radio" id="{{ $choice['attribute_id'] }}-{{ $value }}"
+                                                           name="attribute_id_{{ $choice['attribute_id'] }}"
                                                            value="{{ $value }}" @if($key == 0) checked @endif>
                                                     <label
                                                         for="{{ $choice->attribute_id }}-{{ $value }}">{{ $value }}</label>
@@ -140,14 +144,14 @@
                             @endforeach
                         @endif
 
-                        @if (count(json_decode($product->colors)) > 0)
+                        @if (count($productColors) > 0)
                             <div class="row no-gutters">
                                 <div class="col-2">
                                     <div class="product-description-label mt-2">{{__('Color')}}:</div>
                                 </div>
                                 <div class="col-10">
                                     <ul class="list-inline checkbox-color mb-1">
-                                        @foreach (json_decode($product->colors) as $key => $color)
+                                        @foreach ($productColors as $key => $color)
                                             <li>
                                                 <input type="radio" id="{{ $product->id }}-color-{{ $key }}"
                                                        name="color" value="{{ $color }}" @if($key == 0) checked @endif>
