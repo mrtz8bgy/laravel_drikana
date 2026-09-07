@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b8892a"/>
+      <stop offset="45%" stop-color="#f4d47c"/>
+      <stop offset="55%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#b8892a"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Diamond Mark -->
+  <g transform="translate(10, 8)" filter="url(#glow)">
+    <!-- Outer circle -->
+    <circle cx="22" cy="22" r="21" fill="#07091a" stroke="url(#goldGrad)" stroke-width="2"/>
+    <circle cx="22" cy="22" r="17" fill="none" stroke="url(#goldGrad)" stroke-width="0.5" opacity="0.5"/>
+    <!-- Diamond shape -->
+    <polygon points="22,8 34,22 22,38 10,22" fill="url(#goldGrad)"/>
+    <polygon points="22,8 28,22 22,38 16,22" fill="#07091a" opacity="0.3"/>
+    <polygon points="22,8 34,22 22,22" fill="#fff" opacity="0.15"/>
+    <line x1="10" y1="22" x2="34" y2="22" stroke="#07091a" stroke-width="0.8" opacity="0.6"/>
+    <line x1="22" y1="8" x2="22" y2="38" stroke="#07091a" stroke-width="0.6" opacity="0.6"/>
+  </g>
+
+  <!-- DRIKANA text -->
+  <text x="66" y="32" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="bold" fill="url(#goldGrad)" letter-spacing="3">DRIKANA</text>
+  <!-- Tagline -->
+  <text x="66" y="48" font-family="Vazirmatn, Tahoma, sans-serif" font-size="8" fill="#c5c3c6" letter-spacing="2.5" font-weight="500">LUXURY JEWELRY MARKETPLACE</text>
+  <!-- Decorative lines -->
+  <line x1="66" y1="52" x2="235" y2="52" stroke="url(#goldGrad)" stroke-width="0.5" opacity="0.4"/>
+  <circle cx="230" cy="22" r="1.5" fill="url(#goldGrad)"/>
+</svg>

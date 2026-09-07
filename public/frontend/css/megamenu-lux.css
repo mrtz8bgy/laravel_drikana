@@ -1,0 +1,270 @@
+/* ============================================================
+   مگا منوی لوکس دریکانا - بهبود یافته با پشتیبانی تصویر
+   ============================================================ */
+:root {
+    --mega-gold: #d4af37;
+    --mega-gold-light: #f4d47c;
+    --mega-navy-dark: #07091a;
+    --mega-navy-mid: #12173a;
+    --mega-navy-card: #1a1f4d;
+    --mega-shadow: 0 25px 80px rgba(0,0,0,.75);
+}
+
+.lux-mega-section {
+    background: linear-gradient(90deg, var(--mega-navy-dark) 0%, var(--mega-navy-mid) 100%);
+    border-top: 1px solid rgba(212,175,55,.15);
+    border-bottom: 2px solid rgba(212,175,55,.35);
+    position: relative;
+    z-index: 1100;
+    direction: rtl;
+}
+.lux-mega-container { max-width: 1400px; margin: 0 auto; padding: 0 15px; }
+
+.lux-mega-trigger {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.lux-cat-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #b8892a, #d4af37, #f4d47c, #d4af37, #b8892a);
+    background-size: 200% 200%;
+    color: var(--mega-navy-dark);
+    padding: 14px 28px;
+    font-weight: 800;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--f-base);
+    position: relative;
+    transition: background-position .5s;
+    text-decoration: none;
+}
+.lux-cat-btn:hover {
+    background-position: 100% 0;
+    color: var(--mega-navy-dark);
+}
+
+.lux-mega-list {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 300px;
+    background: linear-gradient(180deg, var(--mega-navy-card), var(--mega-navy-dark));
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+    display: none;
+    box-shadow: var(--mega-shadow);
+    border: 1px solid rgba(212,175,55,.2);
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: visible;
+    z-index: 1200;
+}
+.lux-mega-trigger:hover > .lux-mega-list,
+.lux-mega-list.show { display: block; }
+
+.lux-mega-item {
+    position: relative;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    overflow: visible;
+}
+.lux-mega-item:last-child { border-bottom: none; }
+.lux-mega-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 18px;
+    color: #e8e6f0;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all .25s ease;
+    font-family: var(--f-base);
+}
+.lux-mega-link:hover {
+    background: rgba(212,175,55,.1);
+    color: var(--mega-gold);
+    padding-right: 26px;
+}
+.lux-mega-ico {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: rgba(212,175,55,.08);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all .3s ease;
+}
+.lux-mega-ico img { width:22px; height:22px; object-fit:contain; }
+.lux-mega-ico i { font-size:18px; color: var(--mega-gold); }
+.lux-mega-link:hover .lux-mega-ico { background: rgba(212,175,55,.2); transform: scale(1.08); }
+.lux-mega-name { flex: 1; }
+.lux-mega-arrow {
+    font-size: 14px;
+    color: rgba(255,255,255,.3);
+    transition: transform .25s ease;
+}
+.lux-mega-item:hover > .lux-mega-link .lux-mega-arrow {
+    transform: rotate(-90deg);
+    color: var(--mega-gold);
+}
+
+/* Sub Mega Menu (Panel) */
+.lux-mega-sub {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: 620px;
+    background: linear-gradient(180deg, var(--mega-navy-card), var(--mega-navy-dark));
+    border-radius: 14px;
+    box-shadow: var(--mega-shadow);
+    border: 1px solid rgba(212,175,55,.2);
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(10px);
+    transition: all .28s cubic-bezier(.4,0,.2,1);
+    max-height: 70vh;
+    overflow-y: auto;
+    z-index: 1300;
+}
+.lux-mega-item:hover > .lux-mega-sub {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+.lux-sub-cat-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--mega-gold);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(212,175,55,.15);
+    text-decoration: none;
+}
+.lux-sub-cat-title:hover { color: var(--mega-gold-light); }
+.lux-sub-cat-list {
+    list-style: none;
+    padding: 0; margin: 0 0 14px;
+}
+.lux-sub-cat-list li a {
+    display: block;
+    padding: 5px 8px;
+    font-size: 12.5px;
+    color: #d0cedf;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all .2s ease;
+}
+.lux-sub-cat-list li a:hover {
+    background: rgba(212,175,55,.08);
+    color: var(--mega-gold);
+    padding-right: 14px;
+}
+.lux-mega-banner {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(212,175,55,.18), rgba(212,175,55,.05));
+    border: 1px solid rgba(212,175,55,.3);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.lux-mega-banner img { width: 60px; height: 60px; object-fit: contain; }
+.lux-mega-banner-text strong {
+    display: block;
+    color: var(--mega-gold-light);
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+.lux-mega-banner-text span {
+    font-size: 11px;
+    color: #c5c3d0;
+}
+
+/* View All */
+.lux-mega-viewall {
+    background: linear-gradient(135deg, rgba(212,175,55,.15), rgba(212,175,55,.05));
+    text-align: center;
+}
+.lux-mega-viewall .lux-mega-link {
+    justify-content: center;
+    color: var(--mega-gold);
+    font-weight: 800;
+}
+.lux-mega-viewall:hover { background: rgba(212,175,55,.25); }
+
+/* Scrollbar */
+.lux-mega-list::-webkit-scrollbar,
+.lux-mega-sub::-webkit-scrollbar { width: 4px; }
+.lux-mega-list::-webkit-scrollbar-thumb,
+.lux-mega-sub::-webkit-scrollbar-thumb { background: var(--mega-gold); border-radius: 4px; }
+.lux-mega-list::-webkit-scrollbar-track,
+.lux-mega-sub::-webkit-scrollbar-track { background: transparent; }
+
+/* Hide legacy mega menu section */
+.mega-menu-section { display:none !important; }
+
+/* ===== Mobile Mega Menu ===== */
+@media (max-width: 992px) {
+    .lux-mega-section { padding: 0 0 0 0; }
+    .lux-cat-btn {
+        width: calc(100% - 20px);
+        margin: 10px;
+        border-radius: 12px;
+        justify-content: space-between;
+    }
+    .lux-mega-list {
+        position: static !important;
+        width: calc(100% - 20px) !important;
+        margin: 0 10px 10px;
+        border-radius: 12px;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0;
+        transition: max-height .35s ease;
+        display: block;
+    }
+    .lux-mega-trigger.open .lux-mega-list { max-height: 75vh; overflow-y: auto; padding: 6px 0; }
+    .lux-mega-sub {
+        position: static !important;
+        width: 100% !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        transform: none !important;
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        background: rgba(0,0,0,.2) !important;
+        border-radius: 10px !important;
+        margin-top: 6px;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height .3s ease;
+    }
+    .lux-mega-item.open > .lux-mega-sub {
+        max-height: 2000px;
+        padding: 10px !important;
+    }
+    .lux-mega-item.open > .lux-mega-link .lux-mega-arrow { transform: rotate(180deg); }
+    .lux-mega-banner { display: none; }
+}
+.lux-mega-trigger.force-open > .lux-mega-list { display: block; }
+.lux-mega-item.open > .lux-mega-sub { opacity:1; visibility:visible; pointer-events:auto; transform:translateX(0); }
+@media (min-width: 993px){
+    .lux-mega-trigger.force-open > .lux-mega-list { display: block; }
+    .lux-mega-trigger.force-open .lux-mega-item:hover > .lux-mega-sub { opacity:1; visibility:visible; pointer-events:auto; }
+}

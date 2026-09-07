@@ -16,7 +16,7 @@ class JewelryCertificateController extends Controller
     
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except([publicVerify, verifyPage]);
     }
     
     /**
@@ -258,5 +258,40 @@ class JewelryCertificateController extends Controller
             ->firstOrFail();
         
         return view('admin.jewelry.certificates.public-verify', compact('certificate'));
+    }
+
+    /**
+     * صفحه عمومی استعلام شناسنامه طلا (بدون نیاز به لاگین)
+     */
+    public function verifyPage(Request $request)
+    {
+        $certificate = null;
+        $message = null;
+        $messageType = null;
+
+        if ($request->filled('serial')) {
+            $serial = trim($request->serial);
+            $certificate = JewelryCertificate::where('serial_number', $serial)
+                ->with(['owner', 'transfers.fromOwner', 'transfers.toOwner'])
+                ->first();
+
+            // بررسی گزارش سرقت/مفقودی
+            $missingReport = null;
+            if ($certificate) {
+                $missingReport = \App\Models\MissingReport::where('jewelry_id', $certificate->id)
+                    ->whereIn('status', ['pending', 'confirmed', 'stolen'])
+                    ->latest()
+                    ->first();
+            }
+
+            if (!$certificate) {
+                $message = 'هیچ شناسنامه‌ای با این شماره سریال یافت نشد. لطفاً شماره سریال را بررسی کنید.';
+                $messageType = 'danger';
+            }
+
+            return view('frontend.jewelry.certificate_verify', compact('certificate', 'message', 'messageType', 'missingReport'));
+        }
+
+        return view('frontend.jewelry.certificate_verify', compact('certificate', 'message', 'messageType'));
     }
 }

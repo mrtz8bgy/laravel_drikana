@@ -1642,28 +1642,127 @@ a:hover {
 </section>
 
 <!-- ============================================ -->
-<!-- اسلایدر تمام عرض (۱۰۰٪) -->
+<!-- HERO لوکس جدید دریکانا -->
 <!-- ============================================ -->
-<section class="fullwidth-slider-section">
-    <div class="slick-carousel" data-slick-arrows="true" data-slick-dots="true" data-slick-autoplay="true">
-        @foreach (\App\Slider::where('published', 1)->get() as $key => $slider)
-            <div>
-                <a href="{{ $slider->link }}" target="_blank">
-                    <img class="d-block w-100 h-100 lazyload" src="{{ asset('frontend/images/placeholder-rect.jpg') }}" data-src="{{ asset($slider->photo) }}" alt="{{ env('APP_NAME')}} promo">
-                </a>
-                <div class="slide-content-overlay">
-                    <div class="slide-content">
-                        <h2>خرید <span>طلایی</span><br>با بهترین قیمت</h2>
-                        <p>کیفیت را با قیمت مناسب تجربه کنید</p>
-                        <a href="{{ $slider->link }}" target="_blank" class="slide-btn-custom">
-                            مشاهده و خرید <i class="la la-angle-left"></i>
-                        </a>
+<section class="d-hero">
+    <div class="container">
+        <div class="d-hero-inner">
+            <div class="d-hero-content">
+                <span class="d-hero-badge">
+                    <span class="dot"></span>
+                    معتبرترین مارکت‌پلیس طلا و جواهر ایران
+                </span>
+                <h1>
+                    درخشش <span class="gold-line">اعتماد</span>
+                    در هر <span class="gold-line">قطعه</span>
+                </h1>
+                <p>
+                    خرید و فروش طلا، جواهرات، ساعت‌های لوکس و سنگ‌های قیمتی با
+                    <strong style="color:var(--d-gold);">شناسنامه معتبر</strong>،
+                    <strong style="color:var(--d-gold);">ضمانت اصالت</strong> و
+                    <strong style="color:var(--d-gold);">امکان رهگیری دائمی</strong>.
+                    دریکانا، جایی که ارزش‌ها ماندگارند.
+                </p>
+                <div class="d-hero-cta">
+                    <a href="{{ route('categories.all') }}" class="btn-lux btn-lux-primary">
+                        <i class="la la-shopping-bag"></i> مشاهده محصولات
+                    </a>
+                    <a href="{{ route('jewelry.certificates.verify_page') }}" class="btn-lux btn-lux-outline">
+                        <i class="la la-certificate"></i> استعلام شناسنامه
+                    </a>
+                </div>
+                <div class="d-hero-stats">
+                    <div class="d-hero-stat">
+                        <strong>+۱۰ سال</strong>
+                        <span>سابقه درخشان</span>
+                    </div>
+                    <div class="d-hero-stat">
+                        <strong>+۵۰K</strong>
+                        <span>قطعه شناسنامه‌دار</span>
+                    </div>
+                    <div class="d-hero-stat">
+                        <strong>۱۰۰٪</strong>
+                        <span>گارانتی اصالت</span>
+                    </div>
+                    <div class="d-hero-stat">
+                        <strong>۲۴/۷</strong>
+                        <span>پشتیبانی تخصصی</span>
                     </div>
                 </div>
             </div>
-        @endforeach
+            <div class="d-hero-visual">
+                <div class="d-hero-ring r1"></div>
+                <div class="d-hero-ring r2"></div>
+                <div class="d-hero-ring r3"></div>
+                <div class="d-hero-diamond"></div>
+                <div class="d-hero-float-card d-fc-1">
+                    <div class="fc-icon"><i class="la la-certificate"></i></div>
+                    <div class="fc-text">
+                        <strong>شناسنامه معتبر</strong>
+                        <span>قابل استعلام آنلاین</span>
+                    </div>
+                </div>
+                <div class="d-hero-float-card d-fc-2">
+                    <div class="fc-icon"><i class="la la-shield"></i></div>
+                    <div class="fc-text">
+                        <strong>ضمانت اصالت</strong>
+                        <span>تضمین ۱۰۰٪ کالا</span>
+                    </div>
+                </div>
+                <div class="d-hero-float-card d-fc-3">
+                    <div class="fc-icon"><i class="la la-map-pin"></i></div>
+                    <div class="fc-text">
+                        <strong>رهگیری هوشمند</strong>
+                        <span>از دسترسی دزدها دور بمانید</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
+
+<!-- ============================================ -->
+<!-- سرویس‌های طلایی -->
+<!-- ============================================ -->
+<section class="d-services">
+    <div class="container">
+        <div class="d-services-grid">
+            <div class="d-service-card">
+                <div class="d-service-icon">🛡️</div>
+                <h5>گارانتی اصالت</h5>
+                <p>تمام قطعات قبل از فروش توسط کارشناسان خبره ارزیابی و تأیید می‌شوند.</p>
+            </div>
+            <div class="d-service-card">
+                <div class="d-service-icon">📜</div>
+                <h5>شناسنامه رسمی</h5>
+                <p>هر قطعه دارای شناسنامه معتبر با شماره سریال یکتا و قابل استعلام است.</p>
+            </div>
+            <div class="d-service-card">
+                <div class="d-service-icon">🚨</div>
+                <h5>رهگیری سرقت</h5>
+                <p>ثبت فوری سرقت/مفقودی و اطلاع‌رسانی به شبکه همکاران سراسر کشور.</p>
+            </div>
+            <div class="d-service-card">
+                <div class="d-service-icon">🚚</div>
+                <h5>ارسال امن</h5>
+                <p>ارسال کاملاً بیمه شده با اسکورت مسلح برای قطعات فوق‌العاده ارزشمند.</p>
+            </div>
+            <div class="d-service-card">
+                <div class="d-service-icon">💎</div>
+                <h5>تنوع بی‌نظیر</h5>
+                <p>بیش از ده‌ها هزار مدل طلا، جواهر، ساعت لوکس و سنگ قیمتی.</p>
+            </div>
+            <div class="d-service-card">
+                <div class="d-service-icon">🔧</div>
+                <h5>خدمات پس از فروش</h5>
+                <p>تعمیر، سایز کردن، تمیز کردن و بروزرسانی رایگان شناسنامه.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- فلش دیل
 
 <!-- ============================================ -->
 <!-- فلش دیل (تخفیف امروز) - زیر بنر -->
@@ -2105,6 +2204,218 @@ a:hover {
         </div>
     </div>
 </div>
+
+<div id="section_best_sellers"></div>
+
+<!-- ============================================ -->
+<!-- بخش دسته‌بندی‌های طلا و جواهر -->
+<!-- ============================================ -->
+<section class="d-categories">
+    <div class="container">
+        <div class="section-heading">
+            <span class="kicker">CATEGORIES</span>
+            <h2>گنجینه‌ای از <span class="gold">زیباترین</span> محصولات</h2>
+            <p>از انگشترهای نامزدی ظریف تا ساعت‌های کلکسیونی و الماس‌های کمیاب، هر آنچه از یک مارکت‌پلیس لوکس انتظار دارید.</p>
+            <span class="divider-gold"></span>
+        </div>
+        <div class="d-cat-grid">
+            <a href="{{ route('categories.all') }}" class="d-cat-card">
+                <img src="{{ asset('frontend/images/drikana/ring.svg') }}" alt="حلقه" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <h4>حلقه و انگشتر</h4>
+                <span class="cat-count">۲,۴۰۰+ مدل</span>
+            </a>
+            <a href="{{ route('categories.all') }}" class="d-cat-card">
+                <img src="{{ asset('frontend/images/drikana/necklace.svg') }}" alt="گردنبند" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <h4>گردنبند و آویز</h4>
+                <span class="cat-count">طلای ظریف</span>
+            </a>
+            <a href="{{ route('categories.all') }}" class="d-cat-card">
+                <img src="{{ asset('frontend/images/drikana/watch.svg') }}" alt="ساعت" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <h4>ساعت لوکس</h4>
+                <span class="cat-count">رولکس، پتک و...</span>
+            </a>
+            <a href="{{ route('categories.all') }}" class="d-cat-card">
+                <img src="{{ asset('frontend/images/drikana/diamond.svg') }}" alt="الماس" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(110,180,230,.4));">
+                <h4>الماس و سنگ قیمتی</h4>
+                <span class="cat-count">قیمتی و نیمه‌قیمتی</span>
+            </a>
+            <a href="{{ route('categories.all') }}" class="d-cat-card">
+                <img src="{{ asset('frontend/images/drikana/crown.svg') }}" alt="تاج" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <h4>جواهرات سلطنتی</h4>
+                <span class="cat-count">کلکسیون ویژه</span>
+            </a>
+            <a href="{{ route('categories.all') }}" class="d-cat-card">
+                <img src="{{ asset('frontend/images/drikana/coin.svg') }}" alt="سکه" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <h4>شمش و سکه</h4>
+                <span class="cat-count">سرمایه‌گذاری</span>
+            </a>
+            <a href="{{ route('categories.all') }}" class="d-cat-card">
+                <img src="{{ asset('frontend/images/drikana/gift.svg') }}" alt="هدیه" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(200,30,60,.4));">
+                <h4>پک هدیه لوکس</h4>
+                <span class="cat-count">بسته‌بندی ویژه</span>
+            </a>
+            <a href="{{ route('categories.all') }}" class="d-cat-card">
+                <img src="{{ asset('frontend/images/drikana/antique.svg') }}" alt="عتیقه" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(200,160,80,.4));">
+                <h4>اشیاء عتیقه</h4>
+                <span class="cat-count">کلکسیونرها</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- بخش شناسنامه و امنیت -->
+<!-- ============================================ -->
+<section class="d-trust">
+    <div class="container">
+        <div class="d-trust-inner">
+            <div class="d-trust-content">
+                <span class="kicker" style="color:var(--d-gold); font-weight:700; letter-spacing:3px; font-size:13px;">
+                    CERTIFICATE & SECURITY
+                </span>
+                <h2 style="font-size:clamp(24px,3vw,38px); font-weight:800; margin:10px 0 20px; line-height:1.4;">
+                    هر قطعه، یک <span style="background:var(--grad-gold); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">شناسنامه معتبر</span>؛ آرامش خاطر شما
+                </h2>
+                <p style="color:var(--d-gray-300); font-size:15px; line-height:2.1; margin-bottom:0;">
+                    سامانه شناسنامه دیجیتال دریکانا، سندی رسمی و غیرقابل جعل است که تمامی مشخصات فنی، عیار، وزن، سنگ‌های به‌کاررفته و تاریخچه مالکیت قطعه را در خود جای می‌دهد. هرگونه نقل و انتقال، تعمیر یا تغییر وضعیت در پرونده قطعه به صورت دائمی ثبت می‌شود.
+                </p>
+                <div class="d-trust-features">
+                    <div class="d-trust-feature">
+                        <div class="tf-icon"><i class="la la-qrcode"></i></div>
+                        <div>
+                            <h5>QR-Code اختصاصی</h5>
+                            <p>با اسکن کد روی هر شناسنامه، بلافاصله به صفحه استعلام هدایت می‌شوید.</p>
+                        </div>
+                    </div>
+                    <div class="d-trust-feature">
+                        <div class="tf-icon"><i class="la la-chain"></i></div>
+                        <div>
+                            <h5>تاریخچه شفاف</h5>
+                            <p>تمام انتقالات مالکیت، تعمیرات و کارشناسی‌ها در بلوک‌زنجیره اختصاصی ثبت می‌شود.</p>
+                        </div>
+                    </div>
+                    <div class="d-trust-feature">
+                        <div class="tf-icon"><i class="la la-id-card"></i></div>
+                        <div>
+                            <h5>احراز هویت مالک</h5>
+                            <p>هرگونه معامله یا انتقال با احراز هویت رسمی مالک انجام می‌شود.</p>
+                        </div>
+                    </div>
+                    <div class="d-trust-feature">
+                        <div class="tf-icon"><i class="la la-bell"></i></div>
+                        <div>
+                            <h5>هشدار سرقت لحظه‌ای</h5>
+                            <p>در صورت اعلام سرقت، تمام همکاران و مراکز از ممنوع‌المعامله بودن قطعه آگاه می‌شوند.</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+                    <a href="{{ route('jewelry.certificates.verify_page') }}" class="btn-lux btn-lux-primary">
+                        <i class="la la-search"></i> استعلام آنلاین شناسنامه
+                    </a>
+                    <a href="{{ route('jewelry.missing_reports.create_public') }}" class="btn-lux btn-lux-outline">
+                        <i class="la la-bullhorn"></i> اعلام سرقت/مفقودی
+                    </a>
+                </div>
+            </div>
+            <div class="d-trust-visual">
+                <div class="d-cert-mockup">
+                    <div class="cert-head">
+                        <h6>Certificate No. DRK</h6>
+                        <h3>گواهی اصالت</h3>
+                    </div>
+                    <div class="cert-row"><span>محصول:</span><span>انگشتر الماس</span></div>
+                    <div class="cert-row"><span>فلز:</span><span>طلای ۱۸ عیار</span></div>
+                    <div class="cert-row"><span>وزن:</span><span>۸.۴ گرم</span></div>
+                    <div class="cert-row"><span>سنگ:</span><span>الماس ۱.۲ قیراط</span></div>
+                    <div class="cert-row"><span>مالک:</span><span>—</span></div>
+                    <div class="cert-row"><span>تاریخ صدور:</span><span>۱۴۰۳/۰۶/۱۵</span></div>
+                    <div class="cert-seal">DRIKANA<br>CERTIFIED</div>
+                    <div class="cert-qr"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- استعلام شناسنامه CTA -->
+<!-- ============================================ -->
+<section class="d-verify-cta">
+    <div class="container">
+        <div class="d-verify-box">
+            <div class="d-verify-icon"><i class="la la-certificate"></i></div>
+            <h2 style="font-size:clamp(22px,3vw,34px); font-weight:800; margin:0 0 12px;">
+                همین حالا <span style="background:var(--grad-gold); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">اصالت</span> قطعه خود را بررسی کنید
+            </h2>
+            <p style="color:var(--d-gray-300); margin:0;">
+                با وارد کردن شماره سریال شناسنامه، از مشخصات، اصالت و وضعیت قطعه خود مطلع شوید.
+            </p>
+            <form method="GET" action="{{ route('jewelry.certificates.verify_page') }}" class="d-verify-form">
+                <input type="text" name="serial" placeholder="شماره سریال شناسنامه را وارد کنید..." required>
+                <button type="submit"><i class="la la-search la-flip-horizontal"></i> استعلام کن</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!-- سوالات متداول -->
+<!-- ============================================ -->
+<section class="d-faq">
+    <div class="container">
+        <div class="section-heading">
+            <span class="kicker">FAQ</span>
+            <h2>سوالات <span class="gold">متداول</span></h2>
+            <p>پاسخ به مهم‌ترین پرسش‌های شما درباره خرید طلا، شناسنامه و خدمات دریکانا.</p>
+            <span class="divider-gold"></span>
+        </div>
+        <div class="d-faq-list">
+            <div class="d-faq-item open">
+                <div class="d-faq-q">
+                    <span>شناسنامه طلا چیست و چرا اهمیت دارد؟</span>
+                    <i class="la la-angle-down"></i>
+                </div>
+                <div class="d-faq-a"><p>شناسنامه طلا سندی رسمی و دیجیتال است که مشخصات فنی قطعه شامل وزن، عیار، نوع و مشخصات سنگ، مالک و تاریخچه آن را ثبت می‌کند. با شناسنامه، اصالت قطعه قابل پیگیری و انتقال مالکیت به صورت شفاف و امن انجام می‌شود.</p></div>
+            </div>
+            <div class="d-faq-item">
+                <div class="d-faq-q">
+                    <span>چگونه از اصالت کالایی که می‌خرم مطمئن شوم؟</span>
+                    <i class="la la-angle-down"></i>
+                </div>
+                <div class="d-faq-a"><p>تمام محصولات دریکانا قبل از درج توسط کارشناسان رسمی ارزیابی شده و دارای شناسنامه معتبر با شماره سریال یکتا هستند. شما می‌توانید در هر لحظه با وارد کردن شماره سریال در صفحه «استعلام شناسنامه»، اصالت و وضعیت قطعه را بررسی کنید.</p></div>
+            </div>
+            <div class="d-faq-item">
+                <div class="d-faq-q">
+                    <span>در صورت سرقت یا مفقودی طلا چه کار باید بکنم؟</span>
+                    <i class="la la-angle-down"></i>
+                </div>
+                <div class="d-faq-a"><p>بلافاصله از پنل کاربری خود وارد بخش «اعلام سرقت/مفقودی» شوید و گزارش را ثبت کنید. قطعه شما ظرف چند دقیقه در شبکه همکاران، مراکز خریدوفروش، تعمیرگاه‌ها و لیست ممنوع‌المعامله دریکانا قرار می‌گیرد.</p></div>
+            </div>
+            <div class="d-faq-item">
+                <div class="d-faq-q">
+                    <span>آیا امکان فروش طلای کارکرده در دریکانا وجود دارد؟</span>
+                    <i class="la la-angle-down"></i>
+                </div>
+                <div class="d-faq-a"><p>بله. شما می‌توانید با ثبت‌نام به عنوان فروشنده یا از بخش «فروش طلای من» درخواست کارشناسی رایگان قطعه خود را ثبت کنید. پس از ارزیابی توسط کارشناسان، قطعه با شناسنامه جدید در مارکت‌پلیس عرضه می‌شود.</p></div>
+            </div>
+            <div class="d-faq-item">
+                <div class="d-faq-q">
+                    <span>شیوه ارسال قطعات گران‌بها چگونه است؟</span>
+                    <i class="la la-angle-down"></i>
+                </div>
+                <div class="d-faq-a"><p>قطعات با ارزش بالا با بیمه کامل و اسکورت امنیتی به درب منزل شما ارسال می‌شوند. برای سفارش‌های معمولی نیز بسته‌بندی ایمن و بیمه شده توسط پست پیشتاز یا تیپاکس انجام می‌شود.</p></div>
+            </div>
+            <div class="d-faq-item">
+                <div class="d-faq-q">
+                    <span>هزینه صدور شناسنامه جدید چقدر است؟</span>
+                    <i class="la la-angle-down"></i>
+                </div>
+                <div class="d-faq-a"><p>برای قطعاتی که از دریکانا خریداری می‌شوند، صدور شناسنامه کاملاً رایگان است. برای قطعات متفرقه، هزینه کارشناسی و صدور شناسنامه بر اساس وزن و نوع قطعه محاسبه می‌شود.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <div id="section_best_sellers"></div>
 

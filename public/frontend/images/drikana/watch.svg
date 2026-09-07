@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4d47c"/>
+      <stop offset="100%" stop-color="#8a6a1c"/>
+    </linearGradient>
+  </defs>
+  <!-- Straps -->
+  <rect x="48" y="8" width="24" height="22" rx="4" fill="#1a1f4d"/>
+  <rect x="48" y="90" width="24" height="22" rx="4" fill="#1a1f4d"/>
+  <!-- Watch case -->
+  <circle cx="60" cy="60" r="32" fill="url(#wg)" stroke="#8a6a1c" stroke-width="2"/>
+  <circle cx="60" cy="60" r="27" fill="#07091a"/>
+  <circle cx="60" cy="60" r="27" fill="none" stroke="#d4af37" stroke-width="0.8"/>
+  <!-- Hour markers -->
+  <g fill="#d4af37">
+    <rect x="59" y="37" width="2" height="5"/>
+    <rect x="59" y="78" width="2" height="5"/>
+    <rect x="37" y="59" width="5" height="2"/>
+    <rect x="78" y="59" width="5" height="2"/>
+  </g>
+  <!-- Hands -->
+  <line x1="60" y1="60" x2="60" y2="45" stroke="#d4af37" stroke-width="2" stroke-linecap="round"/>
+  <line x1="60" y1="60" x2="72" y2="60" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="60" cy="60" r="2.5" fill="#d4af37"/>
+  <!-- Crown -->
+  <rect x="92" y="56" width="6" height="8" rx="1" fill="#b8892a"/>
+</svg>

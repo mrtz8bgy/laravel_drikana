@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="coing" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#fff3b8"/>
+      <stop offset="60%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#8a6a1c"/>
+    </radialGradient>
+  </defs>
+  <ellipse cx="62" cy="62" rx="40" ry="40" fill="#6a5012"/>
+  <circle cx="60" cy="60" r="40" fill="url(#coing)" stroke="#8a6a1c" stroke-width="1"/>
+  <circle cx="60" cy="60" r="33" fill="none" stroke="#fff7d6" stroke-width="1" opacity="0.4"/>
+  <circle cx="60" cy="60" r="35" fill="none" stroke="#8a6a1c" stroke-width="0.6"/>
+  <text x="60" y="68" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="bold" fill="#8a6a1c">D</text>
+  <circle cx="48" cy="48" r="4" fill="#fff" opacity="0.5"/>
+</svg>

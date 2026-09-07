@@ -47,16 +47,13 @@
 <!-- Favicon -->
 <link type="image/x-icon" href="{{ asset(\App\GeneralSetting::first()->favicon) }}" rel="shortcut icon" />
 
-<!-- فونت سیستمی به جای فونت گوگل -->
-<style>
-    body, button, input, select, textarea {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "IranSans", Tahoma, sans-serif;
-    }
-</style>
+<!-- فونت فارسی لوکس Vazirmatn -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
 
-{{-- لینک فونت گوگل کامنت شد - برای رفع مشکل کندی سایت
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet" media="none" onload="if(media!='all')media='all'">
---}}
+<!-- تم لوکس Drikana Gold & Jewelry -->
+<link type="text/css" href="{{ asset('frontend/css/drikana-luxury.css') }}" rel="stylesheet" media="all">
+<link type="text/css" href="{{ asset('frontend/css/megamenu-lux.css') }}" rel="stylesheet" media="all">
 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="{{ asset('frontend/css/bootstrap.min.css') }}" type="text/css" media="all">
@@ -603,5 +600,35 @@
 
 @yield('script')
 
+<!-- Back to top -->
+<button class="d-back-top" id="dBackTop" title="بازگشت به بالا" aria-label="Back to top">
+    <i class="la la-angle-up"></i>
+</button>
+
+<script>
+(function(){
+    // Back to top
+    var bk = document.getElementById('dBackTop');
+    if (bk) {
+        window.addEventListener('scroll', function(){
+            if (window.scrollY > 400) bk.classList.add('show');
+            else bk.classList.remove('show');
+        });
+        bk.addEventListener('click', function(){
+            window.scrollTo({top:0, behavior:'smooth'});
+        });
+    }
+
+    // FAQ accordion
+    document.addEventListener('click', function(e){
+        var q = e.target.closest('.d-faq-q');
+        if (!q) return;
+        var item = q.closest('.d-faq-item');
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.d-faq-item.open').forEach(function(i){ i.classList.remove('open'); });
+        if (!isOpen) item.classList.add('open');
+    });
+})();
+</script>
 </body>
 </html>

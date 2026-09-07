@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="ng" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f4d47c"/>
+      <stop offset="100%" stop-color="#8a6a1c"/>
+    </linearGradient>
+  </defs>
+  <!-- Chain -->
+  <path d="M20,30 Q60,100 100,30" fill="none" stroke="url(#ng)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M20,30 Q60,95 100,30" fill="none" stroke="#b8892a" stroke-width="1"/>
+  <!-- Pendant setting -->
+  <circle cx="60" cy="88" r="10" fill="url(#ng)" stroke="#8a6a1c" stroke-width="1"/>
+  <!-- Pendant gem -->
+  <polygon points="60,75 72,88 60,105 48,88" fill="#c41e3a" stroke="#8a0a1e" stroke-width="0.8"/>
+  <polygon points="60,75 66,88 60,105 54,88" fill="#ff6b7a" opacity="0.4"/>
+  <circle cx="58" cy="82" r="2" fill="#fff" opacity="0.6"/>
+</svg>

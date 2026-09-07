@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="rg" cx="50%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#fff7d6"/>
+      <stop offset="50%" stop-color="#f0d080"/>
+      <stop offset="100%" stop-color="#8a6a1c"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b8892a"/>
+      <stop offset="50%" stop-color="#f4d47c"/>
+      <stop offset="100%" stop-color="#b8892a"/>
+    </linearGradient>
+  </defs>
+  <!-- Ring band -->
+  <ellipse cx="60" cy="85" rx="32" ry="12" fill="url(#gold)"/>
+  <ellipse cx="60" cy="82" rx="32" ry="12" fill="none" stroke="#f4d47c" stroke-width="1" opacity="0.6"/>
+  <!-- Diamond -->
+  <g transform="translate(60 35)">
+    <polygon points="-18,0 18,0 12,14 -12,14" fill="url(#rg)" stroke="#b8892a" stroke-width="0.8"/>
+    <polygon points="12,14 -12,14 0,28" fill="url(#gold)"/>
+    <polygon points="-18,0 0,-8 18,0" fill="#fff" opacity="0.3"/>
+    <line x1="-18" y1="0" x2="18" y2="0" stroke="#b8892a" stroke-width="0.6"/>
+    <line x1="-12" y1="14" x2="12" y2="14" stroke="#b8892a" stroke-width="0.6"/>
+    <line x1="-12" y1="14" x2="0" y2="28" stroke="#b8892a" stroke-width="0.5"/>
+    <line x1="12" y1="14" x2="0" y2="28" stroke="#b8892a" stroke-width="0.5"/>
+    <line x1="-18" y1="0" x2="-12" y2="14" stroke="#b8892a" stroke-width="0.5"/>
+    <line x1="18" y1="0" x2="12" y2="14" stroke="#b8892a" stroke-width="0.5"/>
+    <!-- sparkle -->
+    <circle cx="0" cy="0" r="2" fill="#fff"/>
+  </g>
+</svg>

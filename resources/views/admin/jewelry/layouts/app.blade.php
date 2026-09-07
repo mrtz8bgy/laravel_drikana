@@ -675,6 +675,44 @@
         }
     </style>
 
+
+        /* ====== تم طلایی-سرمه‌ای دریکانا برای پنل جواهرات ====== */
+        @import url('https://cdn.jsdelivr.net/npm/vazirmatn@33.0.3/Vazirmatn-font-face.css');
+        :root { --jg:#d4af37; --jg-light:#f4d47c; --jg-dark:#07091a; --jg-navy:#12173a; }
+        body { background:#f3efe6; font-family:'Vazirmatn',Tahoma,sans-serif !important; }
+        .sidebar {
+            background: linear-gradient(180deg, #07091a 0%, #12173a 60%, #1a1f4d 100%) !important;
+            border-left: 3px solid #d4af37;
+        }
+        .sidebar a { color: rgba(255,255,255,.75); border-right:3px solid transparent; border-radius:8px; margin-bottom:4px; transition: all .25s; }
+        .sidebar a:hover, .sidebar a.active {
+            background: linear-gradient(90deg, rgba(212,175,55,.15), rgba(212,175,55,.05)) !important;
+            color: #f4d47c !important;
+            border-right-color: #d4af37 !important;
+        }
+        .sidebar-brand {
+            background: linear-gradient(135deg, rgba(212,175,55,.1), transparent);
+            border-bottom: 1px solid rgba(212,175,55,.2) !important;
+        }
+        .sidebar-brand h4 {
+            background: linear-gradient(135deg, #f4d47c, #d4af37);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            font-weight:800; letter-spacing:.5px;
+        }
+        .navbar-top {
+            background: linear-gradient(90deg, #fff, #fffdf7) !important;
+            border-bottom: 2px solid #d4af37;
+        }
+        .page-header h1 { color:#07091a; font-weight:800; }
+        .btn-primary { background:linear-gradient(135deg,#d4af37,#b8892a); border-color:#b8892a; }
+        .btn-primary:hover { background:linear-gradient(135deg,#b8892a,#d4af37); border-color:#b8892a; }
+        .badge.bg-danger { background:linear-gradient(135deg,#ef4444,#b91c1c) !important; }
+        .card, .table { border-color: rgba(212,175,55,.2); }
+        .card-header, .table thead { background: linear-gradient(90deg, rgba(212,175,55,.08), rgba(212,175,55,.02)); }
+        a.text-danger { color:#e53e3e !important; }
+        .sidebar a.text-danger:hover { background:rgba(229,62,62,.12) !important; color:#fca5a5 !important; border-right-color:#e53e3e !important; }
+        @media (max-width:768px){ .sidebar { min-height:auto; } }
+
     @stack('styles')
 </head>
 <body>
@@ -742,7 +780,13 @@
                             📊 گزارشات
                         </a>
 
-                        <div class="mt-4 pt-3 border-top border-secondary"></div>
+                        <div class="mt-4 pt-3" style="border-top:1px solid rgba(212,175,55,.2);"></div>
+                        <a href="{{ route('admin.dashboard') }}" class="mb-2 rounded">
+                            🏪 پنل اصلی فروشگاه
+                        </a>
+                        <a href="{{ route('home') }}" class="mb-2 rounded" target="_blank">
+                            🌐 مشاهده سایت
+                        </a>
                         <a href="#" class="text-danger" 
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             🚪 خروج از سیستم

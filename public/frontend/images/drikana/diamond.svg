@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="dg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e0f4ff"/>
+      <stop offset="50%" stop-color="#b8e0ff"/>
+      <stop offset="100%" stop-color="#6db3d9"/>
+    </linearGradient>
+    <linearGradient id="dg2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#8ecae6" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+  <polygon points="60,10 100,40 60,110 20,40" fill="url(#dg)" stroke="#4a90b8" stroke-width="1"/>
+  <polygon points="60,10 80,40 60,110 40,40" fill="url(#dg2)" opacity="0.6"/>
+  <polygon points="60,10 100,40 60,40" fill="#ffffff" opacity="0.5"/>
+  <polygon points="60,10 20,40 60,40" fill="#ffffff" opacity="0.3"/>
+  <line x1="20" y1="40" x2="100" y2="40" stroke="#4a90b8" stroke-width="0.8"/>
+  <line x1="40" y1="40" x2="60" y2="110" stroke="#4a90b8" stroke-width="0.6"/>
+  <line x1="80" y1="40" x2="60" y2="110" stroke="#4a90b8" stroke-width="0.6"/>
+  <line x1="60" y1="10" x2="60" y2="110" stroke="#4a90b8" stroke-width="0.4"/>
+  <line x1="20" y1="40" x2="40" y2="40" stroke="#4a90b8" stroke-width="0.4"/>
+  <line x1="80" y1="40" x2="100" y2="40" stroke="#4a90b8" stroke-width="0.4"/>
+  <circle cx="60" cy="30" r="3" fill="#ffffff" opacity="0.8"/>
+</svg>

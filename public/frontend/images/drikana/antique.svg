@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c7a457"/>
+      <stop offset="100%" stop-color="#6a4f12"/>
+    </linearGradient>
+  </defs>
+  <!-- Vase body -->
+  <path d="M40,40 L80,40 L75,55 Q75,90 60,105 Q45,90 45,55 Z" fill="url(#ag)" stroke="#4a3508" stroke-width="1"/>
+  <!-- Rim -->
+  <ellipse cx="60" cy="40" rx="20" ry="5" fill="#8a6a1c" stroke="#4a3508" stroke-width="0.8"/>
+  <ellipse cx="60" cy="38" rx="20" ry="5" fill="url(#ag)"/>
+  <!-- Neck -->
+  <path d="M48,30 Q48,38 52,42 M72,30 Q72,38 68,42" fill="none" stroke="#8a6a1c" stroke-width="1.5"/>
+  <!-- Handles -->
+  <path d="M40,55 Q25,60 30,80 Q35,80 45,75" fill="none" stroke="#8a6a1c" stroke-width="2"/>
+  <path d="M80,55 Q95,60 90,80 Q85,80 75,75" fill="none" stroke="#8a6a1c" stroke-width="2"/>
+  <!-- Decorative patterns -->
+  <circle cx="60" cy="70" r="4" fill="#4a3508"/>
+  <circle cx="50" cy="60" r="2" fill="#4a3508"/>
+  <circle cx="70" cy="60" r="2" fill="#4a3508"/>
+  <path d="M48,80 Q60,85 72,80" fill="none" stroke="#4a3508" stroke-width="1"/>
+</svg>

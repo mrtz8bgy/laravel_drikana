@@ -453,3 +453,26 @@ Route::get('/products/discounted', [ProductController::class, 'discounted_produc
 Route::get('/products/mens-jewelry', [ProductController::class, 'mens_jewelry'])->name('products.mens');
 Route::get('/products/womens-jewelry', [ProductController::class, 'womens_jewelry'])->name('products.womens');
 
+
+// ==========================================
+// روت‌های عمومی مارکت‌پلیس طلا و جواهر دریکانا
+// ==========================================
+
+// استعلام عمومی شناسنامه طلا (بدون نیاز به ورود)
+Route::get('/jewelry/certificate-verify', 'Jewelry\\JewelryCertificateController@verifyPage')
+    ->name('jewelry.certificates.verify_page');
+
+// صفحه اعلام سرقت/مفقودی عمومی (نمایش فرم)
+Route::get('/jewelry/report-stolen', 'FrontendJewelryController@reportStolenForm')
+    ->name('jewelry.missing_reports.create_public');
+Route::post('/jewelry/report-stolen', 'FrontendJewelryController@reportStolenStore')
+    ->name('jewelry.missing_reports.store_public');
+
+// صفحه رهگیری عمومی گواهی
+Route::get('/jewelry/track/{serial?}', 'FrontendJewelryController@track')
+    ->name('jewelry.track');
+
+// صفحه درباره سرویس شناسنامه
+Route::get('/jewelry/certificate-service', function () {
+    return view('frontend.jewelry.service');
+})->name('jewelry.service');
