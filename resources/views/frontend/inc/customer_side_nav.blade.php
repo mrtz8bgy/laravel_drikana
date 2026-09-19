@@ -58,7 +58,7 @@
 -->
                 @if ($refund_request_addon != null && $refund_request_addon->activated == 1)
                     <li>
-                        <a href="{{ route('customer_refund_request') }}" class="{{ areActiveRoutesHome(['customer_refund_request'])}}">
+                        <a href="{{ Route::has('customer_refund_request') ? route('customer_refund_request') : '#' }}" class="{{ areActiveRoutesHome(['customer_refund_request'])}}">
                             <i class="la la-file-text"></i>
                             <span class="category-name">
                                 {{__('Sent Refund Request')}}

@@ -40,17 +40,18 @@
             </thead>
             <tbody>
                 @foreach($customers as $key => $customer)
+                    @php $user = $customer->user; @endphp
                     <tr>
                         <td>{{ ($key+1) + ($customers->currentPage() - 1)*$customers->perPage() }}</td>
-                        <td>{{$customer->user->name}}</td>
-                        <td>{{$customer->user->email}}</td>
-                        <td>{{$customer->user->phone}}</td>
+                        <td>{{ $user ? $user->name : __('Unknown') }}</td>
+                        <td>{{ $user ? $user->email : '-' }}</td>
+                        <td>{{ $user ? $user->phone : '-' }}</td>
                         <td>
-                            @if ($customer->user->customer_package != null)
-                                {{$customer->user->customer_package->name}}
+                            @if ($user && $user->customer_package != null)
+                                {{$user->customer_package->name}}
                             @endif
                         </td>
-                        <td>{{single_price($customer->user->balance)}}</td>
+                        <td>{{ $user ? single_price($user->balance) : '0' }}</td>
                         <td>
                             <div class="btn-group dropdown">
                                 <button class="btn btn-primary dropdown-toggle dropdown-toggle-icon" data-toggle="dropdown" type="button">

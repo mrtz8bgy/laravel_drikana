@@ -234,7 +234,7 @@
         justify-content: space-between;
     }
     .lux-mega-list {
-        position: static !important;
+        /*! position: static !important; */
         width: calc(100% - 20px) !important;
         margin: 0 10px 10px;
         border-radius: 12px;

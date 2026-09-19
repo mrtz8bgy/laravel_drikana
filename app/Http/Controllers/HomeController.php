@@ -251,6 +251,18 @@ class HomeController extends Controller
     }
 
     /**
+     * نمایش محصولات "تخفیف امروز"
+     */
+    public function todays_deal_products()
+    {
+        $products = filter_products(Product::where('published', 1)->where('todays_deal', 1))->paginate(12);
+        $all_colors = collect([]);
+        $attributes = \App\Attribute::all();
+        $selected_attributes = [];
+        return view('frontend.product_listing', compact('products', 'all_colors', 'attributes', 'selected_attributes'));
+    }
+
+    /**
      * نمایش جواهرات مردانه (Men's Jewelry)
      */
     public function mens_jewelry()

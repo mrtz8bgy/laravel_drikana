@@ -20,14 +20,14 @@
 @endsection
 
 @section('jewelry_content')
-<div class="container-fluid">
+<div class="container-fluid certificate-list-page">
     <div class="page-header">
         <div class="d-flex justify-content-between align-items-center">
             <h1>
                 <i class="fas fa-certificate"></i>
                 مدیریت شناسنامه‌ها
             </h1>
-            <a href="{{ route('admin.jewelry.certificates.create') }}" class="btn btn-success">
+            <a href="{{ route('admin.jewelry.certificates.create') }}" class="btn certificate-add-button">
                 <i class="fas fa-plus-circle"></i> شناسنامه جدید
             </a>
         </div>
@@ -106,7 +106,7 @@
                     
                     <div class="col-md-4 d-flex align-items-end">
                         <div class="mb-3 w-100">
-                            <button type="submit" class="btn btn-primary w-100">
+                            <button type="submit" class="btn certificate-filter-button w-100">
                                 <i class="fas fa-search"></i> اعمال فیلتر
                             </button>
                         </div>
@@ -201,7 +201,7 @@
                 <small class="ms-2">({{ $certificates->total() }} مورد)</small>
             </h5>
             <div>
-                <a href="{{ route('admin.jewelry.certificates.create') }}" class="btn btn-light btn-sm">
+                <a href="{{ route('admin.jewelry.certificates.create') }}" class="btn certificate-new-button">
                     <i class="fas fa-plus"></i> جدید
                 </a>
             </div>
@@ -220,7 +220,7 @@
                                 <th>مالک</th>
                                 <th>تاریخ صدور</th>
                                 <th>عکس</th>
-                                <th width="200"><td>عملیات</td></th>
+                                <th width="260">عملیات</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -254,9 +254,9 @@
                                                 <small class="text-muted">{{ $certificate->owner->phone }}</small>
                                             </div>
                                             <a href="{{ route('admin.jewelry.owners.show', $certificate->owner) }}" 
-                                               class="btn btn-sm btn-outline-primary ms-2" 
+                                               class="btn certificate-owner-button ms-2" 
                                                title="مشاهده مالک">
-                                                <i class="fas fa-external-link-alt"></i>
+                                                <i class="fas fa-user"></i> مشاهده مالک
                                             </a>
                                         </div>
                                     @else
@@ -291,33 +291,32 @@
                                         </span>
                                     @endif
                                 </td>
-                                <td><th>
-                                    <div class="btn-group btn-group-sm">
+                                <td class="certificate-actions-cell">
+                                    <div class="certificate-actions">
                                         <a href="{{ route('admin.jewelry.certificates.show', $certificate) }}" 
-                                           class="btn btn-info" title="مشاهده">
+                                           class="btn certificate-action certificate-action-view" title="مشاهده">
                                             <i class="fas fa-eye"></i>مشاهده
                                         </a>
                                         <a href="{{ route('admin.jewelry.certificates.edit', $certificate) }}" 
-                                           class="btn btn-warning" title="ویرایش">
+                                                         class="btn certificate-action certificate-action-edit" title="ویرایش">
                                             <i class="fas fa-edit"></i>ویرایش
                                         </a>
                                         <a href="{{ route('admin.jewelry.certificates.print', $certificate) }}" 
-                                           class="btn btn-outline-info" title="چاپ" target="_blank">
-                                            <i class="fas fa-print"></i>
+                                                         class="btn certificate-action certificate-action-print" title="چاپ" target="_blank">
+                                            <i class="fas fa-print"></i> چاپ
                                         </a>
                                         <form action="{{ route('admin.jewelry.certificates.destroy', $certificate) }}" 
-                                              method="POST" class="d-inline">
+                                              method="POST" class="certificate-delete-form">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" 
-                                                    class="btn btn-danger" 
+                                                    class="btn certificate-action certificate-action-delete" 
                                                     title="حذف"
                                                     onclick="return confirm('آیا از حذف شناسنامه «{{ $certificate->serial_number }}» مطمئن هستید؟')">
                                                 <i class="fas fa-trash"></i>حذف
                                             </button>
                                         </form>
                                     </div>
-</th>
                                 </td>
                             </tr>
                             @endforeach
@@ -352,16 +351,111 @@
 
 @push('styles')
 <style>
-    .table th {
+    .certificate-list-page .table th {
         background-color: #f8f9fa;
         font-weight: 600;
     }
-    .badge {
+    .certificate-list-page .badge {
         font-weight: 500;
         padding: 5px 10px;
     }
-    .btn-group-sm .btn {
-        padding: 0.25rem 0.5rem;
+    .certificate-list-page .certificate-add-button,
+    .certificate-list-page .certificate-new-button,
+    .certificate-list-page .certificate-filter-button,
+    .certificate-list-page .certificate-owner-button,
+    .certificate-list-page .certificate-action {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        visibility: visible !important;
+        opacity: 1 !important;
+        text-decoration: none !important;
+        white-space: nowrap;
+        font-weight: 600;
+    }
+    .certificate-list-page .certificate-add-button {
+        color: #fff !important;
+        background: #198754 !important;
+        border: 1px solid #157347 !important;
+    }
+    .certificate-list-page .certificate-new-button {
+        color: #212529 !important;
+        background: #fff !important;
+        border: 1px solid #ced4da !important;
+        min-height: 32px;
+    }
+    .certificate-list-page .certificate-filter-button {
+        color: #fff !important;
+        background: #0d6efd !important;
+        border: 1px solid #0a58ca !important;
+        min-height: 38px;
+    }
+    .certificate-list-page .certificate-owner-button {
+        min-height: 32px;
+        padding: 6px 10px;
+        color: #fff !important;
+        background: #0d6efd !important;
+        border: 1px solid #084298 !important;
+        border-radius: 5px;
+        font-size: 0.8rem;
+    }
+    .certificate-list-page .certificate-actions-cell {
+        min-width: 260px;
+        vertical-align: middle;
+    }
+    .certificate-list-page .certificate-actions {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .certificate-list-page .certificate-delete-form {
+        display: inline-flex;
+        margin: 0;
+    }
+    .certificate-list-page .certificate-action {
+        min-width: 42px;
+        min-height: 34px;
+        padding: 6px 10px;
+        border-radius: 5px;
+        font-size: 0.82rem;
+    }
+    .certificate-list-page .certificate-action-view {
+        color: #fff !important;
+        background: #087990 !important;
+        border: 1px solid #087990 !important;
+    }
+    .certificate-list-page .certificate-action-edit {
+        color: #664d03 !important;
+        background: #ffda6a !important;
+        border: 1px solid #ffcd39 !important;
+    }
+    .certificate-list-page .certificate-action-print {
+        color: #fff !important;
+        background: #6f42c1 !important;
+        border: 1px solid #59359a !important;
+    }
+    .certificate-list-page .certificate-action-delete {
+        color: #fff !important;
+        background: #dc3545 !important;
+        border: 1px solid #b02a37 !important;
+    }
+    .certificate-list-page .certificate-add-button:hover,
+    .certificate-list-page .certificate-new-button:hover,
+    .certificate-list-page .certificate-filter-button:hover,
+    .certificate-list-page .certificate-owner-button:hover,
+    .certificate-list-page .certificate-action:hover {
+        filter: brightness(0.94);
+        transform: translateY(-1px);
+    }
+    @media (max-width: 768px) {
+        .certificate-list-page .certificate-actions {
+            justify-content: flex-start;
+        }
+        .certificate-list-page .certificate-actions-cell {
+            min-width: 220px;
+        }
     }
 </style>
 @endpush

@@ -17,13 +17,13 @@ class GeneralSettingController extends Controller
     public function index()
     {
         $generalsetting = GeneralSetting::first();
-        return view("general_settings.index", compact("generalsetting"));
+        return view("admin.general_settings.index", compact("generalsetting"));
     }
 
     public function logo()
     {
         $generalsetting = GeneralSetting::first();
-        return view("general_settings.logo", compact("generalsetting"));
+        return view("admin.general_settings.logo", compact("generalsetting"));
     }
 
     //updates the logo and favicons of the system
@@ -69,7 +69,7 @@ class GeneralSettingController extends Controller
     public function color()
     {
         $generalsetting = GeneralSetting::first();
-        return view("general_settings.color", compact("generalsetting"));
+        return view("admin.general_settings.color", compact("generalsetting"));
     }
 
     //updates system ui color

@@ -14,6 +14,8 @@ class MissingReport extends Model
         'type', 
         'location', 
         'description', 
+        'police_report_path',
+        'police_report_name',
         'status'
     ];
     

@@ -412,7 +412,7 @@ class UpdateController extends Controller
             $this->convertProducts();
         }
 
-        return redirect('step2');
+        return redirect()->route('update.step2');
     }
 
     public function step2() {

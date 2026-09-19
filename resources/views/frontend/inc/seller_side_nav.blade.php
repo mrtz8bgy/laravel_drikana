@@ -88,7 +88,7 @@
                 @if (\App\Addon::where('unique_identifier', 'pos_system')->first() != null && \App\Addon::where('unique_identifier', 'pos_system')->first()->activated)
                     @if (\App\BusinessSetting::where('type', 'pos_activation_for_seller')->first() != null && \App\BusinessSetting::where('type', 'pos_activation_for_seller')->first()->value != 0)
                         <li>
-                            <a href="{{route('poin-of-sales.seller_index')}}" class="{{ areActiveRoutesHome(['poin-of-sales.seller_index'])}}">
+                            <a href="{{ Route::has('poin-of-sales.seller_index') ? route('poin-of-sales.seller_index') : '#' }}" class="{{ areActiveRoutesHome(['poin-of-sales.seller_index'])}}">
                                 <i class="la la-fax"></i>
                                 <span class="category-name">
                                     {{__('POS Manager')}}
@@ -128,7 +128,7 @@
 
                 @if ($refund_request_addon != null && $refund_request_addon->activated == 1)
                     <li>
-                        <a href="{{ route('vendor_refund_request') }}" class="{{ areActiveRoutesHome(['vendor_refund_request'])}}">
+                        <a href="{{ Route::has('vendor_refund_request') ? route('vendor_refund_request') : '#' }}" class="{{ areActiveRoutesHome(['vendor_refund_request'])}}">
                             <i class="la la-file-text"></i>
                             <span class="category-name">
                                 {{__('Recieved Refund Request')}}
@@ -137,7 +137,7 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('customer_refund_request') }}" class="{{ areActiveRoutesHome(['customer_refund_request'])}}">
+                        <a href="{{ Route::has('customer_refund_request') ? route('customer_refund_request') : '#' }}" class="{{ areActiveRoutesHome(['customer_refund_request'])}}">
                             <i class="la la-file-text"></i>
                             <span class="category-name">
                                 {{__('Sent Refund Request')}}

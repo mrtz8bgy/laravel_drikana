@@ -29,9 +29,15 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 	Route::get('/products/admin','ProductController@admin_products')->name('products.admin');
 	Route::get('/products/seller','ProductController@seller_products')->name('products.seller');
 	Route::get('/products/create','ProductController@create')->name('products.create');
+	// Legacy stock-management views use the product controller's existing form
+	// and SKU endpoints. Keep these aliases so old admin links remain usable.
+	Route::get('/stocks/create', 'ProductController@create')->name('stocks.create');
+	Route::post('/stocks/store', 'ProductController@store')->name('stocks.store');
+	Route::post('/stocks/sku_combinations', 'ProductController@sku_combination')->name('stocks.sku_combinations');
 	Route::get('/products/admin/{id}/edit','ProductController@admin_product_edit')->name('products.admin.edit');
 	Route::get('/products/seller/{id}/edit','ProductController@seller_product_edit')->name('products.seller.edit');
-	Route::post('/products/todays_deal', 'ProductController@updateTodaysDeal')->name('products.todays_deal');
+	Route::get('/products/todays_deal', 'HomeController@todays_deal_products')->name('admin.products.todays_deal_page');
+	Route::post('/products/todays_deal', 'ProductController@updateTodaysDeal')->name('admin.products.todays_deal');
 	Route::post('/products/get_products_by_subsubcategory', 'ProductController@get_products_by_subsubcategory')->name('products.get_products_by_subsubcategory');
 
 	Route::resource('sellers','SellerController');

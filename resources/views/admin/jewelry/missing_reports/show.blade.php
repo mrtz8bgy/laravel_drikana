@@ -280,6 +280,24 @@
                             @endif
                         </div>
                     </div>
+
+                    {{-- سند کلانتری / مدرک مفقودی --}}
+                    <div class="card mb-3">
+                        <div class="card-header bg-secondary text-white">
+                            <h5>سند کلانتری یا مدرک مفقودی</h5>
+                        </div>
+                        <div class="card-body">
+                            @if($report->police_report_path)
+                                <p class="mb-2">{{ $report->police_report_name ?: 'سند بارگذاری‌شده' }}</p>
+                                <a href="{{ route('admin.jewelry.missing_reports.document', $report->id) }}"
+                                   class="btn btn-outline-primary" target="_blank">
+                                    <i class="fas fa-download"></i> مشاهده / دانلود سند
+                                </a>
+                            @else
+                                <p class="text-muted mb-0">برای این گزارش سندی بارگذاری نشده است.</p>
+                            @endif
+                        </div>
+                    </div>
                     
                     {{-- دکمه‌های عملیات --}}
                     <div class="row mt-4">

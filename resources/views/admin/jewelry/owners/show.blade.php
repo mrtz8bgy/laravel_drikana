@@ -12,15 +12,15 @@ use Illuminate\Support\Str;
 @endsection
 
 @section('jewelry_content')
-<div class="container-fluid">
+<div class="container-fluid owner-details-page">
     <div class="page-header">
         <div class="d-flex justify-content-between align-items-center">
             <h1>جزئیات مالک: {{ $owner->full_name }}</h1>
-            <div>
-                <a href="{{ route('admin.jewelry.owners.edit', $owner) }}" class="btn btn-primary">
+            <div class="owner-page-actions">
+                <a href="{{ route('admin.jewelry.owners.edit', $owner) }}" class="btn owner-action owner-action-primary">
                     <i class="fas fa-edit"></i> ویرایش
                 </a>
-                <a href="{{ route('admin.jewelry.owners.index') }}" class="btn btn-secondary">
+                <a href="{{ route('admin.jewelry.owners.index') }}" class="btn owner-action owner-action-secondary">
                     <i class="fas fa-arrow-right"></i> بازگشت
                 </a>
             </div>
@@ -138,18 +138,18 @@ use Illuminate\Support\Str;
                     <i class="fas fa-bolt"></i> عملیات سریع
                 </div>
                 <div class="card-body">
-                    <div class="d-grid gap-2">
+                    <div class="owner-actions">
                         <a href="{{ route('admin.jewelry.certificates.create') }}?owner_id={{ $owner->id }}" 
-                           class="btn btn-success">
+                           class="btn owner-action owner-action-success">
                             <i class="fas fa-plus-circle"></i> ایجاد شناسنامه جدید
                         </a>
                         @if(isset($owner->phone))
-                        <a href="tel:{{ $owner->phone }}" class="btn btn-outline-primary">
+                        <a href="tel:{{ $owner->phone }}" class="btn owner-action owner-action-outline-primary">
                             <i class="fas fa-phone"></i> تماس با مالک
                         </a>
                         @endif
                         @if(isset($owner->email))
-                        <a href="mailto:{{ $owner->email }}" class="btn btn-outline-info">
+                        <a href="mailto:{{ $owner->email }}" class="btn owner-action owner-action-outline-info">
                             <i class="fas fa-envelope"></i> ارسال ایمیل
                         </a>
                         @endif
@@ -233,19 +233,19 @@ use Illuminate\Support\Str;
                                     @endif
                                 </td>
                                 <td>
-                                    <div class="btn-group" role="group">
+                                     <div class="owner-certificate-actions" role="group">
                                         <a href="{{ route('admin.jewelry.certificates.show', $certificate) }}" 
-                                           class="btn btn-sm btn-outline-primary" 
+                                         class="btn btn-sm owner-action-outline-primary" 
                                            data-bs-toggle="tooltip" title="مشاهده">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a href="{{ route('admin.jewelry.certificates.edit', $certificate) }}" 
-                                           class="btn btn-sm btn-outline-warning"
+                                                         class="btn btn-sm owner-action-outline-warning"
                                            data-bs-toggle="tooltip" title="ویرایش">
                                             <i class="fas fa-pencil"></i>
                                         </a>
                                         <a href="{{ route('admin.jewelry.certificates.print', $certificate) }}" 
-                                           class="btn btn-sm btn-outline-info"
+                                                         class="btn btn-sm owner-action-outline-info"
                                            data-bs-toggle="tooltip" title="چاپ"
                                            target="_blank">
                                             <i class="fas fa-print"></i>
@@ -255,7 +255,7 @@ use Illuminate\Support\Str;
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" 
-                                                    class="btn btn-sm btn-outline-danger"
+                                                    class="btn btn-sm owner-action-outline-danger"
                                                     data-bs-toggle="tooltip" title="حذف"
                                                     onclick="return confirm('آیا از حذف شناسنامه «{{ $certificate->serial_number }}» مطمئن هستید؟')">
                                                 <i class="fas fa-trash"></i>
@@ -296,6 +296,72 @@ use Illuminate\Support\Str;
 
 @push('styles')
 <style>
+    .owner-details-page .owner-page-actions,
+    .owner-details-page .owner-actions,
+    .owner-details-page .owner-certificate-actions {
+        display: flex !important;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .owner-details-page .owner-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .owner-details-page .owner-certificate-actions form {
+        display: inline-block;
+        margin: 0;
+    }
+    .owner-details-page .owner-action,
+    .owner-details-page .owner-certificate-actions .btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        visibility: visible !important;
+        opacity: 1 !important;
+        min-height: 38px;
+        white-space: nowrap;
+        text-decoration: none !important;
+    }
+    .owner-details-page .owner-actions .owner-action {
+        width: 100%;
+    }
+    .owner-details-page .btn-sm {
+        min-height: 32px;
+        padding: 6px 10px;
+        font-size: 0.875rem;
+    }
+    .owner-details-page .owner-action-primary,
+    .owner-details-page .owner-action-success {
+        color: #fff !important;
+        background: #198754 !important;
+        border: 1px solid #157347 !important;
+    }
+    .owner-details-page .owner-action-primary {
+        background: #0d6efd !important;
+        border-color: #0a58ca !important;
+    }
+    .owner-details-page .owner-action-secondary {
+        color: #fff !important;
+        background: #6c757d !important;
+        border: 1px solid #5c636a !important;
+    }
+    .owner-details-page .owner-action-outline-primary,
+    .owner-details-page .owner-action-outline-info,
+    .owner-details-page .owner-action-outline-warning,
+    .owner-details-page .owner-action-outline-danger {
+        background: #fff !important;
+        border: 1px solid currentColor !important;
+    }
+    .owner-details-page .owner-action-outline-primary { color: #0d6efd !important; }
+    .owner-details-page .owner-action-outline-info { color: #087990 !important; }
+    .owner-details-page .owner-action-outline-warning { color: #997404 !important; }
+    .owner-details-page .owner-action-outline-danger { color: #dc3545 !important; }
+    .owner-details-page .owner-action:hover,
+    .owner-details-page .owner-certificate-actions .btn:hover {
+        filter: brightness(0.94);
+        transform: translateY(-1px);
+    }
     .card {
         border: none;
         border-radius: 10px;

@@ -18,13 +18,14 @@
 </div>
 
 <div class="mb-3">
-    <label class="form-label">تلفن</label>
-    <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
-           maxlength="14"
+    <label for="owner_phone" class="form-label">شماره همراه <span class="text-danger">*</span></label>
+    <input type="tel" id="owner_phone" name="phone" class="form-control @error('phone') is-invalid @enderror"
+           inputmode="numeric" maxlength="15" pattern="[0-9]{10,15}" required
            value="{{ old('phone', $owner->phone ?? '') }}">
     @error('phone')
         <div class="invalid-feedback">{{ $message }}</div>
     @enderror
+    <small class="form-text text-muted">شماره را فقط با اعداد انگلیسی وارد کنید؛ مثال: 09123456789</small>
 </div>
 
 <div class="mb-3">

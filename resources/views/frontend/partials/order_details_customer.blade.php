@@ -140,7 +140,9 @@
                                         @endphp
                                         <td>
                                             @if ($orderDetail->product != null && $orderDetail->product->refundable != 0 && $orderDetail->refund_request == null && $today_date <= $last_refund_date && $orderDetail->delivery_status == 'delivered')
-                                                <a href="{{route('refund_request_send_page', $orderDetail->id)}}" class="btn btn-styled btn-sm btn-base-1">{{ __('Send') }}</a>
+                                                @if (Route::has('refund_request_send_page'))
+                                                    <a href="{{ route('refund_request_send_page', $orderDetail->id) }}" class="btn btn-styled btn-sm btn-base-1">{{ __('Send') }}</a>
+                                                @endif
                                             @elseif ($orderDetail->refund_request != null && $orderDetail->refund_request->refund_status == 0)
                                                 <span class="strong-600">{{ __('Pending') }}</span>
                                             @elseif ($orderDetail->refund_request != null && $orderDetail->refund_request->refund_status == 1)

@@ -17,7 +17,10 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $sort_search = null;
-        $customers = Customer::orderBy('created_at', 'desc');
+        $customers = Customer::has('user')->whereHas('user', function($query) {
+            $query->where('user_type', 'customer');
+        })->orderBy('created_at', 'desc');
+
         if ($request->has('search')){
             $sort_search = $request->search;
             $user_ids = User::where('user_type', 'customer')->where(function($user) use ($sort_search){
@@ -27,6 +30,7 @@ class CustomerController extends Controller
                 $customer->whereIn('user_id', $user_ids);
             });
         }
+
         $customers = $customers->paginate(15);
         return view('admin.customers.index', compact('customers', 'sort_search'));
     }
@@ -94,9 +98,15 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        Order::where('user_id', Customer::findOrFail($id)->user->id)->delete();
-        User::destroy(Customer::findOrFail($id)->user->id);
-        if(Customer::destroy($id)){
+        $customer = Customer::findOrFail($id);
+        $user = $customer->user;
+
+        if ($user) {
+            Order::where('user_id', $user->id)->delete();
+            User::destroy($user->id);
+        }
+
+        if (Customer::destroy($id)) {
             flash(__('Customer has been deleted successfully'))->success();
             return redirect()->route('customers.index');
         }

@@ -38,7 +38,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form class="" id="package_payment_form" action="{{ route('purchase_package') }}" method="post">
+            <form class="" id="package_payment_form" action="{{ route('customer_packages.purchase') }}" method="post">
                 @csrf
                 <input type="hidden" name="customer_package_id" value="">
                 <div class="modal-body gry-bg px-3 pt-3">

@@ -24,7 +24,7 @@
                         </div>
                     @endif
                     
-                    <form method="POST" action="{{ route('admin.jewelry.missing_reports.store') }}">
+                    <form method="POST" action="{{ route('admin.jewelry.missing_reports.store') }}" enctype="multipart/form-data">
                         @csrf
                         
                         {{-- انتخاب قطعه --}}
@@ -93,6 +93,20 @@
                                       placeholder="هر توضیح دیگری که می‌تواند کمک کند...">{{ old('description') }}</textarea>
                             @error('description')
                                 <span class="invalid-feedback">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        {{-- سند کلانتری یا مدرک مفقودی --}}
+                        <div class="form-group">
+                            <label for="police_report">سند کلانتری / مدرک مفقودی</label>
+                            <input type="file" name="police_report" id="police_report"
+                                   class="form-control-file @error('police_report') is-invalid @enderror"
+                                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <small class="form-text text-muted">
+                                فرمت‌های مجاز: PDF، Word، JPG و PNG؛ حداکثر حجم: ۱۰ مگابایت.
+                            </small>
+                            @error('police_report')
+                                <span class="invalid-feedback d-block">{{ $message }}</span>
                             @enderror
                         </div>
                         

@@ -49,7 +49,7 @@ class InstallController extends Controller
 
     public function purchase_code(Request $request) {
         $request->session()->put('purchase_code', $request->purchase_code);
-        return redirect('step3');
+            return redirect()->route('install.step3');
     }
 
     public function system_settings(Request $request) {
@@ -102,10 +102,10 @@ class InstallController extends Controller
                 }
                 return redirect('step4');
             }else {
-                return redirect('step3');
+                return redirect()->route('install.step3');
             }
         }else {
-            return redirect('step3/database_error');
+                return redirect()->route('install.step3', 'database_error');
         }
     }
 

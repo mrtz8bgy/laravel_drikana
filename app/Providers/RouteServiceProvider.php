@@ -55,11 +55,20 @@ class RouteServiceProvider extends ServiceProvider
 
     $this->mapPosRoutes();
 
+    $this->mapSellerPackageRoutes();
+
     $this->mapWebRoutes();
 
-    //$this->mapInstallRoutes();
+    // Installation and update routes are only available when their controllers
+    // are present. Keeping them conditional avoids breaking normal requests
+    // while still allowing the installer/update screens to generate URLs.
+    if (class_exists('App\\Http\\Controllers\\InstallController')) {
+      $this->mapInstallRoutes();
+    }
 
-    //$this->mapUpdateRoutes();
+    if (class_exists('App\\Http\\Controllers\\UpdateController')) {
+      $this->mapUpdateRoutes();
+    }
   }
 
   /**
@@ -109,12 +118,9 @@ class RouteServiceProvider extends ServiceProvider
   protected function mapOfflinePaymentRoutes()
   {
     $path = base_path('routes/offline_payment.php');
-    if ($this->canRegisterRouteGroup($path, [
-      'App\\Http\\Controllers\\ManualPaymentMethodController',
-      'App\\Http\\Controllers\\SellerPackagePaymentController',
-      'App\\Http\\Controllers\\CustomerPackagePaymentController',
-      'App\\Http\\Controllers\\WalletController',
-    ])) {
+    // The addon may contain optional seller/customer package handlers. Register
+    // its available routes when the core payment controllers are installed.
+    if (file_exists($path) && class_exists('App\\Http\\Controllers\\ManualPaymentMethodController') && class_exists('App\\Http\\Controllers\\WalletController')) {
       Route::middleware('web')
          ->namespace($this->namespace)
          ->group($path);
@@ -208,6 +214,21 @@ class RouteServiceProvider extends ServiceProvider
   }
 
   /**
+   * Define the seller subscription routes when the addon is installed.
+   *
+   * @return void
+   */
+  protected function mapSellerPackageRoutes()
+  {
+    $path = base_path('routes/seller_package.php');
+    if ($this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\SellerPackageController'])) {
+      Route::middleware('web')
+         ->namespace($this->namespace)
+         ->group($path);
+    }
+  }
+
+  /**
    * Define the "updating" routes for the application.
    *
    * These routes all receive session state, CSRF protection, etc.
@@ -218,6 +239,7 @@ class RouteServiceProvider extends ServiceProvider
   {
     Route::middleware('web')
        ->namespace($this->namespace)
+       ->prefix('update')
        ->group(base_path('routes/update.php'));
   }
 
@@ -232,6 +254,7 @@ class RouteServiceProvider extends ServiceProvider
   {
     Route::middleware('web')
        ->namespace($this->namespace)
+       ->prefix('install')
        ->group(base_path('routes/install.php'));
   }
 

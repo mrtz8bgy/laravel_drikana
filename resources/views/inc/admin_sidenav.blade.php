@@ -68,10 +68,10 @@
                                 <!--Submenu-->
                                 <ul class="collapse">
                                     <li class="{{ areActiveRoutes(['poin-of-sales.index', 'poin-of-sales.create'])}}">
-                                        <a class="nav-link" href="{{route('poin-of-sales.index')}}">{{__('POS Manager')}}</a>
+                                        <a class="nav-link" href="{{ Route::has('poin-of-sales.index') ? route('poin-of-sales.index') : '#' }}">{{__('POS Manager')}}</a>
                                     </li>
                                     <li class="{{ areActiveRoutes(['poin-of-sales.activation'])}}">
-                                        <a class="nav-link" href="{{route('poin-of-sales.activation')}}">{{__('POS Configuration')}}</a>
+                                        <a class="nav-link" href="{{ Route::has('poin-of-sales.activation') ? route('poin-of-sales.activation') : '#' }}">{{__('POS Configuration')}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -191,15 +191,15 @@
                                 <!--Submenu-->
                                 <ul class="collapse">
                                     <li class="{{ areActiveRoutes(['refund_requests_all', 'reason_show'])}}">
-                                        <a class="nav-link" href="{{route('refund_requests_all')}}">{{__('Refund Requests')}}
+                                        <a class="nav-link" href="{{ Route::has('refund_requests_all') ? route('refund_requests_all') : '#' }}">{{__('Refund Requests')}}
                                             @if(count(\App\RefundRequest::where('admin_seen',0)->get()) > 0)<span class="pull-right badge badge-info">{{ count(\App\RefundRequest::where('admin_seen',0)->get()) }}</span>@endif
                                         </a>
                                     </li>
                                     <li class="{{ areActiveRoutes(['paid_refund'])}}">
-                                        <a class="nav-link" href="{{route('paid_refund')}}">{{__('Approved Refund')}}</a>
+                                        <a class="nav-link" href="{{ Route::has('paid_refund') ? route('paid_refund') : '#' }}">{{__('Approved Refund')}}</a>
                                     </li>
                                     <li class="{{ areActiveRoutes(['refund_time_config'])}}">
-                                        <a class="nav-link" href="{{route('refund_time_config')}}">{{__('Refund Configuration')}}</a>
+                                        <a class="nav-link" href="{{ Route::has('refund_time_config') ? route('refund_time_config') : '#' }}">{{__('Refund Configuration')}}</a>
                                     </li>
                                 </ul>
                             </li>
@@ -300,7 +300,7 @@
 
                                 @if (\App\Addon::where('unique_identifier', 'otp_system')->first() != null)
                                     <li class="{{ areActiveRoutes(['sms.index'])}}">
-                                        <a class="nav-link" href="{{route('sms.index')}}">{{__('SMS')}}</a>
+                                        <a class="nav-link" href="{{ Route::has('sms.index') ? route('sms.index') : '#' }}">{{__('SMS')}}</a>
                                     </li>
                                 @endif
                             </ul>
@@ -467,7 +467,7 @@
                                 <!--Submenu-->
                                 <ul class="collapse">
                                     <li class="{{ areActiveRoutes(['paytm.index'])}}">
-                                        <a class="nav-link" href="{{route('paytm.index')}}">{{__('Set Paytm Credentials')}}</a>
+                                        <a class="nav-link" href="{{ Route::has('paytm.index') ? route('paytm.index') : '#' }}">{{__('Set Paytm Credentials')}}</a>
                                     </li>
                                 </ul>
                             </li>

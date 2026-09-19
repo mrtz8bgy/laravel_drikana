@@ -31,7 +31,7 @@
 
                 @if (\App\Addon::where('unique_identifier', 'pos_system')->first() != null && \App\Addon::where('unique_identifier', 'pos_system')->first()->activated)
                 <li class="" data-toggle="tooltip" data-placement="bottom" data-original-title="POS">
-                    <a class="" href="{{ route('poin-of-sales.index') }}">
+                    <a class="" href="{{ Route::has('poin-of-sales.index') ? route('poin-of-sales.index') : '#' }}">
                         <i class="fa fa-print"></i>
                     </a>
                 </li>

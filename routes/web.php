@@ -102,6 +102,7 @@ Route::get('/customer-packages', 'HomeController@premium_package_index')->name('
 // محصولات و فروشگاه‌ها (Products & Shops)
 // ============================================
 Route::get('/product/{slug}', 'HomeController@product')->name('product');
+Route::get('/page/{slug}', 'PageController@show_custom_page')->name('custom-pages.show_custom_page');
 Route::get('/products', 'HomeController@listing')->name('products');
 Route::get('/search?category={category_slug}', 'HomeController@search')->name('products.category');
 Route::get('/search?subcategory={subcategory_slug}', 'HomeController@search')->name('products.subcategory');
@@ -392,6 +393,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function() {
         // روت جداگانه برای چاپ
         Route::get('missing_reports/{id}/print', 'MissingReportController@print')
              ->name('missing_reports.print');
+
+           // سند کلانتری/مدرک مفقودی؛ فقط مالک گزارش اجازه دانلود دارد.
+           Route::get('missing_reports/{id}/document', 'MissingReportController@downloadDocument')
+               ->name('missing_reports.document');
         
         // روت برای دریافت اطلاعات قطعه (AJAX)
         Route::get('missing_reports/get-jewelry-info/{id}', 'MissingReportController@getJewelryInfo')
@@ -450,6 +455,7 @@ Route::get('/products/featured', [ProductController::class, 'featured_products']
 Route::get('/products/best-selling', [ProductController::class, 'best_selling_products'])->name('products.best_selling');
 Route::get('/products/new', [ProductController::class, 'new_products'])->name('products.new');
 Route::get('/products/discounted', [ProductController::class, 'discounted_products'])->name('products.discounted');
+Route::get('/products/todays-deal', [HomeController::class, 'todays_deal_products'])->name('products.todays_deal');
 Route::get('/products/mens-jewelry', [ProductController::class, 'mens_jewelry'])->name('products.mens');
 Route::get('/products/womens-jewelry', [ProductController::class, 'womens_jewelry'])->name('products.womens');
 

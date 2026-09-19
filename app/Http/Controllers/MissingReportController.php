@@ -6,6 +6,7 @@ use App\Models\MissingReport;
 use App\Models\JewelryCertificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class MissingReportController extends Controller
 {
@@ -88,6 +89,7 @@ class MissingReportController extends Controller
             'type' => 'required|in:theft,lost',
             'location' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+            'police_report' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
         ]);
         
         // چک میکنیم قطعه واقعاً مال این کاربر هست؟
@@ -102,14 +104,22 @@ class MissingReportController extends Controller
             return back()->withErrors(['شما مالک این قطعه نیستید'])->withInput();
         }
         
-        MissingReport::create([
+        $reportData = [
             'user_id' => Auth::id(),
             'jewelry_id' => $request->jewelry_id,
             'type' => $request->type,
             'location' => $request->location,
             'description' => $request->description,
             'status' => 'pending'
-        ]);
+        ];
+
+        if ($request->hasFile('police_report')) {
+            $file = $request->file('police_report');
+            $reportData['police_report_path'] = $file->store('missing-reports', 'private');
+            $reportData['police_report_name'] = $file->getClientOriginalName();
+        }
+
+        MissingReport::create($reportData);
         
         return redirect()->route('admin.jewelry.missing_reports.index')
                         ->with('success', 'گزارش با موفقیت ثبت شد');
@@ -158,6 +168,23 @@ class MissingReportController extends Controller
                                ->findOrFail($id);
                                
         return view('admin.jewelry.missing_reports.print', compact('report'));
+    }
+
+    /**
+     * Download the police/lost-item document belonging to the authenticated report owner.
+     */
+    public function downloadDocument($id)
+    {
+        $report = MissingReport::where('user_id', Auth::id())->findOrFail($id);
+
+        if (!$report->police_report_path || !Storage::disk('private')->exists($report->police_report_path)) {
+            abort(404);
+        }
+
+        return Storage::disk('private')->download(
+            $report->police_report_path,
+            $report->police_report_name ?: basename($report->police_report_path)
+        );
     }
     
     /**

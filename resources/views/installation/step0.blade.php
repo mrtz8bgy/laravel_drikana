@@ -22,7 +22,7 @@
     </p>
     <br>
     <div class="text-center">
-        <a href="{{ route('step1') }}" class="btn btn-info text-light">
+        <a href="{{ route('install.step1') }}" class="btn btn-info text-light">
             Start Installation Process
         </a>
     </div>
