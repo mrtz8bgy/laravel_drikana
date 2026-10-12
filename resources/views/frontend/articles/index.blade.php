@@ -3,6 +3,11 @@
 @section('meta_title', $currentCategory ? ($currentCategory->name . ' — ' . __('مقالات')) : __('مقالات طلا، جواهر و سنگ‌های قیمتی'))
 @section('meta_description', __('مقالات آموزشی درباره طلا، جواهرات، سنگ‌های قیمتی، شناسنامه، اصالت‌سنجی و نگهداری اشیاء قیمتی.'))
 
+{{-- استایل ماژول به فایل مستقل منتقل شده است (مرحله ۳ بازسازی) --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/drikana/articles.css') }}">
+@endpush
+
 @section('content')
 
 {{--

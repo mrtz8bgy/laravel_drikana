@@ -295,95 +295,11 @@ use Illuminate\Support\Str;
 </div>
 
 @push('styles')
-<style>
-    .owner-details-page .owner-page-actions,
-    .owner-details-page .owner-actions,
-    .owner-details-page .owner-certificate-actions {
-        display: flex !important;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    .owner-details-page .owner-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .owner-details-page .owner-certificate-actions form {
-        display: inline-block;
-        margin: 0;
-    }
-    .owner-details-page .owner-action,
-    .owner-details-page .owner-certificate-actions .btn {
-        display: inline-flex !important;
-        align-items: center;
-        justify-content: center;
-        visibility: visible !important;
-        opacity: 1 !important;
-        min-height: 38px;
-        white-space: nowrap;
-        text-decoration: none !important;
-    }
-    .owner-details-page .owner-actions .owner-action {
-        width: 100%;
-    }
-    .owner-details-page .btn-sm {
-        min-height: 32px;
-        padding: 6px 10px;
-        font-size: 0.875rem;
-    }
-    .owner-details-page .owner-action-primary,
-    .owner-details-page .owner-action-success {
-        color: #fff !important;
-        background: #198754 !important;
-        border: 1px solid #157347 !important;
-    }
-    .owner-details-page .owner-action-primary {
-        background: #0d6efd !important;
-        border-color: #0a58ca !important;
-    }
-    .owner-details-page .owner-action-secondary {
-        color: #fff !important;
-        background: #6c757d !important;
-        border: 1px solid #5c636a !important;
-    }
-    .owner-details-page .owner-action-outline-primary,
-    .owner-details-page .owner-action-outline-info,
-    .owner-details-page .owner-action-outline-warning,
-    .owner-details-page .owner-action-outline-danger {
-        background: #fff !important;
-        border: 1px solid currentColor !important;
-    }
-    .owner-details-page .owner-action-outline-primary { color: #0d6efd !important; }
-    .owner-details-page .owner-action-outline-info { color: #087990 !important; }
-    .owner-details-page .owner-action-outline-warning { color: #997404 !important; }
-    .owner-details-page .owner-action-outline-danger { color: #dc3545 !important; }
-    .owner-details-page .owner-action:hover,
-    .owner-details-page .owner-certificate-actions .btn:hover {
-        filter: brightness(0.94);
-        transform: translateY(-1px);
-    }
-    .card {
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        margin-bottom: 20px;
-    }
-    .card-header {
-        border-radius: 10px 10px 0 0 !important;
-        font-weight: 600;
-    }
-    .table-borderless th {
-        color: #6c757d;
-        font-weight: 600;
-    }
-    .badge {
-        font-size: 0.85em;
-        padding: 0.35em 0.65em;
-    }
-    .fst-italic {
-        font-style: italic;
-    }
-</style>
+{{-- استایل این صفحه به فایل مستقل زیر منتقل شده است (مرحله ۳ بازسازی)
+     تا از CSS درون‌خطی پرهیز شود. --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/drikana/jewelry-owners.css') }}">
+@endpush
 @endpush
 
 @push('scripts')

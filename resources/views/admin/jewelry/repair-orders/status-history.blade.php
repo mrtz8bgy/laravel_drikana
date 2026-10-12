@@ -2,6 +2,11 @@
 
 @section('title', 'تاریخچه وضعیت سفارش')
 
+{{-- استایل ماژول به فایل مستقل منتقل شده است (مرحله ۳ بازسازی) --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/drikana/repair.css') }}">
+@endpush
+
 @section('jewelry_content')
 
 {{--

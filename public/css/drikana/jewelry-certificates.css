@@ -1,0 +1,125 @@
+/* ============================================================================
+   DRIKANA — فهرست شناسنامه‌ها (پنل مدیریت)
+   ============================================================================
+
+   این فایل از CSS درون‌خطی فایل‌های Blade استخراج شده است (مرحله ۳ بازسازی).
+   محتوای قواعد «بدون هیچ تغییری» منتقل شده تا ظاهر صفحات حفظ شود.
+
+   نکته درباره ترتیب بارگذاری (Cascade):
+   فایل‌هایی که در یک صفحه با هم بارگذاری می‌شوند، به‌گونه‌ای لینک شده‌اند
+   که ترتیب اصلی آن‌ها حفظ شود:
+     • resources/views/admin/jewelry/certificates/index.blade.php
+   قالب‌های پایه پیش از استایل صفحه بارگذاری می‌شوند، پس استایل صفحه
+   همچنان بر آن‌ها اولویت دارد — دقیقاً مانند قبل.
+   ============================================================================ */
+
+/* =====================================================================
+   منبع: resources/views/admin/jewelry/certificates/index.blade.php
+   ===================================================================== */
+
+    .certificate-list-page .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+    .certificate-list-page .badge {
+        font-weight: 500;
+        padding: 5px 10px;
+    }
+    .certificate-list-page .certificate-add-button,
+    .certificate-list-page .certificate-new-button,
+    .certificate-list-page .certificate-filter-button,
+    .certificate-list-page .certificate-owner-button,
+    .certificate-list-page .certificate-action {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        visibility: visible !important;
+        opacity: 1 !important;
+        text-decoration: none !important;
+        white-space: nowrap;
+        font-weight: 600;
+    }
+    .certificate-list-page .certificate-add-button {
+        color: #fff !important;
+        background: #198754 !important;
+        border: 1px solid #157347 !important;
+    }
+    .certificate-list-page .certificate-new-button {
+        color: #212529 !important;
+        background: #fff !important;
+        border: 1px solid #ced4da !important;
+        min-height: 32px;
+    }
+    .certificate-list-page .certificate-filter-button {
+        color: #fff !important;
+        background: #0d6efd !important;
+        border: 1px solid #0a58ca !important;
+        min-height: 38px;
+    }
+    .certificate-list-page .certificate-owner-button {
+        min-height: 32px;
+        padding: 6px 10px;
+        color: #fff !important;
+        background: #0d6efd !important;
+        border: 1px solid #084298 !important;
+        border-radius: 5px;
+        font-size: 0.8rem;
+    }
+    .certificate-list-page .certificate-actions-cell {
+        min-width: 260px;
+        vertical-align: middle;
+    }
+    .certificate-list-page .certificate-actions {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .certificate-list-page .certificate-delete-form {
+        display: inline-flex;
+        margin: 0;
+    }
+    .certificate-list-page .certificate-action {
+        min-width: 42px;
+        min-height: 34px;
+        padding: 6px 10px;
+        border-radius: 5px;
+        font-size: 0.82rem;
+    }
+    .certificate-list-page .certificate-action-view {
+        color: #fff !important;
+        background: #087990 !important;
+        border: 1px solid #087990 !important;
+    }
+    .certificate-list-page .certificate-action-edit {
+        color: #664d03 !important;
+        background: #ffda6a !important;
+        border: 1px solid #ffcd39 !important;
+    }
+    .certificate-list-page .certificate-action-print {
+        color: #fff !important;
+        background: #6f42c1 !important;
+        border: 1px solid #59359a !important;
+    }
+    .certificate-list-page .certificate-action-delete {
+        color: #fff !important;
+        background: #dc3545 !important;
+        border: 1px solid #b02a37 !important;
+    }
+    .certificate-list-page .certificate-add-button:hover,
+    .certificate-list-page .certificate-new-button:hover,
+    .certificate-list-page .certificate-filter-button:hover,
+    .certificate-list-page .certificate-owner-button:hover,
+    .certificate-list-page .certificate-action:hover {
+        filter: brightness(0.94);
+        transform: translateY(-1px);
+    }
+    @media (max-width: 768px) {
+        .certificate-list-page .certificate-actions {
+            justify-content: flex-start;
+        }
+        .certificate-list-page .certificate-actions-cell {
+            min-width: 220px;
+        }
+    }

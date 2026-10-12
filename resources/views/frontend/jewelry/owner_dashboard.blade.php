@@ -1,6 +1,11 @@
 @extends('frontend.layouts.app')
 
 @section('meta_title', __('جواهرات من'))
+{{-- استایل ماژول به فایل مستقل منتقل شده است (مرحله ۳ بازسازی) --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/drikana/repair.css') }}">
+@endpush
+
 @section('content')
 
 {{--

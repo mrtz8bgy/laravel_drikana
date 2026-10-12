@@ -1,0 +1,256 @@
+/* ============================================================================
+   DRIKANA — استایل ماژول مقالات و محتوای آموزشی
+
+   دامنه: صفحات عمومی مقالات (فهرست، جزئیات، دسته‌بندی، جست‌وجو)
+          و صفحات مدیریتی مقالات (پنل ادمین).
+
+   این فایل جای «ویژگی style= روی تگ‌ها» را می‌گیرد. استایل درون‌خطی روی
+   تگ‌ها سه اشکال داشت:
+     • امکان کش شدن توسط مرورگر را از بین می‌برد؛
+     • با هر رندر دوباره، حجم HTML را بالا می‌برد؛
+     • با Content-Security-Policy سطح‌سخت (بدون unsafe-inline) تعارض دارد.
+
+   نام‌گذاری کلاس‌ها با پیشوند `art-` انجام شده تا با استایل‌های موجود
+   پروژه (Bootstrap/ActiveShop) تضاد پیدا نکند.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   کارت مقاله — نمای فهرست
+   --------------------------------------------------------------------------- */
+.art-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 0, 0, .06);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.art-card:hover {
+    box-shadow: 0 10px 28px rgba(0, 0, 0, .10);
+    transform: translateY(-3px);
+}
+
+.art-card__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: #f1f1f1;
+}
+
+.art-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.art-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #b9b9b9;
+    font-size: 32px;
+}
+
+.art-card__body {
+    padding: 14px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.art-card__category {
+    font-size: 12px;
+    color: #a8863a;
+    margin-bottom: 6px;
+}
+
+.art-card__title {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.7;
+    margin: 0 0 8px;
+    color: #1c1c1c;
+}
+
+.art-card__title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.art-card__title a:hover {
+    color: #a8863a;
+}
+
+.art-card__excerpt {
+    font-size: 13px;
+    line-height: 1.9;
+    color: #6b6b6b;
+    margin: 0 0 12px;
+    flex: 1;
+}
+
+.art-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #9a9a9a;
+    border-top: 1px solid rgba(0, 0, 0, .05);
+    padding-top: 10px;
+}
+
+/* برچسب وضعیت */
+.art-status {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.art-status--draft          { background: #eceff1; color: #546e7a; }
+.art-status--pending_review { background: #fff8e1; color: #a17500; }
+.art-status--published      { background: #e8f5e9; color: #2e7d32; }
+.art-status--archived       { background: #fafafa; color: #757575; }
+
+/* ---------------------------------------------------------------------------
+   نمای جزئیات مقاله
+   --------------------------------------------------------------------------- */
+.art-hero {
+    padding: 48px 0 28px;
+    background: linear-gradient(180deg, #faf7f0, #ffffff);
+    border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+
+.art-hero__title {
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.7;
+    margin: 0 0 12px;
+    color: #161616;
+}
+
+.art-hero__meta {
+    font-size: 13px;
+    color: #8a8a8a;
+}
+
+.art-featured {
+    width: 100%;
+    border-radius: 14px;
+    display: block;
+    margin-bottom: 22px;
+}
+
+.art-body {
+    font-size: 15px;
+    line-height: 2.1;
+    color: #333;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+}
+
+.art-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    display: block;
+    margin: 18px auto;
+}
+
+.art-body h2 { font-size: 21px; font-weight: 800; margin: 26px 0 12px; }
+.art-body h3 { font-size: 18px; font-weight: 700; margin: 22px 0 10px; }
+.art-body p  { margin-bottom: 14px; }
+.art-body ul, .art-body ol { padding-right: 22px; margin-bottom: 14px; }
+.art-body blockquote {
+    border-right: 4px solid #d4af37;
+    background: #fcfaf5;
+    padding: 12px 18px;
+    margin: 18px 0;
+    border-radius: 8px;
+    color: #555;
+}
+
+/* جعبه «شبکه‌های اجتماعی و اشتراک‌گذاری» */
+.art-share {
+    border-top: 1px solid rgba(0, 0, 0, .07);
+    margin-top: 32px;
+    padding-top: 18px;
+    font-size: 13px;
+    color: #8a8a8a;
+}
+
+/* ---------------------------------------------------------------------------
+   نمای مدیریتی مقالات
+   --------------------------------------------------------------------------- */
+.art-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.art-form-hint {
+    font-size: 12px;
+    color: #8a8a8a;
+}
+
+.art-preview {
+    max-width: 260px;
+    max-height: 160px;
+    border-radius: 8px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.art-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.art-gallery__item {
+    position: relative;
+    width: 110px;
+}
+
+.art-gallery__item img {
+    width: 110px;
+    height: 82px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, .08);
+}
+
+.art-gallery__remove {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    width: 22px;
+    height: 22px;
+    line-height: 20px;
+    border-radius: 50%;
+    background: #e53e3e;
+    color: #fff;
+    border: none;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.art-stats__value {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.art-stats__label {
+    font-size: 12px;
+    color: #8a8a8a;
+}

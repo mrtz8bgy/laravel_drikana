@@ -1,0 +1,197 @@
+/* ============================================================================
+   DRIKANA — مالکان (پنل مدیریت)
+   ============================================================================
+
+   این فایل از CSS درون‌خطی فایل‌های Blade استخراج شده است (مرحله ۳ بازسازی).
+   محتوای قواعد «بدون هیچ تغییری» منتقل شده تا ظاهر صفحات حفظ شود.
+
+   نکته درباره ترتیب بارگذاری (Cascade):
+   فایل‌هایی که در یک صفحه با هم بارگذاری می‌شوند، به‌گونه‌ای لینک شده‌اند
+   که ترتیب اصلی آن‌ها حفظ شود:
+     • resources/views/admin/jewelry/owners/index.blade.php | resources/views/admin/jewelry/owners/show.blade.php
+   قالب‌های پایه پیش از استایل صفحه بارگذاری می‌شوند، پس استایل صفحه
+   همچنان بر آن‌ها اولویت دارد — دقیقاً مانند قبل.
+   ============================================================================ */
+
+/* =====================================================================
+   منبع: resources/views/admin/jewelry/owners/index.blade.php
+   ===================================================================== */
+
+    .owner-list-page .owner-list-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+    .owner-list-page .owner-list-header h2 {
+        margin: 0;
+        color: #07091a;
+        font-weight: 800;
+    }
+    .owner-list-page .owner-list-add,
+    .owner-list-page .owner-list-action {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        min-height: 34px;
+        padding: 7px 13px;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+        text-decoration: none !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    .owner-list-page .owner-list-add {
+        color: #fff !important;
+        background: linear-gradient(135deg, #d4af37, #b8892a) !important;
+        border: 1px solid #b8892a !important;
+    }
+    .owner-list-page .owner-list-table th,
+    .owner-list-page .owner-list-table td {
+        vertical-align: middle;
+    }
+    .owner-list-page .owner-list-actions-cell {
+        min-width: 220px;
+    }
+    .owner-list-page .owner-list-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .owner-list-page .owner-list-delete-form {
+        display: inline-flex;
+        margin: 0;
+    }
+    .owner-list-page .owner-list-view {
+        color: #fff !important;
+        background: #087990 !important;
+        border: 1px solid #087990 !important;
+    }
+    .owner-list-page .owner-list-edit {
+        color: #664d03 !important;
+        background: #ffda6a !important;
+        border: 1px solid #ffcd39 !important;
+    }
+    .owner-list-page .owner-list-delete {
+        color: #fff !important;
+        background: #dc3545 !important;
+        border: 1px solid #b02a37 !important;
+    }
+    .owner-list-page .owner-list-action:hover,
+    .owner-list-page .owner-list-add:hover {
+        filter: brightness(0.94);
+        transform: translateY(-1px);
+    }
+    .owner-list-page .owner-list-pagination {
+        margin-top: 20px;
+    }
+    @media (max-width: 576px) {
+        .owner-list-page .owner-list-header {
+            align-items: stretch;
+            flex-direction: column;
+        }
+        .owner-list-page .owner-list-add {
+            width: 100%;
+        }
+        .owner-list-page .owner-list-actions {
+            justify-content: flex-start;
+        }
+    }
+
+/* =====================================================================
+   منبع: resources/views/admin/jewelry/owners/show.blade.php
+   ===================================================================== */
+
+    .owner-details-page .owner-page-actions,
+    .owner-details-page .owner-actions,
+    .owner-details-page .owner-certificate-actions {
+        display: flex !important;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .owner-details-page .owner-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .owner-details-page .owner-certificate-actions form {
+        display: inline-block;
+        margin: 0;
+    }
+    .owner-details-page .owner-action,
+    .owner-details-page .owner-certificate-actions .btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        visibility: visible !important;
+        opacity: 1 !important;
+        min-height: 38px;
+        white-space: nowrap;
+        text-decoration: none !important;
+    }
+    .owner-details-page .owner-actions .owner-action {
+        width: 100%;
+    }
+    .owner-details-page .btn-sm {
+        min-height: 32px;
+        padding: 6px 10px;
+        font-size: 0.875rem;
+    }
+    .owner-details-page .owner-action-primary,
+    .owner-details-page .owner-action-success {
+        color: #fff !important;
+        background: #198754 !important;
+        border: 1px solid #157347 !important;
+    }
+    .owner-details-page .owner-action-primary {
+        background: #0d6efd !important;
+        border-color: #0a58ca !important;
+    }
+    .owner-details-page .owner-action-secondary {
+        color: #fff !important;
+        background: #6c757d !important;
+        border: 1px solid #5c636a !important;
+    }
+    .owner-details-page .owner-action-outline-primary,
+    .owner-details-page .owner-action-outline-info,
+    .owner-details-page .owner-action-outline-warning,
+    .owner-details-page .owner-action-outline-danger {
+        background: #fff !important;
+        border: 1px solid currentColor !important;
+    }
+    .owner-details-page .owner-action-outline-primary { color: #0d6efd !important; }
+    .owner-details-page .owner-action-outline-info { color: #087990 !important; }
+    .owner-details-page .owner-action-outline-warning { color: #997404 !important; }
+    .owner-details-page .owner-action-outline-danger { color: #dc3545 !important; }
+    .owner-details-page .owner-action:hover,
+    .owner-details-page .owner-certificate-actions .btn:hover {
+        filter: brightness(0.94);
+        transform: translateY(-1px);
+    }
+    .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+    }
+    .card-header {
+        border-radius: 10px 10px 0 0 !important;
+        font-weight: 600;
+    }
+    .table-borderless th {
+        color: #6c757d;
+        font-weight: 600;
+    }
+    .badge {
+        font-size: 0.85em;
+        padding: 0.35em 0.65em;
+    }
+    .fst-italic {
+        font-style: italic;
+    }

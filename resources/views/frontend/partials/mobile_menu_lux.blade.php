@@ -47,50 +47,8 @@
     </div>
 </div>
 
-<style>
-.mobile-side-menu { position: fixed; inset: 0; z-index: 1050; pointer-events: none; }
-.mobile-side-menu .side-menu-overlay {
-    position: absolute; inset: 0; background: rgba(0,0,0,.7);
-    opacity: 0; transition: opacity .3s ease;
-}
-.mobile-side-menu .side-menu-wrap {
-    position: absolute; top: 0; right: 0; height: 100%; width: 320px; max-width: 85vw;
-    transform: translateX(100%); transition: transform .35s cubic-bezier(.4,0,.2,1);
-}
-.mobile-side-menu.open { pointer-events: auto; }
-.mobile-side-menu.open .side-menu-overlay { opacity: 1; }
-.mobile-side-menu.open .side-menu-wrap { transform: translateX(0); }
-.mobile-side-menu .side-menu {
-    height: 100%; background: linear-gradient(180deg, #0b0f28, #07091a);
-    border-left: 1px solid rgba(212,175,55,.2);
-    overflow-y: auto; display: flex; flex-direction: column;
-}
-.mobile-side-menu .side-menu-header {
-    border-bottom: 1px solid rgba(212,175,55,.15);
-    background: rgba(212,175,55,.04);
-}
-.mobile-side-menu .side-menu-close {
-    position: absolute; top: 12px; left: 12px; width: 36px; height: 36px;
-    border-radius: 50%; background: rgba(255,255,255,.08); color: var(--d-gold);
-    display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer;
-}
-.mobile-side-menu .widget-profile-box { color: var(--d-white); gap: 12px; }
-.mobile-side-menu .widget-profile-box .image {
-    width: 52px; height: 52px; border-radius: 50%;
-    background-size: cover; background-position: center;
-    border: 2px solid var(--d-gold);
-}
-.mobile-side-menu .widget-profile-box .name { color: var(--d-gold-light); font-weight: 700; font-size: 16px; }
-.mobile-side-menu .side-user-menu { list-style: none; padding: 0; margin: 0; }
-.mobile-side-menu .side-user-menu li { border-bottom: 1px solid rgba(212,175,55,.06); }
-.mobile-side-menu .side-user-menu li a {
-    display: flex; align-items: center; gap: 12px;
-    padding: 14px 8px; color: var(--d-gray-100); font-size: 14px; font-weight: 500;
-}
-.mobile-side-menu .side-user-menu li a i { color: var(--d-gold); font-size: 18px; width: 24px; text-align: center; }
-.mobile-side-menu .side-user-menu li a:hover { background: rgba(212,175,55,.05); color: var(--d-gold); }
-.mobile-side-menu .badge {
-    margin-right: auto; background: var(--d-gold); color: var(--d-navy-900);
-    font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 700;
-}
-</style>
+{{-- استایل این صفحه به فایل مستقل زیر منتقل شده است (مرحله ۳ بازسازی)
+     تا از CSS درون‌خطی پرهیز شود. --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/drikana/store-menu.css') }}">
+@endpush

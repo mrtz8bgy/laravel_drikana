@@ -10,6 +10,11 @@
     <li class="breadcrumb-item active">ویرایش</li>
 @endsection
 
+{{-- استایل ماژول به فایل مستقل منتقل شده است (مرحله ۳ بازسازی) --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/drikana/repair.css') }}">
+@endpush
+
 @section('jewelry_content')
 <div class="container">
     <div class="row">

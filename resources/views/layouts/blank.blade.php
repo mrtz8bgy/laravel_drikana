@@ -12,11 +12,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     {{-- فونت سیستمی جایگزین Nunito - بدون نیاز به اینترنت --}}
-    <style>
-        body, button, input, select, textarea {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Nunito", "Helvetica Neue", Arial, sans-serif;
-        }
-    </style>
+    {{-- استایل به فایل مستقل منتقل شد: css/drikana/blank.css --}}
+    <link rel="stylesheet" href="{{ asset('css/drikana/blank.css') }}">
 
     {{-- لینک‌های فونت گوگل کاملاً حذف شدند
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -47,108 +44,7 @@
         body{
             background: #fff;
         }
-        @-webkit-keyframes swinging {
-            0% {
-                -webkit-transform: rotate(10deg);
-            }
-            50% {
-                -webkit-transform: rotate(-5deg);
-            }
-            100% {
-                -webkit-transform: rotate(10deg);
-            }
-            }
-            @keyframes swinging {
-            0% {
-                transform: rotate(10deg);
-            }
-            50% {
-                transform: rotate(-5deg);
-            }
-            100% {
-                transform: rotate(10deg);
-            }
-            }
-            @-webkit-keyframes sleeping {
-            0% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-            }
-            @keyframes sleeping {
-            0% {
-                opacity: 0;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-            }
-            }
-            #swinger {
-            -webkit-transform-origin: top center;
-            transform-origin: top center;
-            transform-box: fill-box;
-            -webkit-animation: swinging 3.5s ease-in-out forwards infinite;
-            animation: swinging 3.5s ease-in-out forwards infinite;
-            }
-
-            #zone {
-            opacity: 0;
-            -webkit-animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation: sleeping 3.5s ease-in-out forwards infinite;
-            }
-
-            #ztwo {
-            opacity: 0;
-            -webkit-animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation-delay: 0.4s;
-            -website-animation-delay: 0.4s;
-            }
-
-            #zthree {
-            opacity: 0;
-            -webkit-animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation-delay: 0.7s;
-            -website-animation-delay: 0.7s;
-            }
-
-            #zfour {
-            opacity: 0;
-            -webkit-animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation-delay: 1s;
-            -website-animation-delay: 1s;
-            }
-
-            #zfive {
-            opacity: 0;
-            -webkit-animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation: sleeping 3.5s ease-in-out forwards infinite;
-            animation-delay: 1.3s;
-            -website-animation-delay: 1.3s;
-            }
-
-            .container {
-            text-align: center;
-            }
-
-            svg {
-            max-width: 1000px;
-            }
-
-    </style>
-
-    <!--JAVASCRIPT-->
-    <!--=================================================-->
+     =========-->
 
     <!--jQuery [ REQUIRED ]-->
     <script src=" {{asset('js/jquery.min.js') }}"></script>

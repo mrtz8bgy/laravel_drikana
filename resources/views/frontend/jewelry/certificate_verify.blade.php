@@ -4,102 +4,11 @@
 @section('meta_description', 'با وارد کردن شماره سریال شناسنامه، اصالت طلا، جواهر، ساعت و اشیاء قیمتی خود را در سامانه دریکانا استعلام کنید.')
 
 @section('content')
-<style>
-    .verify-hero { background: var(--grad-navy); padding: 70px 0 50px; text-align: center; position: relative; overflow: hidden; border-bottom: 1px solid rgba(212,175,55,.15); }
-    .verify-hero::before { content:''; position:absolute; inset:0; background: radial-gradient(circle at 50% 100%, rgba(212,175,55,.18), transparent 60%); }
-    .verify-hero > * { position: relative; z-index: 2; }
-    .verify-hero .kicker { display:inline-block; font-size:12px; letter-spacing:3px; color:var(--d-gold); font-weight:700; margin-bottom:12px; text-transform:uppercase; padding:6px 18px; border:1px solid rgba(212,175,55,.3); border-radius:var(--r-pill); }
-    .verify-hero h1 { font-size:clamp(26px,4vw,44px); font-weight:800; margin:0 0 14px; }
-    .verify-hero h1 .gold { background:var(--grad-gold); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
-    .verify-hero p { color:var(--d-gray-300); max-width:680px; margin:0 auto; font-size:15px; line-height:2; }
-
-    .verify-search { max-width:680px; margin: -30px auto 0; position: relative; z-index: 5; }
-    .verify-search-box {
-        background: linear-gradient(145deg, var(--d-navy-700), var(--d-navy-800));
-        border:1px solid rgba(212,175,55,.25);
-        border-radius: var(--r-xl);
-        padding: 28px;
-        box-shadow: var(--shadow-gold);
-    }
-    .verify-search-box h3 { color:var(--d-gold); font-size:17px; margin-bottom:16px; font-weight:700; display:flex; align-items:center; gap:10px; }
-    .verify-search-box h3 i { font-size:24px; }
-    .verify-form-row { display:flex; gap:12px; }
-    .verify-form-row input {
-        flex:1; background:rgba(255,255,255,.05) !important; border:1px solid rgba(212,175,55,.2) !important;
-        color:var(--d-white) !important; border-radius:var(--r-pill) !important; padding:14px 22px !important;
-        font-family:var(--f-base); font-size:16px; text-align:center; letter-spacing:3px;
-    }
-    .verify-form-row input:focus { border-color:var(--d-gold) !important; box-shadow:0 0 0 4px rgba(212,175,55,.15) !important; outline:none !important; }
-    .verify-form-row button {
-        padding:14px 32px; border-radius:var(--r-pill); background:var(--grad-gold); color:var(--d-navy-900);
-        font-weight:800; border:none; cursor:pointer; font-family:var(--f-base); font-size:15px;
-        transition:all var(--tr-base); white-space:nowrap; display:inline-flex; align-items:center; gap:8px;
-    }
-    .verify-form-row button:hover { transform:translateY(-2px); box-shadow:var(--shadow-gold-lg); }
-
-    .verify-section { padding: 60px 0; }
-
-    .cert-result { margin-top: 40px; animation: fadeInUp .5s ease-out; }
-    .cert-paper {
-        background: linear-gradient(135deg, #fdf7e6 0%, #f4e7c3 100%);
-        border-radius: var(--r-lg);
-        padding: 40px;
-        color: var(--d-navy-900);
-        position: relative;
-        box-shadow: var(--shadow-lg), inset 0 0 0 8px rgba(212,175,55,.1);
-        border: 3px double var(--d-gold-dark);
-    }
-    .cert-paper::before, .cert-paper::after {
-        content: '❖'; position:absolute; color:var(--d-gold-dark); font-size:26px;
-    }
-    .cert-paper::before { top:14px; right:20px; }
-    .cert-paper::after { bottom:14px; left:20px; }
-    .cert-header { text-align:center; padding-bottom:20px; border-bottom:2px double var(--d-gold-dark); margin-bottom:24px; }
-    .cert-header .cert-badge { display:inline-block; background:var(--d-gold-dark); color:#fff; font-size:11px; letter-spacing:3px; padding:4px 16px; border-radius:var(--r-pill); margin-bottom:10px; text-transform:uppercase; }
-    .cert-header h3 { color:var(--d-navy-900) !important; font-size:26px; font-weight:900; margin:0; }
-    .cert-header p { color:var(--d-gold-dark); font-size:13px; letter-spacing:2px; margin:6px 0 0; text-transform:uppercase; }
-
-    .cert-meta-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px 30px; margin-bottom:24px; }
-    .cert-meta-item { padding:8px 0; border-bottom:1px dashed rgba(184,137,42,.3); }
-    .cert-meta-item .label { font-size:11px; color:var(--d-gold-dark); font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px; }
-    .cert-meta-item .value { font-size:15px; color:var(--d-navy-900); font-weight:700; }
-
-    .cert-status-badge {
-        display:inline-flex; align-items:center; gap:8px; padding:10px 24px; border-radius:var(--r-pill);
-        font-weight:800; font-size:14px; margin-top:8px;
-    }
-    .cert-status-badge.verified { background:#15803d; color:#fff; }
-    .cert-status-badge.rejected { background:#b91c1c; color:#fff; }
-    .cert-status-badge.pending  { background:#a16207; color:#fff; }
-
-    .cert-qr-box {
-        position:absolute; bottom:40px; left:40px; width:80px; height:80px;
-        background:#fff; border:4px solid var(--d-gold-dark); border-radius:8px;
-        display:flex; align-items:center; justify-content:center; font-size:40px;
-    }
-    .cert-seal-box {
-        position:absolute; bottom:40px; right:40px; width:90px; height:90px; border-radius:50%;
-        background: radial-gradient(circle, var(--d-gold) 30%, var(--d-gold-dark) 100%);
-        display:flex; align-items:center; justify-content:center; color:var(--d-navy-900); font-weight:900;
-        font-size:10px; text-align:center; line-height:1.2; box-shadow: 0 4px 14px rgba(0,0,0,.3);
-        transform: rotate(-12deg);
-    }
-
-    .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-top:50px; }
-    .feature-box { text-align:center; padding:26px 20px; background:rgba(255,255,255,.03); border:1px solid rgba(212,175,55,.12); border-radius:var(--r-md); transition:all var(--tr-base); }
-    .feature-box:hover { transform:translateY(-6px); border-color:var(--d-gold); box-shadow:var(--shadow-gold); }
-    .feature-box .fb-icon { width:60px; height:60px; margin:0 auto 14px; border-radius:50%; background:rgba(212,175,55,.12); border:2px solid rgba(212,175,55,.25); display:flex; align-items:center; justify-content:center; font-size:26px; color:var(--d-gold); }
-    .feature-box h5 { font-size:15px; font-weight:700; margin-bottom:8px; }
-    .feature-box p { font-size:13px; color:var(--d-gray-300); line-height:1.8; margin:0; }
-
-    @media (max-width:768px){
-        .cert-meta-grid{grid-template-columns:1fr;}
-        .cert-paper{padding:24px;}
-        .cert-qr-box,.cert-seal-box{position:relative;bottom:auto;left:auto;right:auto;margin:20px auto 0;}
-        .verify-form-row{flex-direction:column;}
-        .verify-form-row button{justify-content:center;}
-    }
-</style>
+{{-- استایل این صفحه به فایل مستقل زیر منتقل شده است (مرحله ۳ بازسازی)
+     تا از CSS درون‌خطی پرهیز شود. --}}
+@push('styles')
+<link rel="stylesheet" href="{{ asset('css/drikana/ownership.css') }}">
+@endpush
 
 <section class="verify-hero">
     <div class="container">

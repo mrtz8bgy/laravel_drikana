@@ -1,0 +1,83 @@
+/* ============================================================================
+   DRIKANA — استایل ماژول تعمیرات
+
+   دامنه: سفارش‌های تعمیر در پنل مدیریت (فهرست، جزئیات، اختصاص تکنسین،
+          تاریخچه وضعیت) و بخش تعمیرات در «جواهرات من».
+
+   هدف: خارج کردن استایل درون‌خطی تگ‌ها و یکدست‌سازی نمایش وضعیت‌ها.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------------------
+   نشانگر وضعیت سفارش تعمیر
+   --------------------------------------------------------------------------- */
+.repair-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.repair-status--pending     { background: #fff8e1; color: #a17500; }
+.repair-status--accepted    { background: #e3f2fd; color: #1565c0; }
+.repair-status--in_progress { background: #e8eaf6; color: #3949ab; }
+.repair-status--completed   { background: #e8f5e9; color: #2e7d32; }
+.repair-status--delivered   { background: #ede7f6; color: #5e35b1; }
+.repair-status--cancelled   { background: #fdecea; color: #c62828; }
+
+/* اولویت */
+.repair-priority--high   { color: #c62828; font-weight: 700; }
+.repair-priority--normal { color: #555; }
+.repair-priority--low    { color: #2e7d32; }
+
+/* ---------------------------------------------------------------------------
+   کارت‌های خلاصه
+   --------------------------------------------------------------------------- */
+.repair-stat-card {
+    text-align: center;
+}
+
+.repair-stat-card__value {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.repair-stat-card__label {
+    font-size: 12px;
+    color: #8a8a8a;
+}
+
+/* ---------------------------------------------------------------------------
+   جدول‌ها
+   --------------------------------------------------------------------------- */
+.repair-cell-desc {
+    max-width: 320px;
+    white-space: normal;
+    line-height: 1.8;
+}
+
+.repair-timeline-note {
+    color: #666;
+    line-height: 1.8;
+}
+
+/* ---------------------------------------------------------------------------
+   بخش «جواهرات من» — بلوک‌های آماری
+   --------------------------------------------------------------------------- */
+.repair-owner-stat {
+    text-align: center;
+    padding: 18px 10px;
+}
+
+.repair-owner-stat__value {
+    font-size: 26px;
+    font-weight: 800;
+    margin: 0 0 4px;
+}
+
+.repair-owner-stat__label {
+    font-size: 12px;
+    color: #8a8a8a;
+}

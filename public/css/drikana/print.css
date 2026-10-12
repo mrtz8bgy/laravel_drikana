@@ -1,0 +1,396 @@
+/* ============================================================================
+   DRIKANA — استایل صفحات چاپی
+
+   این فایل از CSS درون‌خطی دو صفحه چاپی زیر استخراج شده است (مرحله ۳ بازسازی):
+     • admin/jewelry/certificates/print.blade.php     — چاپ شناسنامه
+     • admin/jewelry/missing_reports/print.blade.php  — چاپ گزارش مفقودی
+
+   نکته: استایل چاپ عمداً «مستقل» نگه داشته شده و به فایل‌های تم پنل
+   اضافه نشده است، چون این صفحات باید مستقل از پوسته پنل و دقیقاً با
+   همان ظاهر قبلی چاپ شوند. اگر استایل پنل به آن‌ها اضافه شود، خروجی
+   چاپ تغییر می‌کند.
+   ============================================================================ */
+
+/* =====================================================================
+   منبع: resources/views/admin/jewelry/certificates/print.blade.php
+   ===================================================================== */
+
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Tahoma", "Arial", sans-serif;
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        @media print {
+            body {
+                padding: 0;
+                background-color: white;
+            }
+            .no-print {
+                display: none !important;
+            }
+            @page {
+                margin: 15mm;
+            }
+        }
+        .certificate-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border: 2px solid #ccc;
+            padding: 30px;
+            position: relative;
+            page-break-inside: avoid;
+        }
+        .certificate-header {
+            text-align: center;
+            border-bottom: 3px double #333;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .certificate-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .certificate-subtitle {
+            font-size: 18px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+        .certificate-logo {
+            position: absolute;
+            left: 30px;
+            top: 30px;
+            width: 100px;
+            opacity: 0.1;
+        }
+        
+        /* استایل‌های عکس */
+        .jewelry-image-section {
+            text-align: center;
+            margin: 25px 0;
+            page-break-inside: avoid;
+        }
+        .jewelry-image-container {
+            display: inline-block;
+            padding: 10px;
+            border: 2px solid #f1c40f;
+            border-radius: 10px;
+            background-color: #fffdf6;
+            margin-bottom: 10px;
+        }
+        .jewelry-image {
+            max-width: 300px;
+            max-height: 250px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .image-placeholder {
+            width: 300px;
+            height: 200px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            background-color: #f9f9f9;
+        }
+        .image-placeholder-icon {
+            font-size: 48px;
+            color: #ddd;
+            margin-bottom: 10px;
+        }
+        .image-caption {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 8px;
+        }
+        .image-description {
+            font-size: 13px;
+            color: #7f8c8d;
+            margin-top: 3px;
+        }
+        
+        .info-section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .info-item {
+            margin-bottom: 8px;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+            display: inline-block;
+            width: 120px;
+            font-size: 14px;
+        }
+        .info-value {
+            color: #333;
+            font-size: 14px;
+        }
+        .owner-signature {
+            text-align: left;
+            margin-top: 40px;
+            padding-top: 15px;
+            border-top: 1px solid #ccc;
+        }
+        .stamp {
+            position: absolute;
+            right: 40px;
+            bottom: 40px;
+            width: 120px;
+            height: 120px;
+            border: 2px dashed #c0392b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-15deg);
+            opacity: 0.8;
+        }
+        .stamp-text {
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            color: #c0392b;
+        }
+        .print-controls {
+            text-align: center;
+            margin: 15px 0 25px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 0 8px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        .btn-print {
+            background-color: #3498db;
+            color: white;
+        }
+        .btn-back {
+            background-color: #95a5a6;
+            color: white;
+        }
+        .btn-download {
+            background-color: #27ae60;
+            color: white;
+        }
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 70px;
+            color: rgba(0,0,0,0.04);
+            font-weight: bold;
+            z-index: -1;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .certificate-number {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+        .print-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        .print-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+        .debug-info {
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+            margin-top: 5px;
+            font-family: monospace;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin-left: 5px;
+        }
+        .status-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .status-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        /* آیکون‌های ساده جایگزین Font Awesome */
+        .icon {
+            display: inline-block;
+            width: 16px;
+            text-align: center;
+            margin-right: 5px;
+        }
+        .icon-print:before { content: "🖨️"; }
+        .icon-back:before { content: "←"; }
+        .icon-download:before { content: "⬇️"; }
+        .icon-camera:before { content: "📷"; }
+        .icon-check:before { content: "✓"; }
+        .icon-warning:before { content: "⚠️"; }
+        .icon-bug:before { content: "🐛"; }
+        .icon-info:before { content: "ℹ️"; }
+    
+
+/* =====================================================================
+   منبع: resources/views/admin/jewelry/missing_reports/print.blade.php
+   ===================================================================== */
+
+        body {
+            font-family: 'Vazir', Tahoma, Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #f39c12;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        .title {
+            color: #e67e22;
+            font-size: 24px;
+            margin: 0;
+        }
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        .report-number {
+            background: #f39c12;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .section-header {
+            background: #34495e;
+            color: white;
+            padding: 10px 15px;
+            margin: 0;
+            font-size: 18px;
+        }
+        .section-body {
+            padding: 15px;
+            background: #f9f9f9;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table th, table td {
+            padding: 10px;
+            text-align: right;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background: #ecf0f1;
+            width: 200px;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px dashed #ccc;
+            color: #7f8c8d;
+            font-size: 12px;
+        }
+        .badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .badge-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        .badge-warning {
+            background: #f39c12;
+            color: white;
+        }
+        .image-container {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+        }
+        .jewelry-image {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            body {
+                padding: 0;
+            }
+            .section {
+                break-inside: avoid;
+            }
+        }
+    

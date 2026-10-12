@@ -1,0 +1,1549 @@
+/* ============================================================================
+   DRIKANA — صفحه اصلی فروشگاه
+   ============================================================================
+
+   این فایل از CSS درون‌خطی فایل‌های Blade استخراج شده است (مرحله ۳ بازسازی).
+   محتوای قواعد «بدون هیچ تغییری» منتقل شده تا ظاهر صفحات حفظ شود.
+
+   نکته درباره ترتیب بارگذاری (Cascade):
+   فایل‌هایی که در یک صفحه با هم بارگذاری می‌شوند، به‌گونه‌ای لینک شده‌اند
+   که ترتیب اصلی آن‌ها حفظ شود:
+     • resources/views/frontend/index.blade.php
+   قالب‌های پایه پیش از استایل صفحه بارگذاری می‌شوند، پس استایل صفحه
+   همچنان بر آن‌ها اولویت دارد — دقیقاً مانند قبل.
+   ============================================================================ */
+
+/* =====================================================================
+   منبع: resources/views/frontend/index.blade.php
+   ===================================================================== */
+
+/* ============================================ */
+/* تم سرمه‌ای، طلایی و سفید - طراحی لوکس و حرفه‌ای */
+/* ============================================ */
+:root {
+    --color-navy: #0f0e1a;
+    --color-navy-light: #1a1735;
+    --color-navy-card: #1e1b3a;
+    --color-gold: #d4af37;
+    --color-gold-light: #f0d080;
+    --color-gold-glow: #e8c547;
+    --color-white: #ffffff;
+    --color-white-smoke: #f5f5f7;
+    --color-gray: #b0aec0;
+    --color-gray-dark: #6b6980;
+    --color-shadow: rgba(212, 175, 55, 0.15);
+    --shadow-gold: 0 4px 25px rgba(212, 175, 55, 0.25);
+    --shadow-gold-hover: 0 8px 40px rgba(212, 175, 55, 0.4);
+    --gradient-gold: linear-gradient(135deg, #d4af37 0%, #f0d080 50%, #b8962e 100%);
+    --gradient-navy: linear-gradient(135deg, #0f0e1a 0%, #1a1735 50%, #2a2555 100%);
+    --font-base: 'Vazirmatn', 'Segoe UI', sans-serif;
+}
+
+/* ===== ریست کلی و بدنه ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-base);
+    background: #020544;
+    color: var(--color-white);
+    line-height: 1.8;
+    direction: rtl;
+}
+
+a {
+    color: var(--color-gold);
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-gold-light);
+    text-decoration: none;
+}
+
+/* ===== کانتینر ===== */
+.container {
+    max-width: 1400px;
+    padding: 0 15px;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+/* ============================================ */
+/* استایل‌های مستقل مگا منو - بدون تداخل با سایر استایل‌ها */
+/* ============================================ */
+.mega-menu-section {
+    background: var(--color-gold);
+    border-bottom: 2px solid var(--color-gold);
+    position: relative;
+    z-index: 1100;
+    width: 100%;
+    direction: rtl;
+    
+}
+
+.mega-menu-wrapper {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.mega-menu-nav {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.mega-menu-trigger {
+    position: relative;
+    width: 100%;
+    display: block;
+    text-align: right;
+}
+
+.mega-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background:var(--gradient-gold);
+    color: var(--color-navy);
+    padding: 14px 28px;
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    width: 100%;
+    justify-content: center;
+    font-family: var(--font-base);
+}
+
+.mega-menu-btn:hover {
+    background: var(--color-gold-light);
+    color: var(--color-navy);
+}
+
+.mega-menu-btn i {
+    font-size: 20px;
+}
+
+/* ===== لیست اصلی دسته‌بندی‌ها ===== */
+.mega-menu-list {
+    position: absolute;
+    top: calc(100% + 0px);
+    right: 0 !important;
+    left: auto !important;
+    width: min(360px, 92vw);
+    background: var(--color-navy-card);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 0 0 14px 14px;
+    max-height: min(78vh, 680px);
+    overflow-y: auto;
+    overflow-x: visible;
+    min-width: 280px;
+    z-index: 1200;
+    text-align: right;
+}
+
+.mega-menu-trigger:hover .mega-menu-list,
+.mega-menu-trigger.active .mega-menu-list {
+    display: block;
+}
+
+.mega-menu-item {
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    list-style: none;
+    overflow: visible;
+}
+
+.mega-menu-item:last-child {
+    border-bottom: none;
+}
+
+.mega-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 20px;
+    color: var(--color-white-smoke);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: var(--font-base);
+}
+
+.mega-menu-link:hover {
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--color-gold);
+    padding-right: 28px;
+}
+
+.mega-cat-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0.8);
+    transition: all 0.3s ease;
+}
+
+.mega-menu-link:hover .mega-cat-icon {
+    filter: brightness(1);
+}
+
+.mega-arrow {
+    margin-right: auto;
+    font-size: 16px;
+    color: var(--color-gray);
+    transition: all 0.3s ease;
+}
+
+.mega-menu-link:hover .mega-arrow {
+    color: var(--color-gold);
+}
+
+/* ============================================ */
+/* مگا ساب منو (زیردسته‌ها) - کاملاً مستقل */
+/* ============================================ */
+.mega-sub-menu {
+    position: absolute;
+    top: -1px;
+    right: calc(100% + 4px) !important;
+    left: auto !important;
+    width: min(720px, calc(100vw - 390px));
+    background: var(--color-navy-card);
+    border-radius: 14px;
+    box-shadow: 0 22px 70px rgba(0, 0, 0, 0.92);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(212, 175, 55, 0.18);
+    padding: 20px;
+    max-height: min(78vh, 680px);
+    overflow-y: auto;
+    overflow-x: visible;
+    z-index: 1300;
+    pointer-events: none;
+    display: none;
+    min-width: 280px;
+    margin-right: -4px;
+}
+
+/* Ensure columns and submenu don't clip third-level lists */
+.mega-sub-container [class*="col-"] {
+    overflow: visible;
+}
+
+/* Show third-level lists when submenu is open */
+.mega-menu-item:hover .mega-sub-menu .mega-sub-sub-list,
+.mega-menu-item.active .mega-sub-menu .mega-sub-sub-list,
+.mega-menu-item:focus-within .mega-sub-menu .mega-sub-sub-list {
+    display: block !important;
+    max-height: none !important;
+}
+
+.mega-menu-item:hover > .mega-sub-menu,
+.mega-menu-item.active > .mega-sub-menu,
+.mega-menu-item:focus-within > .mega-sub-menu {
+    display: block !important;
+    opacity: 1;
+    visibility: visible;
+    right: calc(100% + 4px) !important;
+    left: auto !important;
+    pointer-events: auto;
+    transform: translateX(0);
+}
+
+.mega-menu-item > .mega-sub-menu {
+    transform: translateX(6px);
+}
+
+/* جلوگیری از بسته شدن منو هنگام حرکت موس */
+.mega-sub-menu:hover {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+}
+
+.mega-sub-container {
+    padding: 5px;
+    width: 100%;
+}
+
+/* Fix: ensure mega submenu sits above other page elements (slider, arrows) and is not clipped */
+.mega-menu-section {
+    z-index: 99999 !important;
+}
+
+.mega-menu-list {
+    /* allow submenu to extend without being clipped by parent */
+    overflow: visible !important;
+}
+
+.mega-sub-menu {
+    z-index: 100000 !important;
+    /* make sure the submenu is positioned above transforms/backdrop-filters */
+    position: absolute !important;
+}
+
+.mega-sub-container .row {
+    margin: 0;
+}
+
+.mega-sub-container [class*="col-"] {
+    padding: 5px;
+}
+
+.mega-sub-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    color: var(--color-white-smoke);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-family: var(--font-base);
+}
+
+.mega-sub-link:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--color-gold);
+}
+
+.mega-sub-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.mega-sub-icon i {
+    font-size: 20px;
+    color: var(--color-gold);
+}
+
+/* ===== سطح سوم (زیرزیردسته‌ها) ===== */
+.mega-sub-sub-list {
+    list-style: none;
+    margin: 0;
+    padding: 0 12px 8px 12px;
+    display: none;
+    transition: max-height 0.22s ease;
+    max-height: 0;
+}
+
+.mega-sub-sub-list li {
+    padding: 2px 0;
+    list-style: none;
+}
+
+/* نمایش زیرزیر دسته در هاور زیرلینک */
+.mega-sub-link:hover + .mega-sub-sub-list,
+.mega-sub-sub-list:hover {
+    display: block;
+    max-height: 400px;
+}
+
+.mega-sub-sub-list li a {
+    color: var(--color-gray);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 3px 12px;
+    display: block;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-family: var(--font-base);
+}
+
+.mega-sub-sub-list li a:hover {
+    color: var(--color-gold);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+/* ===== لینک مشاهده همه ===== */
+.mega-view-all .mega-menu-link {
+    color: var(--color-gold);
+    font-weight: 700;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mega-view-all .mega-menu-link:hover {
+    background: rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================ */
+/* استایل اسکرول مگا منو */
+/* ============================================ */
+.mega-menu-list::-webkit-scrollbar,
+.mega-sub-menu::-webkit-scrollbar {
+    width: 4px;
+}
+
+.mega-menu-list::-webkit-scrollbar-track,
+.mega-sub-menu::-webkit-scrollbar-track {
+    background: var(--color-navy);
+    border-radius: 4px;
+}
+
+.mega-menu-list::-webkit-scrollbar-thumb,
+.mega-sub-menu::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+}
+
+/* ============================================ */
+/* ریسپانسیو مگا منو */
+/* ============================================ */
+@media (max-width: 1200px) {
+    .mega-sub-menu {
+        width: 550px;
+    }
+}
+
+@media (max-width: 767px) {
+    .mega-sub-menu {
+        display: none !important;
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(212, 175, 55, 0.12) !important;
+        padding: 8px 10px 10px !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        max-height: 0 !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+        border-radius: 10px !important;
+        margin-top: 6px;
+        min-width: 100% !important;
+    }
+    
+    .mega-menu-item:hover > .mega-sub-menu,
+    .mega-menu-item.active > .mega-sub-menu,
+    .mega-menu-item:focus-within > .mega-sub-menu {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        max-height: 2000px !important;
+    }
+    
+    .mega-menu-item.active .mega-arrow {
+        transform: rotate(180deg);
+    }
+    
+    .mega-menu-list {
+        position: static;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .mega-menu-trigger:hover .mega-menu-list {
+        display: none;
+    }
+    
+    .mega-menu-trigger.active .mega-menu-list {
+        display: block;
+    }
+    
+    .mega-sub-sub-list {
+        padding-right: 20px;
+    }
+    
+    .mega-sub-container [class*="col-"] {
+        padding: 3px 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .mega-sub-container [class*="col-"] {
+        padding: 2px 5px;
+    }
+    
+    .mega-sub-link {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+    
+    .mega-sub-sub-list li a {
+        font-size: 12px;
+        padding: 2px 10px;
+    }
+}
+
+/* ============================================ */
+/* اسلایدر تمام عرض (۱۰۰٪) - با Slick */
+/* ============================================ */
+.fullwidth-slider-section {
+    width: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.fullwidth-slider-section .slick-carousel {
+    width: 100%;
+}
+
+.fullwidth-slider-section .slick-slide {
+    position: relative;
+    height: 520px;
+}
+
+.fullwidth-slider-section .slick-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.fullwidth-slider-section .slick-slide > div {
+    height: 100%;
+}
+
+.slide-content-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, rgba(15, 14, 26, 0.85) 0%, rgba(15, 14, 26, 0.4) 60%, rgba(15, 14, 26, 0.1) 100%);
+    display: flex;
+    align-items: center;
+    padding: 50px;
+    pointer-events: none;
+}
+
+.slide-content-overlay a {
+    pointer-events: auto;
+}
+
+.slide-content {
+    max-width: 600px;
+}
+
+.slide-content h2 {
+    color: var(--color-white);
+    font-size: 48px;
+    font-weight: 900;
+    margin-bottom: 18px;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.slide-content h2 span {
+    color: var(--color-gold);
+}
+
+.slide-content p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 18px;
+    margin-bottom: 25px;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slide-btn-custom {
+    display: inline-block;
+    background: var(--gradient-gold);
+    color: var(--color-navy);
+    padding: 14px 38px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-gold);
+    font-size: 15px;
+    pointer-events: auto;
+}
+
+.slide-btn-custom:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow-gold-hover);
+    color: var(--color-navy);
+}
+
+/* استایل‌های Slick برای اسلایدر */
+.fullwidth-slider-section .slick-prev,
+.fullwidth-slider-section .slick-next {
+    position: absolute; /* مشکل دقیقا اینجاست وقتی پوزیشن غیر فعال شود زیر منو ها نمایش داده میشوند بررسی کن که چرا این اتفاق میافتد*/
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: rgba(15, 14, 26, 0.8);
+    border-radius: 50%;
+    z-index: 100;
+    cursor: pointer;
+    border: 2px solid var(--color-gold);
+    box-shadow: var(--shadow-gold);
+    transition: all 0.3s ease;
+    font-size: 0;
+    color: var(--color-gold);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+}
+
+.fullwidth-slider-section .slick-prev {
+    left: 20px;
+}
+
+.fullwidth-slider-section .slick-next {
+    right: 20px;
+}
+
+.fullwidth-slider-section .slick-prev:hover,
+.fullwidth-slider-section .slick-next:hover {
+    background: var(--gradient-gold);
+    color: var(--color-navy);
+}
+
+.fullwidth-slider-section .slick-prev::before,
+.fullwidth-slider-section .slick-next::before {
+    display: none;
+}
+
+.fullwidth-slider-section .slick-prev::after {
+    content: '\f104';
+    font-family: 'FontAwesome';
+    font-size: 22px;
+    color: var(--color-gold);
+}
+
+.fullwidth-slider-section .slick-next::after {
+    content: '\f105';
+    font-family: 'FontAwesome';
+    font-size: 22px;
+    color: var(--color-gold);
+}
+
+.fullwidth-slider-section .slick-prev:hover::after,
+.fullwidth-slider-section .slick-next:hover::after {
+    color: var(--color-navy);
+}
+
+/* دات‌های اسلایدر */
+.fullwidth-slider-section .slick-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 20;
+}
+
+.fullwidth-slider-section .slick-dots li {
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.fullwidth-slider-section .slick-dots li button {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    cursor: pointer;
+    font-size: 0;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.fullwidth-slider-section .slick-dots li.slick-active button {
+    background: var(--color-gold);
+    width: 30px;
+    border-radius: 6px;
+    border-color: var(--color-gold);
+}
+
+/* ============================================ */
+/* فلش دیل - اسکرول افقی زیر بنر */
+/* ============================================ */
+.flash-deal-section {
+    background: var(--color-navy-card);
+    padding: 15px 0;
+    border-top: 1px solid rgba(212, 175, 55, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    margin-bottom: 30px;
+}
+
+.flash-deal-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.flash-deal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 10px 0;
+}
+
+.flash-deal-header h4 {
+    color: var(--color-gold);
+    font-weight: 700;
+    font-size: 18px;
+    margin: 0;
+}
+
+.flash-deal-header h4 i {
+    margin-left: 8px;
+}
+
+.flash-deal-header .badge-danger {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 8px;
+}
+
+.flash-deal-view-all {
+    color: var(--color-gray);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.flash-deal-view-all:hover {
+    color: var(--color-gold);
+}
+
+.flash-deal-scroll {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 10px 0 5px 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.flash-deal-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.flash-deal-scroll::-webkit-scrollbar-track {
+    background: var(--color-navy);
+    border-radius: 4px;
+}
+
+.flash-deal-scroll::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+}
+
+.flash-deal-item-horizontal {
+    flex: 0 0 140px;
+    background: var(--color-navy);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.08);
+}
+
+.flash-deal-item-horizontal:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.flash-deal-item-horizontal img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.flash-deal-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flash-deal-price {
+    color: var(--color-gold);
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.flash-deal-old-price {
+    color: var(--color-gray-dark);
+    font-size: 12px;
+    text-decoration: line-through;
+}
+
+/* ============================================ */
+/* کارت محصولات - با max-lines برای متن بلند */
+/* ============================================ */
+
+.product-card-2 {
+    height: 100%;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--color-navy-card);
+    border: 1px solid rgba(212, 175, 55, 0.12);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.product-card-2:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-gold-hover);
+    border-color: var(--color-gold);
+}
+
+.card-image {
+    position: relative;
+    height: 220px;
+    overflow: hidden;
+    background: var(--color-navy);
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.product-card-2:hover .card-image img {
+    transform: scale(1.06);
+}
+
+/* ===== عنوان محصول با max-lines ===== */
+.product-title {
+    height: auto;
+    min-height: 48px;
+    margin: 8px 0 4px;
+    overflow: hidden;
+}
+
+.product-title a {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-white-smoke);
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+    max-height: 3em;
+    word-break: break-word;
+}
+
+.product-title a:hover {
+    color: var(--color-gold);
+}
+
+.price-box {
+    min-height: 52px;
+    margin-bottom: 4px;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-gold);
+}
+
+.old-product-price {
+    font-size: 13px;
+    color: var(--color-gray-dark);
+    text-decoration: line-through;
+}
+
+/* ===== ستاره‌های امتیاز ===== */
+.star-rating {
+    color: var(--color-gold);
+    font-size: 13px;
+}
+
+.text-success {
+    color: #4ade80 !important;
+    font-weight: 500;
+}
+
+/* ===== نشان تخفیف ===== */
+.discount-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    z-index: 2;
+    box-shadow: 0 2px 12px rgba(239, 68, 68, 0.4);
+}
+
+/* ============================================ */
+/* بخش آیکون‌های تبلیغاتی */
+/* ============================================ */
+.mobile-icons-section {
+    width: 100%;
+    margin-bottom: 40px;
+    background: var(--gradient-navy);
+    padding: 30px 0;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.mobile-icons-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.mobile-icons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 15px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.mobile-icon-item {
+    flex: 1;
+    text-align: center;
+    min-width: 70px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.mobile-icon-circle {
+    width: 65px;
+    height: 65px;
+    margin: 0 auto 10px;
+    background: rgba(212, 175, 55, 0.12);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.mobile-icon-item:hover .mobile-icon-circle {
+    transform: scale(1.12) translateY(-3px);
+    background: rgba(212, 175, 55, 0.25);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.mobile-icon-emoji {
+    font-size: 30px;
+}
+
+.mobile-icon-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-white-smoke);
+    margin: 0;
+    letter-spacing: 0.3px;
+}
+
+/* ============================================ */
+/* عنوان‌های بخش‌ها */
+/* ============================================ */
+.section-title-1 {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(212, 175, 55, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.section-title-1 h3 {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-white);
+    letter-spacing: -0.3px;
+}
+
+.section-title-1 h3 i {
+    color: var(--color-gold);
+    margin-left: 8px;
+}
+
+.section-title-1 .inline-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.section-title-1 .inline-links li {
+    display: inline-block;
+}
+
+.section-title-1 .inline-links li a {
+    color: var(--color-gray);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.section-title-1 .inline-links li a:hover {
+    color: var(--color-gold);
+}
+
+.section-title-1 .inline-links li a i {
+    margin-right: 4px;
+}
+
+/* ============================================ */
+/* دسته بندی و برند - اسکرول افقی */
+/* ============================================ */
+
+.categories-section,
+.brands-section {
+    position: relative;
+}
+
+.categories-scroll-wrapper,
+.brands-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 10px 0 20px;
+    margin-bottom: 5px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.categories-scroll-wrapper::-webkit-scrollbar,
+.brands-scroll-wrapper::-webkit-scrollbar {
+    height: 4px;
+}
+
+.categories-scroll-wrapper::-webkit-scrollbar-track,
+.brands-scroll-wrapper::-webkit-scrollbar-track {
+    background: var(--color-navy);
+    border-radius: 4px;
+}
+
+.categories-scroll-wrapper::-webkit-scrollbar-thumb,
+.brands-scroll-wrapper::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+}
+
+.categories-scroll-container,
+.brands-scroll-container {
+    display: inline-flex;
+    gap: 15px;
+    white-space: nowrap;
+    padding: 0 5px;
+}
+
+.category-scroll-item,
+.brand-scroll-item {
+    display: inline-block;
+    width: 140px;
+    flex-shrink: 0;
+}
+
+/* ===== کارت دسته‌بندی با فونت بزرگتر ===== */
+.category-card-horizontal,
+.brand-card-horizontal {
+    display: block;
+    background: var(--color-navy-card);
+    border-radius: 16px;
+    padding: 18px 12px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(212, 175, 55, 0.08);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+.category-card-horizontal:hover,
+.brand-card-horizontal:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-gold);
+    border-color: var(--color-gold);
+}
+
+.category-icon-box,
+.brand-icon-box {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(212, 175, 55, 0.08);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+.category-card-horizontal:hover .category-icon-box,
+.brand-card-horizontal:hover .brand-icon-box {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--color-gold);
+    box-shadow: var(--shadow-gold);
+}
+
+.category-icon-img,
+.brand-icon-img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.category-icon-default,
+.brand-icon-default {
+    font-size: 30px;
+    color: var(--color-gold);
+}
+
+/* ===== نام دسته‌بندی با فونت بزرگتر و max-lines ===== */
+.category-name-horizontal,
+.brand-name-horizontal {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--color-white-smoke);
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    max-height: 2.8em;
+    word-break: break-word;
+    white-space: normal;
+    max-width: 120px;
+    margin: 0 auto;
+}
+
+.category-card-horizontal:hover .category-name-horizontal,
+.brand-card-horizontal:hover .brand-name-horizontal {
+    color: var(--color-gold);
+}
+
+/* ===== دکمه‌های ناوبری اسکرول ===== */
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    background: var(--color-navy-card);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-gold);
+    transition: all 0.3s ease;
+    z-index: 10;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.scroll-btn:hover {
+    background: var(--gradient-gold);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.scroll-btn:hover i {
+    color: var(--color-navy);
+}
+
+.scroll-btn i {
+    font-size: 18px;
+    color: var(--color-gold);
+    transition: all 0.3s ease;
+}
+
+.scroll-left {
+    left: 5px;
+}
+
+.scroll-right {
+    right: 5px;
+}
+
+/* ============================================ */
+/* باکس‌های سفید داخل سایت */
+/* ============================================ */
+.bg-white.shadow-sm.rounded-3 {
+    background: var(--color-navy-card) !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(212, 175, 55, 0.08);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ============================================ */
+/* ریسپانسیو کامل */
+/* ============================================ */
+
+@media (max-width: 1200px) {
+    .card-image { height: 190px; }
+    .slide-content h2 { font-size: 40px; }
+    .fullwidth-slider-section .slick-slide { height: 420px; }
+}
+
+@media (max-width: 992px) {
+    .fullwidth-slider-section .slick-slide { height: 380px; }
+    .slide-content h2 { font-size: 32px; }
+    .slide-content p { font-size: 15px; }
+    .fullwidth-slider-section .slick-prev,
+    .fullwidth-slider-section .slick-next { width: 40px; height: 40px; }
+    .card-image { height: 170px; }
+    .category-scroll-item,
+    .brand-scroll-item { width: 125px; }
+    .scroll-btn { width: 34px; height: 34px; }
+    .scroll-btn i { font-size: 16px; }
+    .scroll-left { left: 0; }
+    .scroll-right { right: 0; }
+    .product-title a { font-size: 13px; }
+}
+
+@media (max-width: 768px) {
+    .fullwidth-slider-section .slick-slide { height: 300px; }
+    .slide-content-overlay { padding: 30px; }
+    .slide-content h2 { font-size: 26px; margin-bottom: 12px; }
+    .slide-content p { font-size: 13px; margin-bottom: 18px; }
+    .slide-btn-custom { padding: 10px 24px; font-size: 13px; }
+    .mobile-icon-circle { width: 52px; height: 52px; }
+    .mobile-icon-emoji { font-size: 24px; }
+    .mobile-icon-title { font-size: 12px; }
+    .card-image { height: 150px; }
+    .product-title a { font-size: 13px; }
+    .product-price { font-size: 16px; }
+    .section-title-1 h3 { font-size: 20px; }
+    .category-scroll-item,
+    .brand-scroll-item { width: 115px; }
+    .category-name-horizontal,
+    .brand-name-horizontal { font-size: 14px; }
+    .category-icon-box,
+    .brand-icon-box { width: 60px; height: 60px; }
+    .category-icon-default,
+    .brand-icon-default { font-size: 26px; }
+    .scroll-btn { width: 30px; height: 30px; }
+    .scroll-btn i { font-size: 14px; }
+    .flash-deal-item-horizontal { flex: 0 0 120px; }
+    .fullwidth-slider-section .slick-prev,
+    .fullwidth-slider-section .slick-next { width: 36px; height: 36px; }
+}
+
+@media (max-width: 576px) {
+    .fullwidth-slider-section .slick-slide { height: 230px; }
+    .slide-content-overlay { padding: 20px; }
+    .slide-content h2 { font-size: 20px; margin-bottom: 8px; }
+    .slide-content p { font-size: 11px; margin-bottom: 12px; display: none; }
+    .slide-btn-custom { padding: 8px 16px; font-size: 11px; }
+    .mega-menu-btn { padding: 10px 14px; font-size: 12px; }
+    .mega-menu-btn i { font-size: 16px; }
+    .mega-menu-link { padding: 10px 14px; font-size: 13px; }
+    .mobile-icon-circle { width: 46px; height: 46px; }
+    .mobile-icon-emoji { font-size: 20px; }
+    .mobile-icon-title { font-size: 10px; }
+    .card-image { height: 130px; }
+    .product-title a { font-size: 12px; }
+    .product-price { font-size: 14px; }
+    .section-title-1 h3 { font-size: 17px; }
+    .category-scroll-item,
+    .brand-scroll-item { width: 100px; }
+    .category-name-horizontal,
+    .brand-name-horizontal { font-size: 13px; max-width: 90px; }
+    .category-icon-box,
+    .brand-icon-box { width: 52px; height: 52px; }
+    .category-icon-default,
+    .brand-icon-default { font-size: 22px; }
+    .category-icon-img,
+    .brand-icon-img { width: 32px; height: 32px; }
+    .flash-deal-item-horizontal { flex: 0 0 100px; }
+    .flash-deal-item-horizontal img { width: 60px; height: 60px; }
+    .flash-deal-price { font-size: 13px; }
+    .fullwidth-slider-section .slick-prev,
+    .fullwidth-slider-section .slick-next { width: 30px; height: 30px; }
+    .fullwidth-slider-section .slick-prev::after,
+    .fullwidth-slider-section .slick-next::after { font-size: 16px; }
+    .fullwidth-slider-section .slick-prev { left: 10px; }
+    .fullwidth-slider-section .slick-next { right: 10px; }
+    .fullwidth-slider-section .slick-dots li button { width: 8px; height: 8px; }
+    .fullwidth-slider-section .slick-dots li.slick-active button { width: 20px; }
+
+    /* Mobile-specific mega menu tweaks */
+    .mega-menu-btn {
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        margin: 0 10px 10px;
+        justify-content: space-between;
+        direction:rtl;
+    }
+
+    .mega-menu-list {
+        position: fixed !important;
+        top: 64px !important;
+        right: 8px !important;
+        left: 8px !important;
+        width: auto !important;
+        max-height: calc(100vh - 90px) !important;
+        background: linear-gradient(180deg, #17152f 0%, #10111d 100%) !important;
+        border-radius: 14px !important;
+        padding: 8px 6px 10px !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55) !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        border: 1px solid rgba(212, 175, 55, 0.16) !important;
+        z-index: 2000 !important;
+    }
+
+    .mega-menu-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+        margin: 2px 0;
+    }
+
+    .mega-menu-item:last-child {
+        border-bottom: none !important;
+    }
+
+    .mega-menu-link {
+        padding: 12px 14px !important;
+        font-size: 14.5px !important;
+        color: var(--color-white-smoke) !important;
+        background: transparent !important;
+        border-radius: 10px;
+        min-height: 46px;
+    }
+
+    .mega-menu-link:hover,
+    .mega-menu-item.active > .mega-menu-link {
+        background: rgba(212, 175, 55, 0.15) !important;
+        color: var(--color-gold) !important;
+    }
+
+    .mega-menu-link .mega-cat-icon {
+        width: 28px;
+        height: 28px;
+        opacity: 0.95;
+    }
+
+    .mega-arrow {
+        color: var(--color-gold);
+        font-size: 16px;
+    }
+
+    .mega-sub-menu {
+        position: relative !important;
+        top: auto !important;
+        right: auto !important;
+        left: auto !important;
+        width: 100% !important;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        box-shadow: none !important;
+        border-radius: 10px !important;
+        padding: 0 !important;
+        margin-top: 4px;
+        visibility: visible !important;
+        pointer-events: auto !important;
+        background: rgba(255, 255, 255, 0.04) !important;
+        border: 1px solid rgba(212, 175, 55, 0.08) !important;
+    }
+
+    .mega-menu-item.active > .mega-sub-menu {
+        max-height: 2000px;
+        padding: 6px 0 4px 0 !important;
+    }
+
+    .mega-sub-link {
+        padding: 10px 12px !important;
+        font-size: 13.5px !important;
+        color: var(--color-white-smoke) !important;
+        border-radius: 8px;
+    }
+
+    .mega-sub-link:hover {
+        background: rgba(212, 175, 55, 0.12) !important;
+        color: var(--color-gold) !important;
+    }
+
+    .mega-sub-sub-list {
+        padding: 2px 0 4px 12px !important;
+        display: block !important;
+    }
+
+    .mega-sub-sub-list li a {
+        color: var(--color-gray) !important;
+        font-size: 12.5px !important;
+        padding: 4px 10px !important;
+    }
+
+    .mega-sub-sub-list li a:hover {
+        color: var(--color-gold) !important;
+        background: rgba(212, 175, 55, 0.08) !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .fullwidth-slider-section .slick-slide { height: 180px; }
+    .slide-content h2 { font-size: 16px; }
+    .slide-btn-custom { padding: 6px 12px; font-size: 10px; }
+    .card-image { height: 110px; }
+    .product-title a { font-size: 11px; }
+    .category-scroll-item,
+    .brand-scroll-item { width: 85px; }
+    .category-name-horizontal,
+    .brand-name-horizontal { font-size: 11px; max-width: 75px; }
+    .category-icon-box,
+    .brand-icon-box { width: 44px; height: 44px; }
+    .category-icon-default,
+    .brand-icon-default { font-size: 18px; }
+    .category-icon-img,
+    .brand-icon-img { width: 28px; height: 28px; }
+    .scroll-btn { width: 26px; height: 26px; }
+    .scroll-btn i { font-size: 12px; }
+    .scroll-left { left: -2px; }
+    .scroll-right { right: -2px; }
+}
+
+/* ============================================ */
+/* انیمیشن‌ها */
+/* ============================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.product-card-2 {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+@keyframes pulseGold {
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(212, 175, 55, 0.4);
+    }
+}
+
+.category-card-horizontal:hover {
+    animation: pulseGold 1.5s ease-in-out infinite;
+}
+
+/* ===== استایل اسکرول ===== */
+.c-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.c-scrollbar::-webkit-scrollbar-track {
+    background: var(--color-navy);
+    border-radius: 4px;
+}
+
+.c-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-gold);
+    border-radius: 4px;
+}
+
+/* ===== متن‌های اضافی ===== */
+.text-muted {
+    color: var(--color-gray-dark) !important;
+}
+
+.gry-bg {
+    background:#02042d !important;
+}
+
+.heading-6 {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.strong-400 {
+    font-weight: 400;
+}
+
+.strong-600 {
+    font-weight: 600;
+}
+
+.strong-700 {
+    font-weight: 700;
+}
+
+/* ===== برچسب محصول ===== */
+.product-label.label-hot {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    padding: 2px 12px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ============================================ */
+/* بنرهای تبلیغاتی پایین صفحه */
+/* ============================================ */
+.media-banner {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.media-banner:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-gold);
+}
+
+.media-banner img {
+    width: 100%;
+    border-radius: 16px;
+}
