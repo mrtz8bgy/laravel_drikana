@@ -78,7 +78,7 @@
                                                                 تحویل داده شد    
                                                             @endif
                                                             @if($order->delivery_viewed == 0)
-                                                                <span class="ml-2" style="color:green"><strong>*</strong></span>
+                                                                <span class="ml-2 u-color-green"><strong>*</strong></span>
                                                             @endif
                                                         </td>
                                                         <td>
@@ -89,7 +89,7 @@
                                                                     <i class="bg-red"></i> {{__('Unpaid')}}
                                                                 @endif
                                                                 @if($order->payment_status_viewed == 0)
-                                                                    <span class="ml-2" style="color:green"><strong>*</strong></span>
+                                                                    <span class="ml-2 u-color-green"><strong>*</strong></span>
                                                                 @endif
                                                             </span>
                                                         </td>

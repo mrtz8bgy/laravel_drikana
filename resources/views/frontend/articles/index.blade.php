@@ -18,14 +18,14 @@
     فهرست سفید انجام می‌شود.
 --}}
 
-<div class="container" style="padding: 24px 15px;">
+<div class="container u-padding-24px-15px">
 
     {{-- ============================================= --}}
     {{-- سرصفحه --}}
     {{-- ============================================= --}}
     <div class="row">
         <div class="col-sm-12">
-            <h1 style="margin-bottom: 6px;">
+            <h1 class="u-margin-bottom-6px">
                 @if($currentCategory)
                     {{ $currentCategory->name }}
                 @else
@@ -45,10 +45,10 @@
     {{-- ============================================= --}}
     {{-- جست‌وجو و مرتب‌سازی --}}
     {{-- ============================================= --}}
-    <div class="row" style="margin-bottom: 20px;">
+    <div class="row u-margin-bottom-20px-2">
         <div class="col-sm-12">
             <form method="GET" action="{{ route('articles.index') }}" class="form-inline">
-                <div class="form-group" style="margin-left: 8px;">
+                <div class="form-group u-margin-left-8px">
                     <input type="text"
                            name="q"
                            class="form-control"
@@ -57,7 +57,7 @@
                            value="{{ e(request('q')) }}">
                 </div>
 
-                <div class="form-group" style="margin-left: 8px;">
+                <div class="form-group u-margin-left-8px">
                     <select name="sort" class="form-control">
                         @foreach([
                             'latest'  => 'جدیدترین',
@@ -79,7 +79,7 @@
     {{-- دسته‌بندی‌ها --}}
     {{-- ============================================= --}}
     @if($categories->count() > 0)
-        <div class="row" style="margin-bottom: 24px;">
+        <div class="row u-margin-bottom-24px">
             <div class="col-sm-12">
                 <a href="{{ route('articles.index') }}"
                    class="btn btn-sm {{ !$currentCategory ? 'btn-primary' : 'btn-default' }}">
@@ -104,16 +104,15 @@
         <div class="col-md-9">
             <div class="row">
                 @forelse($articles as $article)
-                    <div class="col-sm-6 col-md-4" style="margin-bottom: 24px;">
-                        <div class="thumbnail" style="height: 100%;">
+                    <div class="col-sm-6 col-md-4 u-margin-bottom-24px">
+                        <div class="thumbnail u-height-100">
 
                             <a href="{{ $article->public_url }}">
                                 @if($article->featured_image)
-                                    <img src="{{ $article->featured_image_url }}"
-                                         alt="{{ $article->featured_image_alt ?: $article->title }}"
-                                         style="height: 170px; width: 100%; object-fit: cover;">
+                                    <img class="u-height-170px-width-100-object-fit-cover" src="{{ $article->featured_image_url }}"
+ alt="{{ $article->featured_image_alt ?: $article->title }}">
                                 @else
-                                    <div style="height: 170px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                    <div class="u-height-170px-background-f0f0f0-display-flex-align-items-b8b441">
                                         <span class="text-muted">{{ __('بدون تصویر') }}</span>
                                     </div>
                                 @endif
@@ -122,19 +121,19 @@
                             <div class="caption">
                                 @if($article->category)
                                     <a href="{{ route('articles.category', $article->category->slug) }}"
-                                       class="label label-info" style="font-weight: 400;">
+ class="label label-info u-font-weight-400">
                                         {{ $article->category->name }}
                                     </a>
                                     <br><br>
                                 @endif
 
-                                <h4 style="margin-top: 0; font-size: 15px; line-height: 1.6;">
-                                    <a href="{{ $article->public_url }}" style="color: inherit;">
+                                <h4 class="u-margin-top-0-font-size-15px-line-height-1-6">
+                                    <a class="u-color-inherit" href="{{ $article->public_url }}">
                                         {{ \Illuminate\Support\Str::limit($article->title, 70) }}
                                     </a>
                                 </h4>
 
-                                <p class="text-muted" style="font-size: 13px;">
+                                <p class="text-muted u-font-size-13px">
                                     {{ \Illuminate\Support\Str::limit($article->excerpt ?: strip_tags($article->content), 90) }}
                                 </p>
 
@@ -173,8 +172,8 @@
                     </div>
                     <div class="panel-body">
                         @foreach($featured as $item)
-                            <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee;">
-                                <a href="{{ $item->public_url }}" style="font-size: 13px; line-height: 1.7;">
+                            <div class="u-margin-bottom-12px-padding-bottom-12px-border-bottom-1p-24d51a">
+                                <a class="u-font-size-13px-line-height-1-7" href="{{ $item->public_url }}">
                                     {{ \Illuminate\Support\Str::limit($item->title, 65) }}
                                 </a>
                                 <br>
@@ -192,9 +191,9 @@
                     <strong>{{ __('دسته‌بندی‌ها') }}</strong>
                 </div>
                 <div class="panel-body">
-                    <ul class="list-unstyled" style="margin: 0;">
+                    <ul class="list-unstyled u-margin-0">
                         @foreach($categories as $category)
-                            <li style="padding: 5px 0;">
+                            <li class="u-padding-5px-0">
                                 <a href="{{ route('articles.category', $category->slug) }}">
                                     {{ $category->name }}
                                     <span class="badge">{{ $category->published_articles_count }}</span>

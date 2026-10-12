@@ -104,7 +104,7 @@
             <div class="card">
                 <div class="card-header">دلیل و توضیحات درخواست</div>
                 <div class="card-body">
-                    <p class="mb-0" style="white-space: pre-line;">{{ $transfer->notes }}</p>
+                    <p class="mb-0 u-white-space-pre-line">{{ $transfer->notes }}</p>
                 </div>
             </div>
         </div>

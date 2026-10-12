@@ -37,7 +37,7 @@
         <div class="panel">
             <div class="panel-body">
 
-                <h2 style="margin-top: 0;">{{ $article->title }}</h2>
+                <h2 class="u-margin-top-0">{{ $article->title }}</h2>
 
                 <p class="text-muted">
                     <span class="label label-{{ $article->status_color }}">{{ $article->status_label }}</span>
@@ -51,8 +51,8 @@
 
                 @if($article->featured_image)
                     <img src="{{ $article->featured_image_url }}"
-                         alt="{{ $article->featured_image_alt }}"
-                         class="img-responsive" style="margin-bottom: 15px;">
+ alt="{{ $article->featured_image_alt }}"
+ class="img-responsive u-margin-bottom-15px">
                 @endif
 
                 {{--
@@ -70,7 +70,7 @@
                     <h4>{{ __('تصاویر') }}</h4>
                     <div class="row">
                         @foreach($article->images as $image)
-                            <div class="col-sm-4" style="margin-bottom: 10px;">
+                            <div class="col-sm-4 u-margin-bottom-10px-2">
                                 <img src="{{ $image->url }}" alt="{{ $image->alt }}" class="img-responsive img-thumbnail">
                             </div>
                         @endforeach

@@ -10,7 +10,7 @@
         <div class="pull-right clearfix">
             <form class="" id="sort_by_rating" action="{{ route('admin.reviews.index') }}" method="GET">
                 <div class="box-inline pad-rgt pull-left">
-                    <div class="select" style="min-width: 300px;">
+                    <div class="select u-min-width-300px">
                         <select class="form-control demo-select2" name="rating" id="rating" onchange="filter_by_rating()">
                             <option value="">{{__('فیلتر بر اساس امتیاز')}}</option>
                             <option value="rating,desc">امتیاز(نزولی)</option>

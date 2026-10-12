@@ -18,8 +18,8 @@
                     </div>
                 @else
                     <div class="px-3 py-3">
-                        <a href="{{ route('user.login') }}" class="btn-lux btn-lux-primary w-100 mb-2" style="justify-content:center;"><i class="la la-sign-in"></i> ورود</a>
-                        <a href="{{ route('user.registration') }}" class="btn-lux btn-lux-outline w-100" style="justify-content:center;"><i class="la la-user-plus"></i> ثبت‌نام</a>
+                        <a href="{{ route('user.login') }}" class="btn-lux btn-lux-primary w-100 mb-2 u-justify-content-center"><i class="la la-sign-in"></i> ورود</a>
+                        <a href="{{ route('user.registration') }}" class="btn-lux btn-lux-outline w-100 u-justify-content-center"><i class="la la-user-plus"></i> ثبت‌نام</a>
                     </div>
                 @endauth
             </div>

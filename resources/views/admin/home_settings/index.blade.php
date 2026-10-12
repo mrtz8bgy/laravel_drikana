@@ -2,6 +2,23 @@
 
 @section('content')
 
+    {{-- ── خطاهای اعتبارسنجی ──────────────────────────────────────────
+         فرم اسلایدر با AJAX در همین صفحه بارگذاری می‌شود و پس از ارسال،
+         به این صفحه بازمی‌گردد. اگر خطاها اینجا نمایش داده نشوند، مدیر
+         فکر می‌کند «بارگذاری کار نکرد». قواعد اعتبارسنجی در
+         SliderController@store تعریف شده‌اند (نوع واقعی تصویر، حجم،
+         تعداد). --}}
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <button class="close" data-dismiss="alert" type="button">&times;</button>
+            <ul class="u-margin-0-padding-right-20px">
+                @foreach($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="tab-base">
 
         <!--Nav Tabs-->

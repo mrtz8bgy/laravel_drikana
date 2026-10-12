@@ -4,7 +4,7 @@
 @php
     $customer_package = CustomerPackage::findOrFail(Session::get('payment_data')['customer_package_id']);
 @endphp
-    <form action="{!!route('payment.rozer')!!}" method="POST" id='rozer-pay' style="display: none;">
+    <form class="u-display-none" action="{!!route('payment.rozer')!!}" method="POST" id='rozer-pay'>
         <!-- Note that the amount is in paise = 50 INR -->
         <!--amount need to be in paisa-->
         <script src="https://checkout.razorpay.com/v1/checkout.js"

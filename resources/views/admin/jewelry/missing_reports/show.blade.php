@@ -141,10 +141,10 @@
                                                 <div class="card-body text-center">
                                                     <a href="{{ asset('storage/' . $report->jewelry->certificate_file) }}" target="_blank">
                                                         <img src="{{ asset('storage/' . $report->jewelry->certificate_file) }}" 
-                                                             alt="تصویر قطعه" 
-                                                             class="img-fluid img-thumbnail" 
-                                                             style="max-height: 200px; cursor: pointer;"
-                                                             onclick="openImageModal(this.src)">
+ alt="تصویر قطعه" 
+ class="img-fluid img-thumbnail u-max-height-200px-cursor-pointer" 
+ 
+ onclick="openImageModal(this.src)">
                                                     </a>
                                                     <p class="mt-2">
                                                         <a href="{{ asset('storage/' . $report->jewelry->certificate_file) }}" 
@@ -303,7 +303,7 @@
                     <div class="row mt-4">
                         <div class="col-md-12 text-center">
                             @if($report->status == 'pending')
-                                <form action="{{ route('admin.jewelry.missing_reports.update_status', $report->id) }}" method="POST" style="display:inline;">
+                                <form class="u-display-inline-2" action="{{ route('admin.jewelry.missing_reports.update_status', $report->id) }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="status" value="found">
                                     <button type="submit" class="btn btn-success" onclick="return confirm('آیا از پیدا شدن قطعه اطمینان دارید؟')">
@@ -340,7 +340,7 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img src="" id="modalImage" class="img-fluid" style="max-height: 500px;">
+                <img src="" id="modalImage" class="img-fluid u-max-height-500px">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>

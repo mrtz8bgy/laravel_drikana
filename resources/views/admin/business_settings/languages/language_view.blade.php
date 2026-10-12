@@ -28,7 +28,7 @@
                                     <td>{{ $i }}</td>
                                     <td class="key">{{ $key }}</td>
                                     <td>
-                                        <input type="text" class="form-control value" style="width:100%" name="key[{{ $key }}]" @isset(openJSONFile($language->code)[$key])
+                                        <input type="text" class="form-control value u-width-100" name="key[{{ $key }}]" @isset(openJSONFile($language->code)[$key])
                                             value="{{ openJSONFile($language->code)[$key] }}"
                                         @endisset>
                                     </td>

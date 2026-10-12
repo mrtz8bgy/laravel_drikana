@@ -45,7 +45,7 @@
                                         </td>
 
                                         <td class="product-quantity d-none d-md-table-cell">
-                                            <div class="input-group input-group--style-2 pr-4" style="width: 130px;">
+                                            <div class="input-group input-group--style-2 pr-4 u-width-130px">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-number" type="button" data-type="minus" data-field="quantity[{{ $key }}]">
                                                         <i class="la la-minus"></i>

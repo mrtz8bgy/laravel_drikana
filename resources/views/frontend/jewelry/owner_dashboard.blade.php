@@ -19,7 +19,7 @@
     رسمی و مدارک کاغذی است.
 --}}
 
-<div class="container" style="padding: 24px 15px;">
+<div class="container u-padding-24px-15px">
 
     <div class="row">
         <div class="col-sm-12">
@@ -40,11 +40,11 @@
     {{-- ============================================= --}}
     {{-- آمار خلاصه --}}
     {{-- ============================================= --}}
-    <div class="row" style="margin-bottom: 24px;">
+    <div class="row u-margin-bottom-24px">
         <div class="col-sm-3">
             <div class="panel panel-default text-center">
                 <div class="panel-body">
-                    <h3 style="margin: 0;">{{ number_format($stats['total_certificates']) }}</h3>
+                    <h3 class="u-margin-0">{{ number_format($stats['total_certificates']) }}</h3>
                     <small class="text-muted">{{ __('کل قطعات') }}</small>
                 </div>
             </div>
@@ -52,7 +52,7 @@
         <div class="col-sm-3">
             <div class="panel panel-warning text-center">
                 <div class="panel-body">
-                    <h3 style="margin: 0;">{{ number_format($stats['pending_transfers']) }}</h3>
+                    <h3 class="u-margin-0">{{ number_format($stats['pending_transfers']) }}</h3>
                     <small class="text-muted">{{ __('انتقال در انتظار تأیید') }}</small>
                 </div>
             </div>
@@ -60,7 +60,7 @@
         <div class="col-sm-3">
             <div class="panel panel-info text-center">
                 <div class="panel-body">
-                    <h3 style="margin: 0;">{{ number_format($stats['active_repairs']) }}</h3>
+                    <h3 class="u-margin-0">{{ number_format($stats['active_repairs']) }}</h3>
                     <small class="text-muted">{{ __('تعمیرات در جریان') }}</small>
                 </div>
             </div>
@@ -68,7 +68,7 @@
         <div class="col-sm-3">
             <div class="panel panel-danger text-center">
                 <div class="panel-body">
-                    <h3 style="margin: 0;">{{ number_format($stats['missing_reports']) }}</h3>
+                    <h3 class="u-margin-0">{{ number_format($stats['missing_reports']) }}</h3>
                     <small class="text-muted">{{ __('گزارش مفقودی') }}</small>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                                                         {{ __('درخواست انتقال') }}
                                                     </a>
                                                 @else
-                                                    <span class="text-muted" style="font-size: 12px;">
+                                                    <span class="text-muted u-font-size-12px">
                                                         {{ __('درخواست در انتظار') }}
                                                     </span>
                                                 @endif
@@ -161,7 +161,7 @@
     </div>
 
     <hr>
-    <p class="text-muted" style="font-size: 12px;">
+    <p class="text-muted u-font-size-12px">
         {{ __('توجه: سوابق این سامانه، سابقه ثبت‌شده در سیستم است و به‌تنهایی سند مالکیت قانونی محسوب نمی‌شود.') }}
     </p>
 

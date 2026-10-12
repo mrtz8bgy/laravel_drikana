@@ -7,9 +7,9 @@
                 <img src="{{ asset('frontend/images/user.png') }}" class="image rounded-circle">
             @endif
             @if(Auth::user()->seller->verification_status == 1)
-                <div class="name mb-0"> <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span> {{ Auth::user()->name }} </div>
+                <div class="name mb-0"> <span class="ml-2"><i class="fa fa-check-circle u-color-green"></i></span> {{ Auth::user()->name }} </div>
             @else
-                <div class="name mb-0"><span class="ml-2"><i class="fa fa-times-circle" style="color:red"></i></span> {{ Auth::user()->name }} </div>
+                <div class="name mb-0"><span class="ml-2"><i class="fa fa-times-circle u-color-red"></i></span> {{ Auth::user()->name }} </div>
             @endif
         </div>
         <div class="sidebar-widget-title py-3">
@@ -35,7 +35,7 @@
                     <a href="{{ route('purchase_history.index') }}" class="{{ areActiveRoutesHome(['purchase_history.index'])}}">
                         <i class="la la-file-text"></i>
                         <span class="category-name">
-                            {{__('Purchase History')}} @if($delivery_viewed > 0 || $payment_status_viewed > 0)<span class="ml-2" style="color:green"><strong>({{ __(' New Notifications') }})</strong></span>@endif
+                            {{__('Purchase History')}} @if($delivery_viewed > 0 || $payment_status_viewed > 0)<span class="ml-2 u-color-green"><strong>({{ __(' New Notifications') }})</strong></span>@endif
                         </span>
                     </a>
                 </li>
@@ -121,7 +121,7 @@
                     <a href="{{ route('orders.index') }}" class="{{ areActiveRoutesHome(['orders.index'])}}">
                         <i class="la la-file-text"></i>
                         <span class="category-name">
-                            {{__('Orders')}} @if($orders > 0)<span class="ml-2" style="color:green"><strong>({{ $orders }} {{ __('New') }})</strong></span></span>@endif
+                            {{__('Orders')}} @if($orders > 0)<span class="ml-2 u-color-green"><strong>({{ $orders }} {{ __('New') }})</strong></span></span>@endif
                         </span>
                     </a>
                 </li>
@@ -160,7 +160,7 @@
                     <a href="{{ route('reviews.seller') }}" class="{{ areActiveRoutesHome(['reviews.seller'])}}">
                         <i class="la la-star-o"></i>
                         <span class="category-name">
-                            {{__('Product Reviews')}}@if($review_count > 0)<span class="ml-2" style="color:green"><strong>({{ $review_count }} {{ __('New') }})</strong></span>@endif
+                            {{__('Product Reviews')}}@if($review_count > 0)<span class="ml-2 u-color-green"><strong>({{ $review_count }} {{ __('New') }})</strong></span>@endif
                         </span>
                     </a>
                 </li>
@@ -176,7 +176,7 @@
                             <span class="category-name">
                                 {{__('Conversations')}}
                                 @if (count($conversation_sent)+count($conversation_recieved) > 0)
-                                    <span class="ml-2" style="color:green"><strong>({{ count($conversation_sent)+count($conversation_recieved) }})</strong></span>
+                                    <span class="ml-2 u-color-green"><strong>({{ count($conversation_sent)+count($conversation_recieved) }})</strong></span>
                                 @endif
                             </span>
                         </a>
@@ -255,7 +255,7 @@
                     <a href="{{ route('support_ticket.index') }}" class="{{ areActiveRoutesHome(['support_ticket.index', 'support_ticket.show'])}}">
                         <i class="la la-support"></i>
                         <span class="category-name">
-                            {{__('Support Ticket')}} @if($support_ticket > 0)<span class="ml-2" style="color:green"><strong>({{ $support_ticket }} {{ __('New') }})</strong></span></span>@endif
+                            {{__('Support Ticket')}} @if($support_ticket > 0)<span class="ml-2 u-color-green"><strong>({{ $support_ticket }} {{ __('New') }})</strong></span></span>@endif
                         </span>
                     </a>
                 </li>

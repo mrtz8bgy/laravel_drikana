@@ -14,7 +14,7 @@
                         <li><a href="{{ route('dashboard') }}"><i class="la la-user"></i> پنل من</a></li>
                         <li><a href="{{ route('wishlists.index') }}"><i class="la la-heart-o"></i> علاقه‌مندی‌ها</a></li>
                         <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="la la-sign-out"></i> خروج</a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">@csrf</form>
+                            <form class="u-display-none-2" id="logout-form" action="{{ route('logout') }}" method="POST">@csrf</form>
                         </li>
                     @else
                         <li><a href="{{ route('user.login') }}"><i class="la la-sign-in"></i> ورود</a></li>
@@ -39,7 +39,7 @@
                         $gs = \App\GeneralSetting::first();
                         $logoUrl = ($gs && $gs->logo && file_exists(public_path($gs->logo))) ? asset($gs->logo) : asset('frontend/images/logo/drikana-logo.svg');
                     @endphp
-                    <img src="{{ $logoUrl }}" alt="Drikana" style="height:48px;" onerror="this.src='{{ asset('frontend/images/logo/drikana-logo.svg') }}'">
+                    <img class="u-height-48px" src="{{ $logoUrl }}" alt="Drikana" onerror="this.src='{{ asset('frontend/images/logo/drikana-logo.svg') }}'">
                 </a>
 
                 <!-- Search -->
@@ -57,21 +57,21 @@
 
                 <!-- Header Icons -->
                 <div class="d-header-icons">
-                    <a href="{{ route('jewelry.certificates.verify_page') }}" class="d-icon-btn" title="استعلام شناسنامه" style="text-decoration:none;">
+                    <a href="{{ route('jewelry.certificates.verify_page') }}" class="d-icon-btn u-text-decoration-none" title="استعلام شناسنامه">
                         <i class="la la-certificate"></i>
                     </a>
-                    <a href="{{ route('jewelry.missing_reports.create_public') }}" class="d-icon-btn hide-sm" title="اعلام سرقت/مفقودی" style="text-decoration:none;">
+                    <a href="{{ route('jewelry.missing_reports.create_public') }}" class="d-icon-btn hide-sm u-text-decoration-none" title="اعلام سرقت/مفقودی">
                         <i class="la la-shield"></i>
                     </a>
-                    <a href="{{ route('compare') }}" class="d-icon-btn hide-sm" title="مقایسه" style="text-decoration:none;">
+                    <a href="{{ route('compare') }}" class="d-icon-btn hide-sm u-text-decoration-none" title="مقایسه">
                         <i class="la la-refresh"></i>
                         @if(Session::has('compare'))<span class="badge">{{ count(Session::get('compare')) }}</span>@else<span class="badge">0</span>@endif
                     </a>
-                    <a href="{{ route('wishlists.index') }}" class="d-icon-btn" title="علاقه‌مندی" style="text-decoration:none;">
+                    <a href="{{ route('wishlists.index') }}" class="d-icon-btn u-text-decoration-none" title="علاقه‌مندی">
                         <i class="la la-heart-o"></i>
                     </a>
                     <div class="d-user-dropdown">
-                        <a href="{{ route('cart') }}" class="d-icon-btn" title="سبد خرید" style="text-decoration:none;" id="cart_items_sidenav_box">
+                        <a href="{{ route('cart') }}" class="d-icon-btn u-text-decoration-none" title="سبد خرید" id="cart_items_sidenav_box">
                             <i class="la la-shopping-cart"></i>
                             @if(Session::has('cart'))<span class="badge" id="cart_items_sidenav">{{ count(Session::get('cart')) }}</span>@else<span class="badge" id="cart_items_sidenav">0</span>@endif
                         </a>
@@ -106,7 +106,7 @@
                 </ul>
                 <div class="d-nav-cta">
                     @if (\App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
-                        <a href="{{ route('shops.create') }}" class="btn-lux btn-lux-primary" style="padding:8px 20px;font-size:13px;">
+                        <a href="{{ route('shops.create') }}" class="btn-lux btn-lux-primary u-padding-8px-20px-font-size-13px">
                             <i class="la la-plus"></i> فروشنده شوید
                         </a>
                     @endif
@@ -166,14 +166,14 @@
                         </a>
                         @if($cat->subcategories->isNotEmpty())
                             <div class="lux-mega-sub">
-                                <div class="row" style="margin:0;">
+                                <div class="row u-margin-0-2">
                                     @foreach($cat->subcategories->take(9) as $sub)
-                                        <div class="col-lg-4 col-md-6" style="padding:6px;">
+                                        <div class="col-lg-4 col-md-6 u-padding-6px">
                                             <a href="{{ route('products.subcategory', $sub->slug) }}" class="lux-sub-cat-title">
                                                 @if($sub->icon && file_exists(public_path($sub->icon)))
-                                                    <img src="{{ asset($sub->icon) }}" alt="" style="width:18px; height:18px; object-fit:contain;">
+                                                    <img class="u-width-18px-height-18px-object-fit-contain" src="{{ asset($sub->icon) }}" alt="">
                                                 @else
-                                                    <i class="la la-folder-o" style="font-size:14px;"></i>
+                                                    <i class="la la-folder-o u-font-size-14px-2"></i>
                                                 @endif
                                                 <span>{{ $sub->name }}</span>
                                             </a>
@@ -187,7 +187,7 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <a href="{{ route('products.category', $cat->slug) }}" class="lux-mega-banner" style="text-decoration:none;">
+                                <a href="{{ route('products.category', $cat->slug) }}" class="lux-mega-banner u-text-decoration-none">
                                     <img src="{{ asset('frontend/images/drikana/diamond.svg') }}" alt="">
                                     <div class="lux-mega-banner-text">
                                         <strong>مشاهده همه {{ $cat->name }}</strong>
@@ -200,7 +200,7 @@
                 @endforeach
                 <li class="lux-mega-item lux-mega-viewall">
                     <a href="{{ route('categories.all') }}" class="lux-mega-link">
-                        <i class="la la-th-large" style="font-size:18px;"></i>
+                        <i class="la la-th-large u-font-size-18px-2"></i>
                         <span>مشاهده همه دسته‌بندی‌ها</span>
                         <i class="la la-arrow-left"></i>
                     </a>

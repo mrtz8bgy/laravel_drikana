@@ -12,7 +12,7 @@
     سند مالکیت قانونی محسوب نمی‌شود.
 --}}
 
-<div class="container" style="padding: 24px 15px;">
+<div class="container u-padding-24px-15px">
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -31,7 +31,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><strong>{{ __('مشخصات قطعه') }}</strong></div>
                 <div class="panel-body">
-                    <table class="table table-bordered" style="margin: 0;">
+                    <table class="table table-bordered u-margin-0">
                         <tr><th width="35%">{{ __('شماره سری') }}</th><td>{{ $certificate->serial_number }}</td></tr>
                         <tr><th>{{ __('نام قطعه') }}</th><td>{{ $certificate->product_name }}</td></tr>
                         <tr><th>{{ __('فلز / عیار') }}</th><td>{{ $certificate->metal_type }} / {{ $certificate->purity }}</td></tr>
@@ -76,7 +76,7 @@
                 </div>
             </div>
 
-            <div class="alert alert-warning" style="font-size: 13px;">
+            <div class="alert alert-warning u-font-size-13px">
                 {{ __('توجه: سوابق این سامانه، سابقه ثبت‌شده در سیستم است و به‌تنهایی سند مالکیت قانونی محسوب نمی‌شود. مرجع قانونی، اسناد رسمی است.') }}
             </div>
 

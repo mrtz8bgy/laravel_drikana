@@ -82,7 +82,7 @@
                             </td>
                             <td>
                                 @if($wallet->approval == 0)
-                                    <form action="{{ route('wallet_request.update_approved') }}" method="POST" style="display: inline;">
+                                    <form class="u-display-inline" action="{{ route('wallet_request.update_approved') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $wallet->id }}">
                                         <input type="hidden" name="status" value="1">
@@ -91,7 +91,7 @@
                                         </button>
                                     </form>
 
-                                    <form action="{{ route('wallet_request.update_approved') }}" method="POST" style="display: inline;">
+                                    <form class="u-display-inline" action="{{ route('wallet_request.update_approved') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="id" value="{{ $wallet->id }}">
                                         <input type="hidden" name="status" value="-1">

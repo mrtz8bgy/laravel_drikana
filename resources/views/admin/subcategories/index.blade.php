@@ -18,7 +18,7 @@
         <div class="pull-right clearfix">
             <form class="" id="sort_subcategories" action="" method="GET">
                 <div class="box-inline pad-rgt pull-left">
-                    <div class="" style="min-width: 200px;">
+                    <div class="u-min-width-200px">
                         <input type="text" class="form-control" id="search" name="search"@isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="مقدار را وارد کرده و اینتر بزنید">
                     </div>
                 </div>

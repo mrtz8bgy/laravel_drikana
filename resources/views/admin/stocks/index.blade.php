@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-sm-12">
         <a href="{{ route('stocks.create')}}" class="btn btn-danger pull-right">{{__('Destroy')}}</a>
-        <a href="{{ route('stocks.create')}}" class="btn btn-info pull-right" style="margin-right: 10px;">{{__('Create Stock')}}</a>
+        <a href="{{ route('stocks.create')}}" class="btn btn-info pull-right u-margin-right-10px">{{__('Create Stock')}}</a>
     </div>
 </div>
 

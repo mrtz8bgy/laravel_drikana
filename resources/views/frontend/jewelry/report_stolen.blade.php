@@ -24,13 +24,13 @@
         <div class="two-col">
             <!-- Form -->
             <div class="report-form-card">
-                <div style="display:flex; align-items:center; gap:12px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid rgba(212,175,55,.12);">
-                    <div style="width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,#ef4444,#b91c1c); display:flex; align-items:center; justify-content:center; color:#fff; font-size:22px;">
+                <div class="u-display-flex-align-items-center-gap-12px-margin-bottom--985884">
+                    <div class="u-width-46px-height-46px-border-radius-50-background-line-75d203">
                         <i class="la la-bullhorn"></i>
                     </div>
                     <div>
-                        <h3 style="margin:0; font-size:18px; font-weight:800;">ثبت گزارش سرقت / مفقودی</h3>
-                        <p style="margin:4px 0 0; font-size:12px; color:var(--d-gray-500);">تمام اطلاعات محرمانه باقی می‌ماند</p>
+                        <h3 class="u-margin-0-font-size-18px-font-weight-800">ثبت گزارش سرقت / مفقودی</h3>
+                        <p class="u-margin-4px-0-0-font-size-12px-color-var-d-gray-500">تمام اطلاعات محرمانه باقی می‌ماند</p>
                     </div>
                 </div>
 
@@ -79,8 +79,8 @@
                                 </select>
                                 <div class="hint">فقط قطعاتی که شما به عنوان مالک در سامانه ثبت شده‌اند نمایش داده می‌شوند.</div>
                             @else
-                                <div style="padding:14px; background:rgba(251,191,36,.08); border-radius:var(--r-sm); border:1px dashed rgba(251,191,36,.3); color:#fde68a; font-size:13px; text-align:center;">
-                                    <i class="la la-info-circle" style="margin-left:6px;"></i>
+                                <div class="u-padding-14px-background-rgba-251-191-36-08-border-radiu-1a0d56">
+                                    <i class="la la-info-circle u-margin-left-6px-2"></i>
                                     شما هنوز هیچ قطعه‌ای در گنجینه خود ثبت نکرده‌اید. برای ثبت شناسنامه جدید <a href="{{ route('admin.jewelry.certificates.create') }}">کلیک کنید</a>.
                                 </div>
                             @endif
@@ -97,7 +97,7 @@
                             <div class="hint">هرچه توضیحات دقیق‌تر باشد، شانس بازیابی قطعه بالاتر می‌رود.</div>
                         </div>
 
-                        <button type="submit" class="btn-lux btn-lux-primary" style="width:100%; justify-content:center; padding:15px 30px; font-size:16px;">
+                        <button type="submit" class="btn-lux btn-lux-primary u-width-100-justify-content-center-padding-15px-30px-font-543ef9">
                             <i class="la la-paper-plane"></i> ثبت گزارش و آغاز رهگیری
                         </button>
                     </form>
@@ -106,7 +106,7 @@
                         <i class="la la-lock"></i>
                         <p>برای ثبت رسمی گزارش سرقت یا مفقودی، لطفاً ابتدا <a href="{{ route('user.login') }}">وارد حساب کاربری</a> شوید. در صورت نداشتن حساب، <a href="{{ route('user.registration') }}">ثبت‌نام</a> کنید. برای گزارش فوری بدون ورود، می‌توانید با پشتیبانی <a href="tel:02112345678">تماس بگیرید</a>.</p>
                     </div>
-                    <a href="{{ route('user.login') }}" class="btn-lux btn-lux-primary" style="width:100%; justify-content:center; padding:14px;">
+                    <a href="{{ route('user.login') }}" class="btn-lux btn-lux-primary u-width-100-justify-content-center-padding-14px">
                         <i class="la la-sign-in"></i> ورود و ثبت گزارش
                     </a>
                 @endauth
@@ -161,18 +161,18 @@
                     </div>
                 </div>
 
-                <div style="margin-top:20px; background:rgba(255,255,255,.03); border:1px solid rgba(212,175,55,.12); border-radius:var(--r-md); padding:22px;">
-                    <h5 style="font-size:15px; font-weight:700; margin:0 0 12px; display:flex; align-items:center; gap:8px; color:var(--d-gold);">
+                <div class="u-margin-top-20px-background-rgba-255-255-255-03-border-1-30bd86">
+                    <h5 class="u-font-size-15px-font-weight-700-margin-0-0-12px-display--c85edf">
                         <i class="la la-phone"></i> تماس اضطراری
                     </h5>
-                    <p style="font-size:13px; color:var(--d-gray-300); line-height:2; margin:0 0 12px;">
+                    <p class="u-font-size-13px-color-var-d-gray-300-line-height-2-margi-6db2c9">
                         در صورت نیاز فوری با خطوط ویژه پشتیبانی ۲۴ ساعته تماس بگیرید:
                     </p>
-                    <div style="display:flex; flex-direction:column; gap:8px;">
-                        <a href="tel:02112345678" style="display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(212,175,55,.08); border-radius:var(--r-sm); color:var(--d-gold-light); font-weight:700; text-decoration:none;">
+                    <div class="u-display-flex-flex-direction-column-gap-8px">
+                        <a class="u-display-flex-align-items-center-gap-10px-padding-10px-1-0879a0" href="tel:02112345678">
                             <i class="la la-phone"></i> ۰۲۱-۱۲۳۴۵۶۷۸
                         </a>
-                        <a href="tel:110" style="display:flex; align-items:center; gap:10px; padding:10px 14px; background:rgba(239,68,68,.1); border-radius:var(--r-sm); color:#fca5a5; font-weight:700; text-decoration:none;">
+                        <a class="u-display-flex-align-items-center-gap-10px-padding-10px-1-20bbd2" href="tel:110">
                             <i class="la la-warning"></i> پلیس ۱۱۰
                         </a>
                     </div>

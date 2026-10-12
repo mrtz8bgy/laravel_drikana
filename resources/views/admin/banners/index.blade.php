@@ -49,7 +49,7 @@
                             <td>{{ $key + 1 }}</td>
                             <td>
                                 @if($banner->photo)
-                                    <img src="{{ asset($banner->photo) }}" alt="" style="max-height: 70px; max-width: 100%;">
+                                    <img class="u-max-height-70px-max-width-100" src="{{ asset($banner->photo) }}" alt="">
                                 @endif
                             </td>
                             <td>{{ $banner->url }}</td>

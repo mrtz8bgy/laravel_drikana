@@ -1,4 +1,17 @@
-<div style="margin-left:auto;margin-right:auto;">
+
+{{-- کلاس‌های استخراج‌شده از استایل درون‌خطی (بازبینی L-04) --}}
+{{-- این ویو با dompdf به PDF تبدیل می‌شود و dompdf با --}}
+{{-- isRemoteEnabled=false استایل خارجی را بارگذاری نمی‌کند؛ --}}
+{{-- پس کلاس‌ها به‌جای فایل سراسری، اینجا تعریف شده‌اند. --}}
+<style>
+.u-background-eceff4 { background: #eceff4 !important; }
+.u-background-eceff4-padding-1-5rem { background: #eceff4 !important; padding: 1.5rem !important; }
+.u-border-bottom-1px-solid-eceff4-margin-0-1-5rem { border-bottom:1px solid #eceff4 !important; margin: 0 1.5rem !important; }
+.u-display-inline-block { display:inline-block !important; }
+.u-margin-left-auto-margin-right-auto { margin-left:auto !important; margin-right:auto !important; }
+.u-padding-1-5rem { padding: 1.5rem !important; }
+</style>
+<div class="u-margin-left-auto-margin-right-auto">
 <style media="all">
 	/* فونت سیستمی جایگزین Dejavu Sans */
 	*{
@@ -52,26 +65,26 @@
 		$generalsetting = \App\GeneralSetting::first();
 	@endphp
 
-	<div style="background: #eceff4;padding: 1.5rem;">
+	<div class="u-background-eceff4-padding-1-5rem">
 		<table>
 			<tr>
 				<td>
 					@if($generalsetting->logo != null)
-						<img src="{{ asset($generalsetting->logo) }}" height="40" style="display:inline-block;">
+						<img class="u-display-inline-block" src="{{ asset($generalsetting->logo) }}" height="40">
 					@else
-						<img src="{{ asset('frontend/images/logo/logo.png') }}" height="40" style="display:inline-block;">
+						<img class="u-display-inline-block" src="{{ asset('frontend/images/logo/logo.png') }}" height="40">
 					@endif
 				</td>
 			</tr>
 		</table>
 	</div>
 
-	<div style="border-bottom:1px solid #eceff4;margin: 0 1.5rem;"></div>
+	<div class="u-border-bottom-1px-solid-eceff4-margin-0-1-5rem"></div>
 
-    <div style="padding: 1.5rem;">
+    <div class="u-padding-1-5rem">
 		<table class="padding text-left small border-bottom">
 			<thead>
-                <tr class="gry-color" style="background: #eceff4;">
+                <tr class="gry-color u-background-eceff4">
                     <th width="50%">Brand Name</th>
                     <th width="50%">ID</th>
                 </tr>

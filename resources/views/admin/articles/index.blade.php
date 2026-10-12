@@ -58,7 +58,7 @@
     <div class="col-sm-3">
         <div class="panel panel-default">
             <div class="panel-body text-center">
-                <h2 style="margin: 0;">{{ number_format($stats['draft']) }}</h2>
+                <h2 class="u-margin-0">{{ number_format($stats['draft']) }}</h2>
                 <small>{{ __('پیش‌نویس') }}</small>
             </div>
         </div>
@@ -66,7 +66,7 @@
     <div class="col-sm-3">
         <div class="panel panel-warning">
             <div class="panel-body text-center">
-                <h2 style="margin: 0;">{{ number_format($stats['pending_review']) }}</h2>
+                <h2 class="u-margin-0">{{ number_format($stats['pending_review']) }}</h2>
                 <small>{{ __('در انتظار بررسی') }}</small>
             </div>
         </div>
@@ -74,7 +74,7 @@
     <div class="col-sm-3">
         <div class="panel panel-success">
             <div class="panel-body text-center">
-                <h2 style="margin: 0;">{{ number_format($stats['published']) }}</h2>
+                <h2 class="u-margin-0">{{ number_format($stats['published']) }}</h2>
                 <small>{{ __('منتشرشده') }}</small>
             </div>
         </div>
@@ -82,7 +82,7 @@
     <div class="col-sm-3">
         <div class="panel panel-danger">
             <div class="panel-body text-center">
-                <h2 style="margin: 0;">{{ number_format($stats['archived']) }}</h2>
+                <h2 class="u-margin-0">{{ number_format($stats['archived']) }}</h2>
                 <small>{{ __('بایگانی‌شده') }}</small>
             </div>
         </div>
@@ -96,14 +96,14 @@
     <div class="panel-body">
         <form method="GET" action="{{ route('admin.articles.index') }}" class="form-inline">
 
-            <div class="form-group" style="margin-left: 8px;">
+            <div class="form-group u-margin-left-8px">
                 <input type="text" name="search" class="form-control"
                        placeholder="{{ __('جست‌وجو در عنوان و خلاصه') }}"
                        maxlength="100"
                        value="{{ e(request('search')) }}">
             </div>
 
-            <div class="form-group" style="margin-left: 8px;">
+            <div class="form-group u-margin-left-8px">
                 <select name="status" class="form-control">
                     <option value="">{{ __('همه وضعیت‌ها') }}</option>
                     @foreach([
@@ -117,7 +117,7 @@
                 </select>
             </div>
 
-            <div class="form-group" style="margin-left: 8px;">
+            <div class="form-group u-margin-left-8px">
                 <select name="category_id" class="form-control">
                     <option value="">{{ __('همه دسته‌بندی‌ها') }}</option>
                     @foreach($categories as $category)
@@ -173,7 +173,7 @@
                                 <strong>{{ \Illuminate\Support\Str::limit($article->title, 55) }}</strong>
 
                                 @if($article->is_featured)
-                                    <span class="label label-warning" style="font-size: 10px;">{{ __('ویژه') }}</span>
+                                    <span class="label label-warning u-font-size-10px">{{ __('ویژه') }}</span>
                                 @endif
 
                                 <br>
@@ -288,7 +288,7 @@
 </div>
 
 {{-- فرم پنهان برای ارسال درخواست‌های POST (تغییر وضعیت) --}}
-<form id="postActionForm" method="POST" style="display: none;">
+<form class="u-display-none" id="postActionForm" method="POST">
     @csrf
 </form>
 

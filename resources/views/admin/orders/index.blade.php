@@ -12,7 +12,7 @@
         <div class="pull-right clearfix">
             <form class="" id="sort_orders" action="" method="GET">
                 <div class="box-inline pad-rgt pull-left">
-                    <div class="select" style="min-width: 300px;">
+                    <div class="select u-min-width-300px">
                         <select class="form-control demo-select2" name="payment_type" id="payment_type" onchange="sort_orders()">
                             <option value="">{{__('Filter by Payment Status')}}</option>
                             <option value="paid"  @isset($payment_status) @if($payment_status == 'paid') selected @endif @endisset>{{__('Paid')}}</option>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="box-inline pad-rgt pull-left">
-                    <div class="select" style="min-width: 300px;">
+                    <div class="select u-min-width-300px">
                         <select class="form-control demo-select2" name="delivery_status" id="delivery_status" onchange="sort_orders()">
                             <option value="">{{__('Filter by Deliver Status')}}</option>
                             <option value="pending"   @isset($delivery_status) @if($delivery_status == 'pending') selected @endif @endisset>{{__('Pending')}}</option>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="box-inline pad-rgt pull-left">
-                    <div class="" style="min-width: 200px;">
+                    <div class="u-min-width-200px">
                         <input type="text" class="form-control" id="search" name="search"@isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="کد سفارش را وارد کنید و اینتر بزنید">
                     </div>
                 </div>

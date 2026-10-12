@@ -198,18 +198,15 @@
                                                 @endphp
                                                 @if($isImage)
                                                     <img src="{{ asset('storage/' . $report->jewelry->certificate_file) }}" 
-                                                         alt="تصویر" 
-                                                         class="rounded me-2" 
-                                                         style="width: 40px; height: 40px; object-fit: cover;">
+ alt="تصویر" 
+ class="rounded me-2 u-width-40px-height-40px-object-fit-cover">
                                                 @else
-                                                    <div class="bg-secondary rounded me-2 d-flex align-items-center justify-content-center" 
-                                                         style="width: 40px; height: 40px;">
+                                                    <div class="bg-secondary rounded me-2 d-flex align-items-center justify-content-center u-width-40px-height-40px">
                                                         <i class="fas fa-file-pdf text-white"></i>
                                                     </div>
                                                 @endif
                                             @else
-                                                <div class="bg-light rounded me-2 d-flex align-items-center justify-content-center" 
-                                                     style="width: 40px; height: 40px;">
+                                                <div class="bg-light rounded me-2 d-flex align-items-center justify-content-center u-width-40px-height-40px">
                                                     <i class="fas fa-gem text-muted"></i>
                                                 </div>
                                             @endif

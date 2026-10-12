@@ -24,14 +24,14 @@
 
 @foreach($permissionGroups as $groupName => $permissions)
 
-    <div class="panel panel-default" style="margin-bottom: 15px;">
-        <div class="panel-heading" style="padding: 8px 15px;">
-            <h4 class="panel-title" style="font-size: 14px;">
+    <div class="panel panel-default u-margin-bottom-15px">
+        <div class="panel-heading u-padding-8px-15px">
+            <h4 class="panel-title u-font-size-14px">
                 <i class="demo-pli-folder"></i> {{ $groupName }}
                 <span class="badge badge-default pull-left">{{ count($permissions) }}</span>
             </h4>
         </div>
-        <div class="panel-body" style="padding: 10px 15px;">
+        <div class="panel-body u-padding-10px-15px">
             <div class="row">
 
                 @foreach($permissions as $slug => $title)
@@ -49,18 +49,18 @@
                         $disabled = $readOnly || !$canGrant;
                     @endphp
 
-                    <div class="col-sm-6 col-md-4" style="margin-bottom: 6px;">
+                    <div class="col-sm-6 col-md-4 u-margin-bottom-6px">
                         <label class="control-label"
                                style="font-weight: 400; cursor: {{ $disabled ? 'not-allowed' : 'pointer' }};"
                                @if(!$canGrant) title="{{ __('شما این مجوز را ندارید و نمی‌توانید آن را اعطا کنید') }}" @endif>
 
                             <input type="checkbox"
-                                   name="permissions[]"
-                                   value="{{ $slug }}"
-                                   class="demo-sw"
-                                   style="margin-left: 6px;"
-                                   @if($isChecked) checked @endif
-                                   @if($disabled) disabled @endif>
+ name="permissions[]"
+ value="{{ $slug }}"
+ class="demo-sw u-margin-left-6px"
+ 
+ @if($isChecked) checked @endif
+ @if($disabled) disabled @endif>
 
                             {{-- در حالت غیرفعال، مقدار انتخاب‌شده باید حفظ شود --}}
                             @if($disabled && $isChecked)
@@ -70,13 +70,13 @@
                             {{ $title }}
 
                             @if(!$canGrant)
-                                <span class="label label-danger" style="font-size: 10px;">
+                                <span class="label label-danger u-font-size-10px">
                                     {{ __('بدون دسترسی') }}
                                 </span>
                             @endif
                         </label>
                         <br>
-                        <small class="text-muted" style="font-size: 10px;">{{ $slug }}</small>
+                        <small class="text-muted u-font-size-10px">{{ $slug }}</small>
                     </div>
 
                 @endforeach

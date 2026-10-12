@@ -54,7 +54,7 @@
 <div class="panel">
     <div class="panel-body">
         <form method="GET" action="{{ route('users.index') }}" class="form-inline">
-            <div class="form-group" style="margin-left: 10px;">
+            <div class="form-group u-margin-left-10px">
                 <input type="text"
                        name="search"
                        class="form-control"
@@ -63,7 +63,7 @@
                        value="{{ e(request('search')) }}">
             </div>
 
-            <div class="form-group" style="margin-left: 10px;">
+            <div class="form-group u-margin-left-10px">
                 <select name="role" class="form-control">
                     <option value="">{{ __('همه نقش‌ها') }}</option>
                     @foreach($roles as $role)
@@ -74,7 +74,7 @@
                 </select>
             </div>
 
-            <div class="form-group" style="margin-left: 10px;">
+            <div class="form-group u-margin-left-10px">
                 <select name="user_type" class="form-control">
                     <option value="">{{ __('همه انواع کاربر') }}</option>
                     @foreach(['admin' => 'مدیر', 'staff' => 'کارمند', 'seller' => 'فروشنده', 'customer' => 'مشتری'] as $value => $label)
@@ -128,7 +128,7 @@
                             <td>
                                 <strong>{{ $user->name }}</strong>
                                 @if($user->id === Auth::id())
-                                    <span class="label label-info" style="font-size: 10px;">{{ __('شما') }}</span>
+                                    <span class="label label-info u-font-size-10px">{{ __('شما') }}</span>
                                 @endif
                             </td>
 
@@ -150,7 +150,7 @@
 
                             <td>
                                 @forelse($user->roles as $role)
-                                    <span class="label label-success" style="display: inline-block; margin: 2px; font-weight: 400;">
+                                    <span class="label label-success u-display-inline-block-margin-2px-font-weight-400">
                                         {{ $role->name }}
                                     </span>
                                 @empty

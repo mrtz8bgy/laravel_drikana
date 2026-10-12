@@ -45,14 +45,14 @@
                         </div>
                         
                         {{-- نمایش اطلاعات کامل قطعه و مالک --}}
-                        <div id="jewelry_info" class="alert alert-info" style="display:none;">
+                        <div id="jewelry_info" class="alert alert-info u-display-none-2">
                             <div class="row">
                                 <div class="col-md-12">
                                     <h5 class="mb-3">📋 اطلاعات قطعه انتخاب شده:</h5>
                                     
                                     {{-- تصویر قطعه (اگر وجود داشته باشد) --}}
-                                    <div id="jewelry_image_container" style="display:none;" class="text-center mb-3">
-                                        <img id="jewelry_image" src="" alt="تصویر قطعه" class="img-thumbnail" style="max-height: 150px;">
+                                    <div id="jewelry_image_container" class="text-center mb-3 u-display-none-2">
+                                        <img id="jewelry_image" src="" alt="تصویر قطعه" class="img-thumbnail u-max-height-150px">
                                     </div>
                                     
                                     {{-- اطلاعات جزئی --}}

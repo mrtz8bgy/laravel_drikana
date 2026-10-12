@@ -37,7 +37,7 @@
                 {{-- نمایش خطاهای اعتبارسنجی --}}
                 @if($errors->any())
                     <div class="alert alert-danger">
-                        <ul style="margin: 0; padding-right: 20px;">
+                        <ul class="u-margin-0-padding-right-20px">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach

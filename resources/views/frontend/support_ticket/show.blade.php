@@ -68,7 +68,7 @@
                                                                 <div class="mt-3 clearfix">
                                                                     @foreach (json_decode($ticketreply->files) as $key => $file)
                                                                         <div class="float-right bg-white p-2 rounded ml-2">
-                                                                            <a href="{{ asset($file->path) }}" download="{{ $file->name }}" class="file-preview d-block text-black-50" style="width:100px">
+                                                                            <a href="{{ asset($file->path) }}" download="{{ $file->name }}" class="file-preview d-block text-black-50 u-width-100px">
                                                                                 <div class="text-center h4">
                                                                                     <i class="la la-file"></i>
                                                                                 </div>
@@ -110,7 +110,7 @@
                                                                 <div class="mt-3 clearfix">
                                                                     @foreach (json_decode($ticketreply->files) as $key => $file)
                                                                         <div class="float-right bg-white p-2 rounded ml-2">
-                                                                            <a href="{{ asset($file->path) }}" download="{{ $file->name }}" class="file-preview d-block text-black-50" style="width:100px">
+                                                                            <a href="{{ asset($file->path) }}" download="{{ $file->name }}" class="file-preview d-block text-black-50 u-width-100px">
                                                                                 <div class="text-center h4">
                                                                                     <i class="la la-file"></i>
                                                                                 </div>
@@ -153,7 +153,7 @@
                                                         <div class="mt-3 clearfix">
                                                             @foreach (json_decode($ticket->files) as $key => $file)
                                                                 <div class="float-right bg-white p-2 rounded ml-2">
-                                                                    <a href="{{ asset($file->path) }}" download="{{ $file->name }}" class="file-preview d-block text-black-50" style="width:100px">
+                                                                    <a href="{{ asset($file->path) }}" download="{{ $file->name }}" class="file-preview d-block text-black-50 u-width-100px">
                                                                         <div class="text-center h4">
                                                                             <i class="la la-file"></i>
                                                                         </div>

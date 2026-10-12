@@ -26,7 +26,7 @@
                 <input type="text" name="serial" value="{{ request('serial') }}" placeholder="مثلاً: DRK-12345678" maxlength="50" required autofocus>
                 <button type="submit"><i class="la la-check-circle"></i> استعلام</button>
             </form>
-            <p style="margin:14px 0 0; font-size:12px; color:var(--d-gray-500); text-align:center;">
+            <p class="u-margin-14px-0-0-font-size-12px-color-var-d-gray-500-tex-c83710">
                 <i class="la la-info-circle"></i> شماره سریال روی بدنه شناسنامه یا حک شده روی قطعه قابل مشاهده است.
             </p>
         </div>
@@ -37,20 +37,20 @@
     <div class="container">
 
         @if(session('success'))
-            <div class="alert-lux success" style="margin-bottom:20px;">
+            <div class="alert-lux success u-margin-bottom-20px">
                 <i class="la la-check-circle"></i>
                 <span>{{ session('success') }}</span>
             </div>
         @endif
         @if($errors->any())
-            <div class="alert-lux danger" style="margin-bottom:20px;">
+            <div class="alert-lux danger u-margin-bottom-20px">
                 <i class="la la-exclamation-triangle"></i>
                 <span>{{ $errors->first() }}</span>
             </div>
         @endif
         @if($message)
-            <div class="alert-lux" style="padding:16px 20px; border-radius:var(--r-md); margin-bottom:20px; display:flex; align-items:center; gap:12px; background:rgba(229,62,62,.1); border:1px solid rgba(229,62,62,.3); color:#fca5a5;">
-                <i class="la la-exclamation-circle" style="font-size:22px;"></i>
+            <div class="alert-lux u-padding-16px-20px-border-radius-var-r-md-margin-bottom--6b1b5e">
+                <i class="la la-exclamation-circle u-font-size-22px"></i>
                 <span>{{ $message }}</span>
             </div>
         @endif
@@ -58,13 +58,13 @@
         @if($certificate)
             <div class="cert-result">
                 @if($missingReport)
-                    <div class="alert-lux danger" style="padding:16px 20px; border-radius:var(--r-md); margin-bottom:20px; display:flex; align-items:center; gap:12px; background:rgba(229,62,62,.1); border:1px solid rgba(229,62,62,.3); color:#fca5a5;">
-                        <i class="la la-exclamation-triangle" style="font-size:26px; color:#ef4444;"></i>
+                    <div class="alert-lux danger u-padding-16px-20px-border-radius-var-r-md-margin-bottom--6b1b5e">
+                        <i class="la la-exclamation-triangle u-font-size-26px-color-ef4444"></i>
                         <div>
-                            <strong style="display:block; font-size:15px; margin-bottom:4px;">
+                            <strong class="u-display-block-font-size-15px-margin-bottom-4px">
                                 ⚠ هشدار! این قطعه در سامانه به عنوان «{{ $missingReport->type == 'theft' ? 'مسروقه' : 'مفقودی' }}» ثبت شده است.
                             </strong>
-                            <span style="font-size:13px; opacity:.85;">در صورت مشاهده این قطعه، لطفاً مراتب را در اسرع وقت به پلیس و پشتیبانی دریکانا اطلاع دهید.</span>
+                            <span class="u-font-size-13px-opacity-85">در صورت مشاهده این قطعه، لطفاً مراتب را در اسرع وقت به پلیس و پشتیبانی دریکانا اطلاع دهید.</span>
                         </div>
                     </div>
                 @endif
@@ -79,7 +79,7 @@
                     <div class="cert-meta-grid">
                         <div class="cert-meta-item">
                             <div class="label">شماره سریال</div>
-                            <div class="value" style="direction:ltr; letter-spacing:2px;">{{ $certificate->serial_number }}</div>
+                            <div class="value u-direction-ltr-letter-spacing-2px">{{ $certificate->serial_number }}</div>
                         </div>
                         <div class="cert-meta-item">
                             <div class="label">نام محصول</div>
@@ -112,7 +112,7 @@
                     </div>
 
                     @if($certificate->description)
-                        <div style="padding:14px; background:rgba(184,137,42,.08); border-radius:8px; margin-bottom:20px; font-size:13px; color:#5c4a1a;">
+                        <div class="u-padding-14px-background-rgba-184-137-42-08-border-radiu-b06b93">
                             <strong>توضیحات:</strong> {{ $certificate->description }}
                         </div>
                     @endif
@@ -125,24 +125,24 @@
                         @endif
                     </div>
 
-                    <div class="cert-qr-box"><i class="la la-qrcode" style="color:var(--d-gold-dark);"></i></div>
+                    <div class="cert-qr-box"><i class="la la-qrcode u-color-var-d-gold-dark"></i></div>
                     <div class="cert-seal-box">DRIKANA<br>CERTIFIED</div>
                 </div>
 
                 @if($certificate->transfers && $certificate->transfers->count() > 0)
-                    <div class="d-card-lux" style="margin-top:30px;">
+                    <div class="d-card-lux u-margin-top-30px">
                         <div class="d-card-lux-title"><i class="la la-exchange"></i> تاریخچه انتقال مالکیت</div>
-                        <div style="display:flex; flex-direction:column; gap:14px;">
+                        <div class="u-display-flex-flex-direction-column-gap-14px">
                             @foreach($certificate->transfers->sortByDesc('transfer_date') as $t)
-                                <div style="display:flex; gap:16px; align-items:flex-start; padding:14px; background:rgba(255,255,255,.03); border-radius:var(--r-sm); border-right:3px solid var(--d-gold);">
-                                    <div style="width:40px; height:40px; border-radius:50%; background:rgba(212,175,55,.15); display:flex; align-items:center; justify-content:center; color:var(--d-gold); flex-shrink:0;"><i class="la la-arrows-h"></i></div>
-                                    <div style="flex:1;">
-                                        <div style="font-weight:700; margin-bottom:4px; color:var(--d-white);">
-                                            از <span style="color:var(--d-gold-light);">{{ optional($t->fromOwner)->full_name ?: '—' }}</span>
-                                            <i class="la la-long-arrow-left" style="margin:0 10px; color:var(--d-gold);"></i>
-                                            به <span style="color:var(--d-gold-light);">{{ optional($t->toOwner)->full_name ?: '—' }}</span>
+                                <div class="u-display-flex-gap-16px-align-items-flex-start-padding-14-e902f7">
+                                    <div class="u-width-40px-height-40px-border-radius-50-background-rgba-64a69f"><i class="la la-arrows-h"></i></div>
+                                    <div class="u-flex-1-2">
+                                        <div class="u-font-weight-700-margin-bottom-4px-color-var-d-white">
+                                            از <span class="u-color-var-d-gold-light">{{ optional($t->fromOwner)->full_name ?: '—' }}</span>
+                                            <i class="la la-long-arrow-left u-margin-0-10px-color-var-d-gold"></i>
+                                            به <span class="u-color-var-d-gold-light">{{ optional($t->toOwner)->full_name ?: '—' }}</span>
                                         </div>
-                                        <div style="font-size:13px; color:var(--d-gray-500);">
+                                        <div class="u-font-size-13px-color-var-d-gray-500">
                                             <i class="la la-calendar"></i> {{ $t->transfer_date ? $t->transfer_date->format('Y/m/d') : '—' }}
                                         </div>
                                     </div>

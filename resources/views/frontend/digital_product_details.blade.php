@@ -239,7 +239,7 @@
                                             }
                                         @endphp
                                         <div class="form-group">
-                                            <textarea id="referral_code_url" class="form-control" readonly type="text" style="display:none">{{$referral_code_url}}</textarea>
+                                            <textarea id="referral_code_url" class="form-control u-display-none-3" readonly type="text">{{$referral_code_url}}</textarea>
                                         </div>
                                         <button type=button id="ref-cpurl-btn" class="btn btn-sm btn-secondary" data-attrcpy="{{__('Copied')}}" onclick="CopyToClipboard('referral_code_url')">{{__('Copy the Promote Link')}}</button>
                                     @endif
@@ -338,11 +338,11 @@
                             @if ($detailedProduct->added_by == 'seller' && \App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1 && $detailedProduct->user->seller->verification_status == 1)
                                 <div class="position-absolute medal-badge">
                                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" viewBox="0 0 287.5 442.2">
-                                        <polygon style="fill:#F8B517;" points="223.4,442.2 143.8,376.7 64.1,442.2 64.1,215.3 223.4,215.3 "/>
-                                        <circle style="fill:#FBD303;" cx="143.8" cy="143.8" r="143.8"/>
-                                        <circle style="fill:#F8B517;" cx="143.8" cy="143.8" r="93.6"/>
-                                        <polygon style="fill:#FCFCFD;" points="143.8,55.9 163.4,116.6 227.5,116.6 175.6,154.3 195.6,215.3 143.8,177.7 91.9,215.3 111.9,154.3
-                                        60,116.6 124.1,116.6 "/>
+                                        <polygon class="u-fill-f8b517" points="223.4,442.2 143.8,376.7 64.1,442.2 64.1,215.3 223.4,215.3 "/>
+                                        <circle class="u-fill-fbd303" cx="143.8" cy="143.8" r="143.8"/>
+                                        <circle class="u-fill-f8b517" cx="143.8" cy="143.8" r="93.6"/>
+                                        <polygon class="u-fill-fcfcfd" points="143.8,55.9 163.4,116.6 227.5,116.6 175.6,154.3 195.6,215.3 143.8,177.7 91.9,215.3 111.9,154.3
+ 60,116.6 124.1,116.6 "/>
                                     </svg>
                                 </div>
                             @endif
@@ -350,9 +350,9 @@
                             @if($detailedProduct->added_by == 'seller' && \App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
                                 <a href="{{ route('shop.visit', $detailedProduct->user->shop->slug) }}" class="name d-block">{{ $detailedProduct->user->shop->name }}
                                 @if ($detailedProduct->user->seller->verification_status == 1)
-                                    <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span>
+                                    <span class="ml-2"><i class="fa fa-check-circle u-color-green"></i></span>
                                 @else
-                                    <span class="ml-2"><i class="fa fa-times-circle" style="color:red"></i></span>
+                                    <span class="ml-2"><i class="fa fa-times-circle u-color-red"></i></span>
                                 @endif
                                 </a>
                                 <div class="location">{{ $detailedProduct->user->shop->address }}</div>

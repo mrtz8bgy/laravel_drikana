@@ -67,15 +67,15 @@
                     </a>
 
                     <!--Notification dropdown menu-->
-                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right" style="opacity: 1;">
-                        <div class="nano scrollable has-scrollbar" style="height: 265px;">
-                            <div class="nano-content" tabindex="0" style="right: -17px;">
+                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right u-opacity-1">
+                        <div class="nano scrollable has-scrollbar u-height-265px">
+                            <div class="nano-content u-right-17px" tabindex="0">
                                 <ul class="head-list">
                                     @if($orders > 0)
                                         <li>
-                                            <a class="media" href="{{ route('orders.index.admin') }}" style="position:relative">
+                                            <a class="media u-position-relative" href="{{ route('orders.index.admin') }}">
                                                 <div class="media-body">
-                                                    <p class="text-nowrap text-main text-semibold" style="padding-right: 10px">{{ $orders }} سفارش جدید</p>
+                                                    <p class="text-nowrap text-main text-semibold u-padding-right-10px">{{ $orders }} سفارش جدید</p>
                                                 </div>
                                             </a>
                                         </li>
@@ -91,8 +91,8 @@
                                     @endif
                                 </ul>
                             </div>
-                            <div class="nano-pane" style="">
-                                <div class="nano-slider" style="height: 170px; transform: translate(0px, 0px);"></div>
+                            <div class="nano-pane u-">
+                                <div class="nano-slider u-height-170px-transform-translate-0px-0px"></div>
                             </div>
                         </div>
                     </div>

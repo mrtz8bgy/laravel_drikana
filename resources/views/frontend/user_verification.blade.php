@@ -89,7 +89,7 @@
                                     {{ __('انصراف و خروج') }}
                                 </a>
                                 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                <form class="u-display-none" id="logout-form" action="{{ route('logout') }}" method="POST">
                                     @csrf
                                 </form>
                             </div>

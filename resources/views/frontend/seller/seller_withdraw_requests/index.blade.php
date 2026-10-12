@@ -76,9 +76,9 @@
                                                     <td>{{ single_price($seller_withdraw_request->amount) }}</td>
                                                     <td>
                                                         @if ($seller_withdraw_request->status == 1)
-                                                            <span class="ml-2" style="color:green"><strong>{{__('تسویه شده')}}</strong></span>
+                                                            <span class="ml-2 u-color-green"><strong>{{__('تسویه شده')}}</strong></span>
                                                         @else
-                                                            <span class="ml-2" style="color:red"><strong>{{__('در انتظار تایید')}}</strong></span>
+                                                            <span class="ml-2 u-color-red"><strong>{{__('در انتظار تایید')}}</strong></span>
                                                         @endif
                                                     </td>
                                                     <td>

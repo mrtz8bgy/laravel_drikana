@@ -208,10 +208,10 @@
                                             @endphp
                                             @if($isImage)
                                                 <img src="{{ asset('storage/' . $jewelry->certificate_file) }}" 
-                                                     alt="تصویر قطعه" 
-                                                     class="img-fluid img-thumbnail mb-2"
-                                                     style="max-height: 120px; cursor: pointer;"
-                                                     onclick="openImageModal('{{ asset('storage/' . $jewelry->certificate_file) }}')">
+ alt="تصویر قطعه" 
+ class="img-fluid img-thumbnail mb-2 u-max-height-120px-cursor-pointer"
+ 
+ onclick="openImageModal('{{ asset('storage/' . $jewelry->certificate_file) }}')">
                                             @else
                                                 <div class="bg-light p-3 text-center rounded">
                                                     <i class="fas fa-file-pdf fa-3x text-danger"></i>
@@ -415,10 +415,10 @@
                                 <div class="col-md-3 mb-3">
                                     <div class="card">
                                         <img src="{{ asset('storage/' . $image) }}" 
-                                             class="card-img-top" 
-                                             alt="تصویر تعمیرات"
-                                             style="height: 150px; object-fit: cover; cursor: pointer;"
-                                             onclick="openImageModal('{{ asset('storage/' . $image) }}')">
+ class="card-img-top u-height-150px-object-fit-cover-cursor-pointer" 
+ alt="تصویر تعمیرات"
+ 
+ onclick="openImageModal('{{ asset('storage/' . $image) }}')">
                                         <div class="card-body p-2 text-center">
                                             <a href="{{ asset('storage/' . $image) }}" 
                                                class="btn btn-sm btn-primary" 
@@ -540,7 +540,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body text-center">
-                <img src="" id="modalImage" class="img-fluid" style="max-height: 500px;">
+                <img src="" id="modalImage" class="img-fluid u-max-height-500px">
             </div>
         </div>
     </div>

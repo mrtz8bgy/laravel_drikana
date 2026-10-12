@@ -31,7 +31,7 @@
                             </div>
                             <div class="form-box bg-white mt-4">
                                 <div class="form-box-content p-3">
-                                    <table class="table mb-0 table-bordered" style="font-size:14px;background-color: #cce5ff;border-color: #b8daff">
+                                    <table class="table mb-0 table-bordered u-font-size-14px-background-color-cce5ff-border-color-b8daff">
                                         <tr>
                                             <td>1. {{__('Download the skeleton file and fill it with data.')}}</td>
                                         </tr>
@@ -51,7 +51,7 @@
 
                             <div class="form-box bg-white mt-4">
                                 <div class="form-box-content p-3">
-                                    <table class="table mb-0 table-bordered" style="font-size:14px;background-color: #cce5ff;border-color: #b8daff">
+                                    <table class="table mb-0 table-bordered u-font-size-14px-background-color-cce5ff-border-color-b8daff">
                                         <tr>
                                             <td>1. {{__('Category,Sub category,Sub Sub category and Brand should be in numerical ids.')}}</td>
                                         </tr>

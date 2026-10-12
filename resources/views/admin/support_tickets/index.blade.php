@@ -8,7 +8,7 @@
         <div class="pull-right clearfix">
             <form class="" id="sort_support" action="" method="GET">
                 <div class="box-inline pad-rgt pull-left">
-                    <div class="" style="min-width: 300px;">
+                    <div class="u-min-width-300px">
                         <input type="text" class="form-control" id="search" name="search"@isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="شماره تیکت را وارد کرده و اینتر بزنید">
                     </div>
                 </div>

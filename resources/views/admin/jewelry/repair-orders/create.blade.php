@@ -201,7 +201,7 @@
                             
                             {{-- نمایش اطلاعات قطعه انتخاب شده --}}
                             <div class="col-md-12 mb-3">
-                                <div id="jewelry_info" class="alert alert-info" style="display: none;">
+                                <div id="jewelry_info" class="alert alert-info u-display-none">
                                     <h6 class="alert-heading">اطلاعات قطعه انتخاب شده:</h6>
                                     <div id="jewelry_details"></div>
                                 </div>
@@ -278,7 +278,7 @@ function validateAndPreviewImages(input) {
                 col.className = 'col-md-3 mb-2';
                 col.innerHTML = `
                     <div class="card">
-                        <img src="${e.target.result}" class="card-img-top" style="height: 100px; object-fit: cover;">
+                        <img src="${e.target.result}" class="card-img-top u-height-100px-object-fit-cover">
                         <div class="card-body p-1 text-center">
                             <small class="text-muted">${file.name.substring(0, 10)}...</small>
                             <small class="d-block text-success">${(file.size / 1024).toFixed(1)} KB</small>

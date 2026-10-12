@@ -81,11 +81,11 @@
 
                                     @if ($seller_withdraw_request->status == 1)
 
-                                        <span class="ml-2" style="color:green"><strong>{{__('Paid')}}</strong></span>
+                                        <span class="ml-2 u-color-green"><strong>{{__('Paid')}}</strong></span>
 
                                     @else
 
-                                        <span class="ml-2" style="color:red"><strong>{{__('Pending')}}</strong></span>
+                                        <span class="ml-2 u-color-red"><strong>{{__('Pending')}}</strong></span>
 
                                     @endif
 

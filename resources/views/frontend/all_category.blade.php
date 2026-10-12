@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<div class="all-category-wrap py-5" style="background: #1a1a4a;">
+<div class="all-category-wrap py-5 u-background-1a1a4a">
     <div class="container">
         <div class="row">
             <!-- منوی دسته‌بندی‌ها (سمت راست) -->
@@ -179,7 +179,7 @@
                             </div>
                         @else
                             <div class="text-center py-5">
-                                <i class="la la-folder-open" style="font-size: 64px; color: #ccc;"></i>
+                                <i class="la la-folder-open u-font-size-64px-color-ccc"></i>
                                 <p class="text-muted mt-3">{{ __('هیچ زیردسته‌ای برای این دسته‌بندی ثبت نشده است.') }}</p>
                                 <a href="{{ route('products.category', $category->slug) }}" class="btn btn-gold mt-2">
                                     <i class="la la-eye"></i> {{ __('مشاهده محصولات این دسته') }}

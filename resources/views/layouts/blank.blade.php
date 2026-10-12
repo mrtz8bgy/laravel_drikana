@@ -101,6 +101,8 @@
     <!--Custom JavaScript [ REQUIRED ]-->
     <script src="{{ asset('js/custom.js')}}"></script>
 
+    {{-- کلاس‌های استخراج‌شده از استایل درون‌خطی ویوها (بازبینی L-04) --}}
+    <link rel="stylesheet" href="{{ asset('css/drikana/utilities.css') }}">
 </head>
 <body>
     @foreach (session('flash_notification', collect())->toArray() as $message)

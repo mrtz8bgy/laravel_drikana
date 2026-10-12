@@ -109,7 +109,7 @@
             							<div class="row mt-2">
             								<label class="col-md-2">{{__('Refundable')}}</label>
             								<div class="col-md-10">
-            									<label class="switch" style="margin-top:5px;">
+            									<label class="switch u-margin-top-5px">
             										<input type="checkbox" name="refundable" checked>
             			                            <span class="slider round"></span></label>
             									</label>
@@ -274,7 +274,7 @@
         									</select>
         								</div>
         								<div class="col-4 col-xl-1 col-md-2 order-2 order-md-0 text-right">
-        									<label class="switch" style="margin-top:5px;">
+        									<label class="switch u-margin-top-5px">
         										<input value="1" type="checkbox" name="colors_active" checked>
         										<span class="slider round"></span>
         									</label>
@@ -392,7 +392,7 @@
                                                 <input type="number" min="0" step="0.01" value="0" class="form-control mb-3" name="flat_shipping_cost" placeholder="{{__('Flat Rate Cost')}}">
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="switch" style="margin-top:5px;">
+                                                <label class="switch u-margin-top-5px">
                                                     <input type="radio" name="shipping_type" value="flat_rate" checked>
                                                     <span class="slider round"></span>
                                                 </label>
@@ -406,7 +406,7 @@
                                                 <input type="number" min="0" step="0.01" value="0" class="form-control mb-3" name="free_shipping_cost" value="0" disabled placeholder="{{__('Flat Rate Cost')}}">
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="switch" style="margin-top:5px;">
+                                                <label class="switch u-margin-top-5px">
                                                     <input type="radio" name="shipping_type" value="free" checked>
                                                     <span class="slider round"></span>
                                                 </label>

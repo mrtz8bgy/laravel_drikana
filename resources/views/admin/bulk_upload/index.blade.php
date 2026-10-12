@@ -7,7 +7,7 @@
             <h3 class="panel-title">{{__('Product Bulk Upload')}}</h3>
         </div>
         <div class="panel-body">
-            <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
+            <div class="alert u-color-004085-background-color-cce5ff-border-color-b8daf-294077">
                 <strong>مرحله اول:</strong>
                 <p>1. {{__('Download the skeleton file and fill it with data.')}}</p>
                 <p>2. {{__('You can download the example file to understand how the data must be filled.')}}</p>
@@ -18,7 +18,7 @@
             <div class="">
                 <a href="{{ asset('download/product_bulk_demo.xlsx') }}" download><button class="btn btn-primary">دانلود CSV</button></a>
             </div>
-            <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
+            <div class="alert u-color-004085-background-color-cce5ff-border-color-b8daf-294077">
                 <strong>مرحله دوم:</strong>
                 <p>1. {{__('Category,Sub category,Sub Sub category and Brand should be in numerical ids.')}}</p>
                 <p>2. {{__('You can download the pdf to get Category,Sub category,Sub Sub category and Brand id.')}}</p>

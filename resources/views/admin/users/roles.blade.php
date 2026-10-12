@@ -41,7 +41,7 @@
 
 @if($errors->any())
     <div class="alert alert-danger">
-        <ul style="margin: 0; padding-right: 20px;">
+        <ul class="u-margin-0-padding-right-20px">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -85,13 +85,13 @@
                         $disabled    = $isSelf;
                     @endphp
 
-                    <div class="row" style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                    <div class="row u-padding-8px-0-border-bottom-1px-solid-eee">
                         <div class="col-sm-8">
                             <strong>{{ $role->name }}</strong>
                             <span class="label label-default">{{ $role->level }}</span>
 
                             @if($isProtected)
-                                <span class="label label-danger" style="font-size: 10px;">
+                                <span class="label label-danger u-font-size-10px">
                                     {{ __('حساس') }}
                                 </span>
                             @endif

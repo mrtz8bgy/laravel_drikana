@@ -90,7 +90,7 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">{{__('Refundable')}}</label>
 							<div class="col-lg-7">
-								<label class="switch" style="margin-top:5px;">
+								<label class="switch u-margin-top-5px">
 									<input type="checkbox" name="refundable" @if ($product->refundable == 1) checked @endif>
 		                            <span class="slider round"></span></label>
 								</label>
@@ -212,7 +212,7 @@
 							</select>
 						</div>
 						<div class="col-lg-2">
-							<label class="switch" style="margin-top:5px;">
+							<label class="switch u-margin-top-5px">
 								<input value="1" type="checkbox" name="colors_active" <?php if(count(json_decode($product->colors)) > 0) echo "checked";?> >
 								<span class="slider round"></span>
 							</label>
@@ -339,7 +339,7 @@
     							<div class="form-group">
     								<label class="col-lg-2 control-label">{{__('Status')}}</label>
     								<div class="col-lg-7">
-    									<label class="switch" style="margin-top:5px;">
+    									<label class="switch u-margin-top-5px">
     										<input type="radio" name="shipping_type" value="free" @if($product->shipping_type == 'free') checked @endif>
     										<span class="slider round"></span>
     									</label>
@@ -358,7 +358,7 @@
     							<div class="form-group">
     								<label class="col-lg-2 control-label">{{__('Status')}}</label>
     								<div class="col-lg-7">
-    									<label class="switch" style="margin-top:5px;">
+    									<label class="switch u-margin-top-5px">
     										<input type="radio" name="shipping_type" value="flat_rate" @if($product->shipping_type == 'flat_rate') checked @endif>
     										<span class="slider round"></span>
     									</label>

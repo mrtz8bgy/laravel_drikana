@@ -31,7 +31,7 @@
 
                 @if($errors->any())
                     <div class="alert alert-danger">
-                        <ul style="margin: 0; padding-right: 20px;">
+                        <ul class="u-margin-0-padding-right-20px">
                             @foreach($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
@@ -105,7 +105,7 @@
                         <small class="text-muted">
                             {{ __('فرمت‌های مجاز: JPG، PNG، WebP، GIF — حداکثر ۳ مگابایت') }}
                         </small>
-                        <div id="image_upload_status" class="text-muted" style="margin-top: 6px;"></div>
+                        <div id="image_upload_status" class="text-muted u-margin-top-6px"></div>
                     </div>
 
                     <hr>
@@ -113,17 +113,16 @@
                     @if($article->images->count() > 0)
                         <div class="row">
                             @foreach($article->images as $image)
-                                <div class="col-sm-3" style="margin-bottom: 12px;">
+                                <div class="col-sm-3 u-margin-bottom-12px">
                                     <div class="thumbnail">
-                                        <img src="{{ $image->url }}" alt="{{ $image->alt }}" style="height: 120px; object-fit: cover;">
+                                        <img class="u-height-120px-object-fit-cover" src="{{ $image->url }}" alt="{{ $image->alt }}">
                                         <div class="caption">
-                                            <small class="text-muted" style="word-break: break-all;">
+                                            <small class="text-muted u-word-break-break-all">
                                                 {{ \Illuminate\Support\Str::limit($image->original_name, 20) }}
                                             </small>
                                             <a href="#"
-                                               onclick="deleteArticleImage({{ $image->id }}); return false;"
-                                               class="btn btn-xs btn-danger btn-block"
-                                               style="margin-top: 6px;">
+ onclick="deleteArticleImage({{ $image->id }}); return false;"
+ class="btn btn-xs btn-danger btn-block u-margin-top-6px">
                                                 <i class="demo-pli-recycling"></i> {{ __('حذف') }}
                                             </a>
                                         </div>
@@ -165,9 +164,9 @@
                                 ];
                                 $st = isset($statusLabels[$article->status]) ? $statusLabels[$article->status] : ['default', $article->status];
                             @endphp
-                            <span class="label label-{{ $st[0] }}" style="font-size: 13px;">{{ $st[1] }}</span>
+                            <span class="label label-{{ $st[0] }} u-font-size-13px">{{ $st[1] }}</span>
                         @else
-                            <span class="label label-default" style="font-size: 13px;">{{ __('پیش‌نویس جدید') }}</span>
+                            <span class="label label-default u-font-size-13px">{{ __('پیش‌نویس جدید') }}</span>
                         @endif
                     </div>
                 </div>
@@ -201,7 +200,7 @@
                                {{ old('is_featured', $isEdit ? $article->is_featured : false) ? 'checked' : '' }}>
                         <span class="slider round"></span>
                     </label>
-                    <label style="margin-right: 10px;">{{ __('مقاله ویژه') }}</label>
+                    <label class="u-margin-right-10px">{{ __('مقاله ویژه') }}</label>
                 </div>
 
                 <div class="form-group">
@@ -225,9 +224,8 @@
 
                 @if($isEdit && $article->featured_image)
                     <img src="{{ $article->featured_image_url }}"
-                         alt="{{ $article->featured_image_alt }}"
-                         class="img-responsive img-thumbnail"
-                         style="max-height: 160px; margin-bottom: 10px;">
+ alt="{{ $article->featured_image_alt }}"
+ class="img-responsive img-thumbnail u-max-height-160px-margin-bottom-10px">
                 @endif
 
                 <input type="file"
@@ -236,12 +234,12 @@
                        class="form-control">
 
                 <input type="text"
-                       name="featured_image_alt"
-                       class="form-control"
-                       style="margin-top: 8px;"
-                       maxlength="191"
-                       placeholder="{{ __('متن جایگزین تصویر (alt)') }}"
-                       value="{{ old('featured_image_alt', $isEdit ? $article->featured_image_alt : '') }}">
+ name="featured_image_alt"
+ class="form-control u-margin-top-8px"
+ 
+ maxlength="191"
+ placeholder="{{ __('متن جایگزین تصویر (alt)') }}"
+ value="{{ old('featured_image_alt', $isEdit ? $article->featured_image_alt : '') }}">
 
                 <small class="text-muted">
                     {{ __('متن جایگزین برای دسترس‌پذیری و سئو اهمیت دارد.') }}

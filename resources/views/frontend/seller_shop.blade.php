@@ -56,9 +56,9 @@
                         <div class="pr-2">
                             <h3 class="strong-700 heading-4 mb-0">{{ $shop->name }}
                                 @if ($shop->user->seller->verification_status == 1)
-                                    <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span>
+                                    <span class="ml-2"><i class="fa fa-check-circle u-color-green"></i></span>
                                 @else
-                                    <span class="ml-2"><i class="fa fa-times-circle" style="color:red"></i></span>
+                                    <span class="ml-2"><i class="fa fa-times-circle u-color-red"></i></span>
                                 @endif
                             </h3>
                             <div class="star-rating star-rating-sm mb-1">
@@ -131,7 +131,7 @@
                         @if ($shop->sliders != null)
                             @foreach (json_decode($shop->sliders) as $key => $slide)
                                 <div class="">
-                                    <img class="d-block w-100 lazyload" src="{{ asset('frontend/images/placeholder-rect.jpg') }}" data-src="{{ asset($slide) }}" alt="{{ $key }} slide" style="max-height:300px;">
+                                    <img class="d-block w-100 lazyload u-max-height-300px" src="{{ asset('frontend/images/placeholder-rect.jpg') }}" data-src="{{ asset($slide) }}" alt="{{ $key }} slide">
                                 </div>
                             @endforeach
                         @endif

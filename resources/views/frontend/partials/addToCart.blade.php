@@ -173,7 +173,7 @@
                             </div>
                             <div class="col-10">
                                 <div class="product-quantity d-flex align-items-center">
-                                    <div class="input-group input-group--style-2 pr-3" style="width: 160px;">
+                                    <div class="input-group input-group--style-2 pr-3 u-width-160px">
                                         <span class="input-group-btn">
                                             <button class="btn btn-number" type="button" data-type="minus"
                                                     data-field="quantity" disabled="disabled">

@@ -34,7 +34,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">{{__('Pickup Point Status')}}</label>
                         <div class="col-sm-3">
-                            <label class="switch" style="margin-top:5px;">
+                            <label class="switch u-margin-top-5px">
                             		<input value="1" type="checkbox" name="pick_up_status">
                             		<span class="slider round"></span>
                             </label>

@@ -80,9 +80,9 @@
 
                                         <div class="stock-box d-inline-block">
                                             @if($shop->user->seller->verification_status == 1)
-                                                <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span>
+                                                <span class="ml-2"><i class="fa fa-check-circle u-color-green"></i></span>
                                             @else
-                                                <span class="ml-2"><i class="fa fa-times-circle" style="color:red"></i></span>
+                                                <span class="ml-2"><i class="fa fa-times-circle u-color-red"></i></span>
                                             @endif
                                         </div>
                                     </div>

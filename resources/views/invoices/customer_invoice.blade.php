@@ -46,6 +46,23 @@
 
 		}
 	</style>
+
+{{-- کلاس‌های استخراج‌شده از استایل درون‌خطی (بازبینی L-04) --}}
+{{-- این ویو با dompdf به PDF تبدیل می‌شود و dompdf با --}}
+{{-- isRemoteEnabled=false استایل خارجی را بارگذاری نمی‌کند؛ --}}
+{{-- پس کلاس‌ها به‌جای فایل سراسری، اینجا تعریف شده‌اند. --}}
+<style>
+.u-background-eceff4 { background: #eceff4 !important; }
+.u-background-eceff4-padding-1-5rem { background: #eceff4 !important; padding: 1.5rem !important; }
+.u-direction-rtl { direction: rtl !important; }
+.u-display-inline-block { display:inline-block !important; }
+.u-font-size-1-2rem { font-size: 1.2rem !important; }
+.u-font-size-2-5rem { font-size: 2.5rem !important; }
+.u-padding-0-1-5rem { padding:0 1.5rem !important; }
+.u-padding-1-5rem { padding: 1.5rem !important; }
+.u-padding-1-5rem-padding-bottom-0 { padding: 1.5rem !important; padding-bottom: 0 !important; }
+.u-width-40-margin-right-auto { width: 40% !important; margin-right:auto !important; }
+</style>
 </head>
 <body>
 	<div>
@@ -54,22 +71,22 @@
 			$generalsetting = \App\GeneralSetting::first();
 		@endphp
 
-		<div style="background: #eceff4;padding: 1.5rem;">
+		<div class="u-background-eceff4-padding-1-5rem">
 			<table>
 				<tr>
 					<td>
 						@if($generalsetting->logo != null)
-							<img loading="lazy"  src="{{ asset($generalsetting->logo) }}" height="40" style="display:inline-block;">
+							<img class="u-display-inline-block" loading="lazy" src="{{ asset($generalsetting->logo) }}" height="40">
 						@else
-							<img loading="lazy"  src="{{ asset('frontend/images/logo/logo.png') }}" height="40" style="display:inline-block;">
+							<img class="u-display-inline-block" loading="lazy" src="{{ asset('frontend/images/logo/logo.png') }}" height="40">
 						@endif
 					</td>
-					<td style="font-size: 2.5rem;" class="text-right strong">فاکتور خرید</td>
+					<td class="text-right strong u-font-size-2-5rem">فاکتور خرید</td>
 				</tr>
 			</table>
 			<table>
 				<tr>
-					<td style="font-size: 1.2rem;" class="strong">{{ $generalsetting->site_name }}</td>
+					<td class="strong u-font-size-1-2rem">{{ $generalsetting->site_name }}</td>
 					<td class="text-right"></td>
 				</tr>
 				<tr>
@@ -88,7 +105,7 @@
 
 		</div>
 
-		<div style="padding: 1.5rem;padding-bottom: 0">
+		<div class="u-padding-1-5rem-padding-bottom-0">
 			<table>
 				@php
 					$shipping_address = json_decode($order->shipping_address);
@@ -101,10 +118,10 @@
 			</table>
 		</div>
 
-	    <div style="padding: 1.5rem;">
-			<table class="padding text-left small border-bottom" style="direction: rtl;">
+	    <div class="u-padding-1-5rem">
+			<table class="padding text-left small border-bottom u-direction-rtl">
 				<thead>
-	                <tr class="gry-color" style="background: #eceff4;">
+	                <tr class="gry-color u-background-eceff4">
 	                    <th width="35%">نام محصول</th>
 						<th width="15%">نوع تحویل</th>
 	                    <th width="10%">تعداد</th>
@@ -138,8 +155,8 @@
 			</table>
 		</div>
 
-	    <div style="padding:0 1.5rem;">
-	        <table style="width: 40%;margin-right:auto;" class="text-right sm-padding small strong">
+	    <div class="u-padding-0-1-5rem">
+	        <table class="text-right sm-padding small strong u-width-40-margin-right-auto">
 		        <tbody>
 			        <tr>
 			            <th class="gry-color text-left">مجموع</th>

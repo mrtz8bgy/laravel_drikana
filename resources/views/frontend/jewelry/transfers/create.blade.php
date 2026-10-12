@@ -10,7 +10,7 @@
     قطعه‌ای که واقعاً مالک آن است درخواست ثبت کند.
 --}}
 
-<div class="container" style="padding: 24px 15px;">
+<div class="container u-padding-24px-15px">
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -23,7 +23,7 @@
 
             @if($errors->any())
                 <div class="alert alert-danger">
-                    <ul style="margin: 0; padding-right: 20px;">
+                    <ul class="u-margin-0-padding-right-20px">
                         @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
@@ -40,7 +40,7 @@
                     <strong>{{ __('مشخصات قطعه') }}</strong>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-bordered" style="margin: 0;">
+                    <table class="table table-bordered u-margin-0">
                         <tr><th width="35%">{{ __('شماره سری') }}</th><td>{{ $certificate->serial_number }}</td></tr>
                         <tr><th>{{ __('نام قطعه') }}</th><td>{{ $certificate->product_name }}</td></tr>
                         <tr><th>{{ __('فلز / عیار') }}</th><td>{{ $certificate->metal_type }} / {{ $certificate->purity }}</td></tr>

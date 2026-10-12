@@ -93,12 +93,12 @@
                                             }
                                         @endphp
                                             <li>
-                                                <button type="button" class="btn p-0 btn-link" style="font-size: 18px;" title="افزودن به علاقه مندی" onclick="addToWishList({{ $detailedProduct->id }})">
+                                                <button type="button" class="btn p-0 btn-link u-font-size-18px" title="افزودن به علاقه مندی" onclick="addToWishList({{ $detailedProduct->id }})">
                                                     <i class="la la-heart-o d-inline-block nav-box-icon"></i>
                                                 </button>
                                             </li>
                                             <li>
-                                                <button type="button" class="btn btn-link btn-icon-left p-0" style="font-size: 18px;" title="مقایسه" onclick="addToCompare({{ $detailedProduct->id }})">
+                                                <button type="button" class="btn btn-link btn-icon-left p-0 u-font-size-18px" title="مقایسه" onclick="addToCompare({{ $detailedProduct->id }})">
                                                     <i class="la la-refresh d-inline-block nav-box-icon"></i>
                                                 </button>
                                             </li>
@@ -215,7 +215,7 @@
                                     </div>
                                     <div class="col-11">
                                         <div class="product-quantity d-flex align-items-center">
-                                            <div class="input-group input-group--style-2 pr-3" style="width: 200px;">
+                                            <div class="input-group input-group--style-2 pr-3 u-width-200px">
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-number" type="button" data-type="minus" data-field="quantity" disabled="disabled">
                                                         <i class="la la-minus"></i>

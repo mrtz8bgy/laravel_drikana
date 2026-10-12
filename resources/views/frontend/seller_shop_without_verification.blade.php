@@ -50,9 +50,9 @@
                         <div class="pl-4">
                             <h3 class="strong-700 heading-4 mb-0">{{ $shop->name }}
                                 @if ($shop->user->seller->verification_status == 1)
-                                    <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span>
+                                    <span class="ml-2"><i class="fa fa-check-circle u-color-green"></i></span>
                                 @else
-                                    <span class="ml-2"><i class="fa fa-times-circle" style="color:red"></i></span>
+                                    <span class="ml-2"><i class="fa fa-times-circle u-color-red"></i></span>
                                 @endif
                             </h3>
                             <div class="star-rating star-rating-sm mb-1">

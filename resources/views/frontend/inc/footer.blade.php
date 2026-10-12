@@ -6,10 +6,10 @@
         <div class="d-footer-grid">
             {{-- Column 1: Brand --}}
             <div class="d-footer-col d-footer-brand">
-                <a href="{{ route('home') }}" class="d-logo" style="text-decoration:none;">
+                <a href="{{ route('home') }}" class="d-logo u-text-decoration-none">
                     <div class="d-logo-mark">
                         @if($gs->logo != null && file_exists(public_path($gs->logo)))
-                            <img src="{{ asset($gs->logo) }}" alt="Drikana" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">
+                            <img class="u-width-100-height-100-border-radius-50-object-fit-cover" src="{{ asset($gs->logo) }}" alt="Drikana">
                         @else
                             D
                         @endif
@@ -73,8 +73,8 @@
                     <li><i class="la la-envelope"></i> <span>{{ $gs->email ?? 'info@drikana.com' }}</span></li>
                     <li><i class="la la-clock-o"></i> <span>شنبه تا پنجشنبه، ۹ الی ۲۰</span></li>
                 </ul>
-                <div style="margin-top:18px;">
-                    <div style="color: var(--d-gold); font-size:13px; font-weight:600; margin-bottom:8px;">
+                <div class="u-margin-top-18px">
+                    <div class="u-color-var-d-gold-font-size-13px-font-weight-600-margin--dc2d32">
                         <i class="la la-bullhorn"></i> عضویت در خبرنامه
                     </div>
                     <form method="POST" action="{{ route('subscribers.store') }}" class="d-newsletter-form">

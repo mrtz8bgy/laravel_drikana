@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="{{ asset('css/drikana/print.css') }}">
     
     {{-- حذف لینک خارجی Font Awesome - استفاده از آیکون‌های متنی ساده --}}
+    {{-- کلاس‌های استخراج‌شده از استایل درون‌خطی ویوها (بازبینی L-04) --}}
+    <link rel="stylesheet" href="{{ asset('css/drikana/utilities.css') }}">
 </head>
 <body>
     <!-- کنترل‌های چاپ -->
@@ -125,7 +127,7 @@
                 <div class="image-description">
                     {{ $certificate->product_name }}
                     @if($imageExtension)
-                        <span style="font-size: 11px; color: #999;">
+                        <span class="u-font-size-11px-color-999">
                             ({{ strtoupper($imageExtension) }})
                         </span>
                     @endif
@@ -136,10 +138,10 @@
                     <div class="image-placeholder-icon">
                         📷
                     </div>
-                    <div style="color: #999; font-size: 14px; text-align: center; padding: 0 10px;">
+                    <div class="u-color-999-font-size-14px-text-align-center-padding-0-10px">
                         @if($certificate->certificate_file)
                             فایل: {{ $imageFilename }}<br>
-                            <small style="color: #e74c3c; font-size: 12px;">
+                            <small class="u-color-e74c3c-font-size-12px">
                                 @if(!$hasImage)
                                     (فرمت تصویری نیست)
                                 @else
@@ -268,7 +270,7 @@
                 </div>
                 <div class="info-item">
                     <span class="info-label">آدرس:</span>
-                    <span class="info-value" style="grid-column: span 2;">
+                    <span class="info-value u-grid-column-span-2">
                         @if($certificate->owner && $certificate->owner->address)
                             {{ $certificate->owner->address }}
                         @else
@@ -284,7 +286,7 @@
         <div class="info-section">
             <div class="section-title">توضیحات</div>
             <div class="info-item">
-                <div style="line-height: 1.6; text-align: justify; font-size: 14px; padding: 10px; background-color: #f8f9fa; border-radius: 5px;">
+                <div class="u-line-height-1-6-text-align-justify-font-size-14px-paddi-12e2d6">
                     {{ $certificate->description }}
                 </div>
             </div>
@@ -295,37 +297,37 @@
         <div class="stamp" id="stamp">
             <div class="stamp-text">
                 مهر و امضا<br>
-                <small style="font-size: 11px;">مدیریت جواهرات</small>
+                <small class="u-font-size-11px">مدیریت جواهرات</small>
             </div>
         </div>
         
         <!-- امضای مالک -->
         <div class="owner-signature">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                <div style="flex: 1;">
-                    <p style="margin-bottom: 40px; font-weight: bold;">امضاء مالک:</p>
-                    <div style="width: 200px; border-top: 2px solid #333; margin-top: 20px;"></div>
-                    <div style="margin-top: 5px; font-size: 14px; color: #666;">
+            <div class="u-display-flex-justify-content-space-between-align-items--695916">
+                <div class="u-flex-1">
+                    <p class="u-margin-bottom-40px-font-weight-bold">امضاء مالک:</p>
+                    <div class="u-width-200px-border-top-2px-solid-333-margin-top-20px"></div>
+                    <div class="u-margin-top-5px-font-size-14px-color-666">
                         {{ $certificate->owner ? $certificate->owner->full_name : '________' }}
                     </div>
                 </div>
-                <div style="flex: 1; text-align: center;">
-                    <p style="margin-bottom: 40px; font-weight: bold;">مهر و امضای شرکت:</p>
-                    <div style="width: 150px; height: 80px; border: 2px dashed #ccc; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
-                        <span style="color: #999; font-size: 12px;">مهر شرکت</span>
+                <div class="u-flex-1-text-align-center">
+                    <p class="u-margin-bottom-40px-font-weight-bold">مهر و امضای شرکت:</p>
+                    <div class="u-width-150px-height-80px-border-2px-dashed-ccc-margin-0--6721f7">
+                        <span class="u-color-999-font-size-12px">مهر شرکت</span>
                     </div>
                 </div>
             </div>
         </div>
         
         <!-- پانویس -->
-        <div style="margin-top: 30px; font-size: 11px; color: #7f8c8d; text-align: center; border-top: 1px solid #eee; padding-top: 15px;">
+        <div class="u-margin-top-30px-font-size-11px-color-7f8c8d-text-align--c43c63">
             @if($hasImage)
                 <p><span class="icon icon-camera"></span> عکس جواهر ضمیمه شده است. برای مشاهده با کیفیت بالا، فایل اصلی را دانلود کنید.</p>
             @endif
             <p>این شناسنامه به منزله گواهی اصالت و مالکیت جواهر می‌باشد. هرگونه کپی‌برداری و جعل پیگرد قانونی دارد.</p>
             <p>تاریخ چاپ: {{ date('Y/m/d ساعت H:i') }}</p>
-            <p style="font-size: 10px; color: #95a5a6; margin-top: 5px;">
+            <p class="u-font-size-10px-color-95a5a6-margin-top-5px">
                 شماره سریال برای تأیید اصالت: <strong>{{ $certificate->serial_number }}</strong> | 
                 شناسه: <strong>{{ $certificate->id }}</strong>
             </p>
@@ -552,14 +554,14 @@
                         <div class="image-placeholder-icon">
                             ⚠️
                         </div>
-                        <div style="color: #e74c3c; font-size: 14px; text-align: center; padding: 0 10px;">
+                        <div class="u-color-e74c3c-font-size-14px-text-align-center-padding-0-10px">
                             خطا در نمایش عکس<br>
-                            <small style="color: #666; font-size: 12px;">
+                            <small class="u-color-666-font-size-12px">
                                 فایل: ${filename}<br>
                                 مسیر: ${path}
                             </small>
                         </div>
-                        <button onclick="testImageUrl('${url}', '${filename}')" class="btn" style="background-color: #e74c3c; color: white; padding: 5px 15px; font-size: 12px; margin-top: 10px;">
+                        <button onclick="testImageUrl('${url}', '${filename}')" class="btn u-background-color-e74c3c-color-white-padding-5px-15px-fo-1edfe5">
                             <span class="icon icon-bug"></span> تست آدرس
                         </button>
                     </div>

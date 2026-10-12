@@ -130,10 +130,10 @@
                                     <div class="form-box-content p-3">
                                         @if($customer_package != null)
                                             <div class="form-box-content p-2 category-widget text-center">
-                                                <center><img alt="Package Logo" src="{{ asset($customer_package->logo) }}" style="height:100px; width:90px;"></center>
+                                                <center><img class="u-height-100px-width-90px" alt="Package Logo" src="{{ asset($customer_package->logo) }}"></center>
                                                 <left> <strong><p>{{__('Product Upload')}}: {{ $customer_package->product_upload }} {{__('Times')}}</p></strong></left>
                                                 <strong><p>{{__('Product Upload Remaining')}}: {{ Auth::user()->remaining_uploads }} {{__('Times')}}</p></strong>
-                                                <strong><p><div class="name mb-0">{{__('Current Package')}}: {{ $customer_package->name }} <span class="ml-2"><i class="fa fa-check-circle" style="color:green"></i></span></div></p></strong>
+                                                <strong><p><div class="name mb-0">{{__('Current Package')}}: {{ $customer_package->name }} <span class="ml-2"><i class="fa fa-check-circle u-color-green"></i></span></div></p></strong>
                                             </div>
                                         @else
                                             <div class="form-box-content p-2 category-widget text-center">

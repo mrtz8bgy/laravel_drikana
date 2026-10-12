@@ -6,7 +6,7 @@
     </div>
 
     @if (isset($error))
-    <div class="row" style="margin-top: 20px;">
+    <div class="row u-margin-top-20px">
         <div class="col-md-12">
           <div class="alert alert-danger">
             <strong>Invalid Database Credentials!! </strong>Please check your database credentials carefully

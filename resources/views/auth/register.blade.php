@@ -10,6 +10,8 @@
     
     {{-- استایل به فایل مستقل منتقل شد: css/drikana/auth-register.css --}}
     <link rel="stylesheet" href="{{ asset('css/drikana/auth-register.css') }}">
+    {{-- کلاس‌های استخراج‌شده از استایل درون‌خطی ویوها (بازبینی L-04) --}}
+    <link rel="stylesheet" href="{{ asset('css/drikana/utilities.css') }}">
 </head>
 <body>
     @php
@@ -28,7 +30,7 @@
                             @if($generalsetting && $generalsetting->logo != null)
                                 <img src="{{ asset($generalsetting->logo) }}" alt="{{ config('app.name') }}">
                             @else
-                                <h2 style="color: var(--gold-primary); font-size: 2rem;">دریکانا</h2>
+                                <h2 class="u-color-var-gold-primary-font-size-2rem">دریکانا</h2>
                             @endif
                         </div>
                         
@@ -78,7 +80,7 @@
                             @if($generalsetting && $generalsetting->logo != null)
                                 <img src="{{ asset($generalsetting->logo) }}" alt="{{ config('app.name') }}">
                             @else
-                                <h2 style="color: var(--gold-primary);">دریکانا</h2>
+                                <h2 class="u-color-var-gold-primary">دریکانا</h2>
                             @endif
                         </div>
                         <h2>ایجاد حساب کاربری جدید</h2>

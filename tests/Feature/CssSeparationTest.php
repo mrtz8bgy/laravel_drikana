@@ -246,6 +246,213 @@ class CssSeparationTest extends TestCase
     }
 
     // =========================================================
+    //  ۵) استایل درون‌خطی (بازبینی L-04)
+    // =========================================================
+
+    /**
+     * پوشه ویوها.
+     *
+     * @return string
+     */
+    protected function viewsPath()
+    {
+        return base_path('resources/views');
+    }
+
+    public function test_utilities_css_exists_and_is_not_empty()
+    {
+        $path = public_path('css/drikana/utilities.css');
+
+        $this->assertFileExists(
+            $path,
+            'فایل utilities.css باید وجود داشته باشد — کلاس‌های استخراج‌شده از '
+            . 'استایل درون‌خطی ویوها در آن تعریف می‌شوند.'
+        );
+
+        $size = filesize($path);
+
+        $this->assertGreaterThan(
+            5000,
+            $size,
+            'utilities.css غیرمنتظره کوچک است (' . $size . ' بایت) — احتمالاً استخراج ناقص بوده.'
+        );
+
+        $content = file_get_contents($path);
+
+        $this->assertGreaterThan(
+            200,
+            substr_count($content, '.u-'),
+            'تعداد قواعد کلاس در utilities.css کمتر از انتظار است.'
+        );
+
+        // هر قاعده باید !important داشته باشد — وگرنه اولویت استایل
+        // درون‌خطی حفظ نمی‌شود و ظاهر صفحه تغییر می‌کند.
+        $this->assertStringContainsString(
+            '!important',
+            $content,
+            'قواعد utilities.css باید !important داشته باشند تا اولویت '
+            . 'استایل درون‌خطی قبلی حفظ شود.'
+        );
+    }
+
+    public function test_no_static_inline_style_attributes_remain_in_views()
+    {
+        $offenders = [];
+
+        foreach ($this->bladeFiles($this->viewsPath()) as $path) {
+            $source = file_get_contents($path);
+
+            if (preg_match_all('/style="([^"]*)"/', $source, $matches) === 0) {
+                continue;
+            }
+
+            foreach ($matches[1] as $declaration) {
+                // استایل پویا (وابسته به داده) استثناست؛ آن را نمی‌توان
+                // به کلاس ثابت تبدیل کرد.
+                if (strpos($declaration, '{{') !== false || strpos($declaration, '@') !== false) {
+                    continue;
+                }
+
+                $offenders[] = str_replace(base_path(), '', $path) . ' → style="' . $declaration . '"';
+            }
+        }
+
+        $this->assertSame(
+            [],
+            array_slice($offenders, 0, 20),
+            'استایل درون‌خطی ایستا در ویوها باقی مانده است. این استایل‌ها باید '
+            . 'کلاس‌دار شوند تا CSP سخت‌گیرانه (بدون unsafe-inline) کار کند.'
+        );
+    }
+
+    public function test_every_extracted_class_is_defined_somewhere()
+    {
+        $utilities = file_get_contents(public_path('css/drikana/utilities.css'));
+        $undefined = [];
+
+        foreach ($this->bladeFiles($this->viewsPath()) as $path) {
+            $source = file_get_contents($path);
+
+            if (preg_match_all('/(?<![\w-])(u-[a-z0-9-]+)(?![\w-])/', $source, $matches) === 0) {
+                continue;
+            }
+
+            foreach (array_unique($matches[1]) as $class) {
+                if (strpos($utilities, '.' . $class . ' ') !== false
+                    || strpos($utilities, '.' . $class . '{') !== false) {
+                    continue;
+                }
+
+                // ویوهای PDF کلاس خود را درون همان فایل تعریف می‌کنند
+                if (preg_match('/\.' . preg_quote($class, '/') . '\s*\{/', $source)) {
+                    continue;
+                }
+
+                $undefined[] = str_replace(base_path(), '', $path) . ' → .' . $class;
+            }
+        }
+
+        $this->assertSame(
+            [],
+            array_slice($undefined, 0, 20),
+            'کلاس استخراج‌شده‌ای در ویو استفاده شده اما در هیچ CSS تعریف نشده است — '
+            . 'یعنی استایل آن عنصر از دست رفته است.'
+        );
+    }
+
+    public function test_pdf_views_keep_their_styles_inside_the_file()
+    {
+        $pdfViews = [
+            'invoices/admin_invoice.blade.php',
+            'invoices/customer_invoice.blade.php',
+            'invoices/seller_invoice.blade.php',
+            'downloads/brand.blade.php',
+            'downloads/category.blade.php',
+            'downloads/sub_category.blade.php',
+            'downloads/sub_sub_category.blade.php',
+            'downloads/user.blade.php',
+        ];
+
+        foreach ($pdfViews as $relative) {
+            $path = $this->viewsPath() . '/' . $relative;
+
+            $this->assertFileExists($path);
+
+            $source = file_get_contents($path);
+
+            // dompdf با isRemoteEnabled=false استایل خارجی را بارگذاری
+            // نمی‌کند؛ اگر کلاس‌ها به فایل بیرونی منتقل شوند، PDF
+            // بی‌استایل می‌شود. پس این ویوها باید تعریف درون‌فایلی داشته باشند.
+            $this->assertNotContains(
+                'utilities.css',
+                $source,
+                'ویو PDF «' . $relative . '» نباید به CSS بیرونی تکیه کند.'
+            );
+        }
+    }
+
+    public function test_layouts_link_the_utilities_file()
+    {
+        $layouts = [
+            'layouts/app.blade.php',
+            'layouts/blank.blade.php',
+            'layouts/login.blade.php',
+            'frontend/layouts/app.blade.php',
+            'admin/jewelry/layouts/app.blade.php',
+            'auth/register.blade.php',
+        ];
+
+        foreach ($layouts as $relative) {
+            $source = file_get_contents($this->viewsPath() . '/' . $relative);
+
+            $this->assertContains(
+                'css/drikana/utilities.css',
+                $source,
+                'قالب «' . $relative . '» باید utilities.css را بارگذاری کند.'
+            );
+        }
+    }
+
+    public function test_rendered_page_has_no_static_inline_style()
+    {
+        $user = $this->makeUser(['customer']);
+        $response = $this->actingAs($user)->get('/');
+
+        $response->assertStatus(200);
+
+        $body = $response->getContent();
+
+        preg_match_all('/style="([^"]*)"/', $body, $matches);
+
+        // استثنا: هر صفتی که نشانی (URL) دارد، ذاتاً پویاست — مثل
+        // `background-image:url('{{ asset(...) }}')`. چنین صفتی را
+        // نمی‌توان به کلاس ثابت تبدیل کرد و در ویو باقی می‌ماند.
+        $static = [];
+
+        foreach ($matches[1] as $declaration) {
+            if (stripos($declaration, 'url(') !== false) {
+                continue;
+            }
+
+            $static[] = $declaration;
+        }
+
+        $this->assertSame(
+            [],
+            array_slice($static, 0, 10),
+            'خروجی HTML صفحه اصلی هنوز صفت style ایستا دارد — یعنی استایل '
+            . 'درون‌خطی به کلاس تبدیل نشده است.'
+        );
+
+        $this->assertStringContainsString(
+            'css/drikana/utilities.css',
+            $body,
+            'صفحه اصلی باید utilities.css را لینک کند، وگرنه کلاس‌های '
+            . 'استخراج‌شده استایل نمی‌گیرند.'
+        );
+    }
+
+    // =========================================================
     // ۴) ابزار کمکی
     // =========================================================
 

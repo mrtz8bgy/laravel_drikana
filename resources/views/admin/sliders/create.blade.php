@@ -1,3 +1,17 @@
+{{-- ── نمایش خطاهای اعتبارسنجی ────────────────────────────────────
+     این فرم با AJAX داخل مودال بارگذاری می‌شود، پس اگر خطای
+     اعتبارسنجی نمایش داده نشود، مدیر فکر می‌کند «دکمه کار نکرد».
+     قواعد اعتبارسنجی در SliderController@store تعریف شده‌اند. --}}
+@if($errors->any())
+    <div class="alert alert-danger">
+        <ul class="u-margin-0-padding-right-20px">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <div class="panel">
     <div class="panel-heading">
         <h3 class="panel-title">{{__('Slider Information')}}</h3>

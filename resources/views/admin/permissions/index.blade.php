@@ -41,7 +41,7 @@
 
 @if($errors->any())
     <div class="alert alert-danger">
-        <ul style="margin: 0; padding-right: 20px;">
+        <ul class="u-margin-0-padding-right-20px">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -90,7 +90,7 @@
                                 <td>
                                     <code>{{ $permission->slug }}</code>
                                     @if($isProtected)
-                                        <span class="label label-warning" style="font-size: 10px;">
+                                        <span class="label label-warning u-font-size-10px">
                                             {{ __('سیستمی') }}
                                         </span>
                                     @endif

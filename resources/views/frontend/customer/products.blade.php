@@ -94,9 +94,9 @@
                                             </td>
                                             <td>
                                                 @if ($product->published == '1')
-                                                    <span class="ml-2" style="color:green"><strong>{{__('PUBLISHED')}}</strong></span>
+                                                    <span class="ml-2 u-color-green"><strong>{{__('PUBLISHED')}}</strong></span>
                                                 @else
-                                                    <span class="ml-2" style="color:red"><strong>{{__('PENDING')}}</strong></span>
+                                                    <span class="ml-2 u-color-red"><strong>{{__('PENDING')}}</strong></span>
                                                 @endif
                                             </td>
                                             <td>

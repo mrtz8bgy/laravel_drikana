@@ -79,7 +79,7 @@
                             <span class="pr-4">{{ single_price($cartItem['price']*$cartItem['quantity']) }}</span>
                         </td>
                     </tr>
-                    <tr class="cart_item" style="border-bottom: 1px dashed #f1f1f1;">
+                    <tr class="cart_item u-border-bottom-1px-dashed-f1f1f1">
                         <td>
                             تعداد 
                         </td>

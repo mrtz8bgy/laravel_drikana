@@ -52,13 +52,13 @@
                     
                     @if ($vendor_system_enabled)
                         <div class="stat-sub">
-                            <span class="emoji-icon" style="color: var(--success-color);">🏪</span>
+                            <span class="emoji-icon u-color-var-success-color">🏪</span>
                             فروشندگان: {{ \Illuminate\Support\Facades\Schema::hasTable('products') ? \App\Product::where('published', 1)->where('added_by', 'seller')->get()->count() : 0 }}
                         </div>
                     @endif
                     
                     <div class="stat-sub">
-                        <span class="emoji-icon" style="color: var(--primary-color);">👑</span>
+                        <span class="emoji-icon u-color-var-primary-color">👑</span>
                         ادمین: {{ \App\Product::where('published', 1)->where('added_by', 'admin')->get()->count() }}
                     </div>
                     
@@ -277,7 +277,7 @@
 <div class="row">
     <div class="col-md-3">
         <div class="small-stat-card">
-            <div class="stat-icon" style="background: linear-gradient(135deg, var(--purple-color), #8b5cf6);">
+            <div class="stat-icon u-background-linear-gradient-135deg-var-purple-color-8b5cf6">
                 <span>👥</span>
             </div>
             <span class="stat-label">کاربران فعال</span>
@@ -291,7 +291,7 @@
     
     <div class="col-md-3">
         <div class="small-stat-card">
-            <div class="stat-icon" style="background: linear-gradient(135deg, var(--pink-color), #ec4899);">
+            <div class="stat-icon u-background-linear-gradient-135deg-var-pink-color-ec4899">
                 <span>🛒</span>
             </div>
             <span class="stat-label">سرقت و مفقودی </span>
@@ -305,7 +305,7 @@
     
     <div class="col-md-3">
         <div class="small-stat-card">
-            <div class="stat-icon" style="background: linear-gradient(135deg, var(--orange-color), #f97316);">
+            <div class="stat-icon u-background-linear-gradient-135deg-var-orange-color-f97316">
                 <span>💰</span>
             </div>
             <span class="stat-label">مدیریت شناسنامه‌ها</span>
@@ -319,7 +319,7 @@
     
     <div class="col-md-3">
         <div class="small-stat-card">
-            <div class="stat-icon" style="background: linear-gradient(135deg, var(--info-color), #3b82f6);">
+            <div class="stat-icon u-background-linear-gradient-135deg-var-info-color-3b82f6">
                 <span>👁️</span>
             </div>
             <span class="stat-label">مدیریت مالکان طلا و جواهر </span>

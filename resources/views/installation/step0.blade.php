@@ -12,12 +12,12 @@
         <li class="list-group-item text-semibold"><i class="fa fa-check"></i> Database Password</li>
         <li class="list-group-item text-semibold"><i class="fa fa-check"></i> Database Hostname</li>
     </ol>
-    <p style="font-size: 14px;">
+    <p class="u-font-size-14px">
         During the installation process, we will check if the files that are needed to be written
         (<strong>.env file</strong>) have
         <strong>write permission</strong>. We will also check if <strong>curl</strong> are enabled on your server or not.
     </p>
-    <p style="font-size: 14px;">
+    <p class="u-font-size-14px">
         Gather the information mentioned above before hitting the start installation button. If you are ready....
     </p>
     <br>

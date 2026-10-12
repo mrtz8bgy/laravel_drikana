@@ -12,38 +12,38 @@
     </div>
 </section>
 
-<section style="padding: 60px 0 80px;">
+<section class="u-padding-60px-0-80px">
     <div class="container">
-        <div class="row" style="justify-content:center;">
+        <div class="row u-justify-content-center">
             <div class="col-lg-8">
                 <div class="d-card-lux">
                     <div class="d-card-lux-title"><i class="la la-search la-flip-horizontal"></i> رهگیری سریع</div>
-                    <form method="GET" action="{{ route('jewelry.track') }}" style="display:flex; gap:12px; flex-wrap:wrap;">
-                        <input type="text" name="serial" value="{{ $serial ?? old('serial') }}" class="form-control-lux" placeholder="شماره سریال شناسنامه را وارد کنید..." required style="flex:1; min-width:200px; letter-spacing:2px;">
+                    <form class="u-display-flex-gap-12px-flex-wrap-wrap" method="GET" action="{{ route('jewelry.track') }}">
+                        <input type="text" name="serial" value="{{ $serial ?? old('serial') }}" class="form-control-lux u-flex-1-min-width-200px-letter-spacing-2px" placeholder="شماره سریال شناسنامه را وارد کنید..." required>
                         <button type="submit" class="btn-lux btn-lux-primary"><i class="la la-map-marker"></i> رهگیری</button>
                     </form>
-                    <p style="margin-top:14px; font-size:12px; color:var(--d-gray-500);">
+                    <p class="u-margin-top-14px-font-size-12px-color-var-d-gray-500">
                         <i class="la la-info-circle"></i> همچنین می‌توانید از صفحات <a href="{{ route('orders.track') }}">رهگیری سفارش</a> یا <a href="{{ route('jewelry.certificates.verify_page') }}">استعلام شناسنامه</a> استفاده کنید.
                     </p>
                 </div>
 
                 @if($message)
-                    <div class="alert-lux danger" style="margin-top:24px;">
+                    <div class="alert-lux danger u-margin-top-24px">
                         <i class="la la-exclamation-circle"></i>
                         <span>{{ $message }}</span>
                     </div>
                 @endif
 
                 @if($certificate)
-                    <div class="d-card-lux" style="margin-top:24px;">
+                    <div class="d-card-lux u-margin-top-24px">
                         <div class="d-card-lux-title"><i class="la la-gem"></i> اطلاعات قطعه</div>
 
                         @if($missingReport)
-                            <div class="alert-lux danger" style="margin-bottom:20px;">
+                            <div class="alert-lux danger u-margin-bottom-20px">
                                 <i class="la la-exclamation-triangle"></i>
                                 <div>
-                                    <strong style="display:block; margin-bottom:4px;">⚠ این قطعه در سامانه به عنوان «{{ $missingReport->type == 'theft' ? 'مسروقه' : 'مفقودی' }}» ثبت شده است.</strong>
-                                    <span style="font-size:13px; opacity:.85;">تاریخ ثبت: {{ $missingReport->created_at->format('Y/m/d') }} · وضعیت: در حال پیگیری</span>
+                                    <strong class="u-display-block-margin-bottom-4px">⚠ این قطعه در سامانه به عنوان «{{ $missingReport->type == 'theft' ? 'مسروقه' : 'مفقودی' }}» ثبت شده است.</strong>
+                                    <span class="u-font-size-13px-opacity-85">تاریخ ثبت: {{ $missingReport->created_at->format('Y/m/d') }} · وضعیت: در حال پیگیری</span>
                                 </div>
                             </div>
                         @endif
@@ -51,7 +51,7 @@
                         <div class="d-cert-info-grid">
                             <div class="d-cert-info-item">
                                 <div class="label">شماره سریال</div>
-                                <div class="value" style="direction:ltr; letter-spacing:2px;">{{ $certificate->serial_number }}</div>
+                                <div class="value u-direction-ltr-letter-spacing-2px">{{ $certificate->serial_number }}</div>
                             </div>
                             <div class="d-cert-info-item">
                                 <div class="label">نام قطعه</div>
@@ -82,8 +82,8 @@
                         </div>
 
                         @if($certificate->transfers && $certificate->transfers->count() > 0)
-                            <div style="margin-top:30px;">
-                                <h5 style="font-size:15px; font-weight:700; color:var(--d-gold); margin-bottom:16px;">
+                            <div class="u-margin-top-30px">
+                                <h5 class="u-font-size-15px-font-weight-700-color-var-d-gold-margin--6adf8b">
                                     <i class="la la-history"></i> تاریخچه انتقال مالکیت
                                 </h5>
                                 @php
@@ -109,12 +109,12 @@
                             </div>
                         @endif
 
-                        <div style="margin-top:24px; display:flex; gap:10px; flex-wrap:wrap;">
-                            <a href="{{ route('jewelry.certificates.verify_page') }}?serial={{ $certificate->serial_number }}" class="btn-lux btn-lux-outline" style="padding:10px 20px; font-size:13px;">
+                        <div class="u-margin-top-24px-display-flex-gap-10px-flex-wrap-wrap">
+                            <a href="{{ route('jewelry.certificates.verify_page') }}?serial={{ $certificate->serial_number }}" class="btn-lux btn-lux-outline u-padding-10px-20px-font-size-13px">
                                 <i class="la la-file-text-o"></i> مشاهده شناسنامه کامل
                             </a>
                             @auth
-                                <a href="{{ route('jewelry.missing_reports.create_public') }}" class="btn-lux btn-lux-outline" style="padding:10px 20px; font-size:13px; border-color:#ef4444; color:#fca5a5;">
+                                <a href="{{ route('jewelry.missing_reports.create_public') }}" class="btn-lux btn-lux-outline u-padding-10px-20px-font-size-13px-border-color-ef4444-co-5d66b6">
                                     <i class="la la-warning"></i> اعلام مفقودی/سرقت
                                 </a>
                             @endauth

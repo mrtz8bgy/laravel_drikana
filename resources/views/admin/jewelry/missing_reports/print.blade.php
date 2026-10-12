@@ -8,13 +8,15 @@
 {{-- استایل چاپ به فایل مستقل زیر منتقل شده است (مرحله ۳ بازسازی).
      این فایل مشترک میان همه صفحات چاپی است. --}}
 <link rel="stylesheet" href="{{ asset('css/drikana/print.css') }}">
+    {{-- کلاس‌های استخراج‌شده از استایل درون‌خطی ویوها (بازبینی L-04) --}}
+    <link rel="stylesheet" href="{{ asset('css/drikana/utilities.css') }}">
 </head>
 <body>
-    <div class="no-print" style="text-align: left; margin-bottom: 20px;">
-        <button onclick="window.print()" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+    <div class="no-print u-text-align-left-margin-bottom-20px">
+        <button class="u-padding-10px-20px-background-3498db-color-white-border--cce4b2" onclick="window.print()">
             چاپ
         </button>
-        <button onclick="window.close()" style="padding: 10px 20px; background: #95a5a6; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        <button class="u-padding-10px-20px-background-95a5a6-color-white-border--81fe04" onclick="window.close()">
             بستن
         </button>
     </div>
@@ -153,9 +155,9 @@
                     <th>وضعیت قطعه</th>
                     <td>
                         @if($report->jewelry->is_active)
-                            <span class="badge" style="background: #27ae60; color: white;">فعال</span>
+                            <span class="badge u-background-27ae60-color-white">فعال</span>
                         @else
-                            <span class="badge" style="background: #e74c3c; color: white;">غیرفعال</span>
+                            <span class="badge u-background-e74c3c-color-white">غیرفعال</span>
                         @endif
                     </td>
                 </tr>

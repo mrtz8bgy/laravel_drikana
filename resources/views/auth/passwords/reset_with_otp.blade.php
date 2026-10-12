@@ -17,7 +17,7 @@
       • کد یک‌بارمصرف پس از استفاده باطل می‌شود.
 --}}
 
-<div class="container" style="padding: 40px 15px;">
+<div class="container u-padding-40px-15px">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div class="panel panel-default">
@@ -28,7 +28,7 @@
 
                     @if($errors->any())
                         <div class="alert alert-danger">
-                            <ul style="margin: 0; padding-right: 20px;">
+                            <ul class="u-margin-0-padding-right-20px">
                                 @foreach($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach

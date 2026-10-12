@@ -10,7 +10,7 @@
     درخواست‌دهنده، مالک مبدأ یا مالک مقصد باشد.
 --}}
 
-<div class="container" style="padding: 24px 15px;">
+<div class="container u-padding-24px-15px">
 
     <div class="row">
         <div class="col-sm-12">

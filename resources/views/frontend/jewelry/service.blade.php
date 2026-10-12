@@ -11,13 +11,13 @@
     </div>
 </section>
 
-<section style="padding:60px 0 80px;">
+<section class="u-padding-60px-0-80px-2">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <div class="d-card-lux">
                     <div class="d-card-lux-title"><i class="la la-certificate"></i> به‌زودی...</div>
-                    <p style="color:var(--d-gray-300); line-height:2.2;">
+                    <p class="u-color-var-d-gray-300-line-height-2-2">
                         صفحه سرویس شناسنامه در حال تکمیل است. از طریق منوی اصلی می‌توانید از امکانات <a href="{{ route('jewelry.certificates.verify_page') }}">استعلام شناسنامه</a> و <a href="{{ route('jewelry.missing_reports.create_public') }}">اعلام سرقت</a> استفاده کنید.
                     </p>
                     <a href="{{ route('home') }}" class="btn-lux btn-lux-primary mt-3"><i class="la la-home"></i> بازگشت به خانه</a>

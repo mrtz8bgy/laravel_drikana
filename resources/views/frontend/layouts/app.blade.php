@@ -133,8 +133,8 @@
   fbq('track', 'PageView');
 </script>
 <noscript>
-  <img height="1" width="1" style="display:none"
-       src="https://www.facebook.com/tr?id={{ config('drikana.tracking.facebook_pixel_id') }}/&ev=PageView&noscript=1"/>
+  <img class="u-display-none-3" height="1" width="1" 
+ src="https://www.facebook.com/tr?id={{ config('drikana.tracking.facebook_pixel_id') }}/&ev=PageView&noscript=1"/>
 </noscript>
 @endif
 --}}
@@ -149,6 +149,8 @@
      ───────────────────────────────────────────────────────────── --}}
 @stack('styles')
 
+    {{-- کلاس‌های استخراج‌شده از استایل درون‌خطی ویوها (بازبینی L-04) --}}
+    <link rel="stylesheet" href="{{ asset('css/drikana/utilities.css') }}">
 </head>
 <body>
 

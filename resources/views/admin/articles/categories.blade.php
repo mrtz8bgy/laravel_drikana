@@ -41,7 +41,7 @@
 
 @if($errors->any())
     <div class="alert alert-danger">
-        <ul style="margin: 0; padding-right: 20px;">
+        <ul class="u-margin-0-padding-right-20px">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -82,7 +82,7 @@
                             <input type="checkbox" name="is_active" value="1" checked>
                             <span class="slider round"></span>
                         </label>
-                        <label style="margin-right: 10px;">{{ __('فعال') }}</label>
+                        <label class="u-margin-right-10px">{{ __('فعال') }}</label>
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-block">
@@ -193,7 +193,7 @@
                                 <input type="checkbox" name="is_active" value="1" {{ $category->is_active ? 'checked' : '' }}>
                                 <span class="slider round"></span>
                             </label>
-                            <label style="margin-right: 10px;">{{ __('فعال') }}</label>
+                            <label class="u-margin-right-10px">{{ __('فعال') }}</label>
                         </div>
                     </div>
 

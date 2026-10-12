@@ -84,7 +84,7 @@
                                         {{__('Orders')}}
                                     </div>
                                     <div class="form-box-content p-3">
-                                        <table class="table mb-0 table-bordered" style="font-size:14px;">
+                                        <table class="table mb-0 table-bordered u-font-size-14px-2">
                                             <tr>
                                                 <td>{{__('Total orders')}}:</td>
                                                 <td><strong class="heading-6">{{ count(\App\OrderDetail::where('seller_id', Auth::user()->id)->get()) }}</strong></td>

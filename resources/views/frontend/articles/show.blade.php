@@ -48,13 +48,13 @@
     یعنی {{ }} و با escape خودکار نمایش داده می‌شوند.
 --}}
 
-<div class="container" style="padding: 24px 15px;">
+<div class="container u-padding-24px-15px">
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
 
             {{-- مسیر راهنما --}}
-            <ol class="breadcrumb" style="background: transparent; padding-right: 0;">
+            <ol class="breadcrumb u-background-transparent-padding-right-0">
                 <li><a href="{{ route('articles.index') }}">{{ __('مقالات') }}</a></li>
                 @if($article->category)
                     <li><a href="{{ route('articles.category', $article->category->slug) }}">{{ $article->category->name }}</a></li>
@@ -65,11 +65,11 @@
             <article class="panel panel-default">
                 <div class="panel-body">
 
-                    <h1 style="margin-top: 0; font-size: 26px; line-height: 1.6;">{{ $article->title }}</h1>
+                    <h1 class="u-margin-top-0-font-size-26px-line-height-1-6">{{ $article->title }}</h1>
 
-                    <p class="text-muted" style="font-size: 13px;">
+                    <p class="text-muted u-font-size-13px">
                         @if($article->category)
-                            <span class="label label-info" style="font-weight: 400;">{{ $article->category->name }}</span>
+                            <span class="label label-info u-font-weight-400">{{ $article->category->name }}</span>
                             &nbsp;
                         @endif
 
@@ -84,19 +84,18 @@
 
                     @if($article->featured_image)
                         <img src="{{ $article->featured_image_url }}"
-                             alt="{{ $article->featured_image_alt ?: $article->title }}"
-                             class="img-responsive"
-                             style="width: 100%; margin: 15px 0 20px;">
+ alt="{{ $article->featured_image_alt ?: $article->title }}"
+ class="img-responsive u-width-100-margin-15px-0-20px">
                     @endif
 
                     @if($article->excerpt)
-                        <div class="alert alert-info" style="font-size: 15px; line-height: 1.9;">
+                        <div class="alert alert-info u-font-size-15px-line-height-1-9">
                             {{ $article->excerpt }}
                         </div>
                     @endif
 
                     {{-- محتوای پاک‌سازی‌شده مقاله --}}
-                    <div class="article-content" style="font-size: 15px; line-height: 2;">
+                    <div class="article-content u-font-size-15px-line-height-2">
                         {!! $article->content !!}
                     </div>
 
@@ -105,7 +104,7 @@
                         <h4>{{ __('تصاویر مقاله') }}</h4>
                         <div class="row">
                             @foreach($article->images as $image)
-                                <div class="col-sm-6" style="margin-bottom: 12px;">
+                                <div class="col-sm-6 u-margin-bottom-12px">
                                     <img src="{{ $image->url }}"
                                          alt="{{ $image->alt }}"
                                          class="img-responsive img-thumbnail">
@@ -141,14 +140,13 @@
                     <div class="panel-body">
                         <div class="row">
                             @foreach($related as $item)
-                                <div class="col-sm-6 col-md-3" style="margin-bottom: 15px;">
+                                <div class="col-sm-6 col-md-3 u-margin-bottom-15px">
                                     <a href="{{ $item->public_url }}">
                                         @if($item->featured_image)
-                                            <img src="{{ $item->featured_image_url }}"
-                                                 alt="{{ $item->featured_image_alt ?: $item->title }}"
-                                                 style="height: 100px; width: 100%; object-fit: cover;">
+                                            <img class="u-height-100px-width-100-object-fit-cover" src="{{ $item->featured_image_url }}"
+ alt="{{ $item->featured_image_alt ?: $item->title }}">
                                         @endif
-                                        <h5 style="font-size: 13px; line-height: 1.6; margin-top: 6px;">
+                                        <h5 class="u-font-size-13px-line-height-1-6-margin-top-6px">
                                             {{ \Illuminate\Support\Str::limit($item->title, 55) }}
                                         </h5>
                                     </a>

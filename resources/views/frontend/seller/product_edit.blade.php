@@ -114,7 +114,7 @@
             							<div class="row mt-2">
             								<label class="col-md-2">{{__('Refundable')}}</label>
             								<div class="col-md-10">
-            									<label class="switch" style="margin-top:5px;">
+            									<label class="switch u-margin-top-5px">
             										<input type="checkbox" name="refundable" @if ($product->refundable == 1) checked @endif>
             			                            <span class="slider round"></span></label>
             									</label>
@@ -336,7 +336,7 @@
         									</select>
         								</div>
         								<div class="col-4 col-xl-1 col-md-2 order-2 order-md-0 text-right">
-        									<label class="switch" style="margin-top:5px;">
+        									<label class="switch u-margin-top-5px">
                                                 <input value="1" type="checkbox" name="colors_active" <?php if(count(json_decode($product->colors)) > 0) echo "checked";?> >
         										<span class="slider round"></span>
         									</label>
@@ -467,7 +467,7 @@
                                                 <input type="number" min="0" step="0.01" class="form-control mb-3" name="flat_shipping_cost" value="{{ $product->shipping_cost }}" placeholder="{{__('Flat Rate Cost')}}">
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="switch" style="margin-top:5px;">
+                                                <label class="switch u-margin-top-5px">
                                                     <input type="radio" name="shipping_type" value="flat_rate" @if($product->shipping_type == 'flat_rate') checked @endif>
                                                     <span class="slider round"></span>
                                                 </label>
@@ -481,7 +481,7 @@
                                                 <input type="number" min="0" step="0.01" class="form-control mb-3" name="free_shipping_cost" value="0" disabled placeholder="{{__('Flat Rate Cost')}}">
                                             </div>
                                             <div class="col-md-2">
-                                                <label class="switch" style="margin-top:5px;">
+                                                <label class="switch u-margin-top-5px">
                                                     <input type="radio" name="shipping_type" value="free" @if($product->shipping_type == 'free') checked @endif>
                                                     <span class="slider round"></span>
                                                 </label>

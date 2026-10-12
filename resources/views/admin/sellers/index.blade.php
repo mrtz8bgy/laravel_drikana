@@ -18,7 +18,7 @@
             <div class="pull-right clearfix">
                 <form class="" id="sort_sellers" action="" method="GET">
                     <div class="box-inline pad-rgt pull-left">
-                        <div class="select" style="min-width: 300px;">
+                        <div class="select u-min-width-300px">
                             <select class="form-control demo-select2" name="approved_status" id="approved_status" onchange="sort_sellers()">
                                 <option value="">{{__('فیلتر بر اساس تایید')}}</option>
                                 <option value="1"  @isset($approved) @if($approved == 'paid') selected @endif @endisset>{{__('Approved')}}</option>
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="box-inline pad-rgt pull-left">
-                        <div class="" style="min-width: 200px;">
+                        <div class="u-min-width-200px">
                             <input type="text" class="form-control" id="search" name="search"@isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="نام یا ایمیل را وارد کرده و اینتر بزنید">
                         </div>
                     </div>

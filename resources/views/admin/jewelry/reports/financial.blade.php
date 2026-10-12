@@ -115,7 +115,7 @@
     </div>
 </div>
 
-<div class="alert alert-warning mt-3" style="font-size: 13px;">
+<div class="alert alert-warning mt-3 u-font-size-13px">
     این گزارش صرفاً مبالغ اعلامی ثبت‌شده در سیستم را نشان می‌دهد و مبنای رسمی مالی یا مالیاتی نیست.
 </div>
 

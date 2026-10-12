@@ -21,6 +21,8 @@
          و فونت بارگذاری نمی‌شود. --}}
 
     @stack('styles')
+    {{-- کلاس‌های استخراج‌شده از استایل درون‌خطی ویوها (بازبینی L-04) --}}
+    <link rel="stylesheet" href="{{ asset('css/drikana/utilities.css') }}">
 </head>
 <body>
     <div class="container-fluid">
@@ -102,8 +104,8 @@
                             مستقیم به آدرس هم رد می‌شود.
                         --}}
                         @canany(['users.view', 'users.create', 'roles.view', 'audit_logs.view'])
-                            <div class="mt-4 pt-3" style="border-top:1px solid rgba(212,175,55,.2);"></div>
-                            <small class="d-block text-uppercase mb-2" style="opacity:.65; letter-spacing:1px;">
+                            <div class="mt-4 pt-3 u-border-top-1px-solid-rgba-212-175-55-2"></div>
+                            <small class="d-block text-uppercase mb-2 u-opacity-65-letter-spacing-1px">
                                 کاربران و سطح دسترسی
                             </small>
 
@@ -150,7 +152,7 @@
                             @endcan
                         @endcanany
 
-                        <div class="mt-4 pt-3" style="border-top:1px solid rgba(212,175,55,.2);"></div>
+                        <div class="mt-4 pt-3 u-border-top-1px-solid-rgba-212-175-55-2"></div>
                         <a href="{{ route('admin.dashboard') }}" class="mb-2 rounded">
                             🏪 پنل اصلی فروشگاه
                         </a>
@@ -229,7 +231,7 @@
         </div>
     </div>
 
-    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    <form class="u-display-none" id="logout-form" action="{{ route('logout') }}" method="POST">
         @csrf
     </form>
 

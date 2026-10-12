@@ -43,7 +43,7 @@
 
 @if($errors->any())
     <div class="alert alert-danger">
-        <ul style="margin: 0; padding-right: 20px;">
+        <ul class="u-margin-0-padding-right-20px">
             @foreach($errors->all() as $error)
                 <li>{{ $error }}</li>
             @endforeach
@@ -55,7 +55,7 @@
 <div class="alert alert-info">
     <i class="demo-pli-information"></i>
     <strong>{{ __('ساخت «کاربر با نقش» تفاوت دارد با ساخت «مدیر کل سیستم»:') }}</strong>
-    <ul style="margin: 10px 0 0; padding-right: 20px;">
+    <ul class="u-margin-10px-0-0-padding-right-20px">
         <li>
             {{ __('کاربر با نقش (پیشنهادشده) تنها به بخش‌هایی دسترسی دارد که نقش‌های انتخابی شما اجازه می‌دهند.') }}
             <br>
@@ -177,7 +177,7 @@
                              مستقلاً نوع حساب را بررسی می‌کند. --}}
                         <input type="hidden" name="account_type" value="staff">
                         <div class="col-sm-6">
-                            <div class="alert alert-warning" style="margin-bottom: 0;">
+                            <div class="alert alert-warning u-margin-bottom-0">
                                 {{ __('ساخت حساب «مدیر کل سیستم» تنها توسط مدیر کل سیستم امکان‌پذیر است.') }}
                             </div>
                         </div>
@@ -197,13 +197,13 @@
                         $isSuper   = ($role->slug === 'super_admin');
                     @endphp
 
-                    <div class="row" style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                    <div class="row u-padding-8px-0-border-bottom-1px-solid-eee">
                         <div class="col-sm-8">
                             <strong>{{ $role->name }}</strong>
                             <span class="label label-default">{{ $role->level }}</span>
 
                             @if($isSuper)
-                                <span class="label label-danger" style="font-size: 10px;">
+                                <span class="label label-danger u-font-size-10px">
                                     {{ __('حساس') }}
                                 </span>
                             @endif
@@ -267,7 +267,7 @@
                     {{ __('رمز عبور به‌صورت تصادفی و قوی ساخته می‌شود و پس از ذخیره، «تنها یک بار» به شما نمایش داده می‌شود. آن را یادداشت کنید و در اولین ورود، تغییر دهید.') }}
                 </div>
 
-                <div id="manual-password-fields" style="display: none;">
+                <div class="u-display-none" id="manual-password-fields">
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">

@@ -3,7 +3,7 @@
 @section('meta_title', __('جزئیات درخواست انتقال'))
 @section('content')
 
-<div class="container" style="padding: 24px 15px;">
+<div class="container u-padding-24px-15px">
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -21,7 +21,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <table class="table table-bordered" style="margin: 0;">
+                    <table class="table table-bordered u-margin-0">
                         <tr>
                             <th width="35%">{{ __('وضعیت') }}</th>
                             <td>
@@ -67,7 +67,7 @@
             @endif
 
             @if($history->count() > 0)
-                <div class="panel panel-default" style="margin-top: 20px;">
+                <div class="panel panel-default u-margin-top-20px">
                     <div class="panel-heading"><strong>{{ __('سابقه مالکیت این قطعه') }}</strong></div>
                     <div class="panel-body">
                         <table class="table table-striped table-condensed">

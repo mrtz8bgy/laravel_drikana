@@ -116,7 +116,7 @@
                     <input type="checkbox" onchange="updateSettings(this, 'category_wise_commission')" <?php if(\App\BusinessSetting::where('type', 'category_wise_commission')->first()->value == 1) echo "checked";?>>
                     <span class="slider round"></span>
                 </label>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
+                <div class="alert u-color-004085-background-color-cce5ff-border-color-b8daf-294077">
                 پس از فعال کردن این گزینه کمیسیون فروشنده غیرفعال می شود و شما باید برای هر گروه کمیسیون تعیین کنید در غیر اینصورت مدیر سایت هیچ کمیسیونی را دریافت نمی کند. <a href="{{ route('categories.index') }}">تعیین کمیسیون</a>
                 </div>
             </div>
@@ -132,7 +132,7 @@
                     <input type="checkbox" onchange="updateSettings(this, 'email_verification')" <?php if(\App\BusinessSetting::where('type', 'email_verification')->first()->value == 1) echo "checked";?>>
                     <span class="slider round"></span>
                 </label>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
+                <div class="alert u-color-004085-background-color-cce5ff-border-color-b8daf-294077">
                     برای فعال کردن این قسمت باید تنظیمات SMTP را انجام دهید <a href="{{ route('smtp_settings.index') }}">تنظیمات</a>
                 </div>
             </div>
@@ -173,7 +173,7 @@
                     <input type="checkbox" onchange="updateSettings(this, 'facebook_login')" <?php if(\App\BusinessSetting::where('type', 'facebook_login')->first()->value == 1) echo "checked";?>>
                     <span class="slider round"></span>
                 </label>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
+                <div class="alert u-color-004085-background-color-cce5ff-border-color-b8daf-294077">
                 برای فعال کردن این ویژگی ، باید Facebook Client را به درستی پیکربندی کنید. <a href="{{ route('social_login.index') }}">تنظیمات</a>
                 </div>
             </div>
@@ -189,7 +189,7 @@
                     <input type="checkbox" onchange="updateSettings(this, 'google_login')" <?php if(\App\BusinessSetting::where('type', 'google_login')->first()->value == 1) echo "checked";?>>
                     <span class="slider round"></span>
                 </label>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
+                <div class="alert u-color-004085-background-color-cce5ff-border-color-b8daf-294077">
                 برای فعال کردن این ویژگی باید Google Client را به درستی پیکربندی کنید. <a href="{{ route('social_login.index') }}">تنظیمات</a>
                 </div>
             </div>
@@ -205,7 +205,7 @@
                     <input type="checkbox" onchange="updateSettings(this, 'twitter_login')" <?php if(\App\BusinessSetting::where('type', 'twitter_login')->first()->value == 1) echo "checked";?>>
                     <span class="slider round"></span>
                 </label>
-                <div class="alert" style="color: #004085;background-color: #cce5ff;border-color: #b8daff;margin-bottom:0;margin-top:10px;">
+                <div class="alert u-color-004085-background-color-cce5ff-border-color-b8daf-294077">
                 برای فعال کردن این ویژگی ، باید Twitter Client را به درستی پیکربندی کنید. <a href="{{ route('social_login.index') }}">تنظیمات</a>
                 </div>
             </div>

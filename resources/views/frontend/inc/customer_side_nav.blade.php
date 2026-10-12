@@ -42,7 +42,7 @@
                     <a href="{{ route('purchase_history.index') }}" class="{{ areActiveRoutesHome(['purchase_history.index'])}}">
                         <i class="la la-file-text"></i>
                         <span class="category-name">
-                            {{__('Purchase History')}} @if($delivery_viewed > 0 || $payment_status_viewed > 0)<span class="ml-2" style="color:green"><strong>({{ __('New Notifications') }})</strong></span>@endif
+                            {{__('Purchase History')}} @if($delivery_viewed > 0 || $payment_status_viewed > 0)<span class="ml-2 u-color-green"><strong>({{ __('New Notifications') }})</strong></span>@endif
                         </span>
                     </a>
                 </li>
@@ -86,7 +86,7 @@
                             <span class="category-name">
                                 {{__('Conversations')}}
                                 @if (count($conversation) > 0)
-                                    <span class="ml-2" style="color:green"><strong>({{ count($conversation) }})</strong></span>
+                                    <span class="ml-2 u-color-green"><strong>({{ count($conversation) }})</strong></span>
                                 @endif
                             </span>
                         </a>
@@ -143,7 +143,7 @@
                     <a href="{{ route('support_ticket.index') }}" class="{{ areActiveRoutesHome(['support_ticket.index'])}}">
                         <i class="la la-support"></i>
                         <span class="category-name">
-                            {{__('Support Ticket')}} @if($support_ticket > 0)<span class="ml-2" style="color:green"><strong>({{ $support_ticket }} {{ __('New') }})</strong></span></span>@endif
+                            {{__('Support Ticket')}} @if($support_ticket > 0)<span class="ml-2 u-color-green"><strong>({{ $support_ticket }} {{ __('New') }})</strong></span></span>@endif
                         </span>
                     </a>
                 </li>

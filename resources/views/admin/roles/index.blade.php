@@ -67,7 +67,7 @@
                                 <strong>{{ $role->name }}</strong>
 
                                 @if($role->is_system)
-                                    <span class="label label-warning" style="font-size: 10px;">
+                                    <span class="label label-warning u-font-size-10px">
                                         {{ __('سیستمی') }}
                                     </span>
                                 @endif
@@ -137,9 +137,8 @@
                                             @if($role->is_system)
                                                 {{-- نقش سیستمی قابل حذف نیست --}}
                                                 <li class="disabled">
-                                                    <a href="#" title="{{ __('نقش سیستمی قابل حذف نیست') }}"
-                                                       onclick="return false;"
-                                                       style="cursor: not-allowed; opacity: .5;">
+                                                    <a class="u-cursor-not-allowed-opacity-5" href="#" title="{{ __('نقش سیستمی قابل حذف نیست') }}"
+ onclick="return false;">
                                                         <i class="demo-pli-recycling"></i> {{ __('حذف (سیستمی)') }}
                                                     </a>
                                                 </li>

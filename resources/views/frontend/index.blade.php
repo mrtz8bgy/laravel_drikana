@@ -69,7 +69,7 @@
                                     @if($category->icon && file_exists(public_path($category->icon)))
                                         <img class="mega-cat-icon lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($category->icon) }}" width="30" alt="{{ __($category->name) }}">
                                     @else
-                                        <i class="la la-folder-open" style="font-size:20px;color:var(--color-gold);width:30px;text-align:center;"></i>
+                                        <i class="la la-folder-open u-font-size-20px-color-var-color-gold-width-30px-text-ali-7e344c"></i>
                                     @endif
                                     <span>{{ __($category->name) }}</span>
                                     @if($category->subcategories && $category->subcategories->isNotEmpty())
@@ -87,7 +87,7 @@
                                                             @if($subcategory->icon && file_exists(public_path($subcategory->icon)))
                                                                 <img class="mega-sub-icon lazyload" src="{{ asset('frontend/images/placeholder.jpg') }}" data-src="{{ asset($subcategory->icon) }}" width="24" alt="{{ __($subcategory->name) }}">
                                                             @else
-                                                                <i class="la la-folder-o" style="font-size:20px;color:var(--color-gold);width:24px;text-align:center;"></i>
+                                                                <i class="la la-folder-o u-font-size-20px-color-var-color-gold-width-24px-text-ali-dfa443"></i>
                                                             @endif
                                                             <span>{{ __($subcategory->name) }}</span>
                                                         </a>
@@ -132,6 +132,82 @@
     </div>
 </section>
 
+{{-- ═══════════════════════════════════════════════════════════════
+     بنر اصلی صفحه (اسلایدر) — بازگردانی‌شده
+     ───────────────────────────────────────────────────────────────
+     [رفع اشکال] اسلایدر از جدول `sliders` تغذیه می‌شود و پنل مدیریت
+     (frontend_settings/sliders) از قبل امکان بارگذاری، فعال/غیرفعال و
+     حذف اسلاید را داشت — اما هیچ‌جا از سایت رندر نمی‌شد. در بازطراحی
+     لوکس، بخش بنر با «HERO استاتیک» جای‌گزین شده بود و مارک‌آپ اسلایدر
+     از ویو حذف شده بود؛ در نتیجه اسلایدهای بارگذاری‌شده در صفحه اصلی
+     دیده نمی‌شدند.
+
+     CSS این بخش از قبل در `public/css/drikana/store.css` بود
+     (`.fullwidth-slider-section` و کلاس‌های `.slide-content*`)، پس
+     مارک‌آپ زیر همان طراحی آماده را زنده می‌کند — بدون CSS تازه.
+
+     نکته: اگر هیچ اسلاید منتشرشده‌ای (با تصویر موجود) نباشد، این بخش
+     به‌کل رندر نمی‌شود و صفحه اصلی دقیقاً مثل قبل می‌ماند.
+     ═══════════════════════════════════════════════════════════════ --}}
+@if(isset($sliders) && $sliders->count() > 0)
+<section class="fullwidth-slider-section">
+    <div class="slick-carousel"
+         data-slick-items="1"
+         data-slick-xs-items="1"
+         data-slick-sm-items="1"
+         data-slick-md-items="1"
+         data-slick-lg-items="1"
+         data-slick-xl-items="1"
+         data-slick-arrows="true"
+         data-slick-dots="true"
+         data-slick-autoplay="true"
+         data-slick-rows="1">
+
+        @foreach($sliders as $slider)
+            @php
+                // پیوند خالی یا «#» یعنی اسلاید بدون مقصد. در آن حالت عنصر
+                // پیوند ساخته نمی‌شود تا کلیک، تب خالی باز نکند. برای
+                // پیوندهای بیرونی `rel="noopener noreferrer"` لازم است تا
+                // صفحه مقصد به `window.opener` دسترسی نداشته باشد.
+                $slideLink = trim((string) $slider->link);
+                $slideLink = ($slideLink === '' || $slideLink === '#') ? null : $slideLink;
+            @endphp
+
+            <div>
+                @if($slideLink)
+                    <a href="{{ $slideLink }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ asset($slider->photo) }}"
+                             alt="{{ __('اسلاید') }} {{ $loop->iteration }}"
+                             loading="{{ $loop->first ? 'eager' : 'lazy' }}">
+                    </a>
+                @else
+                    <img src="{{ asset($slider->photo) }}"
+                         alt="{{ __('اسلاید') }} {{ $loop->iteration }}"
+                         loading="{{ $loop->first ? 'eager' : 'lazy' }}">
+                @endif
+
+                <div class="slide-content-overlay">
+                    <div class="slide-content">
+                        <h2>خرید <span>طلایی</span><br>با بهترین قیمت</h2>
+                        <p>کیفیت را با قیمت مناسب تجربه کنید</p>
+
+                        @if($slideLink)
+                            <a href="{{ $slideLink }}" target="_blank" rel="noopener noreferrer" class="slide-btn-custom">
+                                {{ __('مشاهده و خرید') }} <i class="la la-angle-left"></i>
+                            </a>
+                        @else
+                            <a href="{{ route('categories.all') }}" class="slide-btn-custom">
+                                {{ __('مشاهده و خرید') }} <i class="la la-angle-left"></i>
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+</section>
+@endif
+
 <!-- ============================================ -->
 <!-- HERO لوکس جدید دریکانا -->
 <!-- ============================================ -->
@@ -149,9 +225,9 @@
                 </h1>
                 <p>
                     خرید و فروش طلا، جواهرات، ساعت‌های لوکس و سنگ‌های قیمتی با
-                    <strong style="color:var(--d-gold);">شناسنامه معتبر</strong>،
-                    <strong style="color:var(--d-gold);">ضمانت اصالت</strong> و
-                    <strong style="color:var(--d-gold);">امکان رهگیری دائمی</strong>.
+                    <strong class="u-color-var-d-gold">شناسنامه معتبر</strong>،
+                    <strong class="u-color-var-d-gold">ضمانت اصالت</strong> و
+                    <strong class="u-color-var-d-gold">امکان رهگیری دائمی</strong>.
                     دریکانا، جایی که ارزش‌ها ماندگارند.
                 </p>
                 <div class="d-hero-cta">
@@ -722,42 +798,42 @@
         </div>
         <div class="d-cat-grid">
             <a href="{{ route('categories.all') }}" class="d-cat-card">
-                <img src="{{ asset('frontend/images/drikana/ring.svg') }}" alt="حلقه" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <img src="{{ asset('frontend/images/drikana/ring.svg') }}" alt="حلقه" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>حلقه و انگشتر</h4>
                 <span class="cat-count">۲,۴۰۰+ مدل</span>
             </a>
             <a href="{{ route('categories.all') }}" class="d-cat-card">
-                <img src="{{ asset('frontend/images/drikana/necklace.svg') }}" alt="گردنبند" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <img src="{{ asset('frontend/images/drikana/necklace.svg') }}" alt="گردنبند" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>گردنبند و آویز</h4>
                 <span class="cat-count">طلای ظریف</span>
             </a>
             <a href="{{ route('categories.all') }}" class="d-cat-card">
-                <img src="{{ asset('frontend/images/drikana/watch.svg') }}" alt="ساعت" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <img src="{{ asset('frontend/images/drikana/watch.svg') }}" alt="ساعت" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>ساعت لوکس</h4>
                 <span class="cat-count">رولکس، پتک و...</span>
             </a>
             <a href="{{ route('categories.all') }}" class="d-cat-card">
-                <img src="{{ asset('frontend/images/drikana/diamond.svg') }}" alt="الماس" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(110,180,230,.4));">
+                <img src="{{ asset('frontend/images/drikana/diamond.svg') }}" alt="الماس" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ffea0d">
                 <h4>الماس و سنگ قیمتی</h4>
                 <span class="cat-count">قیمتی و نیمه‌قیمتی</span>
             </a>
             <a href="{{ route('categories.all') }}" class="d-cat-card">
-                <img src="{{ asset('frontend/images/drikana/crown.svg') }}" alt="تاج" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <img src="{{ asset('frontend/images/drikana/crown.svg') }}" alt="تاج" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>جواهرات سلطنتی</h4>
                 <span class="cat-count">کلکسیون ویژه</span>
             </a>
             <a href="{{ route('categories.all') }}" class="d-cat-card">
-                <img src="{{ asset('frontend/images/drikana/coin.svg') }}" alt="سکه" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(212,175,55,.4));">
+                <img src="{{ asset('frontend/images/drikana/coin.svg') }}" alt="سکه" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>شمش و سکه</h4>
                 <span class="cat-count">سرمایه‌گذاری</span>
             </a>
             <a href="{{ route('categories.all') }}" class="d-cat-card">
-                <img src="{{ asset('frontend/images/drikana/gift.svg') }}" alt="هدیه" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(200,30,60,.4));">
+                <img src="{{ asset('frontend/images/drikana/gift.svg') }}" alt="هدیه" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-13829f">
                 <h4>پک هدیه لوکس</h4>
                 <span class="cat-count">بسته‌بندی ویژه</span>
             </a>
             <a href="{{ route('categories.all') }}" class="d-cat-card">
-                <img src="{{ asset('frontend/images/drikana/antique.svg') }}" alt="عتیقه" class="cat-ico" style="width:90px;height:90px;object-fit:contain;filter:drop-shadow(0 8px 20px rgba(200,160,80,.4));">
+                <img src="{{ asset('frontend/images/drikana/antique.svg') }}" alt="عتیقه" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-70c493">
                 <h4>اشیاء عتیقه</h4>
                 <span class="cat-count">کلکسیونرها</span>
             </a>
@@ -856,13 +932,13 @@
     <div class="container">
         <div class="d-trust-inner">
             <div class="d-trust-content">
-                <span class="kicker" style="color:var(--d-gold); font-weight:700; letter-spacing:3px; font-size:13px;">
+                <span class="kicker u-color-var-d-gold-font-weight-700-letter-spacing-3px-fon-f179e3">
                     CERTIFICATE & SECURITY
                 </span>
-                <h2 style="font-size:clamp(24px,3vw,38px); font-weight:800; margin:10px 0 20px; line-height:1.4;">
-                    هر قطعه، یک <span style="background:var(--grad-gold); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">شناسنامه معتبر</span>؛ آرامش خاطر شما
+                <h2 class="u-font-size-clamp-24px-3vw-38px-font-weight-800-margin-10-372c2c">
+                    هر قطعه، یک <span class="u-background-var-grad-gold-webkit-background-clip-text-ba-1929d0">شناسنامه معتبر</span>؛ آرامش خاطر شما
                 </h2>
-                <p style="color:var(--d-gray-300); font-size:15px; line-height:2.1; margin-bottom:0;">
+                <p class="u-color-var-d-gray-300-font-size-15px-line-height-2-1-mar-8d9f21">
                     سامانه شناسنامه دیجیتال دریکانا، سندی رسمی و غیرقابل جعل است که تمامی مشخصات فنی، عیار، وزن، سنگ‌های به‌کاررفته و تاریخچه مالکیت قطعه را در خود جای می‌دهد. هرگونه نقل و انتقال، تعمیر یا تغییر وضعیت در پرونده قطعه به صورت دائمی ثبت می‌شود.
                 </p>
                 <div class="d-trust-features">
@@ -895,7 +971,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="margin-top:30px; display:flex; gap:12px; flex-wrap:wrap;">
+                <div class="u-margin-top-30px-display-flex-gap-12px-flex-wrap-wrap">
                     <a href="{{ route('jewelry.certificates.verify_page') }}" class="btn-lux btn-lux-primary">
                         <i class="la la-search"></i> استعلام آنلاین شناسنامه
                     </a>
@@ -931,10 +1007,10 @@
     <div class="container">
         <div class="d-verify-box">
             <div class="d-verify-icon"><i class="la la-certificate"></i></div>
-            <h2 style="font-size:clamp(22px,3vw,34px); font-weight:800; margin:0 0 12px;">
-                همین حالا <span style="background:var(--grad-gold); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;">اصالت</span> قطعه خود را بررسی کنید
+            <h2 class="u-font-size-clamp-22px-3vw-34px-font-weight-800-margin-0-0-12px">
+                همین حالا <span class="u-background-var-grad-gold-webkit-background-clip-text-ba-1929d0">اصالت</span> قطعه خود را بررسی کنید
             </h2>
-            <p style="color:var(--d-gray-300); margin:0;">
+            <p class="u-color-var-d-gray-300-margin-0">
                 با وارد کردن شماره سریال شناسنامه، از مشخصات، اصالت و وضعیت قطعه خود مطلع شوید.
             </p>
             <form method="GET" action="{{ route('jewelry.certificates.verify_page') }}" class="d-verify-form">

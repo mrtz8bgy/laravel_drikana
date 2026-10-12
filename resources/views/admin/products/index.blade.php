@@ -20,7 +20,7 @@
             <form class="" id="sort_products" action="" method="GET">
                 @if($type == 'Seller')
                     <div class="box-inline pad-rgt pull-left">
-                        <div class="select" style="min-width: 200px;">
+                        <div class="select u-min-width-200px">
                             <select class="form-control demo-select2" id="user_id" name="user_id" onchange="sort_products()">
                                 <option value="">تمام فروشندگان</option>
                                 @foreach (App\Seller::all() as $key => $seller)
@@ -33,7 +33,7 @@
                     </div>
                 @endif
                 <div class="box-inline pad-rgt pull-left">
-                    <div class="select" style="min-width: 200px;">
+                    <div class="select u-min-width-200px">
                         <select class="form-control demo-select2" name="type" id="type" onchange="sort_products()">
                             <option value="">مرتب سازی بر اساس</option>
                             <option value="rating,desc" @isset($col_name , $query) @if($col_name == 'rating' && $query == 'desc') selected @endif @endisset>امتیاز(نزولی)</option>
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="box-inline pad-rgt pull-left">
-                    <div class="" style="min-width: 200px;">
+                    <div class="u-min-width-200px">
                         <input type="text" class="form-control" id="search" name="search"@isset($sort_search) value="{{ $sort_search }}" @endisset placeholder="تایپ کنید و اینتر بزنید">
                     </div>
                 </div>

@@ -25,7 +25,7 @@
     <div class="col-sm-3">
         <div class="panel panel-primary">
             <div class="panel-body text-center">
-                <h2 style="margin: 0;">{{ number_format($stats['total']) }}</h2>
+                <h2 class="u-margin-0">{{ number_format($stats['total']) }}</h2>
                 <small>{{ __('کل رویدادها') }}</small>
             </div>
         </div>
@@ -33,7 +33,7 @@
     <div class="col-sm-3">
         <div class="panel panel-danger">
             <div class="panel-body text-center">
-                <h2 style="margin: 0;">{{ number_format($stats['critical']) }}</h2>
+                <h2 class="u-margin-0">{{ number_format($stats['critical']) }}</h2>
                 <small>{{ __('رویدادهای بحرانی') }}</small>
             </div>
         </div>
@@ -41,7 +41,7 @@
     <div class="col-sm-3">
         <div class="panel panel-warning">
             <div class="panel-body text-center">
-                <h2 style="margin: 0;">{{ number_format($stats['warning']) }}</h2>
+                <h2 class="u-margin-0">{{ number_format($stats['warning']) }}</h2>
                 <small>{{ __('هشدارها') }}</small>
             </div>
         </div>
@@ -49,7 +49,7 @@
     <div class="col-sm-3">
         <div class="panel panel-info">
             <div class="panel-body text-center">
-                <h2 style="margin: 0;">{{ number_format($stats['today']) }}</h2>
+                <h2 class="u-margin-0">{{ number_format($stats['today']) }}</h2>
                 <small>{{ __('رویدادهای امروز') }}</small>
             </div>
         </div>
@@ -63,7 +63,7 @@
     <div class="panel-body">
         <form method="GET" action="{{ route('audit_logs.index') }}" class="form-inline">
 
-            <div class="form-group" style="margin-left: 8px;">
+            <div class="form-group u-margin-left-8px">
                 <input type="text"
                        name="event"
                        class="form-control"
@@ -72,7 +72,7 @@
                        value="{{ e(request('event')) }}">
             </div>
 
-            <div class="form-group" style="margin-left: 8px;">
+            <div class="form-group u-margin-left-8px">
                 <select name="severity" class="form-control">
                     <option value="">{{ __('همه سطوح') }}</option>
                     @foreach([
@@ -88,18 +88,18 @@
                 </select>
             </div>
 
-            <div class="form-group" style="margin-left: 8px;">
+            <div class="form-group u-margin-left-8px">
                 <input type="number" name="user_id" class="form-control"
                        placeholder="{{ __('شناسه کاربر') }}" min="1"
                        value="{{ e(request('user_id')) }}">
             </div>
 
-            <div class="form-group" style="margin-left: 8px;">
+            <div class="form-group u-margin-left-8px">
                 <input type="date" name="date_from" class="form-control"
                        value="{{ e(request('date_from')) }}" title="{{ __('از تاریخ') }}">
             </div>
 
-            <div class="form-group" style="margin-left: 8px;">
+            <div class="form-group u-margin-left-8px">
                 <input type="date" name="date_to" class="form-control"
                        value="{{ e(request('date_to')) }}" title="{{ __('تا تاریخ') }}">
             </div>
@@ -158,7 +158,7 @@
                             </td>
 
                             <td>
-                                <code style="font-size: 11px;">{{ $log->event }}</code>
+                                <code class="u-font-size-11px">{{ $log->event }}</code>
                             </td>
 
                             <td class="text-center">
@@ -221,11 +221,11 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <h5>{{ __('مقدار پیشین') }}</h5>
-                                <pre style="max-height: 300px; overflow: auto; direction: ltr; text-align: left;">{{ json_encode($log->old_values, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) }}</pre>
+                                <pre class="u-max-height-300px-overflow-auto-direction-ltr-text-align-left">{{ json_encode($log->old_values, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) }}</pre>
                             </div>
                             <div class="col-sm-6">
                                 <h5>{{ __('مقدار جدید') }}</h5>
-                                <pre style="max-height: 300px; overflow: auto; direction: ltr; text-align: left;">{{ json_encode($log->new_values, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) }}</pre>
+                                <pre class="u-max-height-300px-overflow-auto-direction-ltr-text-align-left">{{ json_encode($log->new_values, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) }}</pre>
                             </div>
                         </div>
 

@@ -70,7 +70,7 @@
                 </table>
 
                 @if($role->description)
-                    <div class="alert alert-info" style="margin-top: 10px;">
+                    <div class="alert alert-info u-margin-top-10px">
                         {{ $role->description }}
                     </div>
                 @endif
@@ -111,15 +111,15 @@
 
                     @foreach($grouped as $groupName => $items)
                         <div class="panel panel-default">
-                            <div class="panel-heading" style="padding: 6px 12px;">
+                            <div class="panel-heading u-padding-6px-12px">
                                 <strong><code>{{ $groupName }}</code></strong>
                                 <span class="badge">{{ count($items) }}</span>
                             </div>
-                            <div class="panel-body" style="padding: 8px 12px;">
+                            <div class="panel-body u-padding-8px-12px">
                                 @foreach($items as $perm)
-                                    <span class="label label-info" style="display: inline-block; margin: 3px; font-weight: 400;">
+                                    <span class="label label-info u-display-inline-block-margin-3px-font-weight-400">
                                         {{ $perm->name }}
-                                        <small style="opacity: .75;">({{ $perm->slug }})</small>
+                                        <small class="u-opacity-75">({{ $perm->slug }})</small>
                                     </span>
                                 @endforeach
                             </div>

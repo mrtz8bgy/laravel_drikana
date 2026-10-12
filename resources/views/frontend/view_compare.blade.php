@@ -13,7 +13,7 @@
                 </div>
                 <div class="col">
                     <div class="text-right">
-                        <a href="{{ route('compare.reset') }}" style="text-decoration: none;" class="btn btn-link btn-base-5 btn-sm">{{__('Reset Compare List')}}</a>
+                        <a href="{{ route('compare.reset') }}" class="btn btn-link btn-base-5 btn-sm u-text-decoration-none-2">{{__('Reset Compare List')}}</a>
                     </div>
                 </div>
             </div>
@@ -35,11 +35,11 @@
                                     <table class="table table-bordered compare-table mb-0">
                                         <thead>
                                             <tr>
-                                                <th scope="col" style="width:16%" class="font-weight-bold">
+                                                <th scope="col" class="font-weight-bold u-width-16">
                                                     {{__('Name')}}
                                                 </th>
                                                 @foreach (Session::get('compare') as $key => $item)
-                                                    <th scope="col" style="width:28%" class="font-weight-bold">
+                                                    <th scope="col" class="font-weight-bold u-width-28">
                                                         <a href="{{ route('product', \App\Product::find($item)->slug) }}">{{ \App\Product::find($item)->name }}</a>
                                                     </th>
                                                 @endforeach
