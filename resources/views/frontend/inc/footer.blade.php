@@ -44,6 +44,7 @@
                     <li><a href="{{ route('products.best_selling') }}">پرفروش‌ترین‌ها</a></li>
                     <li><a href="{{ route('products.todays_deal') }}">تخفیف‌های امروز</a></li>
                     <li><a href="{{ route('brands.all') }}">برندها</a></li>
+                    <li><a href="{{ route('articles.index') }}">مقالات و راهنمای طلا و جواهر</a></li>
                     <li><a href="#">وبلاگ و مقالات</a></li>
                 </ul>
             </div>

@@ -96,6 +96,12 @@
                     <li><a href="#"><i class="la la-gem"></i> سنگ‌های قیمتی</a></li>
                     <li><a href="{{ route('jewelry.certificates.verify_page') }}"><i class="la la-certificate"></i> استعلام شناسنامه</a></li>
                     <li><a href="{{ route('jewelry.missing_reports.create_public') }}"><i class="la la-bullhorn"></i> اعلام سرقت</a></li>
+
+                    {{-- لینک مقالات برای همه کاربران — صفحه عمومی و بدون نیاز به ورود --}}
+                    <li class="{{ request()->routeIs('articles.*') ? 'active' : '' }}">
+                        <a href="{{ route('articles.index') }}"><i class="la la-book"></i> مقالات و راهنما</a>
+                    </li>
+
                     <li><a href="#"><i class="la la-phone"></i> تماس با ما</a></li>
                 </ul>
                 <div class="d-nav-cta">

@@ -12,6 +12,23 @@
 <div class="row">
     <div class="col-sm-12">
         <h3 class="pull-right">{{ __('مدیریت کاربران و نقش‌ها') }}</h3>
+
+        {{-- ساخت کاربر ادمین جدید و دسترسی به نقش‌ها.
+             نمایش دکمه‌ها با @can انجام می‌شود، اما اعمال واقعی مجوز در
+             میدل‌ور همان مسیرها است؛ پنهان‌بودن دکمه جایگزین کنترل سرور نیست. --}}
+        <div class="pull-left">
+            @can('users.create')
+                <a href="{{ route('users.create') }}" class="btn btn-primary">
+                    <i class="demo-pli-add-user"></i> {{ __('کاربر ادمین جدید') }}
+                </a>
+            @endcan
+
+            @can('roles.view')
+                <a href="{{ route('roles.index') }}" class="btn btn-default">
+                    <i class="demo-pli-shield"></i> {{ __('نقش‌ها و سطح دسترسی') }}
+                </a>
+            @endcan
+        </div>
     </div>
 </div>
 

@@ -87,6 +87,69 @@
                             📊 گزارشات
                         </a>
 
+                        {{-- ============================================ --}}
+                        {{-- کاربران و سطح دسترسی (RBAC) --}}
+                        {{--
+                            لینک‌های مدیریت کاربران و نقش‌ها همان مسیرهای
+                            عمومی پنل مدیریت هستند (`admin/users`, `admin/roles`)
+                            و از این پنل هم در دسترس‌اند.
+
+                            نمایش هر لینک با @can کنترل می‌شود تا مدیر
+                            مالکیت یا تکنسین تعمیرات، گزینه‌ای که مجوزش را
+                            ندارد نبیند. اما توجه: این فقط لایه رابط کاربری
+                            است — اعمال واقعی مجوز روی خود مسیرها با
+                            میدل‌ور `permission:` انجام می‌شود و درخواست
+                            مستقیم به آدرس هم رد می‌شود.
+                        --}}
+                        @canany(['users.view', 'users.create', 'roles.view', 'audit_logs.view'])
+                            <div class="mt-4 pt-3" style="border-top:1px solid rgba(212,175,55,.2);"></div>
+                            <small class="d-block text-uppercase mb-2" style="opacity:.65; letter-spacing:1px;">
+                                کاربران و سطح دسترسی
+                            </small>
+
+                            @can('users.create')
+                                <a href="{{ route('users.create') }}"
+                                   class="mb-2 rounded {{ request()->is('admin/users/create') ? 'active' : '' }}">
+                                    ➕ کاربر ادمین جدید
+                                </a>
+                            @endcan
+
+                            @can('users.view')
+                                <a href="{{ route('users.index') }}"
+                                   class="mb-2 rounded {{ request()->is('admin/users') ? 'active' : '' }}">
+                                    👤 کاربران سامانه
+                                </a>
+                            @endcan
+
+                            @can('roles.view')
+                                <a href="{{ route('roles.index') }}"
+                                   class="mb-2 rounded {{ request()->is('admin/roles*') ? 'active' : '' }}">
+                                    🛡️ نقش‌ها و سطح دسترسی
+                                </a>
+                            @endcan
+
+                            @can('roles.create')
+                                <a href="{{ route('roles.create') }}"
+                                   class="mb-2 rounded {{ request()->is('admin/roles/create') ? 'active' : '' }}">
+                                    ➕ نقش جدید
+                                </a>
+                            @endcan
+
+                            @can('permissions.view')
+                                <a href="{{ route('permissions.index') }}"
+                                   class="mb-2 rounded {{ request()->is('admin/permissions*') ? 'active' : '' }}">
+                                    🔑 مجوزها
+                                </a>
+                            @endcan
+
+                            @can('audit_logs.view')
+                                <a href="{{ route('audit_logs.index') }}"
+                                   class="mb-2 rounded {{ request()->is('admin/audit-logs*') ? 'active' : '' }}">
+                                    📋 گزارش حسابرسی
+                                </a>
+                            @endcan
+                        @endcanany
+
                         <div class="mt-4 pt-3" style="border-top:1px solid rgba(212,175,55,.2);"></div>
                         <a href="{{ route('admin.dashboard') }}" class="mb-2 rounded">
                             🏪 پنل اصلی فروشگاه

@@ -22,6 +22,8 @@ use App\Color;
 use App\Order;
 use App\BusinessSetting;
 use App\Http\Controllers\SearchController;
+use App\Models\Article;
+use App\Models\ArticleCategory;
 use ImageOptimizer;
 use Cookie;
 
@@ -179,9 +181,48 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /**
+     * صفحه اصلی سایت (عمومی — بدون نیاز به ورود).
+     *
+     * ── چرا اینجا کوئری زده می‌شود و نه در Blade؟ ───────────────────
+     * پیش از این، صفحه اصلی چند کوئری را مستقیماً داخل
+     * `resources/views/frontend/index.blade.php` اجرا می‌کرد
+     * (مثلاً `App\Banner::where(...)`). این کار سه مشکل دارد:
+     *   ۱) کوئری‌ها از چشم ابزارهای پروفایلینگ و تست پنهان می‌مانند
+     *   ۲) ویو به مدل‌ها وابسته می‌شود و در تست دشوار است
+     *   ۳) خطای دیتابیس به‌جای ۵۰۰ واضح، به خطای رندر ویو تبدیل می‌شود
+     *
+     * بخش مقالات از ابتدا درست نوشته می‌شود: کوئری در کنترلر، نمایش
+     * در ویو. اگر وب‌سرور از کش پشتیبانی کند، همین‌جا نقطه مناسبی برای
+     * افزودن `Cache::remember` است.
+     *
+     * @return \Illuminate\View\View
+     */
     public function index()
     {
-        return view('frontend.index');
+        // آخرین مقالات منتشرشده برای نمایش در صفحه اصلی.
+        // `Article::scopePublished` فقط مقالات منتشرشده‌ای را برمی‌گرداند
+        // که تاریخ انتشارشان رسیده باشد؛ پیش‌نویس و بایگانی هرگز در
+        // صفحه عمومی دیده نمی‌شوند.
+        $latestArticles = Article::query()
+            ->with('category')
+            ->published()
+            ->orderByDesc('published_at')
+            ->orderByDesc('id')
+            ->limit(3)
+            ->get();
+
+        // دسته‌بندی‌هایی که حداقل یک مقاله منتشرشده دارند — برای نمایش
+        // لینک‌های موضوعی زیر بخش مقالات.
+        $articleCategories = ArticleCategory::query()
+            ->active()
+            ->withCount(['publishedArticles'])
+            ->having('published_articles_count', '>', 0)
+            ->ordered()
+            ->limit(6)
+            ->get();
+
+        return view('frontend.index', compact('latestArticles', 'articleCategories'));
     }
 
     public function flash_deal_details($slug)

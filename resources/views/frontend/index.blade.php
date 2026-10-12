@@ -766,6 +766,90 @@
 </section>
 
 <!-- ============================================ -->
+<!-- بخش مقالات و راهنما (برای همه کاربران سایت) -->
+<!-- ============================================ -->
+{{--
+    مقالات عمومی: تنها مقالات «منتشرشده» نمایش داده می‌شوند.
+    کوئری در HomeController@index اجرا شده و اینجا فقط نمایش داده می‌شود.
+    اگر مقاله‌ای منتشر نشده باشد، کل بخش نمایش داده نمی‌شود تا صفحه
+    اصلی با یک بخش خالی زشت نشود.
+--}}
+@if(isset($latestArticles) && count($latestArticles) > 0)
+<section class="d-articles">
+    <div class="container">
+        <div class="section-heading">
+            <span class="kicker">MAGAZINE &amp; GUIDE</span>
+            <h2>مجله <span class="gold">دریکانا</span> — راهنمای طلا و جواهر</h2>
+            <p>شناخت سنگ‌های قیمتی، نکات نگهداری اشیاء گران‌بها و هر آنچه پیش از خرید باید بدانید.</p>
+            <span class="divider-gold"></span>
+        </div>
+
+        <div class="d-art-grid">
+            @foreach($latestArticles as $article)
+                <article class="d-art-card">
+                    <a href="{{ route('articles.show', $article->slug) }}" class="d-art-thumb">
+                        @if($article->featured_image_url)
+                            <img src="{{ $article->featured_image_url }}"
+                                 alt="{{ $article->featured_image_alt ?: $article->title }}"
+                                 loading="lazy">
+                        @else
+                            <img src="{{ asset('frontend/images/placeholder-rect.jpg') }}"
+                                 alt="{{ $article->title }}"
+                                 loading="lazy">
+                        @endif
+
+                        @if($article->category)
+                            <span class="d-art-badge">{{ $article->category->name }}</span>
+                        @endif
+                    </a>
+
+                    <div class="d-art-body">
+                        <h3 class="d-art-title">
+                            <a href="{{ route('articles.show', $article->slug) }}">{{ $article->title }}</a>
+                        </h3>
+
+                        @if($article->excerpt)
+                            <p class="d-art-excerpt">{{ \Illuminate\Support\Str::limit($article->excerpt, 110) }}</p>
+                        @endif
+
+                        <div class="d-art-meta">
+                            <span>
+                                📅
+                                {{ ($article->published_at ?: $article->created_at)->format('Y/m/d') }}
+                            </span>
+                            @if($article->views_count)
+                                <span>👁 {{ number_format($article->views_count) }}</span>
+                            @endif
+                        </div>
+                    </div>
+                </article>
+            @endforeach
+        </div>
+
+        @if(isset($articleCategories) && count($articleCategories) > 0)
+            <div class="d-art-topics">
+                @foreach($articleCategories as $category)
+                    <a href="{{ route('articles.category', $category->slug) }}" class="d-art-topic">
+                        {{ $category->name }}
+                        <span>{{ $category->published_articles_count }}</span>
+                    </a>
+                @endforeach
+            </div>
+        @endif
+
+        <div class="d-art-actions">
+            <a href="{{ route('articles.index') }}" class="btn-lux btn-lux-primary">
+                📖 مشاهده همه مقالات
+            </a>
+            <a href="{{ route('articles.search') }}" class="btn-lux btn-lux-outline">
+                🔍 جست‌وجو در مقالات
+            </a>
+        </div>
+    </div>
+</section>
+@endif
+
+<!-- ============================================ -->
 <!-- بخش شناسنامه و امنیت -->
 <!-- ============================================ -->
 <section class="d-trust">

@@ -560,6 +560,36 @@
                                 <li class="{{ areActiveRoutes(['roles.index', 'roles.create', 'roles.edit'])}}">
                                     <a class="nav-link" href="{{route('roles.index')}}">{{__('Staff permissions')}}</a>
                                 </li>
+
+                                {{-- ========================================== --}}
+                                {{-- مدیریت کاربران و سطح دسترسی (RBAC) --}}
+                                {{--
+                                    این بخش در کنار «کارکنان» قرار می‌گیرد چون
+                                    هر دو یک کار را انجام می‌دهند: تعیین اینکه
+                                    چه کسی به چه بخشی دسترسی دارد.
+
+                                    نمایش با @can کنترل می‌شود، اما اعمال واقعی
+                                    مجوز روی خودِ مسیرها با میدل‌ور `permission:`
+                                    انجام می‌شود؛ درخواست مستقیم به آدرس هم رد
+                                    می‌شود حتی اگر لینک پنهان باشد.
+                                --}}
+                                @can('users.view')
+                                    <li class="{{ areActiveRoutes(['users.index', 'users.show', 'users.roles.edit'])}}">
+                                        <a class="nav-link" href="{{ route('users.index') }}">{{__('کاربران سامانه')}}</a>
+                                    </li>
+                                @endcan
+
+                                @can('users.create')
+                                    <li class="{{ areActiveRoutes(['users.create'])}}">
+                                        <a class="nav-link" href="{{ route('users.create') }}">{{__('کاربر ادمین جدید')}}</a>
+                                    </li>
+                                @endcan
+
+                                @can('audit_logs.view')
+                                    <li class="{{ areActiveRoutes(['audit_logs.index'])}}">
+                                        <a class="nav-link" href="{{ route('audit_logs.index') }}">{{__('گزارش حسابرسی')}}</a>
+                                    </li>
+                                @endcan
                             </ul>
                         </li>
                         @endif

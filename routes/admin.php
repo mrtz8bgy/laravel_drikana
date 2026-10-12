@@ -228,8 +228,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     // ---------------------------------------------------------
     // کاربران و انتساب نقش
+    //
+    // ⚠ ترتیب مهم است: روت‌های ثابت (`/users/create`) باید پیش از روت
+    // پارامتری (`/users/{id}`) ثبت شوند. لاراول مسیرها را به «ترتیب
+    // ثبت» تطبیق می‌دهد؛ اگر `/users/{id}` جلوتر باشد، درخواست
+    // `/users/create` با `id = "create"` تفسیر می‌شود و ۴۰۴ می‌دهد.
     // ---------------------------------------------------------
     Route::get('/users',             'UserRoleController@index')->name('users.index')->middleware('permission:users.view');
+    Route::get('/users/create',      'UserRoleController@create')->name('users.create')->middleware('permission:users.create');
+    Route::post('/users',            'UserRoleController@store')->name('users.store')->middleware('permission:users.create');
     Route::get('/users/{id}',        'UserRoleController@show')->name('users.show')->middleware('permission:users.view');
     Route::get('/users/{id}/roles',  'UserRoleController@editRoles')->name('users.roles.edit')->middleware('permission:roles.assign');
     Route::post('/users/{id}/roles', 'UserRoleController@updateRoles')->name('users.roles.update')->middleware('permission:roles.assign');

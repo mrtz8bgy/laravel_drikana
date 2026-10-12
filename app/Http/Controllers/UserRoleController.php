@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\AuditLog;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Services\AuditLogger;
 use App\Services\Rbac\PermissionRegistry;
 use App\Services\Rbac\RbacService;
+use App\Services\Security\PasswordPolicy;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * کنترلر مدیریت کاربران و انتساب نقش (User & Role Assignment).
@@ -31,18 +35,25 @@ class UserRoleController extends Controller
      */
     protected $rbac;
 
-    public function __construct(RbacService $rbac)
+    /**
+     * @var \App\Services\AuditLogger
+     */
+    protected $audit;
+
+    public function __construct(RbacService $rbac, AuditLogger $audit)
     {
         $this->middleware('auth');
 
         $this->middleware('permission:users.view')->only(['index', 'show']);
+        $this->middleware('permission:users.create')->only(['create', 'store']);
         $this->middleware('permission:roles.assign')->only(['editRoles', 'updateRoles']);
         $this->middleware('permission:permissions.view')->only(['permissions']);
         $this->middleware('permission:permissions.create')->only(['storePermission']);
         $this->middleware('permission:permissions.delete')->only(['destroyPermission']);
         $this->middleware('permission:audit_logs.view')->only(['auditLogs']);
 
-        $this->rbac = $rbac;
+        $this->rbac  = $rbac;
+        $this->audit = $audit;
     }
 
     // =========================================================
@@ -94,6 +105,191 @@ class UserRoleController extends Controller
     }
 
     /**
+     * فرم ساخت کاربر ادمین جدید.
+     *
+     * ── دو نوع حساب ─────────────────────────────────────────────────
+     *   ۱) «کاربر با نقش» (staff) — پیش‌فرض و مسیر درست RBAC.
+     *      دسترسی این کاربر دقیقاً از نقش‌هایی می‌آید که به او می‌دهید.
+     *   ۲) «مدیر کل سیستم» (admin) — حساب با دسترسی کامل.
+     *      این گزینه تنها برای مدیر کل سیستم نمایش داده می‌شود، چون
+     *      `user_type = 'admin'` در `User::isSuperAdmin()` به‌معنای
+     *      «همه مجوزها» است — یعنی ساخت چنین کاربری معادل ساخت یک
+     *      مدیر کل است.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        $actor = Auth::user();
+
+        $roles = $this->assignableRoles($actor);
+
+        // تنها مدیر کل سیستم می‌تواند حساب «مدیر کل» بسازد
+        $canCreateSuperAdmin = $actor->isSuperAdmin();
+
+        return view('admin.users.create', compact('roles', 'canCreateSuperAdmin'));
+    }
+
+    /**
+     * ذخیره کاربر ادمین جدید.
+     *
+     * ── محافظ‌های امنیتی ────────────────────────────────────────────
+     *   ۱) ساخت حساب `admin` تنها توسط مدیر کل سیستم
+     *   ۲) انتساب نقش با `RbacService::syncUserRoles` انجام می‌شود که
+     *      خودش بررسی می‌کند نقش اعطایی از سطح عامل بالاتر نباشد
+     *   ۳) رمز عبور با `PasswordPolicy` سنجیده می‌شود؛ اگر تولید خودکار
+     *      انتخاب شده باشد، تنها یک بار به مدیر نمایش داده می‌شود
+     *   ۴) همه‌چیز در یک تراکنش: اگر انتساب نقش شکست بخورد، کاربر
+     *      نیمه‌ساخته باقی نمی‌ماند
+     *   ۵) رخداد در `audit_logs` ثبت می‌شود
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request)
+    {
+        $actor = Auth::user();
+
+        $validated = $request->validate([
+            'name'              => 'required|string|min:3|max:191',
+            'email'             => 'nullable|required_without:phone|email|max:191|unique:users,email',
+            'phone'             => 'nullable|required_without:email|string|max:20|unique:users,phone',
+            'account_type'      => 'required|in:staff,admin',
+            'password_mode'     => 'required|in:auto,manual',
+            'password'          => 'nullable|required_if:password_mode,manual|string|max:191|confirmed',
+            'roles'             => 'nullable|array',
+            'roles.*'           => 'string|max:100',
+        ], [
+            'name.required'            => 'نام کاربر الزامی است.',
+            'name.min'                 => 'نام کاربر باید حداقل ۳ کاراکتر باشد.',
+            'email.required_without'   => 'ایمیل یا شماره موبایل الزامی است.',
+            'email.unique'             => 'این ایمیل قبلاً ثبت شده است.',
+            'phone.required_without'   => 'ایمیل یا شماره موبایل الزامی است.',
+            'phone.unique'             => 'این شماره موبایل قبلاً ثبت شده است.',
+            'account_type.required'    => 'نوع حساب را انتخاب کنید.',
+            'account_type.in'          => 'نوع حساب انتخابی معتبر نیست.',
+            'password.required_if'     => 'رمز عبور را وارد کنید یا حالت «تولید خودکار» را انتخاب کنید.',
+            'password.confirmed'       => 'رمز عبور و تکرار آن یکسان نیستند.',
+        ]);
+
+        // ── محافظ ۱: ساخت مدیر کل سیستم تنها توسط مدیر کل ──────────
+        if ($validated['account_type'] === 'admin' && !$actor->isSuperAdmin()) {
+            // ۴۰۳ صریح: این مسیر برای کاربر غیرمجاز «وجود دارد» اما ممنوع است.
+            // برخلاف ناحیه مدیریت (که ۴۰۴ می‌دهیم)، اینجا کاربر درون پنل
+            // است و پنهان‌کردن وجود صفحه کمکی نمی‌کند.
+            abort(403, 'ساخت حساب «مدیر کل سیستم» تنها توسط مدیر کل سیستم امکان‌پذیر است.');
+        }
+
+        $roles = isset($validated['roles']) ? array_values(array_filter($validated['roles'])) : [];
+
+        // حساب مدیر کل باید نقش super_admin داشته باشد تا در گزارش‌های
+        // دسترسی هم به‌درستی دیده شود (user_type تنها میان‌بر است).
+        if ($validated['account_type'] === 'admin' && !in_array('super_admin', $roles, true)) {
+            $roles[] = 'super_admin';
+        }
+
+        // ── محافظ ۲: نقش‌ها باید قابل‌انتساب باشند ─────────────────
+        // `syncUserRoles` خودش این بررسی را انجام می‌دهد و در صورت
+        // تخلف `RuntimeException` می‌دهد که پایین‌تر مدیریت می‌شود.
+
+        // ── رمز عبور ────────────────────────────────────────────────
+        $generatedPassword = null;
+
+        if ($validated['password_mode'] === 'auto') {
+            $generatedPassword = PasswordPolicy::generate(16);
+            $plainPassword = $generatedPassword;
+        } else {
+            $plainPassword = (string) $validated['password'];
+
+            $policyError = PasswordPolicy::validate($plainPassword);
+
+            if ($policyError !== null) {
+                return back()->withInput()->with('error', $policyError);
+            }
+        }
+
+        try {
+            $user = DB::transaction(function () use ($validated, $roles, $plainPassword, $actor) {
+
+                $user = new User();
+                $user->name              = $validated['name'];
+                $user->email             = isset($validated['email']) ? $validated['email'] : null;
+                $user->phone             = isset($validated['phone']) ? $validated['phone'] : null;
+                $user->password          = Hash::make($plainPassword);
+                $user->user_type         = $validated['account_type'] === 'admin' ? 'admin' : 'staff';
+                $user->role              = $validated['account_type'] === 'admin' ? 'admin' : 'staff';
+                $user->email_verified_at = !empty($validated['email']) ? now() : null;
+                $user->phone_verified_at = !empty($validated['phone']) ? now() : null;
+
+                $user->save();
+
+                // انتساب نقش‌ها از طریق سرویس RBAC (با همه محافظ‌ها)
+                if (!empty($roles)) {
+                    $this->rbac->syncUserRoles($user, $roles, $actor);
+                }
+
+                return $user;
+            });
+        } catch (\RuntimeException $e) {
+            return back()->withInput()->with('error', $e->getMessage());
+        } catch (\Exception $e) {
+            report($e);
+
+            return back()->withInput()->with('error', 'خطای غیرمنتظره در ساخت کاربر.');
+        }
+
+        $this->audit->log(
+            AuditLog::EVENT_USER_CREATED,
+            'ساخت کاربر ادمین جدید: ' . $user->name . ' (' . ($user->email ?: $user->phone) . ')',
+            $user,
+            [],
+            [
+                'user_type' => $user->user_type,
+                'roles'     => $user->roleSlugs(),
+            ],
+            AuditLog::SEVERITY_CRITICAL
+        );
+
+        // ── نمایش یک‌باره رمز تولیدشده ──────────────────────────────
+        $redirect = redirect()
+            ->route('users.show', $user->getKey())
+            ->with('success', 'کاربر «' . $user->name . '» با موفقیت ساخته شد.');
+
+        if ($generatedPassword !== null) {
+            // رمز در فلش‌سشن نگه داشته می‌شود و پس از یک بار نمایش
+            // پاک می‌گردد. در Audit Log و در دیتابیس چیزی ثبت نمی‌شود.
+            $redirect->with('generated_password', $generatedPassword);
+        }
+
+        return $redirect;
+    }
+
+    /**
+     * نقش‌هایی که کاربر جاری مجاز به اعطای آن‌هاست.
+     *
+     * ── قاعده ──────────────────────────────────────────────────────
+     * نقش با سطح بالاتر از سطح خود کاربر نمایش داده نمی‌شود. مدیر کل
+     * سیستم سقف ندارد. این فیلتر «رابط کاربری» است؛ اعمال واقعی در
+     * `RbacService::assertCanAssignRoles` انجام می‌شود (Defense in
+     * Depth) تا حتی با دست‌کاری درخواست هم تخلف ممکن نباشد.
+     *
+     * @param  \App\User $actor
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    protected function assignableRoles($actor)
+    {
+        $actorLevel = $actor->isSuperAdmin()
+            ? 999
+            : (int) Role::query()->whereIn('slug', $actor->roleSlugs())->max('level');
+
+        return Role::query()
+            ->active()
+            ->where('level', '<=', $actorLevel)
+            ->ordered()
+            ->get();
+    }
+
+    /**
      * نمایش جزئیات یک کاربر و نقش‌هایش.
      *
      * @param  int $id
@@ -122,16 +318,12 @@ class UserRoleController extends Controller
     {
         $user = User::query()->with('roles')->findOrFail($id);
 
-        // سطح نقشی که عامل می‌تواند اعطا کند
+        // سطح نقشی که عامل می‌تواند اعطا کند (منطق مشترک با create())
         $actorLevel = Auth::user()->isSuperAdmin()
             ? 999
             : (int) Role::query()->whereIn('slug', Auth::user()->roleSlugs())->max('level');
 
-        $roles = Role::query()
-            ->active()
-            ->where('level', '<=', $actorLevel)
-            ->ordered()
-            ->get();
+        $roles = $this->assignableRoles(Auth::user());
 
         $userRoleSlugs = $user->roleSlugs();
 
