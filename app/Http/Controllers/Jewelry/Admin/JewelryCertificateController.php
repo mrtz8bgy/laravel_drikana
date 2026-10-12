@@ -3,15 +3,47 @@
 namespace App\Http\Controllers\Jewelry\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AuditLog;
 use App\Models\JewelryCertificate;
 use App\Models\JewelryTransfer;
 use App\Models\JewelryOwner;
+use App\Services\AuditLogger;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+/**
+ * کنترلر مدیریت شناسنامه‌ها در پنل مدیریت.
+ *
+ * ── یادداشت معماری (Stage 2) ────────────────────────────────────────
+ * این کلاس و کلاس `Jewelry\JewelryCertificateController` دو مسئولیت
+ * متفاوت دارند و عمداً جدا نگه داشته شده‌اند:
+ *
+ *   • `Jewelry\JewelryCertificateController` — CRUD عمومی + صفحات
+ *     عمومی استعلام و استعلام سریع (بدون ورود).
+ *   • همین کلاس — عملیات «مدیریتی»: تأیید، رد، حذف کنترل‌شده،
+ *     تاریخچه انتقالات و بررسی سریع در پنل.
+ *
+ * پیش از این تغییرات، تمام متدهای مدیریتی این کلاس (verify، reject،
+ * destroy، transferHistory، quickVerify) **هیچ روتی نداشتند** و در
+ * نتیجه ۲۴۲ خط کد مدیریتی کاملاً غیرقابل دسترس بود. اکنون روت‌های آن‌ها
+ * در `routes/web.php` ثبت شده و هر یک با مجوز جداگانه محافظت می‌شود.
+ */
 class JewelryCertificateController extends Controller
 {
+    /**
+     * @var \App\Services\AuditLogger
+     */
+    protected $audit;
+
+    /**
+     * @param \App\Services\AuditLogger $audit
+     */
+    public function __construct(AuditLogger $audit)
+    {
+        $this->audit = $audit;
+    }
+
     /**
      * نمایش لیست تمام شناسنامه‌ها برای ادمین
      */
@@ -91,30 +123,61 @@ class JewelryCertificateController extends Controller
         $request->validate([
             'verification_notes' => 'nullable|string|max:500',
         ]);
-        
+
         $certificate = JewelryCertificate::findOrFail($id);
-        
+
         // بررسی اینکه قبلاً رد نشده باشد
         if ($certificate->rejected_at) {
             return redirect()->back()
                 ->with('error', 'این شناسنامه قبلاً رد شده است و قابل تأیید نیست.');
         }
-        
-        $certificate->update([
-            'is_verified' => true,
-            'verified_at' => Carbon::now(),
-            'verified_by' => auth()->id(),
+
+        // ── نکته مهم (رفع باگ) ─────────────────────────────────────────
+        // نسخه قبلی این متد ستون‌های `verified_at`، `verified_by` و
+        // `verification_notes` را می‌نوشت؛ اما هیچ‌یک از این سه ستون در
+        // جدول `jewelry_certificates` وجود ندارد و این عملیات با خطای
+        // «Unknown column» شکست می‌خورد. برای جلوگیری از ساخت ستون‌های
+        // تکراری، از ستون‌های موجود `approved_by` و `approved_at`
+        // (که همان معنی «تأییدکننده و زمان تأیید» را دارند) استفاده
+        // می‌شود و تنها ستون واقعاً تازه `verification_notes` است.
+        $old = [
+            'is_verified'    => (bool) $certificate->is_verified,
+            'approved_by'    => $certificate->approved_by,
+            'approved_at'    => optional($certificate->approved_at)->toDateTimeString(),
+            'rejected_at'    => optional($certificate->rejected_at)->toDateTimeString(),
+        ];
+
+        $changes = [
+            'is_verified'        => true,
+            'approved_at'        => Carbon::now(),
+            'approved_by'        => auth()->id(),
             'verification_notes' => $request->get('verification_notes'),
-            'rejected_at' => null,
-            'rejection_reason' => null,
-        ]);
-        
-        // TODO: ارسال نوتیفیکیشن به کاربر
-        
+            'rejected_at'        => null,
+            'rejection_reason'   => null,
+        ];
+
+        // عملیات حساس → تراکنش + ثبت در گزارش حسابرسی امنیتی
+        DB::transaction(function () use ($certificate, $changes) {
+            $certificate->update($changes);
+        });
+
+        $this->audit->log(
+            AuditLog::EVENT_CERTIFICATE_UPDATED,
+            'تأیید شناسنامه شماره سری ' . $certificate->serial_number,
+            $certificate,
+            $old,
+            [
+                'is_verified' => true,
+                'approved_by' => auth()->id(),
+                'approved_at' => Carbon::now()->toDateTimeString(),
+            ],
+            AuditLog::SEVERITY_NOTICE
+        );
+
         return redirect()->route('admin.jewelry.certificates.show', $certificate)
             ->with('success', 'شناسنامه با موفقیت تأیید شد.');
     }
-    
+
     /**
      * رد شناسنامه توسط ادمین
      */
@@ -123,30 +186,53 @@ class JewelryCertificateController extends Controller
         $request->validate([
             'rejection_reason' => 'required|string|max:500',
         ]);
-        
+
         $certificate = JewelryCertificate::findOrFail($id);
-        
+
         // بررسی اینکه قبلاً تأیید نشده باشد
         if ($certificate->is_verified) {
             return redirect()->back()
                 ->with('error', 'این شناسنامه قبلاً تأیید شده است و قابل رد نیست.');
         }
-        
-        $certificate->update([
-            'is_verified' => false,
-            'verified_at' => null,
-            'verified_by' => null,
+
+        $old = [
+            'is_verified'      => (bool) $certificate->is_verified,
+            'rejection_reason' => $certificate->rejection_reason,
+            'rejected_at'      => optional($certificate->rejected_at)->toDateTimeString(),
+        ];
+
+        $changes = [
+            'is_verified'        => false,
+            'approved_at'        => null,
+            'approved_by'        => null,
             'verification_notes' => null,
-            'rejected_at' => Carbon::now(),
-            'rejection_reason' => $request->get('rejection_reason'),
-        ]);
-        
-        // TODO: ارسال نوتیفیکیشن به کاربر
-        
+            'rejected_at'        => Carbon::now(),
+            'rejection_reason'   => $request->get('rejection_reason'),
+        ];
+
+        DB::transaction(function () use ($certificate, $changes) {
+            $certificate->update($changes);
+        });
+
+        // دلیل رد الزامی است و در گزارش حسابرسی ثبت می‌شود
+        $this->audit->log(
+            AuditLog::EVENT_CERTIFICATE_UPDATED,
+            'رد شناسنامه شماره سری ' . $certificate->serial_number
+                . ' — دلیل: ' . $request->get('rejection_reason'),
+            $certificate,
+            $old,
+            [
+                'is_verified'      => false,
+                'rejection_reason' => $request->get('rejection_reason'),
+                'rejected_at'      => Carbon::now()->toDateTimeString(),
+            ],
+            AuditLog::SEVERITY_WARNING
+        );
+
         return redirect()->route('admin.jewelry.certificates.show', $certificate)
             ->with('success', 'شناسنامه با موفقیت رد شد.');
     }
-    
+
     /**
      * حذف شناسنامه توسط ادمین
      */
@@ -204,40 +290,61 @@ class JewelryCertificateController extends Controller
     {
         $request->validate([
             'certificate_id' => 'required|exists:jewelry_certificates,id',
-            'status' => 'required|in:verify,reject',
-            'notes' => 'nullable|string|max:500',
+            'status'         => 'required|in:verify,reject',
+            'notes'          => 'nullable|string|max:500',
         ]);
-        
-        $certificate = JewelryCertificate::findOrFail($request->get('certificate_id'));
-        
-        if ($request->get('status') == 'verify') {
-            $certificate->update([
-                'is_verified' => true,
-                'verified_at' => Carbon::now(),
-                'verified_by' => auth()->id(),
-                'verification_notes' => $request->get('notes'),
-                'rejected_at' => null,
-                'rejection_reason' => null,
-            ]);
-            
-            $message = 'شناسنامه با موفقیت تأیید شد.';
-        } else {
-            $certificate->update([
-                'is_verified' => false,
-                'verified_at' => null,
-                'verified_by' => null,
-                'verification_notes' => null,
-                'rejected_at' => Carbon::now(),
-                'rejection_reason' => $request->get('notes'),
-            ]);
-            
-            $message = 'شناسنامه با موفقیت رد شد.';
+
+        // رد کردن بدون دلیل مجاز نیست (هم‌راستا با متد reject)
+        if ($request->get('status') === 'reject' && !$request->filled('notes')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'برای رد شناسنامه، ذکر دلیل الزامی است.',
+            ], 422);
         }
-        
+
+        $certificate = JewelryCertificate::findOrFail($request->get('certificate_id'));
+
+        if ($request->get('status') == 'verify') {
+            $changes = [
+                'is_verified'        => true,
+                'approved_at'        => Carbon::now(),
+                'approved_by'        => auth()->id(),
+                'verification_notes' => $request->get('notes'),
+                'rejected_at'        => null,
+                'rejection_reason'   => null,
+            ];
+
+            $event     = AuditLog::EVENT_CERTIFICATE_UPDATED;
+            $message   = 'شناسنامه با موفقیت تأیید شد.';
+            $severity  = AuditLog::SEVERITY_NOTICE;
+            $auditText = 'تأیید سریع شناسنامه شماره سری ' . $certificate->serial_number;
+        } else {
+            $changes = [
+                'is_verified'        => false,
+                'approved_at'        => null,
+                'approved_by'        => null,
+                'verification_notes' => null,
+                'rejected_at'        => Carbon::now(),
+                'rejection_reason'   => $request->get('notes'),
+            ];
+
+            $event     = AuditLog::EVENT_CERTIFICATE_UPDATED;
+            $message   = 'شناسنامه با موفقیت رد شد.';
+            $severity  = AuditLog::SEVERITY_WARNING;
+            $auditText = 'رد سریع شناسنامه شماره سری ' . $certificate->serial_number
+                . ' — دلیل: ' . $request->get('notes');
+        }
+
+        DB::transaction(function () use ($certificate, $changes) {
+            $certificate->update($changes);
+        });
+
+        $this->audit->log($event, $auditText, $certificate, [], $changes, $severity);
+
         return response()->json([
-            'success' => true,
-            'message' => $message,
-            'certificate' => $certificate->load('owner.user')
+            'success'     => true,
+            'message'     => $message,
+            'certificate' => $certificate->fresh()->load('owner.user'),
         ]);
     }
 }

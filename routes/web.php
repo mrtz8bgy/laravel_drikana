@@ -440,6 +440,43 @@ Route::prefix('admin/jewelry')
             ->name('certificates.print')
             ->middleware('permission:jewelry.certificates.print');
 
+        // تاریخچه انتقالات یک شناسنامه
+        // ── رفع باگ ────────────────────────────────────────────────────
+        // متد `transferHistory` در کنترلر وجود داشت و ویو آن هم ساخته شده
+        // بود، اما هیچ روتی به آن اشاره نمی‌کرد؛ یعنی صفحه تاریخچه
+        // انتقالات یک شناسنامه کاملاً غیرقابل دسترس بود.
+        // ── عملیات مدیریتی شناسنامه ────────────────────────────────
+        // ── رفع باگ (Stage 2) ─────────────────────────────────────────
+        // کلاس `Jewelry\Admin\JewelryCertificateController` پنج متد
+        // مدیریتی داشت (verify، reject، destroy، transferHistory و
+        // quickVerify) اما «هیچ روتی» به آن اشاره نمی‌کرد؛ یعنی ۲۴۲ خط
+        // کد تأیید/رد شناسنامه کاملاً غیرقابل دسترس بود.
+        //
+        // نکته: متدهای index/show/destroy آن کلاس عمداً روت نمی‌گیرند،
+        // زیرا کنترلر `Jewelry\JewelryCertificateController` همین
+        // قابلیت‌ها را با مجوزهای مشخص پوشش می‌دهد و ثبت روت تکراری
+        // باعث سایه‌افتادن و ابهام می‌شود.
+
+        // تاریخچه انتقالات یک شناسنامه
+        Route::get('certificates/{certificate}/transfer-history', 'Jewelry\Admin\JewelryCertificateController@transferHistory')
+            ->name('certificates.transfer_history')
+            ->middleware('permission:jewelry.certificates.view');
+
+        // تأیید شناسنامه — عملیات حساس، مجوز جداگانه
+        Route::post('certificates/{certificate}/verify', 'Jewelry\Admin\JewelryCertificateController@verify')
+            ->name('certificates.verify')
+            ->middleware('permission:jewelry.certificates.verify');
+
+        // رد شناسنامه — دلیل رد الزامی است و در audit_logs ثبت می‌شود
+        Route::post('certificates/{certificate}/reject', 'Jewelry\Admin\JewelryCertificateController@reject')
+            ->name('certificates.reject')
+            ->middleware('permission:jewelry.certificates.verify');
+
+        // بررسی سریع شناسنامه (AJAX) از پنل مدیریت
+        Route::post('certificates/quick-verify', 'Jewelry\Admin\JewelryCertificateController@quickVerify')
+            ->name('certificates.quick_verify')
+            ->middleware('permission:jewelry.certificates.verify');
+
         // -------------------------------------------
         // سفارشات تعمیر (Repair Orders)
         // — تکنسین تعمیرات به این بخش دسترسی دارد

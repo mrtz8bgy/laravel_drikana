@@ -315,6 +315,64 @@ class ViewSmokeTest extends TestCase
         }
     }
 
+    /** @test */
+    public function admin_repair_order_pages_render()
+    {
+        $admin = $this->makeUser(['super_admin']);
+
+        $order = new \App\Models\RepairOrder();
+        $order->order_number  = 'RO-' . strtoupper(uniqid());
+        $order->user_id       = $admin->id;
+        $order->repair_type   = 'تعمیر زنجیر';
+        $order->description   = 'توضیح سفارش آزمایشی';
+        $order->status        = 'pending';
+        $order->priority      = 'عادی';
+        $order->save();
+
+        // ثبت یک رکورد تاریخچه وضعیت — این جدول پیش‌تر وجود نداشت و
+        // نوشتن در آن بی‌صدا شکست می‌خورد (رفع باگ Stage 2)
+        \Illuminate\Support\Facades\DB::table('repair_order_status_logs')->insert([
+            'repair_order_id' => $order->id,
+            'old_status'      => null,
+            'new_status'      => 'pending',
+            'changed_by'      => $admin->id,
+            'notes'           => 'ثبت اولیه',
+            'created_at'      => now(),
+            'updated_at'      => now(),
+        ]);
+
+        $this->assertPageRenders($admin, '/admin/jewelry/repair-orders/' . $order->id, 'جزئیات سفارش تعمیر');
+        $this->assertPageRenders($admin, '/admin/jewelry/repair-orders/' . $order->id . '/assign', 'اختصاص سفارش به تکنسین');
+        $this->assertPageRenders($admin, '/admin/jewelry/repair-orders/' . $order->id . '/status-history', 'تاریخچه وضعیت سفارش');
+    }
+
+    /** @test */
+    public function admin_certificate_transfer_history_renders()
+    {
+        $admin = $this->makeUser(['super_admin']);
+
+        $owner = new JewelryOwner();
+        $owner->user_id   = $admin->id;
+        $owner->full_name = 'مالک آزمایشی شناسنامه';
+        $owner->phone     = '09120000009';
+        $owner->save();
+
+        $certificate = new JewelryCertificate();
+        $certificate->owner_id      = $owner->id;
+        $certificate->product_name  = 'دستبند آزمایشی';
+        $certificate->metal_type    = 'طلا';
+        $certificate->purity        = 750;
+        $certificate->weight        = 8;
+        $certificate->serial_number = 'SMOKE-TH-' . strtoupper(uniqid());
+        $certificate->save();
+
+        $this->assertPageRenders(
+            $admin,
+            '/admin/jewelry/certificates/' . $certificate->id . '/transfer-history',
+            'تاریخچه انتقالات شناسنامه'
+        );
+    }
+
     // =========================================================
     // صفحات عمومی بدون ورود
     // =========================================================

@@ -358,6 +358,35 @@ CREATE TABLE IF NOT EXISTS `article_images` (
 
 
 -- --------------------------------------------------------------------------
+-- ---------------------------------------------------------------------------
+-- ۱-۱۰) جدول `repair_order_status_logs` (تاریخچه تغییر وضعیت تعمیرات)
+--      کنترلر `Jewelry\Admin\RepairOrderController` هر تغییر وضعیت را در این
+--      جدول ثبت می‌کند، اما این جدول هرگز ساخته نشده بود؛ نتیجه آن بود که
+--      تاریخچه تعمیرات هیچ‌وقت ذخیره نمی‌شد و صفحه تاریخچه همیشه خالی بود
+--      بدون اینکه خطایی دیده شود (خطا در try/catch بی‌صدا بلعیده می‌شد).
+--
+--      نکته مهم: نوع ستون `repair_order_id` باید دقیقاً با `repair_orders.id`
+--      یکسان باشد (int unsigned). اگر bigint انتخاب شود، ساخت کلید خارجی با
+--      خطای errno 150 «Foreign key constraint is incorrectly formed» شکست
+--      می‌خورد.
+-- ---------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `repair_order_status_logs` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `repair_order_id` int(10) unsigned NOT NULL,
+  `old_status` varchar(100) DEFAULT NULL,
+  `new_status` varchar(100) NOT NULL,
+  `changed_by` int(10) unsigned DEFAULT NULL,
+  `notes` text,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `repair_order_status_logs_order_index` (`repair_order_id`),
+  KEY `repair_order_status_logs_user_index` (`changed_by`),
+  KEY `repair_order_status_logs_created_index` (`created_at`),
+  CONSTRAINT `repair_order_status_logs_order_foreign` FOREIGN KEY (`repair_order_id`) REFERENCES `repair_orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `repair_order_status_logs_user_foreign` FOREIGN KEY (`changed_by`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ۱-9) جدول `login_attempts` (تلاش‌های ورود)
 -- ثبت تلاش‌های ورود برای مقابله با حمله Brute Force.
 -- --------------------------------------------------------------------------
@@ -492,6 +521,9 @@ CALL drikana_add_column('jewelry_certificates', 'approved_by',      'INT UNSIGNE
 CALL drikana_add_column('jewelry_certificates', 'approved_at',      'TIMESTAMP NULL');
 CALL drikana_add_column('jewelry_certificates', 'rejected_at',      'TIMESTAMP NULL');
 CALL drikana_add_column('jewelry_certificates', 'rejection_reason', 'VARCHAR(500) NULL');
+-- یادداشت تأیید/رد شناسنامه (ستون‌های verified_at/verified_by عامدانه ساخته
+-- نمی‌شوند؛ approved_at/approved_by همین نقش را دارند)
+CALL drikana_add_column('jewelry_certificates', 'verification_notes', 'VARCHAR(500) NULL');
 
 CALL drikana_add_index('jewelry_certificates', 'jewelry_certificates_created_by_index', '`created_by`');
 CALL drikana_add_index('jewelry_certificates', 'jewelry_certificates_is_verified_index', '`is_verified`');
@@ -913,7 +945,7 @@ SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
 -- ============================================================================
 --  پس از اجرای این کوئری‌ها باید مقادیر زیر را ببینید:
 --
---      جدول‌های جدید      : ۱۳
+--      جدول‌های جدید      : ۱۴
 --      نقش‌های سیستمی     : ۶
 --      مجوزها             : ۸۶
 --      انتساب نقش-مجوز    : ۱۴۳
@@ -934,13 +966,13 @@ LEFT JOIN `permission_role` pr ON pr.`role_id` = r.`id`
 GROUP BY r.`id`, r.`slug`, r.`name`, r.`level`
 ORDER BY r.`level` DESC;
 
--- وجود ستون‌های تازه (باید ۲۲ سطر باشد)
+-- وجود ستون‌های تازه (باید ۲۳ سطر باشد)
 SELECT COUNT(*) AS `ستون‌های افزوده‌شده`
 FROM information_schema.columns
 WHERE table_schema = DATABASE()
   AND (
        (table_name = 'roles'                 AND column_name IN ('slug','description','level','is_system','is_active'))
-    OR (table_name = 'jewelry_certificates'  AND column_name IN ('is_active','created_by','approved_by','approved_at','rejected_at','rejection_reason'))
+    OR (table_name = 'jewelry_certificates'  AND column_name IN ('is_active','created_by','approved_by','approved_at','rejected_at','rejection_reason','verification_notes'))
     OR (table_name = 'jewelry_transfers'     AND column_name IN ('price','contract_file','requested_by','approved_by','status','approval_note','approved_at'))
     OR (table_name = 'missing_reports'       AND column_name IN ('police_report_path','police_report_name'))
     OR (table_name = 'order_details'         AND column_name IN ('shipping_type','pickup_point_id'))
