@@ -184,5 +184,13 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+
+        // ── محدودسازی نرخ تلاش ورود (Brute Force) ──────────────────
+        // لاراول در Trait `AuthenticatesUsers` به‌طور پیش‌فرض پس از ۵
+        // تلاش ناموفق در دقیقه قفل می‌کند، اما آن شمارش بر پایه
+        // «ایمیل + آی‌پی» است. میدل‌ور `throttle` لایه دومی روی «آی‌پی»
+        // اضافه می‌کند تا مهاجمی که با ایمیل‌های پیاپی (Password
+        // Spraying) حمله می‌کند هم متوقف شود.
+        $this->middleware('throttle:20,1')->only('login');
     }
 }

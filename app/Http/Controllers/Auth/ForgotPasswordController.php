@@ -59,7 +59,10 @@ class ForgotPasswordController extends Controller
         else{
             $user = User::where('phone', $request->email)->first();
             if ($user != null) {
-                $user->verification_code = rand(100000,999999);
+                // [امنیت] کد بازیابی رمز عبور با random_int() ساخته
+                // می‌شود؛ rand() قابل پیش‌بینی است و برای کد امنیتی
+                // مناسب نیست.
+                $user->verification_code = random_int(100000, 999999);
                 $user->save();
                 sendSMS($user->phone, env('APP_NAME'), $user->verification_code.' is your verification code');
                 return view('admin.otp_systems.frontend.auth.passwords.reset_with_phone');

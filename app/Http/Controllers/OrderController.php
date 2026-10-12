@@ -196,7 +196,9 @@ class OrderController extends Controller
             $order->user_id = Auth::user()->id;
         }
         else{
-            $order->guest_id = mt_rand(100000, 999999);
+            // [امنیت] شناسه مهمان با random_int() ساخته می‌شود تا
+            // قابل حدس‌زدن نباشد (mt_rand قابل پیش‌بینی است).
+            $order->guest_id = random_int(100000, 999999);
         }
 
         $order->shipping_address = json_encode($request->session()->get('shipping_info'));
@@ -204,7 +206,9 @@ class OrderController extends Controller
         $order->payment_type = $request->payment_option;
         $order->delivery_viewed = '0';
         $order->payment_status_viewed = '0';
-        $order->code = date('Ymd-His').rand(10,99);
+        // کد سفارش — بخش تصادفی با random_int() ساخته می‌شود تا
+        // حدس‌زدن کد سفارش دیگران (شمارش ترتیبی) ممکن نباشد.
+        $order->code = date('Ymd-His') . random_int(10, 99);
         $order->date = strtotime('now');
 
         if($order->save()){
@@ -328,9 +332,9 @@ class OrderController extends Controller
     		file_put_contents($invoice_dir.'/'.'Order#'.$order->code.'.pdf', $output);
 
             $array['view'] = 'emails.invoice';
-            $array['subject'] = 'Ø§Ø·Ù„Ø§Ø¹Ø§Øª Ø³ÙØ§Ø±Ø´ - '.$order->code;
+            $array['subject'] = 'اطلاعات سفارش - '.$order->code;
             $array['from'] = env('MAIL_USERNAME');
-            $array['content'] = 'Ø®Ø±ÛŒØ¯Ø§Ø± Ø¹Ø²ÛŒØ²ØŒ Ø§Ù…ÛŒØ¯ÙˆØ§Ø±ÛŒÙ… Ø®Ø±ÛŒØ¯ Ù„Ø°Øªâ€Œ Ø¨Ø®Ø´ÛŒ Ø±Ø§ ØªØ¬Ø±Ø¨Ù‡ Ú©Ø±Ø¯Ù‡ Ø¨Ø§Ø´ÛŒØ¯.';
+            $array['content'] = 'خریدار عزیز، امیدواریم خرید لذت‌ بخشی را تجربه کرده باشید.';
             $array['file'] = $invoice_dir.'/Order#'.$order->code.'.pdf';
             $array['file_name'] = 'Order#'.$order->code.'.pdf';
 

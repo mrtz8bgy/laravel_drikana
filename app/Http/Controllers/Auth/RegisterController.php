@@ -143,7 +143,9 @@ class RegisterController extends Controller
         }
         
         // در غیر این صورت کد تصادفی تولید کن
-        return rand(100000, 999999);
+        // [امنیت] به‌جای rand() از random_int() استفاده می‌شود تا کد
+        // تأیید قابل پیش‌بینی نباشد.
+        return random_int(100000, 999999);
     }
     
     /**

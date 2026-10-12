@@ -24,7 +24,7 @@ class PolicyController extends Controller
         $policy->content = $request->content;
         $policy->save();
 
-        flash($request->name.' Ø¨Ø§ Ù…ÙˆÙÙ‚ÛŒØª Ø¨Ù‡ Ø±ÙˆØ² Ø±Ø³Ø§Ù†ÛŒ Ø´Ø¯');
+        flash($request->name.' با موفقیت به روز رسانی شد');
         return back();
     }
 }

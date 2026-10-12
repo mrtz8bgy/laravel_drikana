@@ -71,12 +71,19 @@ Route::middleware(['auth'])->group(function () {
     // `route('verification.verify')` می‌تواند به مسیر اشتباه برود.
     // اکنون نام‌ها تفکیک شده‌اند: ایمیل از نام‌های پیش‌فرض لاراول و
     // تلفن از پیشوند phone استفاده می‌کند.
+    // [امنیت — محدودسازی نرخ] این دو روت، نسخه «احراز‌شده» همان
+    // مسیرهای OTP هستند: POST /verification/verify کد را بررسی می‌کند و
+    // POST /verification/resend یک پیامک تازه می‌فرستد. بدون محدودسازی،
+    // کد کوتاه با آزمون و خطا حدس‌زدنی است و اعتبار پنل پیامک
+    // می‌سوزد. کلید محدودسازی «آی‌پی + نام مسیر» است.
     Route::post('/verification/verify', 'OTPVerificationController@verify_phone')
-         ->name('verification.phone.verify');
-    
+         ->name('verification.phone.verify')
+         ->middleware('throttle:10,1');
+
     // ارسال مجدد کد
     Route::post('/verification/resend', 'OTPVerificationController@resend_verification_code')
-         ->name('verification.phone.code_resend');
+         ->name('verification.phone.code_resend')
+         ->middleware('throttle:3,1');
 });
 
 // ============================================

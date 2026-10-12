@@ -46,6 +46,7 @@ class MakeSuperAdmin extends Command
                             {--email= : ایمیل مدیر کل}
                             {--phone= : شماره موبایل مدیر کل (در صورت نداشتن ایمیل)}
                             {--name= : نام نمایشی}
+                            {--password-file= : فایل حاوی رمز عبور (برای اجرای غیرتعاملی)}
                             {--force : اجرا بدون پرسش تأیید}';
 
     /**
@@ -63,6 +64,72 @@ class MakeSuperAdmin extends Command
         'qwerty', '111111', '123123', '1234567890', 'letmein', 'welcome',
         'password123', 'drikana', 'administrator', 'root', 'test',
     ];
+
+    /**
+     * خواندن رمز عبور از منبع غیرتعاملی (فایل یا متغیر محیطی).
+     *
+     * ── چرا اولویت به فایل است؟ ─────────────────────────────────────
+     * متغیر محیطی در فهرست فرایندهای سیستم (`ps e`, `top`،
+     * `/proc/<pid>/environ`) برای همان کاربر و معمولاً root قابل دیدن
+     * است و می‌تواند در log استقرار هم بیفتد. فایل با مجوز ۶۰۰ این
+     * مشکل را ندارد.
+     *
+     * @return array آرایه‌ای با کلیدهای «ok» (بولی) و «message» (رشته)
+     *               و در صورت موفقیت «password»
+     */
+    protected function resolvePasswordFromSource()
+    {
+        // ---------------------------------------------------
+        // ۱) فایل رمز عبور — امن‌ترین راه غیرتعاملی
+        // ---------------------------------------------------
+        $file = $this->option('password-file') ?: env('DRIKANA_ADMIN_PASSWORD_FILE');
+
+        if (!empty($file)) {
+            $path = (string) $file;
+
+            if (!is_file($path)) {
+                return ['ok' => false, 'message' => 'فایل رمز عبور یافت نشد: ' . $path];
+            }
+
+            if (!is_readable($path)) {
+                return ['ok' => false, 'message' => 'فایل رمز عبور قابل خواندن نیست: ' . $path];
+            }
+
+            // هشدار امنیتی: فایل رمز عبور نباید برای دیگران خواندنی باشد
+            $permissions = @fileperms($path);
+            if ($permissions !== false && ($permissions & 0077) !== 0) {
+                $this->warn('⚠ فایل رمز عبور برای گروه/دیگران خواندنی است. مجوز 600 توصیه می‌شود:');
+                $this->line('    chmod 600 ' . $path);
+            }
+
+            // فقط خط اول خوانده می‌شود تا کاراکتر انتهای فایل مشکل نسازد
+            $contents = (string) file_get_contents($path);
+            $line = strtok($contents, "\r\n");
+
+            if ($line === false || trim($line) === '') {
+                return ['ok' => false, 'message' => 'فایل رمز عبور خالی است: ' . $path];
+            }
+
+            return ['ok' => true, 'password' => trim($line)];
+        }
+
+        // ---------------------------------------------------
+        // ۲) متغیر محیطی — راحت ولی کم‌امن‌تر
+        // ---------------------------------------------------
+        $envPassword = env('DRIKANA_ADMIN_PASSWORD');
+
+        if (!empty($envPassword)) {
+            $this->warn('⚠ رمز عبور از متغیر محیطی خوانده شد. این روش در فهرست فرایندها');
+            $this->warn('  قابل دیدن است و برای اتوماسیون موقت مناسب است، نه استقرار همیشگی.');
+
+            return ['ok' => true, 'password' => (string) $envPassword];
+        }
+
+        // ---------------------------------------------------
+        // ۳) هیچ منبعی تنظیم نشده → ورودی تعاملی
+        // ---------------------------------------------------
+        return ['ok' => false, 'message' => null];
+    }
 
     /**
      * @return int
@@ -88,8 +155,14 @@ class MakeSuperAdmin extends Command
         // -------------------------------------------------------
         // ۲) دریافت اطلاعات
         // -------------------------------------------------------
-        $email = $this->option('email') ?: $this->ask('ایمیل مدیر کل');
-        $phone = $this->option('phone');
+        // ایمیل: گزینه خط فرمان → متغیر محیطی → پرسش تعاملی
+        $email = $this->option('email') ?: env('DRIKANA_ADMIN_EMAIL');
+
+        if (empty($email) && $this->input->isInteractive()) {
+            $email = $this->ask('ایمیل مدیر کل');
+        }
+
+        $phone = $this->option('phone') ?: env('DRIKANA_ADMIN_PHONE');
         $name  = $this->option('name') ?: $this->ask('نام نمایشی', 'مدیر کل سیستم');
 
         if (empty($email) && empty($phone)) {
@@ -137,7 +210,35 @@ class MakeSuperAdmin extends Command
         // -------------------------------------------------------
         // ۵) دریافت رمز عبور (هرگز در کد ذخیره نمی‌شود)
         // -------------------------------------------------------
-        $password = $this->secret('رمز عبور (حداقل ۱۲ کاراکتر — ورودی نمایش داده نمی‌شود)');
+        // -------------------------------------------------------
+        // منبع رمز عبور — به ترتیب اولویت:
+        //   ۱) --password-file (یا DRIKANA_ADMIN_PASSWORD_FILE)
+        //      امن‌ترین راه غیرتعاملی: رمز در فهرست فرایندها دیده نمی‌شود.
+        //   ۲) DRIKANA_ADMIN_PASSWORD
+        //      راحت ولی کم‌امن‌تر: متغیر محیطی می‌تواند در `ps e` و
+        //      فایل‌های log دیده شود. تنها برای اتوماسیون کنترل‌شده.
+        //   ۳) ورودی تعاملی (پیش‌فرض)
+        // -------------------------------------------------------
+        $source = $this->resolvePasswordFromSource();
+
+        // منبع تنظیم شده اما خطا داشته → توقف، نه بازگشت به ورودی تعاملی.
+        // اگر اینجا به پرسش تعاملی برمی‌گشتیم، اسکریپت‌های خودکار بی‌صدا
+        // روی یک رمز متفاوت متوقف می‌شدند.
+        if ($source['ok'] === false && !empty($source['message'])) {
+            $this->error($source['message']);
+
+            return 1;
+        }
+
+        $passwordFromSource = $source['ok'] ? $source['password'] : null;
+
+        if ($passwordFromSource !== null) {
+            $password = $passwordFromSource;
+            $confirm  = $passwordFromSource;
+            $this->warn('رمز عبور از منبع غیرتعاملی خوانده شد — پرسش تأیید رد می‌شود.');
+        } else {
+            $password = $this->secret('رمز عبور (حداقل ۱۲ کاراکتر — ورودی نمایش داده نمی‌شود)');
+        }
 
         if (strlen((string) $password) < 12) {
             $this->error('رمز عبور باید حداقل ۱۲ کاراکتر باشد.');
@@ -162,7 +263,9 @@ class MakeSuperAdmin extends Command
             return 1;
         }
 
-        $confirm = $this->secret('تکرار رمز عبور');
+        if ($passwordFromSource === null) {
+            $confirm = $this->secret('تکرار رمز عبور');
+        }
 
         if ($password !== $confirm) {
             $this->error('رمز عبور و تکرار آن یکسان نیستند.');
@@ -172,7 +275,7 @@ class MakeSuperAdmin extends Command
         // -------------------------------------------------------
         // ۶) تأیید نهایی در محیط production
         // -------------------------------------------------------
-        if (app()->environment('production') && !$this->option('force')) {
+        if (app()->environment('production') && !$this->option('force') && $this->input->isInteractive()) {
             $this->warn('شما در محیط production هستید.');
             if (!$this->confirm('آیا از ایجاد مدیر کل اطمینان دارید؟', false)) {
                 $this->info('عملیات لغو شد.');

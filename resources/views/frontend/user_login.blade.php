@@ -1,5 +1,20 @@
 @extends('frontend.layouts.app')
 
+@php
+    /**
+     * حالت نمایشی (Demo Mode).
+     *
+     * مقدار از `config('app.demo_mode')` خوانده می‌شود (نه `env()`)، تا در
+     * محیطی که کش تنظیمات فعال است هم درست کار کند. تنها مقادیر
+     * «on/true/1/yes» به‌عنوان فعال در نظر گرفته می‌شوند.
+     */
+    $demoMode = in_array(
+        strtolower((string) config('app.demo_mode')),
+        ['on', 'true', '1', 'yes'],
+        true
+    );
+@endphp
+
 @section('content')
     <section class="gry-bg py-5">
         <div class="profile">
@@ -94,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (env("DEMO_MODE") == "On")
+                    @if ($demoMode)
                         <div class="bg-white p-4 mx-auto mt-4">
                             <div class="">
                                 <table class="table table-responsive table-bordered mb-0">
@@ -119,14 +134,24 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript">
-        function autoFillSeller(){
-            $('#email').val('seller@example.com');
-            $('#password').val('123456');
-        }
-        function autoFillCustomer(){
-            $('#email').val('customer@example.com');
-            $('#password').val('123456');
-        }
-    </script>
+    {{--
+        اسکریپت پرشدن خودکار فرم، «تنها» در حالت نمایشی لازم است.
+
+        پیش از این، این اسکریپت بی‌قید اجرا می‌شد و اطلاعات ورود حساب‌های
+        نمونه در «منبع صفحه» همه بازدیدکنندگان — حتی با DEMO_MODE خاموش —
+        قرار می‌گرفت. اکنون هم پنل و هم اسکریپت با همان شرط `$demoMode`
+        کنترل می‌شوند تا مقادیر پیش‌فرض هرگز در محیط واقعی منتشر نشوند.
+    --}}
+    @if ($demoMode)
+        <script type="text/javascript">
+            function autoFillSeller(){
+                $('#username').val('seller@example.com');
+                $('#password').val('123456');
+            }
+            function autoFillCustomer(){
+                $('#username').val('customer@example.com');
+                $('#password').val('123456');
+            }
+        </script>
+    @endif
 @endsection
