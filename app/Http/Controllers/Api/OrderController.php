@@ -74,9 +74,19 @@ class OrderController extends Controller
                 $product_stocks->qty -= $cartItem->quantity;
                 $product_stocks->save();
             } else {
-                $product->update([
-                    'current_stock' => DB::raw('current_stock - ' . $cartItem->quantity)
-                ]);
+                // [بازبینی L-03] پیش‌تر مقدار مستقیماً به رشته SQL چسبانده
+                // می‌شد. `$cartItem->quantity` ستون عددی دیتابیس است و
+                // امروز تزریق‌پذیر نیست، اما «الحاق رشته در SQL» الگویی
+                // است که با هر تغییر ستون به آسیب‌پذیری تبدیل می‌شود.
+                // اکنون مقدار به‌زور Integer می‌شود؛ حتی اگر فردا رشته
+                // شود، چیزی جز یک عدد به SQL نمی‌رسد.
+                $quantity = (int) $cartItem->quantity;
+
+                if ($quantity > 0) {
+                    $product->update([
+                        'current_stock' => DB::raw('current_stock - ' . $quantity)
+                    ]);
+                }
             }
 
             $order_detail_shipping_cost= 0;
@@ -108,9 +118,14 @@ class OrderController extends Controller
                 'quantity' => $cartItem->quantity,
                 'payment_status' => $request->payment_status
             ]);
-            $product->update([
-                'num_of_sale' => DB::raw('num_of_sale + ' . $cartItem->quantity)
-            ]);
+            // [بازبینی L-03] همان قاعده: به‌زور Integer، بدون الحاق رشته.
+            $soldQuantity = (int) $cartItem->quantity;
+
+            if ($soldQuantity > 0) {
+                $product->update([
+                    'num_of_sale' => DB::raw('num_of_sale + ' . $soldQuantity)
+                ]);
+            }
         }
         // apply coupon usage
         if ($request->coupon_code != '') {

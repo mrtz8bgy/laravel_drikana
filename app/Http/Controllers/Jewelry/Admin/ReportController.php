@@ -416,15 +416,38 @@ class ReportController extends Controller
     /**
      * فرمت تاریخ بر اساس دوره
      */
+    /**
+     * قالب تاریخ MySQL بر پایه دوره درخواستی.
+     *
+     * ── بازبینی [L-03] ─────────────────────────────────────────────────
+     *
+     * این مقدار در `DB::raw("DATE_FORMAT(created_at, '{$dateFormat}')")`
+     * درج می‌شود. `$period` از پارامتر درخواست (`?period=...`) می‌آید،
+     * پس این تابع یک «نقطه درج در SQL» است و باید مقاوم بماند.
+     *
+     * امروز حمله‌پذیر **نیست**، چون `switch` تنها چهار مقدار ثابت
+     * برمی‌گرداند و ورودی ناشناخته به `default` می‌رود. اما «امروز
+     * نیست» با «فردا هم نیست» یکی نیست؛ کسی می‌تواند خروجی این تابع را
+     * با محاسبه‌ای دیگر جای‌گزین کند. پس یک بررسی «فهرست مجاز» هم
+     * اضافه شده است: هر مقداری که در فهرست نباشد، به قالب پیش‌فرض
+     * برمی‌گردد.
+     *
+     * قاعده کلی [L-03]: هیچ‌وقت مقدار متغیر را داخل رشته SQL نگذارید —
+     * حتی اگر امروز «توسط switch محافظت‌شده» به‌نظر برسد.
+     *
+     * @param  string $period
+     * @return string
+     */
     private function getDateFormat($period)
     {
-        switch ($period) {
-            case 'week': return '%Y-%U';
-            case 'month': return '%Y-%m';
-            case 'quarter': return '%Y-%m';
-            case 'year': return '%Y';
-            default: return '%Y-%m';
-        }
+        $allowed = [
+            'week'    => '%Y-%U',
+            'month'   => '%Y-%m',
+            'quarter' => '%Y-%m',
+            'year'    => '%Y',
+        ];
+
+        return isset($allowed[$period]) ? $allowed[$period] : '%Y-%m';
     }
     
     /**

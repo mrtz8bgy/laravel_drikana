@@ -50,24 +50,24 @@ php7.4 -d memory_limit=1G vendor/bin/phpunit --filter SecurityFixesTest
 ```
 PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
 
-...............................................................  63 / 191 ( 32%)
-............................................................... 126 / 191 ( 65%)
-S.............................................................. 189 / 191 ( 98%)
-..                                                              191 / 191 (100%)
+...............................................................  63 / 207 ( 30%)
+............................................................... 126 / 207 ( 60%)
+............S.................................................. 189 / 207 ( 91%)
+..................                                              207 / 207 (100%)
 
-Time: 12.18 seconds, Memory: 86.50 MB
+Time: 12.73 seconds, Memory: 90.50 MB
 
 OK, but incomplete, skipped, or risky tests!
-Tests: 191, Assertions: 1349, Skipped: 1.
+Tests: 207, Assertions: 1420, Skipped: 1.
 ```
 
 | شاخص | مقدار |
 |------|-------|
-| آزمون‌های اجراشده | **۱۹۱** |
-| موفق | **۱۹۰** |
+| آزمون‌های اجراشده | **۲۰۷** |
+| موفق | **۲۰۶** |
 | ناموفق | **۰** |
 | رد‌شده (Skipped) | **۱** |
-| تعداد Assertion | **۱۳۴۹** |
+| تعداد Assertion | **۱۴۲۰** |
 
 ### آزمون رد‌شده (Skipped)
 
@@ -85,6 +85,8 @@ Tests: 191, Assertions: 1349, Skipped: 1.
 | `tests/Feature/SecurityFixesTest.php` | ۳۷ | ۱۳۶ | ✅ OK |
 | `tests/Feature/BackdoorRemovalAndEnvHardeningTest.php` | ۱۳ | ۴۴ | ✅ OK |
 | `tests/Feature/ConfigCacheSafetyTest.php` | ۵ | ۷۴۴ | ✅ OK |
+| `tests/Feature/AddonInstallerHardeningTest.php` | ۱۱ | ۳۵ | ✅ OK |
+| `tests/Feature/SqlInjectionHardeningTest.php` | ۵ | ۳۶ | ✅ OK |
 | `tests/Feature/ArticleManagementTest.php` | ۲۸ | ۵۴ | ✅ OK |
 | `tests/Feature/RbacAccessControlTest.php` | ۲۰ | ۵۲ | ✅ OK (۱ مورد بالقوه رد‌شونده) |
 | `tests/Feature/OwnershipTransferTest.php` | ۱۹ | ۵۶ | ✅ OK |
@@ -103,7 +105,7 @@ Tests: 191, Assertions: 1349, Skipped: 1.
 
 ## پوشش موضوعی
 
-### امنیت (۱۰۳ آزمون)
+### امنیت (۱۱۹ آزمون)
 
 | موضوع | فایل | چه چیزی سنجیده می‌شود |
 |-------|------|-----------------------|
@@ -120,6 +122,10 @@ Tests: 191, Assertions: 1349, Skipped: 1.
 | قفل حساب | `AuthHardeningTest` | پس از تلاش‌های ناموفق، پیام throttle |
 | پوشش محدودسازی نرخ | `AuthHardeningTest` | وجود `throttle` روی **۱۵** مسیر حساس، با تطبیق «متد + مسیر» |
 | شمارش کاربران | `AuthHardeningTest` | پاسخ API بازیابی رمز، وجود کاربر را افشا نمی‌کند |
+| تزریق SQL در مرتب‌سازی | `SqlInjectionHardeningTest` | ۱۳ محموله حمله در `sort_by`/`sort_order` به SQL نمی‌رسند؛ ۸ ستون مجاز کار می‌کنند |
+| انکار سرویس با `per_page` | `SqlInjectionHardeningTest` | مقدارهای بزرگ و غیرعددی به پیش‌فرض برمی‌گردند |
+| Zip Slip | `AddonInstallerHardeningTest` | سه نوع عضو خصمانه ZIP رد می‌شود و فایل بیرون از مقصد ساخته نمی‌شود |
+| بازنویسی فایل حیاتی | `AddonInstallerHardeningTest` | `.env`، `composer.json`، `public/index.php` و پوشه‌های حساس مسیر معتبر نمی‌گیرند |
 | متن به‌هم‌ریخته | `AuthHardeningTest` | نبود mojibake در کنترلرها |
 | Open Redirect | `SecurityFixesTest` | ۵ محموله حمله رد می‌شوند |
 | نصب‌کننده | `SecurityFixesTest` | `/install/*` روی سامانه نصب‌شده ۴۰۴ |
@@ -192,6 +198,7 @@ Audit Log.
 | دسته‌بندی مقالات | `GET /articles/category/{slug}` | ✅ ۲۰۰ |
 | جست‌وجو در مقالات | `GET /articles/search?q=طلا` | ✅ ۲۰۰ |
 | در پشتی نوشتن فایل | `POST /config_content` روی سرور محلی | ✅ ۴۰۴ و **هیچ فایلی نوشته نشد** |
+| بازبینی کوئری‌های خام | جست‌وجوی الگوی «الحاق متغیر در SQL» روی کل `app/` | ✅ تنها دو مورد باقی‌مانده: `(int)` شده‌اند |
 | پایداری آزمون قفل ورود | اجرای سه‌باره آزمون و دو اجرای کامل مجموعه | ✅ بدون شکست — الگوی متن throttle به‌جای برابری عدد ثانیه |
 | نصب وابستگی‌ها | `composer validate` + `composer install --dry-run` پس از تغییر `minimum-stability` | ✅ بدون خطا و بدون هشدار «قفل قدیمی است» |
 | ایمنی `config:cache` | `php artisan config:cache` + درخواست به `/`، `/articles`، `/admin` | ✅ ۲۰۰/۲۰۰/۲۰۲ — و `config('drikana.sms.farazsms.from')` مقدار درست داد در حالی که `env('APP_NAME')` خالی بود |
@@ -310,12 +317,13 @@ Audit Log.
 **سیدرها (۲ فایل)**
 `database/seeds/RbacSeeder.php`, `database/seeds/DrikanaSampleArticlesSeeder.php`
 
-**آزمون‌ها (۱۲ فایل)**
+**آزمون‌ها (۱۴ فایل)**
 `SecurityFixesTest`, `RbacAccessControlTest`, `OwnershipTransferTest`,
 `ArticleManagementTest`, `ViewSmokeTest`, `RouteIntegrityTest`,
 `InstallAndSeedTest`, `AuthHardeningTest`, `CssSeparationTest`,
 `AdminUsersAndHomeArticlesTest`, `BackdoorRemovalAndEnvHardeningTest`,
-`ConfigCacheSafetyTest`
+`ConfigCacheSafetyTest`, `AddonInstallerHardeningTest`,
+`SqlInjectionHardeningTest`
 
 **CSS جدا‌شده (۱۴ فایل در `public/css/drikana/`)**
 `store.css`, `store-category.css`, `store-menu.css`, `jewelry-admin.css`,
@@ -363,4 +371,5 @@ Audit Log.
 | آیا آزمونی «اجرا‌نشده» به‌عنوان موفق گزارش شده؟ | خیر — موارد آزمون‌نشده صریحاً فهرست شده‌اند |
 | آیا قابلیتی از دست رفته؟ | خیر — چهار فایل حذف‌شده، همه آسیب‌پذیری بودند یا جایگزین کامل‌تر داشتند |
 | آیا مسیرهای حیاتی آزمون دستی شدند؟ | بله — جدول «آزمون‌های دستی» |
-| بزرگ‌ترین ریسک باقی‌مانده | هشدارهای وابستگی Composer و نبود آزمون پرداخت واقعی |
+| بزرگ‌ترین ریسک باقی‌مانده | هشدارهای وابستگی Composer (نیازمند ارتقای بزرگ) و نبود آزمون پرداخت واقعی |
+| آیا کوئری خام ناامن باقی مانده؟ | خیر — ۱۵۳ نقطه بازبینی شد؛ دو تزریق واقعی بسته شد و نصب افزونه محافظ‌گذاری شد |

@@ -51,12 +51,79 @@ class JewelryCertificateController extends Controller
             });
         }
         
-        // مرتب‌سازی
-        $sortBy = $request->get('sort_by', 'created_at');
-        $sortOrder = $request->get('sort_order', 'desc');
+        // ────────────────────────────────────────────────────────────
+        //  مرتب‌سازی — با «فهرست مجاز»  [امنیت: L-03 / تزریق SQL]
+        // ────────────────────────────────────────────────────────────
+        //
+        // چرا فهرست مجاز لازم است؟ `orderBy($column, $direction)` در
+        // Query Builder، نام ستون و جهت مرتب‌سازی را به‌صورت **خام**
+        // داخل رشته SQL می‌گذارد (برخلاف `where` که مقدار را به
+        // binding می‌سپارد). پس اگر این دو مقدار از پارامتر درخواست
+        // بیایند بدون بازبینی، مهاجم می‌تواند در بخش ORDER BY کد SQL
+        // تزریق کند:
+        //
+        //     ?sort_by=id,(SELECT ...)   →  تزریق در ORDER BY
+        //
+        // پیش‌تر همین دو خط، دقیقاً همین کار را می‌کردند:
+        //     $sortBy = $request->get('sort_by', 'created_at');
+        //     $sortOrder = $request->get('sort_order', 'desc');
+        //     $query->orderBy($sortBy, $sortOrder);
+        //
+        // اکنون هر مقداری که در فهرست مجاز نباشد، به پیش‌فرض برمی‌گردد.
+        // (هیچ ویویی فعلاً این پارامترها را نمی‌فرستد؛ اما مسیر از طریق
+        //  نشانی مستقیم در دسترس است، پس باگ واقعی بود.)
+        // ────────────────────────────────────────────────────────────
+        // فهرست باید **دقیقاً** با ستون‌های واقعی جدول یکی باشد. اگر
+        // ستونی در جدول نباشد، MySQL خطا می‌دهد و صفحه ۵۰۰ می‌شود —
+        // یعنی فهرست نادرست، خودش یک اشکال تازه می‌سازد. ستون‌های
+        // زیر از `SHOW COLUMNS FROM jewelry_certificates` گرفته شده‌اند.
+        $sortableColumns = [
+            'id',
+            'owner_id',
+            'product_name',
+            'metal_type',
+            'purity',
+            'weight',
+            'stone_type',
+            'serial_number',
+            'issued_at',
+            'is_verified',
+            'is_active',
+            'approved_at',
+            'created_at',
+            'updated_at',
+        ];
+
+        $sortBy = (string) $request->get('sort_by', 'created_at');
+
+        if (!in_array($sortBy, $sortableColumns, true)) {
+            $sortBy = 'created_at';
+        }
+
+        $sortOrder = strtolower((string) $request->get('sort_order', 'desc'));
+
+        if (!in_array($sortOrder, ['asc', 'desc'], true)) {
+            $sortOrder = 'desc';
+        }
+
         $query->orderBy($sortBy, $sortOrder);
-        
-        $certificates = $query->paginate($request->get('per_page', 15));
+
+        // ────────────────────────────────────────────────────────────
+        //  اندازه صفحه — محدودسازی  [امنیت: L-03 / انکار سرویس]
+        // ────────────────────────────────────────────────────────────
+        //
+        // `per_page` پیش‌تر بی‌بازبینی به `paginate()` می‌رفت. با
+        // `?per_page=10000000` یک کاربر می‌توانست دیتابیس و حافظه سرور
+        // را زیر بار ببرد (Denial of Service). اکنون عدد به بازه
+        // ۵ تا ۱۰۰ محدود می‌شود و ورودی غیرعددی به پیش‌فرض برمی‌گردد.
+        // ────────────────────────────────────────────────────────────
+        $perPage = (int) $request->get('per_page', 15);
+
+        if ($perPage < 5 || $perPage > 100) {
+            $perPage = 15;
+        }
+
+        $certificates = $query->paginate($perPage);
         
         $owners = JewelryOwner::orderBy('full_name')->get();
         
