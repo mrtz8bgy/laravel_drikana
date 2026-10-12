@@ -128,7 +128,7 @@
                                                     ->count();
                                     @endphp
                                     <li class="{{ areActiveRoutes(['reviews.index'])}}">
-                                        <a class="nav-link" href="{{route('reviews.index')}}">{{__('Product Reviews')}}@if($review_count > 0)<span class="pull-right badge badge-info">{{ $review_count }}</span>@endif</a>
+                                        <a class="nav-link" href="{{route('admin.reviews.index')}}">{{__('Product Reviews')}}@if($review_count > 0)<span class="pull-right badge badge-info">{{ $review_count }}</span>@endif</a>
                                     </li>
                                 </ul>
                             </li>

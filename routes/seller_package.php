@@ -14,7 +14,6 @@
 //Admin
 Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function(){
     Route::resource('seller_packages','SellerPackageController');
-    Route::get('/seller_packages/destroy/{id}', 'SellerPackageController@destroy')->name('seller_packages.destroy');
 });
 
 //FrontEnd

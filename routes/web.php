@@ -61,12 +61,22 @@ Route::middleware(['auth'])->group(function () {
          ->name('verification');
     
     // تأیید کد
+    // نام این روت‌ها با پیشوند «phone» مشخص شده است.
+    //
+    // ── چرا؟ (رفع تداخل نام) ───────────────────────────────────────
+    // دستور `Auth::routes(['verify' => true])` در همین فایل، روت‌های
+    // تأیید ایمیل لاراول را با نام‌های `verification.verify` و
+    // `verification.resend` ثبت می‌کند. اگر این دو روت هم همان نام‌ها را
+    // داشته باشند، یکی روی دیگری سایه می‌افتد و فراخوانی
+    // `route('verification.verify')` می‌تواند به مسیر اشتباه برود.
+    // اکنون نام‌ها تفکیک شده‌اند: ایمیل از نام‌های پیش‌فرض لاراول و
+    // تلفن از پیشوند phone استفاده می‌کند.
     Route::post('/verification/verify', 'OTPVerificationController@verify_phone')
-         ->name('verification.verify');
+         ->name('verification.phone.verify');
     
     // ارسال مجدد کد
     Route::post('/verification/resend', 'OTPVerificationController@resend_verification_code')
-         ->name('verification.resend');
+         ->name('verification.phone.code_resend');
 });
 
 // ============================================
@@ -212,7 +222,6 @@ Route::group(['middleware' => ['user']], function(){
     // تاریخچه خرید (Purchase History)
     Route::resource('purchase_history','PurchaseHistoryController');
     Route::post('/purchase_history/details', 'PurchaseHistoryController@purchase_history_details')->name('purchase_history.details');
-    Route::get('/purchase_history/destroy/{id}', 'PurchaseHistoryController@destroy')->name('purchase_history.destroy');
 
     // لیست علاقه‌مندی‌ها (Wishlist)
     Route::resource('wishlists','WishlistController');
@@ -238,7 +247,6 @@ Route::group(['middleware' => ['user']], function(){
     Route::get('digital_purchase_history', 'PurchaseHistoryController@digital_index')->name('digital_purchase_history.index');
 });
 
-Route::get('/customer_products/destroy/{id}', 'CustomerProductController@destroy')->name('customer_products.destroy');
 
 // ============================================
 # بخش فروشندگان (Seller Area)
@@ -269,11 +277,13 @@ Route::group(['middleware' => ['auth']], function(){
     // محصولات (Products)
     Route::post('/products/store/','ProductController@store')->name('products.store');
     Route::post('/products/update/{id}','ProductController@update')->name('products.update');
-    Route::get('/products/destroy/{id}', 'ProductController@destroy')->name('products.destroy');
     Route::get('/products/duplicate/{id}', 'ProductController@duplicate')->name('products.duplicate');
     Route::post('/products/sku_combination', 'ProductController@sku_combination')->name('products.sku_combination');
     Route::post('/products/sku_combination_edit', 'ProductController@sku_combination_edit')->name('products.sku_combination_edit');
-    Route::post('/products/featured', 'ProductController@updateFeatured')->name('products.featured');
+    // نام این روت با پیشوند admin. مشخص شده تا با روت عمومی
+    // `products.featured` (نمایش محصولات ویژه در فروشگاه) تداخل نداشته باشد.
+    Route::post('/products/featured', 'ProductController@updateFeatured')
+        ->name('admin.products.featured');
     Route::post('/products/published', 'ProductController@updatePublished')->name('products.published');
 
     // فاکتورها (Invoices)
@@ -282,7 +292,6 @@ Route::group(['middleware' => ['auth']], function(){
 
     // سفارشات (Orders)
     Route::resource('orders','OrderController');
-    Route::get('/orders/destroy/{id}', 'OrderController@destroy')->name('orders.destroy');
     Route::post('/orders/details', 'OrderController@order_details')->name('orders.details');
     Route::post('/orders/update_delivery_status', 'OrderController@update_delivery_status')->name('orders.update_delivery_status');
     Route::post('/orders/update_payment_status', 'OrderController@update_payment_status')->name('orders.update_payment_status');
@@ -319,7 +328,6 @@ Route::group(['middleware' => ['auth']], function(){
 
     // محصولات دیجیتال (Digital Products)
     Route::resource('digitalproducts','DigitalProductController');
-    Route::get('/digitalproducts/destroy/{id}', 'DigitalProductController@destroy')->name('digitalproducts.destroy');
     Route::get('/digitalproducts/download/{id}', 'DigitalProductController@download')->name('digitalproducts.download');
 });
 
@@ -343,7 +351,6 @@ Route::get('/vogue-pay/failure/{id}', 'VoguePayController@paymentFailure');
 # آدرس‌ها (Addresses)
 // ============================================
 Route::resource('addresses','AddressController');
-Route::get('/addresses/destroy/{id}', 'AddressController@destroy')->name('addresses.destroy');
 Route::get('/addresses/set_default/{id}', 'AddressController@set_default')->name('addresses.set_default');
 
 

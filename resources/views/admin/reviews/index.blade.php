@@ -8,7 +8,7 @@
     <div class="panel-heading bord-btm clearfix pad-all h-100">
         <h3 class="panel-title pull-left pad-no">{{__('Product Reviews')}}</h3>
         <div class="pull-right clearfix">
-            <form class="" id="sort_by_rating" action="{{ route('reviews.index') }}" method="GET">
+            <form class="" id="sort_by_rating" action="{{ route('admin.reviews.index') }}" method="GET">
                 <div class="box-inline pad-rgt pull-left">
                     <div class="select" style="min-width: 300px;">
                         <select class="form-control demo-select2" name="rating" id="rating" onchange="filter_by_rating()">

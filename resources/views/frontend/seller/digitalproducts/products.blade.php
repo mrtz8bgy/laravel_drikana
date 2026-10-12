@@ -111,7 +111,7 @@
             else{
                 var status = 0;
             }
-            $.post('{{ route('products.featured') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
+            $.post('{{ route('admin.products.featured') }}', {_token:'{{ csrf_token() }}', id:el.value, status:status}, function(data){
                 if(data == 1){
                     showFrontendAlert('success', 'اطلاعات با موفقیت بروزرسانی شد');
                 }

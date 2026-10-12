@@ -43,7 +43,7 @@
                                 لطفاً کد ۶ رقمی را وارد کنید.
                             </p>
                             
-                            <form class="form-default" role="form" action="{{ route('verification.verify') }}" method="POST">
+                            <form class="form-default" role="form" action="{{ route('verification.phone.verify') }}" method="POST">
                                 @csrf
                                 
                                 <div class="form-group">
@@ -77,7 +77,7 @@
                             </form>
                             
                             <div class="text-center mt-4">
-                                <form action="{{ route('verification.resend') }}" method="POST" class="d-inline">
+                                <form action="{{ route('verification.phone.code_resend') }}" method="POST" class="d-inline">
                                     @csrf
                                     <button type="submit" class="btn btn-link">
                                         {{ __('ارسال مجدد کد') }}

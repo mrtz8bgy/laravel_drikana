@@ -15,8 +15,21 @@ use App\Http\Controllers\CommissionController;
 use App\Http\Controllers\WalletController;
 use App\CustomerPackage;
 use App\Http\Controllers\CustomerPackageController;
-session_start();
+/* ── توجه (رفع باگ — مرحله ۲) ────────────────────────────────────────────
+   پیش‌تر در سطح «فایل» و بیرون از کلاس، دستور `session_start();` اجرا
+   می‌شد. فراخوانی تابع در سطح فایل یعنی این کد با هر بار «بارگذاری
+   خودکار کلاس» اجرا می‌شود؛ نتیجه‌اش این بود که در محیط خط فرمان و در
+   آزمون‌های خودکار، خطای
+       session_start(): Cannot start session when headers already sent
+   رخ می‌داد و ابزارهایی مثل `php artisan route:list` هم به مشکل می‌خوردند.
 
+   به‌علاوه، این کنترلر میان دو سیستم نشست جابه‌جا می‌شد: هم `$_SESSION`
+   بومی PHP و هم نشست لاراول. اختلاط این دو، رفتار غیرقابل پیش‌بینی
+   می‌سازد و در محیط‌هایی که لاراول نشست را با درایور غیر‌فایلی
+   (redis/database/array) اداره می‌کند، اصلاً کار نمی‌کند.
+
+   اکنون همه مقادیر از نشست خودِ لاراول خوانده و نوشته می‌شوند و نشست
+   بومی PHP کاملاً کنار گذاشته شده است. ── */
 class PublicSslCommerzPaymentController extends Controller
 {
 
@@ -35,9 +48,9 @@ class PublicSslCommerzPaymentController extends Controller
                     $post_data['tran_id'] = substr(md5($request->session()->get('order_id')), 0, 10); // tran_id must be unique
 
                     #Start to save these value  in session to pick in success page.
-                    $_SESSION['payment_values']['tran_id']=$post_data['tran_id'];
-                    $_SESSION['payment_values']['order_id']=$request->session()->get('order_id');
-                    $_SESSION['payment_values']['payment_type']=$request->session()->get('payment_type');
+                    session(['payment_values.tran_id' => $post_data['tran_id']]);
+                    session(['payment_values.order_id' => $request->session()->get('order_id')]);
+                    session(['payment_values.payment_type' => $request->session()->get('payment_type')]);
                     #End to save these value  in session to pick in success page.
 
                     # CUSTOMER INFORMATION
@@ -56,9 +69,9 @@ class PublicSslCommerzPaymentController extends Controller
                     $post_data['tran_id'] = substr(md5($request->session()->get('payment_data')['seller_id']), 0, 10); // tran_id must be unique
 
                     #Start to save these value  in session to pick in success page.
-                    $_SESSION['payment_values']['tran_id']=$post_data['tran_id'];
-                    $_SESSION['payment_values']['payment_data']=$request->session()->get('payment_data');
-                    $_SESSION['payment_values']['payment_type']=$request->session()->get('payment_type');
+                    session(['payment_values.tran_id' => $post_data['tran_id']]);
+                    session(['payment_values.payment_data' => $request->session()->get('payment_data')]);
+                    session(['payment_values.payment_type' => $request->session()->get('payment_type')]);
                     #End to save these value  in session to pick in success page.
 
                     # CUSTOMER INFORMATION
@@ -77,9 +90,9 @@ class PublicSslCommerzPaymentController extends Controller
                     $post_data['tran_id'] = substr(md5(Auth::user()->id), 0, 10); // tran_id must be unique
 
                     #Start to save these value  in session to pick in success page.
-                    $_SESSION['payment_values']['tran_id']=$post_data['tran_id'];
-                    $_SESSION['payment_values']['payment_data']=$request->session()->get('payment_data');
-                    $_SESSION['payment_values']['payment_type']=$request->session()->get('payment_type');
+                    session(['payment_values.tran_id' => $post_data['tran_id']]);
+                    session(['payment_values.payment_data' => $request->session()->get('payment_data')]);
+                    session(['payment_values.payment_type' => $request->session()->get('payment_type')]);
                     #End to save these value  in session to pick in success page.
 
                     # CUSTOMER INFORMATION
@@ -99,9 +112,9 @@ class PublicSslCommerzPaymentController extends Controller
                     $post_data['tran_id'] = substr(md5(Auth::user()->id), 0, 10); // tran_id must be unique
 
                     #Start to save these value  in session to pick in success page.
-                    $_SESSION['payment_values']['tran_id']=$post_data['tran_id'];
-                    $_SESSION['payment_values']['payment_data']=$request->session()->get('payment_data');
-                    $_SESSION['payment_values']['payment_type']=$request->session()->get('payment_type');
+                    session(['payment_values.tran_id' => $post_data['tran_id']]);
+                    session(['payment_values.payment_data' => $request->session()->get('payment_data')]);
+                    session(['payment_values.payment_type' => $request->session()->get('payment_type')]);
                     #End to save these value  in session to pick in success page.
 
                     # CUSTOMER INFORMATION
@@ -152,26 +165,26 @@ class PublicSslCommerzPaymentController extends Controller
 
         $sslc = new SSLCommerz();
         #Start to received these value from session. which was saved in index function.
-        $tran_id = $_SESSION['payment_values']['tran_id'];
+        $tran_id = session('payment_values.tran_id');
         #End to received these value from session. which was saved in index function.
         $payment = json_encode($request->all());
 
-        if(isset($_SESSION['payment_values']['payment_type'])){
-            if($_SESSION['payment_values']['payment_type'] == 'cart_payment'){
+        if(session()->has('payment_values.payment_type')){
+            if(session('payment_values.payment_type') == 'cart_payment'){
                 $checkoutController = new CheckoutController;
-                return $checkoutController->checkout_done($_SESSION['payment_values']['order_id'], $payment);
+                return $checkoutController->checkout_done(session('payment_values.order_id'), $payment);
             }
-            elseif ($_SESSION['payment_values']['payment_type'] == 'seller_payment') {
+            elseif (session('payment_values.payment_type') == 'seller_payment') {
                 $commissionController = new CommissionController;
-                return $commissionController->seller_payment_done($_SESSION['payment_values']['payment_data'], $payment);
+                return $commissionController->seller_payment_done(session('payment_values.payment_data'), $payment);
             }
-            elseif ($_SESSION['payment_values']['payment_type'] == 'wallet_payment') {
+            elseif (session('payment_values.payment_type') == 'wallet_payment') {
                 $walletController = new WalletController;
-                return $walletController->wallet_payment_done($_SESSION['payment_values']['payment_data'], $payment);
+                return $walletController->wallet_payment_done(session('payment_values.payment_data'), $payment);
             }
-            elseif ($_SESSION['payment_values']['payment_type'] == 'package_payment') {
+            elseif (session('payment_values.payment_type') == 'package_payment') {
                 $customer_package_controller = new CustomerPackageController;
-                return $customer_package_controller->purchase_payment_done($_SESSION['payment_values']['payment_data'], $payment);
+                return $customer_package_controller->purchase_payment_done(session('payment_values.payment_data'), $payment);
             }
         }
     }

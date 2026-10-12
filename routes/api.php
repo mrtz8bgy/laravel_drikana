@@ -12,75 +12,100 @@ Route::prefix('v1/auth')->group(function () {
 });
 
 Route::prefix('v1')->group(function () {
-    Route::apiResource('banners', 'Api\BannerController')->only('index');
+    Route::apiResource('banners', 'Api\BannerController')->only('index')
+        ->names(['index' => 'api.banners.index']);
 
     Route::get('brands/top', 'Api\BrandController@top');
-    Route::apiResource('brands', 'Api\BrandController')->only('index');
+    Route::apiResource('brands', 'Api\BrandController')->only('index')
+        // پیشوند api. الزامی است: نام brands.index در بخش وب هم استفاده
+        // می‌شود (admin/brands) و ثبت دوباره همان نام، روت وب را سایه می‌انداخت.
+        ->names(['index' => 'api.brands.index']);
 
-    Route::apiResource('business-settings', 'Api\BusinessSettingController')->only('index');
+    Route::apiResource('business-settings', 'Api\BusinessSettingController')->only('index')
+        ->names(['index' => 'api.business-settings.index']);
 
     Route::get('categories/featured', 'Api\CategoryController@featured');
     Route::get('categories/home', 'Api\CategoryController@home');
-    Route::apiResource('categories', 'Api\CategoryController')->only('index');
-    Route::get('sub-categories/{id}', 'Api\SubCategoryController@index')->name('subCategories.index');
+    Route::apiResource('categories', 'Api\CategoryController')->only('index')
+        ->names(['index' => 'api.categories.index']);
+    Route::get('sub-categories/{id}', 'Api\SubCategoryController@index')->name('api.subCategories.index');
 
-    Route::apiResource('colors', 'Api\ColorController')->only('index');
+    Route::apiResource('colors', 'Api\ColorController')->only('index')
+        ->names(['index' => 'api.colors.index']);
 
-    Route::apiResource('currencies', 'Api\CurrencyController')->only('index');
+    Route::apiResource('currencies', 'Api\CurrencyController')->only('index')
+        ->names(['index' => 'api.currencies.index']);
 
-    Route::apiResource('customers', 'Api\CustomerController')->only('show');
+    Route::apiResource('customers', 'Api\CustomerController')->only('show')
+        ->names(['show' => 'api.customers.show']);
 
-    Route::apiResource('general-settings', 'Api\GeneralSettingController')->only('index');
+    Route::apiResource('general-settings', 'Api\GeneralSettingController')->only('index')
+        ->names(['index' => 'api.general-settings.index']);
 
-    Route::apiResource('home-categories', 'Api\HomeCategoryController')->only('index');
+    Route::apiResource('home-categories', 'Api\HomeCategoryController')->only('index')
+        ->names(['index' => 'api.home-categories.index']);
 
     Route::get('purchase-history/{id}', 'Api\PurchaseHistoryController@index')->middleware('auth:api');
-    Route::get('purchase-history-details/{id}', 'Api\PurchaseHistoryDetailController@index')->name('purchaseHistory.details')->middleware('auth:api');
+    Route::get('purchase-history-details/{id}', 'Api\PurchaseHistoryDetailController@index')->name('api.purchaseHistory.details')->middleware('auth:api');
 
     Route::get('products/admin', 'Api\ProductController@admin');
     Route::get('products/seller', 'Api\ProductController@seller');
     Route::get('products/category/{id}', 'Api\ProductController@category')->name('api.products.category');
-    Route::get('products/sub-category/{id}', 'Api\ProductController@subCategory')->name('products.subCategory');
-    Route::get('products/sub-sub-category/{id}', 'Api\ProductController@subSubCategory')->name('products.subSubCategory');
+    Route::get('products/sub-category/{id}', 'Api\ProductController@subCategory')->name('api.products.subCategory');
+    Route::get('products/sub-sub-category/{id}', 'Api\ProductController@subSubCategory')->name('api.products.subSubCategory');
     Route::get('products/brand/{id}', 'Api\ProductController@brand')->name('api.products.brand');
     Route::get('products/todays-deal', 'Api\ProductController@todaysDeal');
     Route::get('products/flash-deal', 'Api\ProductController@flashDeal');
     Route::get('products/featured', 'Api\ProductController@featured');
     Route::get('products/best-seller', 'Api\ProductController@bestSeller');
-    Route::get('products/related/{id}', 'Api\ProductController@related')->name('products.related');
-    Route::get('products/top-from-seller/{id}', 'Api\ProductController@topFromSeller')->name('products.topFromSeller');
+    Route::get('products/related/{id}', 'Api\ProductController@related')->name('api.products.related');
+    Route::get('products/top-from-seller/{id}', 'Api\ProductController@topFromSeller')->name('api.products.topFromSeller');
     Route::get('products/search', 'Api\ProductController@search');
     Route::post('products/variant/price', 'Api\ProductController@variantPrice');
     Route::get('products/home', 'Api\ProductController@home');
-    Route::apiResource('products', 'Api\ProductController')->except(['store', 'update', 'destroy']);
+    Route::apiResource('products', 'Api\ProductController')->except(['store', 'update', 'destroy'])
+        ->names([
+            'index' => 'api.products.index',
+            'show'  => 'api.products.show',
+        ]);
 
     Route::get('carts/{id}', 'Api\CartController@index')->middleware('auth:api');
     Route::post('carts/add', 'Api\CartController@add')->middleware('auth:api');
     Route::post('carts/change-quantity', 'Api\CartController@changeQuantity')->middleware('auth:api');
-    Route::apiResource('carts', 'Api\CartController')->only('destroy')->middleware('auth:api');
+    Route::apiResource('carts', 'Api\CartController')->only('destroy')
+        ->names(['destroy' => 'api.carts.destroy'])
+        ->middleware('auth:api');
 
     Route::get('reviews/product/{id}', 'Api\ReviewController@index')->name('api.reviews.index');
 
     Route::get('shop/user/{id}', 'Api\ShopController@shopOfUser')->middleware('auth:api');
-    Route::get('shops/details/{id}', 'Api\ShopController@info')->name('shops.info');
-    Route::get('shops/products/all/{id}', 'Api\ShopController@allProducts')->name('shops.allProducts');
-    Route::get('shops/products/top/{id}', 'Api\ShopController@topSellingProducts')->name('shops.topSellingProducts');
-    Route::get('shops/products/featured/{id}', 'Api\ShopController@featuredProducts')->name('shops.featuredProducts');
-    Route::get('shops/products/new/{id}', 'Api\ShopController@newProducts')->name('shops.newProducts');
-    Route::get('shops/brands/{id}', 'Api\ShopController@brands')->name('shops.brands');
-    Route::apiResource('shops', 'Api\ShopController')->only('index');
+    Route::get('shops/details/{id}', 'Api\ShopController@info')->name('api.shops.info');
+    Route::get('shops/products/all/{id}', 'Api\ShopController@allProducts')->name('api.shops.allProducts');
+    Route::get('shops/products/top/{id}', 'Api\ShopController@topSellingProducts')->name('api.shops.topSellingProducts');
+    Route::get('shops/products/featured/{id}', 'Api\ShopController@featuredProducts')->name('api.shops.featuredProducts');
+    Route::get('shops/products/new/{id}', 'Api\ShopController@newProducts')->name('api.shops.newProducts');
+    Route::get('shops/brands/{id}', 'Api\ShopController@brands')->name('api.shops.brands');
+    Route::apiResource('shops', 'Api\ShopController')->only('index')
+        ->names(['index' => 'api.shops.index']);
 
-    Route::apiResource('sliders', 'Api\SliderController')->only('index');
+    Route::apiResource('sliders', 'Api\SliderController')->only('index')
+        ->names(['index' => 'api.sliders.index']);
 
     Route::get('wishlists/{id}', 'Api\WishlistController@index')->middleware('auth:api');
     Route::post('wishlists/check-product', 'Api\WishlistController@isProductInWishlist')->middleware('auth:api');
-    Route::apiResource('wishlists', 'Api\WishlistController')->except(['index', 'update', 'show'])->middleware('auth:api');
+    Route::apiResource('wishlists', 'Api\WishlistController')->except(['index', 'update', 'show'])
+        ->names([
+            'store'   => 'api.wishlists.store',
+            'destroy' => 'api.wishlists.destroy',
+        ])
+        ->middleware('auth:api');
 
-    Route::apiResource('settings', 'Api\SettingsController')->only('index');
+    Route::apiResource('settings', 'Api\SettingsController')->only('index')
+        ->names(['index' => 'api.settings.index']);
 
-    Route::get('policies/seller', 'Api\PolicyController@sellerPolicy')->name('policies.seller');
-    Route::get('policies/support', 'Api\PolicyController@supportPolicy')->name('policies.support');
-    Route::get('policies/return', 'Api\PolicyController@returnPolicy')->name('policies.return');
+    Route::get('policies/seller', 'Api\PolicyController@sellerPolicy')->name('api.policies.seller');
+    Route::get('policies/support', 'Api\PolicyController@supportPolicy')->name('api.policies.support');
+    Route::get('policies/return', 'Api\PolicyController@returnPolicy')->name('api.policies.return');
 
     Route::get('user/info/{id}', 'Api\UserController@info')->middleware('auth:api');
     Route::post('user/info/update', 'Api\UserController@updateName')->middleware('auth:api');

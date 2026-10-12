@@ -9,8 +9,16 @@
             <h3 class="panel-title text-center">{{ __('Language Info') }}</h3>
         </div>
         <div class="panel-body">
+            {{--
+                نکته: روت `languages.update` در Laravel با متدهای PUT/PATCH ثبت شده
+                است (ساخته‌شده توسط Route::resource). مرورگرها تنها GET و POST را
+                در HTML پشتیبانی می‌کنند، بنابراین فیلد پنهان `_method` لازم است.
+                پیش‌تر این فرم فقط method="POST" داشت و درخواست با خطای 405
+                (Method Not Allowed) رد می‌شد — یعنی ویرایش زبان عملاً کار نمی‌کرد.
+            --}}
             <form class="form-horizontal" action="{{ route('languages.update', $language->id) }}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="form-group">
                     <div class="col-lg-3">
                         <label class="control-label">{{ __('Name') }}</label>
