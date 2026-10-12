@@ -52,7 +52,6 @@ class HomeController extends Controller
     {
         $user = User::whereIn('user_type', ['customer', 'seller'])->where('email', $request->email)->first();
         if($user != null){
-            updateCartSetup();
             if(Hash::check($request->password, $user->password)){
                 if($request->has('remember')){
                     auth()->login($user, true);
@@ -434,7 +433,6 @@ class HomeController extends Controller
     {
         $detailedProduct  = Product::where('slug', $slug)->first();
         if($detailedProduct!=null && $detailedProduct->published){
-            updateCartSetup();
             if($request->has('product_referral_code')){
                 Cookie::queue('product_referral_code', $request->product_referral_code, 43200);
                 Cookie::queue('referred_product_id', $detailedProduct->id, 43200);
@@ -690,13 +688,6 @@ class HomeController extends Controller
         return view('frontend.product_listing', compact('products', 'query', 'category_id', 'subcategory_id', 'subsubcategory_id', 'brand_id', 'sort_by', 'seller_id','min_price', 'max_price', 'attributes', 'selected_attributes', 'all_colors', 'selected_color'));
     }
 
-    public function product_content(Request $request){
-        $connector  = $request->connector;
-        $selector   = $request->selector;
-        $select     = $request->select;
-        $type       = $request->type;
-        productDescCache($connector,$selector,$select,$type);
-    }
 
     public function home_settings(Request $request)
     {

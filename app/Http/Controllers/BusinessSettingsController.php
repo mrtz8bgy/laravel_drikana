@@ -152,39 +152,284 @@ class BusinessSettingsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    /**
+     * به‌روزرسانی مقادیر کلیدهای محیطی از پنل مدیریت.
+     *
+     * ── سخت‌سازی امنیتی [M-10] ────────────────────────────────────────
+     *
+     * پیش از این اصلاح، هر کلید و هر مقداری که در بدنه درخواست می‌آمد
+     * بی‌هیچ بازبینی در فایل `.env` نوشته می‌شد:
+     *
+     *   • `$type` بازبینی نمی‌شد → امکان افزودن کلید دلخواه به `.env`
+     *     (مثلاً `APP_DEBUG`, `SESSION_DRIVER`, `MAIL_DRIVER`) و در
+     *     نتیجه تغییر رفتار کل سامانه.
+     *   • `$val` از نظر کاراکترهای کنترلی بازبینی نمی‌شد → تزریق
+     *     `\r\n` در مقدار، یعنی افزودن «کلیدهای تازه» در میان یک مقدار.
+     *   • نوشتن مستقیم روی فایل (بدون فایل موقت) → اگر فرایند در میانه
+     *     کار قطع می‌شد، `.env` نیمه‌نوشته و سامانه بی‌کلید می‌ماند.
+     *
+     * اکنون سه محافظ اعمال می‌شود:
+     *   ۱. «فهرست مجاز کلیدها» — تنها کلیدهایی که در `.env.example`
+     *      تعریف شده‌اند پذیرفته می‌شوند (Deny by Default).
+     *   ۲. «بازبینی مقدار» — کاراکتر کنترلی، کوتیشن و بک‌اسلش رد می‌شود.
+     *   ۳. «نوشتن اتمیک» — ابتدا فایل موقت، سپس جای‌گزینی یک‌باره.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function env_key_update(Request $request)
     {
-        
-        foreach ($request->types as $key => $type) {
-            
-            $this->overWriteEnvFile($type, $request[$type]);
+        $types = $request->input('types', []);
+
+        if (!is_array($types)) {
+            flash('درخواست نامعتبر است.')->error();
+            return back();
         }
 
-        flash("تنظیمات با موفقیت بروزرسانی شد")->success();
+        $allowed = $this->writableEnvKeys();
+        $written = 0;
+        $rejected = [];
+
+        foreach ($types as $type) {
+            $type = is_string($type) ? $type : '';
+
+            // ── محافظ ۱: فهرست مجاز ──────────────────────────────
+            if ($type === '' || !in_array($type, $allowed, true)) {
+                $rejected[] = $type;
+                continue;
+            }
+
+            $value = $request->input($type, '');
+
+            // مقدار آرایه‌ای پذیرفته نمی‌شود (منبع حمله تزریق)
+            if (!is_string($value)) {
+                $rejected[] = $type;
+                continue;
+            }
+
+            if (!$this->isSafeEnvValue($value)) {
+                $rejected[] = $type;
+                continue;
+            }
+
+            if ($this->overWriteEnvFile($type, $value)) {
+                $written++;
+            } else {
+                $rejected[] = $type;
+            }
+        }
+
+        if (!empty($rejected)) {
+            flash(
+                'به‌روزرسانی انجام شد، اما این کلیدها پذیرفته نشدند: '
+                . implode(', ', $rejected)
+            )->warning();
+        }
+
+        if ($written > 0 || empty($rejected)) {
+            flash('تنظیمات با موفقیت بروزرسانی شد.')->success();
+        }
+
         return back();
     }
 
     /**
-     * overWrite the Env File values.
-     * @param  String type
-     * @param  String value
-     * @return \Illuminate\Http\Response
+     * فهرست کلیدهایی که اجازه نوشتن در `.env` را دارند.
+     *
+     * منبع فهرست، خودِ `.env.example` است: اگر کلیدی در قالب نمونه
+     * وجود ندارد، این متد هم آن را نمی‌نویسد. بنابراین افزودن یک کلید
+     * تازه به `.env` نیازمند افزودن آن به `.env.example` (و در نتیجه
+     * یک تغییر کد قابل بازبینی در Git) است — نه یک درخواست HTTP.
+     *
+     * کلیدهای حساس عمداً از فهرست بیرون گذاشته شده‌اند تا پنل مدیریت
+     * نتواند خودش را قفل کند یا وضعیت امنیتی سامانه را تغییر دهد.
+     *
+     * @return array
+     */
+    protected function writableEnvKeys()
+    {
+        // کلیدهایی که هرگز نباید از رابط کاربری نوشته شوند
+        $neverWritable = [
+            'APP_KEY',          // تغییر آن تمام داده رمزنگاری‌شده را ناخوانا می‌کند
+            'APP_ENV',          // محیط اجرا باید در استقرار تعیین شود
+            'APP_DEBUG',        // افشای جزئیات خطای PHP در محیط عملیاتی
+            'APP_URL',
+            'DB_CONNECTION', 'DB_HOST', 'DB_PORT', 'DB_DATABASE',
+            'DB_USERNAME', 'DB_PASSWORD',   // خرابی کامل اتصال دیتابیس
+            'SESSION_DRIVER', 'CACHE_DRIVER', 'QUEUE_CONNECTION',
+            'BROADCAST_DRIVER', 'SESSION_SECURE_COOKIE', 'SESSION_ENCRYPT',
+            'LOG_CHANNEL', 'DEMO_MODE',
+        ];
+
+        static $keys = null;
+
+        if ($keys !== null) {
+            return $keys;
+        }
+
+        $keys = [];
+        $example = base_path('.env.example');
+
+        if (is_file($example)) {
+            foreach (file($example, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+                $line = trim($line);
+
+                if ($line === '' || $line[0] === '#') {
+                    continue;
+                }
+
+                $pos = strpos($line, '=');
+                if ($pos === false) {
+                    continue;
+                }
+
+                $name = trim(substr($line, 0, $pos));
+
+                if (preg_match('/^[A-Z][A-Z0-9_]*$/', $name)) {
+                    $keys[$name] = true;
+                }
+            }
+        }
+
+        $keys = array_keys($keys);
+
+        // حذف کلیدهای غیرقابل‌نوشتن
+        $keys = array_values(array_diff($keys, $neverWritable));
+
+        return $keys;
+    }
+
+    /**
+     * آیا مقدار برای نوشتن در فایل `.env` ایمن است؟
+     *
+     * قاعده: هیچ کاراکتر کنترلی (شامل `\r` و `\n`)، هیچ کوتیشنی و
+     * هیچ بک‌اسلشی پذیرفته نمی‌شود. دلیل:
+     *
+     *   • `\r\n` → شکستن خط در فایل پیکربندی و افزودن کلید تازه.
+     *   • `"` و `'` → خروج از رشته و ساخت مقدار غیرمنتظره.
+     *   • `\`  → در برخی پیاده‌سازی‌های dotenv، تعبیر کاراکتر escape.
+     *
+     * @param  string $value
+     * @return bool
+     */
+    protected function isSafeEnvValue($value)
+    {
+        if ($value === '') {
+            return true;
+        }
+
+        // کاراکتر کنترلی (شامل \r و \n و NUL)
+        if (preg_match('/[\x00-\x1F\x7F]/', $value)) {
+            return false;
+        }
+
+        // کوتیشن‌ها و بک‌اسلش — با strpos بررسی می‌شوند تا از دام
+        // escape در رشته‌های PHP و الگوهای باقاعده دور بمانیم.
+        if (strpos($value, '"') !== false) {
+            return false;
+        }
+
+        if (strpos($value, "'") !== false) {
+            return false;
+        }
+
+        if (strpos($value, '\\') !== false) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * نوشتن یک کلید در فایل `.env`.
+     *
+     * برخلاف نسخه پیشین، این متد:
+     *   • کلید را با قاعده `^[A-Z][A-Z0-9_]*$` بازبینی می‌کند،
+     *   • مقدار را با `isSafeEnvValue()` بازبینی می‌کند،
+     *   • خط موجود را «خط‌به‌خط» جای‌گزین می‌کند (نه با
+     *     `str_replace` روی کل محتوا که می‌توانست چند جای مختلف را
+     *     دست بزند)،
+     *   • بازنویسی را «اتمیک» انجام می‌دهد تا فایل نیمه‌نوشته نشود.
+     *
+     * @param  string $type نام کلید
+     * @param  string $val  مقدار
+     * @return bool  آیا نوشتن موفق بود؟
      */
     public function overWriteEnvFile($type, $val)
     {
         $path = base_path('.env');
-        if (file_exists($path)) {
-            $val = '"'.trim($val).'"';
-            if(is_numeric(strpos(file_get_contents($path), $type)) && strpos(file_get_contents($path), $type) >= 0){
-                file_put_contents($path, str_replace(
-                    $type.'="'.env($type).'"', $type.'='.$val, file_get_contents($path)
-                ));
-                
-            }
-            else{
-                file_put_contents($path, file_get_contents($path)."\r\n".$type.'='.$val);
+
+        if (!preg_match('/^[A-Z][A-Z0-9_]*$/', (string) $type)) {
+            return false;
+        }
+
+        if (!$this->isSafeEnvValue((string) $val)) {
+            return false;
+        }
+
+        if (!file_exists($path) || !is_writable($path)) {
+            return false;
+        }
+
+        $contents = file_get_contents($path);
+
+        if ($contents === false) {
+            return false;
+        }
+
+        $newLine = $type . '="' . trim($val) . '"';
+
+        // ── جای‌گزینی خط موجود ────────────────────────────────────
+        $lines = preg_split('/\r\n|\n|\r/', $contents);
+        $replaced = false;
+
+        foreach ($lines as $i => $line) {
+            if (strpos(ltrim($line), $type . '=') === 0) {
+                $lines[$i] = $newLine;
+                $replaced = true;
+                break;
             }
         }
+
+        if (!$replaced) {
+            $lines[] = $newLine;
+        }
+
+        $updated = implode("\r\n", $lines);
+
+        return $this->atomicWrite($path, $updated);
+    }
+
+    /**
+     * نوشتن اتمیک فایل: ابتدا فایل موقت، سپس جای‌گزینی یک‌باره.
+     *
+     * اگر فرایند در میانه کار قطع شود، فایل اصلی دست‌نخورده می‌ماند.
+     *
+     * @param  string $path
+     * @param  string $contents
+     * @return bool
+     */
+    protected function atomicWrite($path, $contents)
+    {
+        $tmp = $path . '.tmp-' . bin2hex(random_bytes(6));
+
+        if (file_put_contents($tmp, $contents, LOCK_EX) === false) {
+            return false;
+        }
+
+        // مجوز فایل اصلی حفظ می‌شود (۰۶۰۰ روی سرور عملیاتی)
+        $perms = @fileperms($path);
+
+        if ($perms !== false) {
+            @chmod($tmp, $perms & 0777);
+        }
+
+        if (!@rename($tmp, $path)) {
+            @unlink($tmp);
+            return false;
+        }
+
+        return true;
     }
 
     public function seller_verification_form(Request $request)

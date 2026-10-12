@@ -59,7 +59,11 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 	Route::get('/smtp-settings', 'BusinessSettingsController@smtp_settings')->name('smtp_settings.index');
 	Route::get('/google-analytics', 'BusinessSettingsController@google_analytics')->name('google_analytics.index');
 	Route::get('/facebook-chat', 'BusinessSettingsController@facebook_chat')->name('facebook_chat.index');
-	Route::post('/env_key_update', 'BusinessSettingsController@env_key_update')->name('env_key_update.update');
+	// [سخت‌سازی M-10] این مسیر مستقیم در فایل .env می‌نویسد؛ پس علاوه بر
+	// میدل‌ور admin، به مجوز «تنظیمات» هم نیاز دارد (دفاع لایه‌ای).
+	Route::post('/env_key_update', 'BusinessSettingsController@env_key_update')
+		->name('env_key_update.update')
+		->middleware('permission:settings.update');
 	Route::post('/payment_method_update', 'BusinessSettingsController@payment_method_update')->name('payment_method.update');
 	Route::post('/google_analytics', 'BusinessSettingsController@google_analytics_update')->name('google_analytics.update');
 	Route::post('/facebook_chat', 'BusinessSettingsController@facebook_chat_update')->name('facebook_chat.update');
