@@ -43,7 +43,7 @@ class RazorpayController extends Controller
         $input = Input::all();
         //get API Configuration
         if(Session::get('payment_type') == 'cart_payment' || Session::get('payment_type') == 'wallet_payment' || Session::get('payment_type') == 'package_payment'){
-            $api = new Api(env('RAZOR_KEY'), env('RAZOR_SECRET'));
+            $api = new Api(config('drikana.payments.razorpay.key'), config('drikana.payments.razorpay.secret'));
         }
         elseif (Session::get('payment_type') == 'seller_payment') {
             $seller = Seller::findOrFail(Session::get('payment_data')['seller_id']);

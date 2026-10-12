@@ -2,20 +2,20 @@
 
 <script>
     closedFunction=function() {
-        location.href = '{{ env('APP_URL') }}'
+        location.href = '{{ config('app.url') }}'
     }
 
     successFunction=function(transaction_id) {
-        location.href = '{{ env('APP_URL') }}'+'/vogue-pay/success/'+transaction_id
+        location.href = '{{ config('app.url') }}'+'/vogue-pay/success/'+transaction_id
     }
     failedFunction=function(transaction_id) {
-        location.href = '{{ env('APP_URL') }}'+'/vogue-pay/failure/'+transaction_id
+        location.href = '{{ config('app.url') }}'+'/vogue-pay/failure/'+transaction_id
     }
 </script>
 @if (\App\BusinessSetting::where('type', 'voguepay_sandbox')->first()->value == 1)
     <input type="hidden" id="merchant_id" name="v_merchant_id" value="demo">
 @else
-    <input type="hidden" id="merchant_id" name="v_merchant_id" value="{{ env('VOGUE_MERCHANT_ID') }}">
+    <input type="hidden" id="merchant_id" name="v_merchant_id" value="{{ config('drikana.payments.voguepay.merchant_id') }}">
 @endif
 
 <script>

@@ -33,8 +33,8 @@ class InstamojoController extends Controller
                }
 
                $api = new \Instamojo\Instamojo(
-                    env('IM_API_KEY'),
-                    env('IM_AUTH_TOKEN'),
+                    config('drikana.payments.instamojo.api_key'),
+                    config('drikana.payments.instamojo.auth_token'),
                     $endPoint
                   );
                   if(preg_match_all('/^(?:(?:\+|0{0,2})91(\s*[\ -]\s*)?|[0]?)?[789]\d{9}|(\d[ -]?){10}\d$/im', Session::get('shipping_info')['phone'])){
@@ -69,8 +69,8 @@ class InstamojoController extends Controller
                }
 
                $api = new \Instamojo\Instamojo(
-                    env('IM_API_KEY'),
-                    env('IM_AUTH_TOKEN'),
+                    config('drikana.payments.instamojo.api_key'),
+                    config('drikana.payments.instamojo.auth_token'),
                     $endPoint
                   );
                   try {
@@ -130,8 +130,8 @@ class InstamojoController extends Controller
                }
 
                $api = new \Instamojo\Instamojo(
-                    env('IM_API_KEY'),
-                    env('IM_AUTH_TOKEN'),
+                    config('drikana.payments.instamojo.api_key'),
+                    config('drikana.payments.instamojo.auth_token'),
                     $endPoint
                   );
                   try {
@@ -167,8 +167,8 @@ class InstamojoController extends Controller
          if(Session::has('payment_type')){
              if(Session::get('payment_type') == 'cart_payment' || Session::get('payment_type') == 'wallet_payment' || Session::get('payment_type') == 'package_payment'){
                  $api = new \Instamojo\Instamojo(
-                     env('IM_API_KEY'),
-                     env('IM_AUTH_TOKEN'),
+                     config('drikana.payments.instamojo.api_key'),
+                     config('drikana.payments.instamojo.auth_token'),
                      $endPoint
                  );
              }

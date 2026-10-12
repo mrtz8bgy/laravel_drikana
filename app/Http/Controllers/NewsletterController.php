@@ -19,13 +19,13 @@ class NewsletterController extends Controller
 
     public function send(Request $request)
     {
-        if (env('MAIL_USERNAME') != null) {
+        if (config('mail.username') != null) {
             //sends newsletter to selected users
         	if ($request->has('user_emails')) {
                 foreach ($request->user_emails as $key => $email) {
                     $array['view'] = 'emails.newsletter';
                     $array['subject'] = $request->subject;
-                    $array['from'] = env('MAIL_USERNAME');
+                    $array['from'] = config('mail.username');
                     $array['content'] = $request->content;
 
                     try {
@@ -41,7 +41,7 @@ class NewsletterController extends Controller
                 foreach ($request->subscriber_emails as $key => $email) {
                     $array['view'] = 'emails.newsletter';
                     $array['subject'] = $request->subject;
-                    $array['from'] = env('MAIL_USERNAME');
+                    $array['from'] = config('mail.username');
                     $array['content'] = $request->content;
 
                     try {

@@ -94,7 +94,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <div class="g-recaptcha" data-sitekey="{{ env('CAPTCHA_KEY') }}">
+                                            <div class="g-recaptcha" data-sitekey="{{ config('drikana.captcha_key') }}">
                                                 @if ($errors->has('g-recaptcha-response'))
                                                     <span class="invalid-feedback" style="display:block">
                                                         <strong>{{ $errors->first('g-recaptcha-response') }}</strong>

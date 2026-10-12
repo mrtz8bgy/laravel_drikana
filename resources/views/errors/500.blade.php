@@ -8,6 +8,6 @@
         {{__('Something went wrong. Looks like server failed to load your request.')}}
     </div>
     <hr class="new-section-sm bord-no">
-    <div class="pad-top"><a class="btn btn-primary" href="{{env('APP_URL')}}">{{__('Return Home')}}</a></div>
+    <div class="pad-top"><a class="btn btn-primary" href="{{config('app.url')}}">{{__('Return Home')}}</a></div>
 </div>
 @endsection

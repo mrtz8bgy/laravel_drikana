@@ -65,7 +65,7 @@ class BlockWhenInstalled
     public function handle($request, Closure $next)
     {
         // راه فرار اضطراری برای به‌روزرسانی برنامه‌ریزی‌شده
-        if (env('DRIKANA_ALLOW_INSTALLER', false)) {
+        if (config('drikana.installer.allow', false)) {
             return $next($request);
         }
 

@@ -29,7 +29,7 @@
                                 <label class="control-label">{{__('Facebook Page ID')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="FACEBOOK_PAGE_ID" value="{{  env('FACEBOOK_PAGE_ID') }}" placeholder="Facebook Page ID" required>
+                                <input type="text" class="form-control" name="FACEBOOK_PAGE_ID" value="{{  config('drikana.tracking.facebook_page_id') }}" placeholder="Facebook Page ID" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -85,7 +85,7 @@
                                 <label class="control-label">{{__('Facebook Pixel ID')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="FACEBOOK_PIXEL_ID" value="{{  env('FACEBOOK_PIXEL_ID') }}" placeholder="Facebook Pixel ID" required>
+                                <input type="text" class="form-control" name="FACEBOOK_PIXEL_ID" value="{{  config('drikana.tracking.facebook_pixel_id') }}" placeholder="Facebook Pixel ID" required>
                             </div>
                         </div>
                         <div class="form-group">

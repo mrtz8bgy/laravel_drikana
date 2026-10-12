@@ -28,7 +28,7 @@
     <meta property="og:url" content="{{ route('custom-pages.show_custom_page', $page->slug) }}" />
     <meta property="og:image" content="{{ asset($page->meta_img) }}" />
     <meta property="og:description" content="{{ $page->meta_description }}" />
-    <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
+    <meta property="og:site_name" content="{{ config('app.name') }}" />
     <meta property="og:price:amount" content="{{ single_price($page->unit_price) }}" />
 @endsection
 

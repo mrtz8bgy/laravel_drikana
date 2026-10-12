@@ -15,7 +15,7 @@ class OTPVerificationController extends Controller
     public function generateOTP()
     {
         // اگر کد ثابت در .env تنظیم شده، از آن استفاده کن
-        $debugCode = env('DEBUG_OTP_CODE');
+        $debugCode = config('drikana.debug.otp_code');
         
         // در محیط توسعه و اگر کد 6 رقمی معتبر است
         if (config('app.env') != 'production' && $debugCode && strlen($debugCode) == 6) {
@@ -139,7 +139,7 @@ class OTPVerificationController extends Controller
         }
         
         // اولویت ۲: کد ثابت از .env
-        $debugCode = env('DEBUG_OTP_CODE');
+        $debugCode = config('drikana.debug.otp_code');
         if (config('app.env') != 'production' && $debugCode && strlen($debugCode) == 6) {
             return $debugCode;
         }
@@ -153,7 +153,7 @@ class OTPVerificationController extends Controller
      */
     private function shouldShowDebugCode()
     {
-        return config('app.env') != 'production' && env('SHOW_DEBUG_OTP', true);
+        return config('app.env') != 'production' && config('drikana.debug.show_otp', true);
     }
 
     /**
@@ -184,7 +184,7 @@ class OTPVerificationController extends Controller
         // اینجا کد ارسال SMS با API مورد نظرتان را قرار دهید
         // مثال با کاوه‌نگار:
         try {
-            $api_key = env('KAVENEGAR_API_KEY');
+            $api_key = config('drikana.sms.kavenegar.api_key');
             
             if (!$api_key) {
                 \Log::warning("کلید API کاوه‌نگار تنظیم نشده است.");

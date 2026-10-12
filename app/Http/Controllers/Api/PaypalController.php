@@ -12,10 +12,10 @@ class PaypalController extends Controller
         $order = new OrderController;
 
         $gateway = new Braintree_Gateway([
-            'environment' => env('BRAINTREE_ENVIRONMENT'),
-            'merchantId' => env('BRAINTREE_MERCHANT_ID'),
-            'publicKey' => env('BRAINTREE_PUBLIC_KEY'),
-            'privateKey' => env('BRAINTREE_PRIVATE_KEY')
+            'environment' => config('drikana.payments.braintree.environment'),
+            'merchantId' => config('drikana.payments.braintree.merchant_id'),
+            'publicKey' => config('drikana.payments.braintree.public_key'),
+            'privateKey' => config('drikana.payments.braintree.private_key')
         ]);
 
         $response = $gateway->transaction()->sale([

@@ -506,9 +506,15 @@ class SecurityFixesTest extends TestCase
     /** @test */
     public function installer_can_be_temporarily_enabled_by_env_flag()
     {
-        // راه فرار اضطراری برای به‌روزرسانی برنامه‌ریزی‌شده
-        putenv('DRIKANA_ALLOW_INSTALLER=true');
-        $_ENV['DRIKANA_ALLOW_INSTALLER'] = 'true';
+        // راه فرار اضطراری برای به‌روزرسانی برنامه‌ریزی‌شده.
+        //
+        // نکته (مورد M-09): میدل‌ور پیش‌تر این کلید را با `env()` می‌خواند
+        // و کش‌شدن پیکربندی، آن را بسته نگه می‌داشت (رفتار ایمن، اما
+        // غیرقابل پیش‌بینی). اکنون از `config('drikana.installer.allow')`
+        // خوانده می‌شود؛ پس آزمون هم مقدار را در خود پیکربندی می‌گذارد.
+        $original = config('drikana.installer.allow');
+
+        config(['drikana.installer.allow' => true]);
 
         $middleware = new \App\Http\Middleware\BlockWhenInstalled();
 
@@ -520,12 +526,11 @@ class SecurityFixesTest extends TestCase
 
         $this->assertTrue(
             $reached,
-            'با تنظیم DRIKANA_ALLOW_INSTALLER=true باید امکان اجرای به‌روزرسانی فراهم باشد.'
+            'با فعال بودن DRIKANA_ALLOW_INSTALLER باید امکان اجرای به‌روزرسانی فراهم باشد.'
         );
 
-        putenv('DRIKANA_ALLOW_INSTALLER');
-        unset($_ENV['DRIKANA_ALLOW_INSTALLER']);
-        app()->forgetInstance('env.DRIKANA_ALLOW_INSTALLER');
+        // بازگرداندن مقدار اصلی — حتی اگر آزمون شکست بخورد
+        config(['drikana.installer.allow' => $original]);
     }
 
     /** @test */

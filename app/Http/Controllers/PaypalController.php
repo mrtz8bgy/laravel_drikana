@@ -34,8 +34,8 @@ class PaypalController extends Controller
 
             if(Session::get('payment_type') == 'cart_payment' || Session::get('payment_type') == 'wallet_payment'){
                 $this->_apiContext = PayPal::ApiContext(
-                    env('PAYPAL_CLIENT_ID'),
-                    env('PAYPAL_CLIENT_SECRET'));
+                    config('drikana.payments.paypal.client_id'),
+                    config('drikana.payments.paypal.client_secret'));
 
         		$this->_apiContext->setConfig(array(
         			'mode' => $mode,
@@ -63,8 +63,8 @@ class PaypalController extends Controller
             }
             elseif(Session::get('payment_type') == 'package_payment'){
                 $this->_apiContext = PayPal::ApiContext(
-                    env('PAYPAL_CLIENT_ID'),
-                    env('PAYPAL_CLIENT_SECRET'));
+                    config('drikana.payments.paypal.client_id'),
+                    config('drikana.payments.paypal.client_secret'));
 
         		$this->_apiContext->setConfig(array(
         			'mode' => $mode,
@@ -140,8 +140,8 @@ class PaypalController extends Controller
         if($request->session()->has('payment_type')){
             if($request->session()->get('payment_type') == 'cart_payment'){
                 $this->_apiContext = PayPal::ApiContext(
-                    env('PAYPAL_CLIENT_ID'),
-                    env('PAYPAL_CLIENT_SECRET'));
+                    config('drikana.payments.paypal.client_id'),
+                    config('drikana.payments.paypal.client_secret'));
 
                 $payment = PayPal::getById($payment_id, $this->_apiContext);
                 $paymentExecution = PayPal::PaymentExecution();
@@ -171,8 +171,8 @@ class PaypalController extends Controller
             }
             elseif ($request->session()->get('payment_type') == 'wallet_payment') {
                 $this->_apiContext = PayPal::ApiContext(
-                    env('PAYPAL_CLIENT_ID'),
-                    env('PAYPAL_CLIENT_SECRET'));
+                    config('drikana.payments.paypal.client_id'),
+                    config('drikana.payments.paypal.client_secret'));
 
                 $payment = PayPal::getById($payment_id, $this->_apiContext);
                 $paymentExecution = PayPal::PaymentExecution();
@@ -186,8 +186,8 @@ class PaypalController extends Controller
             }
             elseif ($request->session()->get('payment_type') == 'package_payment') {
                 $this->_apiContext = PayPal::ApiContext(
-                    env('PAYPAL_CLIENT_ID'),
-                    env('PAYPAL_CLIENT_SECRET'));
+                    config('drikana.payments.paypal.client_id'),
+                    config('drikana.payments.paypal.client_secret'));
 
                 $payment = PayPal::getById($payment_id, $this->_apiContext);
                 $paymentExecution = PayPal::PaymentExecution();

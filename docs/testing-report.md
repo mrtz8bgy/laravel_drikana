@@ -50,23 +50,24 @@ php7.4 -d memory_limit=1G vendor/bin/phpunit --filter SecurityFixesTest
 ```
 PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
 
-...............................................................  63 / 185 ( 34%)
-..........................................................S.... 126 / 185 ( 68%)
-...........................................................     185 / 185 (100%)
+...............................................................  63 / 190 ( 33%)
+............................................................... 126 / 190 ( 66%)
+S.............................................................. 189 / 190 ( 99%)
+.                                                               190 / 190 (100%)
 
-Time: 12.66 seconds, Memory: 84.50 MB
+Time: 12.19 seconds, Memory: 86.50 MB
 
 OK, but incomplete, skipped, or risky tests!
-Tests: 185, Assertions: 588, Skipped: 1.
+Tests: 190, Assertions: 1332, Skipped: 1.
 ```
 
 | شاخص | مقدار |
 |------|-------|
-| آزمون‌های اجراشده | **۱۸۵** |
-| موفق | **۱۸۴** |
+| آزمون‌های اجراشده | **۱۹۰** |
+| موفق | **۱۸۹** |
 | ناموفق | **۰** |
 | رد‌شده (Skipped) | **۱** |
-| تعداد Assertion | **۵۸۸** |
+| تعداد Assertion | **۱۳۳۲** |
 
 ### آزمون رد‌شده (Skipped)
 
@@ -83,6 +84,7 @@ Tests: 185, Assertions: 588, Skipped: 1.
 |------------|-------|-----------|-------|
 | `tests/Feature/SecurityFixesTest.php` | ۳۷ | ۱۳۶ | ✅ OK |
 | `tests/Feature/BackdoorRemovalAndEnvHardeningTest.php` | ۱۳ | ۴۴ | ✅ OK |
+| `tests/Feature/ConfigCacheSafetyTest.php` | ۵ | ۷۴۴ | ✅ OK |
 | `tests/Feature/ArticleManagementTest.php` | ۲۸ | ۵۴ | ✅ OK |
 | `tests/Feature/RbacAccessControlTest.php` | ۲۰ | ۵۲ | ✅ OK (۱ مورد بالقوه رد‌شونده) |
 | `tests/Feature/OwnershipTransferTest.php` | ۱۹ | ۵۶ | ✅ OK |
@@ -101,7 +103,7 @@ Tests: 185, Assertions: 588, Skipped: 1.
 
 ## پوشش موضوعی
 
-### امنیت (۹۸ آزمون)
+### امنیت (۱۰۳ آزمون)
 
 | موضوع | فایل | چه چیزی سنجیده می‌شود |
 |-------|------|-----------------------|
@@ -123,6 +125,7 @@ Tests: 185, Assertions: 588, Skipped: 1.
 | در پشتی (نوشتن فایل) | `BackdoorRemovalAndEnvHardeningTest` | حذف مسیر `/config_content`، تابع مبهم‌سازی و استثنای CSRF آن |
 | ارتباط پنهان | `BackdoorRemovalAndEnvHardeningTest` | نبود تابع ارسال و نبود نشانی بیرونی در کل فایل‌های PHP |
 | تزریق `.env` | `BackdoorRemovalAndEnvHardeningTest` | رد `\n`/`\r`/کوتیشن/بک‌اسلش، فهرست مجاز کلیدها، میدل‌ور `settings.update` |
+| ایمنی کش پیکربندی | `ConfigCacheSafetyTest` | نبود `env()` در کد برنامه، صحت استثناهای مستند، وجود ۳۴ کلید پیکربندی، پوشش `.env.example`، نبود رمز واقعی در آن |
 | کوکی نشست | `SecurityFixesTest` | رمزنگاری و SameSite |
 | نشست بومی | `SecurityFixesTest` | `session_start()` در سطح فایل وجود ندارد |
 | روت‌های مدیریتی | `SecurityFixesTest` | هر روت تغییردهنده مجوز یا Gate دارد |
@@ -188,6 +191,7 @@ Audit Log.
 | دسته‌بندی مقالات | `GET /articles/category/{slug}` | ✅ ۲۰۰ |
 | جست‌وجو در مقالات | `GET /articles/search?q=طلا` | ✅ ۲۰۰ |
 | در پشتی نوشتن فایل | `POST /config_content` روی سرور محلی | ✅ ۴۰۴ و **هیچ فایلی نوشته نشد** |
+| ایمنی `config:cache` | `php artisan config:cache` + درخواست به `/`، `/articles`، `/admin` | ✅ ۲۰۰/۲۰۰/۲۰۲ — و `config('drikana.sms.farazsms.from')` مقدار درست داد در حالی که `env('APP_NAME')` خالی بود |
 | بررسی نحو PHP | `php -l` روی تمام فایل‌های تغییریافته | ✅ بدون خطا |
 | فهرست روت‌ها | `php artisan route:list` | ✅ بدون خطای روت |
 | پاک‌سازی Autoload | `composer dump-autoload` | ✅ ۹۲۹۵ کلاس |
@@ -228,11 +232,15 @@ Audit Log.
 مقایسه با شاخه `backup/pre-refactor` (وضعیت پیش از بازسازی):
 
 ```
-۲۰۸ فایل تغییر کرد: ۳۵٬۴۹۳ خط افزوده، ۷٬۳۹۱ خط حذف
-  ۱۱۶ فایل افزوده   (A)
-   ۸۸ فایل تغییر‌یافته (M)
+~۲۴۰ فایل تغییر کرد (این شماره با هر بسته کار افزایش می‌یابد)
+  ~۱۲۰ فایل افزوده   (A)
+   ~۹۰ فایل تغییر‌یافته (M)
     ۴ فایل حذف‌شده    (D)
 ```
+
+> **چرا «تقریبی»؟** این گزارش پیش از پایان کار نوشته شده است. عدد دقیق
+> را با `git diff --stat backup/pre-refactor` بگیرید؛ شاخه
+> `backup/pre-refactor` نقطه شروع کار را نگه می‌دارد.
 
 ### فایل‌های حذف‌شده (چهار مورد — همه با دلیل)
 
@@ -281,6 +289,10 @@ Audit Log.
 `Models/ArticleImage.php`, `Services/Content/ArticleService.php`,
 `Services/Content/HtmlSanitizer.php`, `Policies/ArticlePolicy.php`
 
+**پیکربندی (۱ فایل)**
+`config/drikana.php` — کلیدهای پیامک، درگاه پرداخت، رهگیری، کد تأیید
+توسعه، نصب‌کننده و داده نمونه (رفع مورد M-09)
+
 **امنیت (۶ فایل)**
 `Middleware/SecurityHeaders.php`, `Middleware/BlockWhenInstalled.php`,
 `Services/Media/SecureImageUploader.php`,
@@ -295,11 +307,12 @@ Audit Log.
 **سیدرها (۲ فایل)**
 `database/seeds/RbacSeeder.php`, `database/seeds/DrikanaSampleArticlesSeeder.php`
 
-**آزمون‌ها (۱۱ فایل)**
+**آزمون‌ها (۱۲ فایل)**
 `SecurityFixesTest`, `RbacAccessControlTest`, `OwnershipTransferTest`,
 `ArticleManagementTest`, `ViewSmokeTest`, `RouteIntegrityTest`,
 `InstallAndSeedTest`, `AuthHardeningTest`, `CssSeparationTest`,
-`AdminUsersAndHomeArticlesTest`, `BackdoorRemovalAndEnvHardeningTest`
+`AdminUsersAndHomeArticlesTest`, `BackdoorRemovalAndEnvHardeningTest`,
+`ConfigCacheSafetyTest`
 
 **CSS جدا‌شده (۱۴ فایل در `public/css/drikana/`)**
 `store.css`, `store-category.css`, `store-menu.css`, `jewelry-admin.css`,
@@ -343,7 +356,7 @@ Audit Log.
 
 | پرسش | پاسخ |
 |------|------|
-| آیا همه آزمون‌ها سبز هستند؟ | بله — ۱۷۱ موفق، ۰ ناموفق، ۱ رد‌شده |
+| آیا همه آزمون‌ها سبز هستند؟ | بله — ۱۸۹ موفق، ۰ ناموفق، ۱ رد‌شده |
 | آیا آزمونی «اجرا‌نشده» به‌عنوان موفق گزارش شده؟ | خیر — موارد آزمون‌نشده صریحاً فهرست شده‌اند |
 | آیا قابلیتی از دست رفته؟ | خیر — چهار فایل حذف‌شده، همه آسیب‌پذیری بودند یا جایگزین کامل‌تر داشتند |
 | آیا مسیرهای حیاتی آزمون دستی شدند؟ | بله — جدول «آزمون‌های دستی» |

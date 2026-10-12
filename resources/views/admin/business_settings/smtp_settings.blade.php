@@ -17,9 +17,9 @@
                         </div>
                         <div class="col-lg-6">
                             <select class="demo-select2" name="MAIL_DRIVER" onchange="checkMailDriver()">
-                                <option value="sendmail" @if (env('MAIL_DRIVER') == "sendmail") selected @endif>Sendmail</option>
-                                <option value="smtp" @if (env('MAIL_DRIVER') == "smtp") selected @endif>SMTP</option>
-                                <option value="mailgun" @if (env('MAIL_DRIVER') == "mailgun") selected @endif>Mailgun</option>
+                                <option value="sendmail" @if (config('mail.driver') == "sendmail") selected @endif>Sendmail</option>
+                                <option value="smtp" @if (config('mail.driver') == "smtp") selected @endif>SMTP</option>
+                                <option value="mailgun" @if (config('mail.driver') == "mailgun") selected @endif>Mailgun</option>
                             </select>
                         </div>
                     </div>
@@ -30,7 +30,7 @@
                                 <label class="control-label">{{__('MAIL HOST')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAIL_HOST" value="{{  env('MAIL_HOST') }}" placeholder="MAIL HOST">
+                                <input type="text" class="form-control" name="MAIL_HOST" value="{{  config('mail.host') }}" placeholder="MAIL HOST">
                             </div>
                         </div>
                         <div class="form-group">
@@ -39,7 +39,7 @@
                                 <label class="control-label">{{__('MAIL PORT')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAIL_PORT" value="{{  env('MAIL_PORT') }}" placeholder="MAIL PORT">
+                                <input type="text" class="form-control" name="MAIL_PORT" value="{{  config('mail.port') }}" placeholder="MAIL PORT">
                             </div>
                         </div>
                         <div class="form-group">
@@ -48,7 +48,7 @@
                                 <label class="control-label">{{__('MAIL USERNAME')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAIL_USERNAME" value="{{  env('MAIL_USERNAME') }}">
+                                <input type="text" class="form-control" name="MAIL_USERNAME" value="{{  config('mail.username') }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -57,7 +57,7 @@
                                 <label class="control-label">{{__('MAIL PASSWORD')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAIL_PASSWORD" value="{{  env('MAIL_PASSWORD') }}">
+                                <input type="text" class="form-control" name="MAIL_PASSWORD" value="{{  config('mail.password') }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -66,7 +66,7 @@
                                 <label class="control-label">{{__('MAIL ENCRYPTION')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAIL_ENCRYPTION" value="{{  env('MAIL_ENCRYPTION') }}">
+                                <input type="text" class="form-control" name="MAIL_ENCRYPTION" value="{{  config('mail.encryption') }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -75,7 +75,7 @@
                                 <label class="control-label">{{__('MAIL FROM ADDRESS')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAIL_FROM_ADDRESS" value="{{  env('MAIL_FROM_ADDRESS') }}">
+                                <input type="text" class="form-control" name="MAIL_FROM_ADDRESS" value="{{  config('mail.from.address') }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -84,7 +84,7 @@
                                 <label class="control-label">{{__('MAIL FROM NAME')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAIL_FROM_NAME" value="{{  env('MAIL_FROM_NAME') }}">
+                                <input type="text" class="form-control" name="MAIL_FROM_NAME" value="{{  config('mail.from.name') }}">
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                                 <label class="control-label">{{__('MAILGUN DOMAIN')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAILGUN_DOMAIN" value="{{  env('MAILGUN_DOMAIN') }}">
+                                <input type="text" class="form-control" name="MAILGUN_DOMAIN" value="{{  config('services.mailgun.domain') }}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -104,7 +104,7 @@
                                 <label class="control-label">{{__('MAILGUN SECRET')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="MAILGUN_SECRET" value="{{  env('MAILGUN_SECRET') }}">
+                                <input type="text" class="form-control" name="MAILGUN_SECRET" value="{{  config('services.mailgun.secret') }}">
                             </div>
                         </div>
                     </div>

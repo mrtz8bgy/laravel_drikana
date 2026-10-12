@@ -16,7 +16,7 @@
                             @if($showDebugCode ?? false)
                             <div class="alert alert-info text-center mb-4">
                                 <strong>کد تأیید (فقط برای توسعه):</strong>
-                                <h3 class="my-2">{{ $user->verification_code ?? env('DEBUG_OTP_CODE', '123456') }}</h3>
+                                <h3 class="my-2">{{ $user->verification_code ?? config('drikana.debug.otp_code') }}</h3>
                                 <small class="text-muted">
                                     این کد فقط در محیط توسعه نمایش داده می‌شود.<br>
                                     برای تغییر آن فایل .env را ویرایش کنید.

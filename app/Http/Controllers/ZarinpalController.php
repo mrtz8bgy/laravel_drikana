@@ -24,12 +24,12 @@ class ZarinpalController extends Controller
     public function getCheckout()
     {        
         $order = Order::findOrFail(Session::get('order_id'));
-        $MerchantID 	= env('ZARINPAL_MERCHANT_CODE');
+        $MerchantID 	= config('drikana.payments.zarinpal.merchant_code');
         $Amount 		= $order->grand_total;
         $Description 	= "تراکنش زرین پال";
         $Email 			= "";
         $Mobile 		= "";
-        $CallbackURL 	= env('APP_URL')."zarinpal/back_url";
+        $CallbackURL 	= config('app.url')."zarinpal/back_url";
         $ZarinGate 		= false;
         $SandBox 		= false;
 
@@ -55,7 +55,7 @@ class ZarinpalController extends Controller
         
         $order = Order::where('payment_details', $_GET['Authority'])->first();
         Session::put('order_id', $order->id);
-        $MerchantID 	= env('ZARINPAL_MERCHANT_CODE');
+        $MerchantID 	= config('drikana.payments.zarinpal.merchant_code');
         $Amount 		= $order->grand_total;
         $ZarinGate 		= false;
         $SandBox 		= false;

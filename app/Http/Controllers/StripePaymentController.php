@@ -49,7 +49,7 @@ class StripePaymentController extends Controller
             if($request->session()->get('payment_type') == 'cart_payment'){
                 $order = Order::findOrFail(Session::get('order_id'));
 
-                Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+                Stripe\Stripe::setApiKey(config('drikana.payments.stripe.secret'));
 
                 $payment = json_encode(Stripe\Charge::create ([
                         "amount" => round(convert_to_usd($order->grand_total) * 100),
@@ -76,7 +76,7 @@ class StripePaymentController extends Controller
             }
             elseif ($request->session()->get('payment_type') == 'wallet_payment') {
 
-                Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+                Stripe\Stripe::setApiKey(config('drikana.payments.stripe.secret'));
 
                 $payment = json_encode(Stripe\Charge::create ([
                         "amount" => round(convert_to_usd($request->session()->get('payment_data')['amount']) * 100),
@@ -89,7 +89,7 @@ class StripePaymentController extends Controller
             }
             elseif ($request->session()->get('payment_type') == 'package_payment') {
 
-                Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+                Stripe\Stripe::setApiKey(config('drikana.payments.stripe.secret'));
                 $customer_package = CustomerPackage::findOrFail(Session::get('payment_data')['customer_package_id']);
 
                 $payment = json_encode(Stripe\Charge::create ([

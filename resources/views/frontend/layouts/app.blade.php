@@ -46,7 +46,7 @@
     <meta property="og:url" content="{{ route('home') }}" />
     <meta property="og:image" content="{{ asset(($generalSetting && $generalSetting->logo) ? $generalSetting->logo : 'frontend/images/logo/drikana-logo.svg') }}" />
     <meta property="og:description" content="{{ $seoDescription }}" />
-    <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
+    <meta property="og:site_name" content="{{ config('app.name') }}" />
 @endif
 
 <!-- Favicon -->
@@ -108,12 +108,12 @@
 
 {{-- Google Analytics - غیرفعال شد
 @if (\App\BusinessSetting::where('type', 'google_analytics')->first()->value == 1)
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('TRACKING_ID') }}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('drikana.tracking_id') }}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', '{{ env('TRACKING_ID') }}');
+      gtag('config', '{{ config('drikana.tracking_id') }}');
     </script>
 @endif
 --}}
@@ -129,12 +129,12 @@
   t.src=v;s=b.getElementsByTagName(e)[0];
   s.parentNode.insertBefore(t,s)}(window, document,'script',
   'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', {{ env('FACEBOOK_PIXEL_ID') }});
+  fbq('init', '{{ config('drikana.tracking.facebook_pixel_id') }}');
   fbq('track', 'PageView');
 </script>
 <noscript>
   <img height="1" width="1" style="display:none"
-       src="https://www.facebook.com/tr?id={{ env('FACEBOOK_PIXEL_ID') }}/&ev=PageView&noscript=1"/>
+       src="https://www.facebook.com/tr?id={{ config('drikana.tracking.facebook_pixel_id') }}/&ev=PageView&noscript=1"/>
 </noscript>
 @endif
 --}}
@@ -170,7 +170,7 @@
         <div id="fb-root"></div>
         <div class="fb-customerchat"
           attribution=setup_tool
-          page_id="{{ env('FACEBOOK_PAGE_ID') }}">
+          page_id="{{ config('drikana.tracking.facebook_page_id') }}">
         </div>
     @endif
     --}}

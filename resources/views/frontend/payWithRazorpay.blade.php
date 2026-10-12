@@ -6,10 +6,10 @@
         <!-- Note that the amount is in paise = 50 INR -->
         <!--amount need to be in paisa-->
         <script src="https://checkout.razorpay.com/v1/checkout.js"
-                data-key="{{ env('RAZOR_KEY') }}"
+                data-key="{{ config('drikana.payments.razorpay.key') }}"
                 data-amount={{round($order->grand_total) * 100}}
                 data-buttontext=""
-                data-name="{{ env('APP_NAME') }}"
+                data-name="{{ config('app.name') }}"
                 data-description="Cart Payment"
                 data-image="{{ asset(\App\GeneralSetting::first()->logo) }}"
                 data-prefill.name= {{ Session::get('shipping_info')['name'] }}

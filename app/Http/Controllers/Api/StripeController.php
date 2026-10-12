@@ -11,7 +11,7 @@ class StripeController extends Controller
 {
     public function processPayment(Request $request)
     {
-        Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+        Stripe::setApiKey(config('drikana.payments.stripe.secret_key'));
 
         try {
             $intent = PaymentIntent::create([

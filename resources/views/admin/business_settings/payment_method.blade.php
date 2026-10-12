@@ -17,7 +17,7 @@
                             <label class="control-label">کد درگاه پرداخت</label>
                         </div>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="ZARINPAL_MERCHANT_CODE" value="{{  env('ZARINPAL_MERCHANT_CODE') }}" placeholder="کد درگاه پرداخت" required>
+                            <input type="text" class="form-control" name="ZARINPAL_MERCHANT_CODE" value="{{  config('drikana.payments.zarinpal.merchant_code') }}" placeholder="کد درگاه پرداخت" required>
                         </div>
                     </div>
                     <div class="form-group">

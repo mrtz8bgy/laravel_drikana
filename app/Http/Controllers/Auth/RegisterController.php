@@ -135,7 +135,7 @@ class RegisterController extends Controller
     private function generateOTPCode()
     {
         // اگر کد ثابت در .env تنظیم شده، از آن استفاده کن
-        $debugCode = env('DEBUG_OTP_CODE');
+        $debugCode = config('drikana.debug.otp_code');
         
         // در محیط توسعه و اگر کد 6 رقمی معتبر است
         if (config('app.env') != 'production' && $debugCode && strlen($debugCode) == 6) {

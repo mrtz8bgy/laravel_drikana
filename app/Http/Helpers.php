@@ -26,15 +26,15 @@ if (!function_exists('sendSMS')) {
             }
 
         } elseif (OtpConfiguration::where('type', 'twillo')->first()->value == 1) {
-            $sid = env("TWILIO_SID"); // Your Account SID from www.twilio.com/console
-            $token = env("TWILIO_AUTH_TOKEN"); // Your Auth Token from www.twilio.com/console
+            $sid = config('drikana.sms.twilio.sid'); // Your Account SID from www.twilio.com/console
+            $token = config('drikana.sms.twilio.auth_token'); // Your Auth Token from www.twilio.com/console
 
             $client = new Client($sid, $token);
             try {
                 $message = $client->messages->create(
                     $to, // Text this number
                     array(
-                        'from' => env('VALID_TWILLO_NUMBER'), // From a valid Twilio number
+                        'from' => config('drikana.sms.twilio.from'), // From a valid Twilio number
                         'body' => $text
                     )
                 );
@@ -43,11 +43,11 @@ if (!function_exists('sendSMS')) {
             }
 
         } elseif (OtpConfiguration::where('type', 'ssl_wireless')->first()->value == 1) {
-            $user = env("SSL_SMS_USER");
-            $pass = env("SSL_SMS_PASSWORD");
-            $sid = env("SSL_SMS_SID");
+            $user = config('drikana.sms.ssl_sms.user');
+            $pass = config('drikana.sms.ssl_sms.password');
+            $sid = config('drikana.sms.ssl_sms.sid');
             $uid = date('dmYhhmi') . rand(10000, 99999);
-            $url = env("SSL_SMS_URL");
+            $url = config('drikana.sms.ssl_sms.url');
             $param = "user=$user&pass=$pass&sms[0][0]=$to&sms[0][1]=" . urlencode($text) . "&sms[0][2]=" . $uid . "&sid=$sid";
 
             $crl = curl_init();
@@ -70,14 +70,14 @@ if (!function_exists('sendSMS')) {
             }
 
             $fields = array(
-                "sender_id" => env("SENDER_ID"),
+                "sender_id" => config('drikana.sms.local.sender_id'),
                 "message" => $text,
-                "language" => env("LANGUAGE"),
-                "route" => env("ROUTE"),
+                "language" => config('drikana.sms.local.language'),
+                "route" => config('drikana.sms.local.route'),
                 "numbers" => $to,
             );
 
-            $auth_key = env('AUTH_KEY');
+            $auth_key = config('drikana.sms.local.auth_key');
 
             $curl = curl_init();
 
@@ -682,30 +682,14 @@ if (!function_exists('convertNumToEng')) {
     }
 }
 
-if (!function_exists('putPermanentEnv')) {
-    function putPermanentEnv($key, $value): bool
-    {
-        $path = app()->environmentFilePath();
-
-        $escaped = preg_quote('=' . env($key), '/');
-
-        $status = file_put_contents($path, preg_replace(
-            "/^{$key}{$escaped}/m",
-            "{$key}={$value}",
-            file_get_contents($path)
-        ));
-
-        return (bool)$status;
-    }
-}
 
 if (!function_exists('sendOTPSMS')) {
     function sendOTPSMS($to, $text)
     {
         if (OtpConfiguration::where('type', 'melipayamak')->first()->value == 1) {
-            $username = env("MELIPAYAMAK_USERNAME");
-            $password = env("MELIPAYAMAK_PASSWORD");
-            $pattern = env("MELIPAYAMAK_PATTERN_ID");
+            $username = config('drikana.sms.melipayamak.username');
+            $password = config('drikana.sms.melipayamak.password');
+            $pattern = config('drikana.sms.melipayamak.pattern_id');
 
             try {
                 ini_set("soap.wsdl_cache_enabled", "0");
@@ -724,10 +708,10 @@ if (!function_exists('sendOTPSMS')) {
             } catch (\Exception $e) {
             }
         } elseif (OtpConfiguration::where('type', 'farazsms')->first()->value == 1) {
-            $username = env("FARAZSMS_USERNAME");
-            $password = env("FARAZSMS_PASSWORD");
-            $from = env("FARAZSMS_FROM");
-            $pattern = env("FARAZSMS_PATTERN_ID");
+            $username = config('drikana.sms.farazsms.username');
+            $password = config('drikana.sms.farazsms.password');
+            $from = config('drikana.sms.farazsms.from');
+            $pattern = config('drikana.sms.farazsms.pattern_id');
 
             try {
                 $to = [$to];

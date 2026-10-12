@@ -9,7 +9,7 @@
                 data-key="{{ $seller->razorpay_api_key }}"
                 data-amount={{Session::get('payment_data')['amount']*100}}
                 data-buttontext=""
-                data-name="{{ env('APP_NAME') }}"
+                data-name="{{ config('app.name') }}"
                 data-description="Seller Commission Payment"
                 data-image="{{ asset(\App\GeneralSetting::first()->logo) }}"
                 data-prefill.name= {{ Auth::user()->name}}

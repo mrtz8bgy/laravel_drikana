@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="{{ asset('css/drikana/admin.css') }}">
 @endpush
 
-@if(env('MAIL_USERNAME') == null && env('MAIL_PASSWORD') == null)
+@if(config('mail.username') == null && config('mail.password') == null)
     <div class="row">
         <div class="col-sm-12">
             <div class="smtp-alert text-center">

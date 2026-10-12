@@ -333,7 +333,7 @@ class OrderController extends Controller
 
             $array['view'] = 'emails.invoice';
             $array['subject'] = 'اطلاعات سفارش - '.$order->code;
-            $array['from'] = env('MAIL_USERNAME');
+            $array['from'] = config('mail.username');
             $array['content'] = 'خریدار عزیز، امیدواریم خرید لذت‌ بخشی را تجربه کرده باشید.';
             $array['file'] = $invoice_dir.'/Order#'.$order->code.'.pdf';
             $array['file_name'] = 'Order#'.$order->code.'.pdf';
@@ -356,7 +356,7 @@ class OrderController extends Controller
             }
 
             //sends email to customer with the invoice pdf attached
-            if(env('MAIL_USERNAME') != null){
+            if(config('mail.username') != null){
                 try {
                     Mail::to($request->session()->get('shipping_info')['email'])->queue(new InvoiceEmailManager($array));
                     Mail::to(User::where('user_type', 'admin')->first()->email)->queue(new InvoiceEmailManager($array));

@@ -110,11 +110,16 @@ chmod 600 .env
 chown www-data:www-data .env
 ```
 
-> ⚠ **`php artisan config:cache` را اجرا نکنید.**
-> در این نسخه، ۷۶ نقطه از کد مستقیماً `env()` را صدا می‌زند؛ با کش
-> تنظیمات، این مقادیر `null` برمی‌گردند و قابلیت‌هایی مثل ارسال
-> پیامک OTP بی‌صدا از کار می‌افتند. جزئیات: مورد M-09 در
-> `docs/security-audit.md`.
+> ✅ **`php artisan config:cache` اکنون بی‌خطر است.**
+> پیش‌تر ۷۵ فراخوانی `env()` در کد برنامه وجود داشت و با کش‌شدن
+> تنظیمات، همه `null` برمی‌گشتند (شکست بی‌صدا در پیامک OTP و
+> درگاه‌های پرداخت). اکنون تمام این مقادیر در `config/drikana.php`
+> (و `config/services.php`، `config/mail.php`) تعریف شده‌اند.
+> جزئیات: مورد M-09 در `docs/security-audit.md`.
+>
+> **تنها نکته:** اگر مقداری را از **پنل مدیریت** تغییر دهید (کد درگاه،
+> SMTP، پیکسل رهگیری و ...)، در حالت کش‌شده یک بار کش را تازه کنید:
+> `php artisan config:clear && php artisan config:cache`
 
 ---
 
@@ -359,10 +364,24 @@ chown -R www-data:www-data storage bootstrap/cache
 
 | دستور | اجرا شود؟ | توضیح |
 |-------|-----------|-------|
+| `php artisan config:cache` | ✅ | اکنون بی‌خطر است (مورد M-09 رفع شد) |
 | `php artisan route:cache` | ✅ | روت‌ها ثابت هستند |
 | `php artisan view:cache` | ✅ | ویوها را پیش‌کامپایل می‌کند |
-| `php artisan config:cache` | ❌ **نه** | تا رفع مورد M-09 — قابلیت‌ها بی‌صدا از کار می‌افتند |
 | `php artisan cache:clear` | در صورت نیاز | پس از تغییر مجوزها/نقش‌ها از پنل لازم نیست (کش خودکار پاک می‌شود) |
+
+**ترتیب پیشنهادی روی سرور عملیاتی:**
+
+```bash
+php artisan config:clear          # پاک‌سازی کش قبلی، پیش از هر چیز
+php artisan config:cache          # پیکربندی
+php artisan route:cache           # مسیرها
+php artisan view:cache            # ویوها
+```
+
+> هر بار که `.env` یا فایل‌های `config/` را دستی تغییر دادید، همین
+> سه دستور را تکرار کنید. اگر مقداری را از **پنل مدیریت** تغییر دادید
+> (پنل، مقدار را در `.env` می‌نویسد)، تنها `config:cache` را دوباره
+> اجرا کنید تا مقدار تازه خوانده شود.
 
 > اگر پس از `route:cache` تغییری در `routes/` دادید، باید
 > `php artisan route:clear` و سپس `route:cache` را اجرا کنید.
@@ -390,6 +409,7 @@ chown -R www-data:www-data storage bootstrap/cache
    `not_installed` روی ۸ مسیر `/install/*` و `/update/*` پاسخ ۴۰۴
    می‌دهد.
 8. **نخستین مدیر کل را با دستور بسازید**، نه با رمز پیش‌فرض.
+8.5. **`config:cache`، `route:cache` و `view:cache` را اجرا کنید** (سود کارایی).
 9. **جایگاه مدیر کل را محدود کنید** — هر حساب `user_type = admin`
    دسترسی کامل دارد.
 10. **گزارش حسابرسی را بررسی کنید** — `/admin/audit-logs`.
@@ -489,7 +509,8 @@ php artisan cache:clear
 | «No application encryption key» | `APP_KEY` خالی | `php artisan key:generate` |
 | تصاویر آپلودشده ۴۰۴ می‌دهند | پیوند ذخیره‌سازی ساخته نشده | `php artisan storage:link` |
 | خطای «could not find driver» | افزونه `pdo_mysql` نصب نیست | نصب افزونه PHP |
-| پیامک OTP ارسال نمی‌شود | `config:cache` اجرا شده | `php artisan config:clear` |
+| پیامک OTP ارسال نمی‌شود | اعتبارنامه پنل پیامک در `.env` خالی است | کلیدهای `MELIPAYAMAK_*` / `FARAZSMS_*` را پر کنید |
+| مقدار تازه پنل اثر نمی‌کند | کش پیکربندی قدیمی | `php artisan config:clear && php artisan config:cache` |
 | مسیرها ۴۰۴ می‌دهند | کش روت قدیمی | `php artisan route:clear && php artisan route:cache` |
 | «Permission denied» در `storage` | مجوز پوشه | `chmod -R 775 storage bootstrap/cache` |
 | جدول‌ها ساخته نشده‌اند | مهاجرت اجرا نشده | `php artisan migrate --force` |

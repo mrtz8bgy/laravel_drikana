@@ -20,7 +20,7 @@
                             <div class="col-lg-6">
                                 <select class="form-control demo-select2-placeholder" name="DEFAULT_LANGUAGE">
                                     @foreach (\App\Language::all() as $key => $language)
-                                        <option value="{{ $language->code }}" <?php if(env('DEFAULT_LANGUAGE') == $language->code) echo 'selected'?> >{{ $language->name }}</option>
+                                        <option value="{{ $language->code }}" <?php if(config('drikana.default_language') == $language->code) echo 'selected'?> >{{ $language->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

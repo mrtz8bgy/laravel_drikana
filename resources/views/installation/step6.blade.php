@@ -50,7 +50,7 @@
         </div>
     </div>
     <div class="text-center">
-        <a href="{{ env('APP_URL') }}" class="btn btn-primary">Go to Frontend Website</a>
-        <a href="{{ env('APP_URL') }}/admin" class="btn btn-success">Login to Admin panel</a>
+        <a href="{{ config('app.url') }}" class="btn btn-primary">Go to Frontend Website</a>
+        <a href="{{ config('app.url') }}/admin" class="btn btn-success">Login to Admin panel</a>
     </div>
 @endsection

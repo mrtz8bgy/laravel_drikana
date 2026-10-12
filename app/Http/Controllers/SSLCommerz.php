@@ -30,8 +30,8 @@ class SSLCommerz
                 }
 
                 $this->setSSLCommerzMode((SSLCZ_IS_SANDBOX) ? 1 : 0);
-                $this->store_id = env('SSLCZ_STORE_ID');
-                $this->store_pass = env('SSLCZ_STORE_PASSWD');
+                $this->store_id = config('drikana.payments.sslcommerz.store_id');
+                $this->store_pass = config('drikana.payments.sslcommerz.store_passwd');
             }
             elseif (Session::get('payment_type') == 'seller_payment') {
                 $seller = Seller::findOrFail(Session::get('payment_data')['seller_id']);

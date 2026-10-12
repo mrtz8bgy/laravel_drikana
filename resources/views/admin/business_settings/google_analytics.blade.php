@@ -29,7 +29,7 @@
                                 <label class="control-label">{{__('Tracking ID')}}</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="TRACKING_ID" value="{{  env('TRACKING_ID') }}" placeholder="Tracking ID" required>
+                                <input type="text" class="form-control" name="TRACKING_ID" value="{{  config('drikana.tracking_id') }}" placeholder="Tracking ID" required>
                             </div>
                         </div>
                         <div class="form-group">

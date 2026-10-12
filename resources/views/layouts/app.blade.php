@@ -170,7 +170,7 @@
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', @php env('TRACKING_ID') @endphp);
+          gtag('config', @php config('drikana.tracking_id') @endphp);
         </script>
     @endif
     --}}

@@ -64,7 +64,7 @@ class ForgotPasswordController extends Controller
                 // مناسب نیست.
                 $user->verification_code = random_int(100000, 999999);
                 $user->save();
-                sendSMS($user->phone, env('APP_NAME'), $user->verification_code.' is your verification code');
+                sendSMS($user->phone, config('app.name'), $user->verification_code.' is your verification code');
                 return view('admin.otp_systems.frontend.auth.passwords.reset_with_phone');
             }
             else {

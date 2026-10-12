@@ -22,11 +22,11 @@ class PaystackController extends Controller
 
         if(Session::get('payment_type') == 'cart_payment'){
             $order = Order::findOrFail(Session::get('order_id'));
-            $paystack = new Paystack(env('PAYSTACK_SECRET_KEY'), $baseUrl);
+            $paystack = new Paystack(config('drikana.payments.paystack.secret_key'), $baseUrl);
             //$user = Auth::user();
             $request->email = $request->session()->get('shipping_info')['email'];
             $request->amount = round($order->grand_total * 100);
-            //$request->key = env('PAYSTACK_SECRET_KEY');
+            //$request->key = config('drikana.payments.paystack.secret_key');
             $request->reference = $paystack->genTranxRef();
             return $paystack->getAuthorizationUrl()->redirectNow();
         }
@@ -41,17 +41,17 @@ class PaystackController extends Controller
             return $paystack->getAuthorizationUrl()->redirectNow();
         }
         elseif(Session::get('payment_type') == 'wallet_payment'){
-            $paystack = new Paystack(env('PAYSTACK_SECRET_KEY'), $baseUrl);
+            $paystack = new Paystack(config('drikana.payments.paystack.secret_key'), $baseUrl);
             $user = Auth::user();
             $request->email = $user->email;
             $request->amount = round(Session::get('payment_data')['amount'] * 100);
-            // $request->key = env('PAYSTACK_SECRET_KEY');
+            // $request->key = config('drikana.payments.paystack.secret_key');
             $request->reference = $paystack->genTranxRef();
             return $paystack->getAuthorizationUrl()->redirectNow();
         }
         elseif(Session::get('payment_type') == 'package_payment'){
             $customer_package = CustomerPackage::findOrFail(Session::get('payment_data')['customer_package_id']);
-            $paystack = new Paystack(env('PAYSTACK_SECRET_KEY'), $baseUrl);
+            $paystack = new Paystack(config('drikana.payments.paystack.secret_key'), $baseUrl);
             $user = Auth::user();
             $request->email = $user->email;
             $request->amount = round($customer_package->amount * 100);
@@ -73,7 +73,7 @@ class PaystackController extends Controller
         $baseUrl = "https://api.paystack.co";
         if(Session::has('payment_type')){
             if(Session::get('payment_type') == 'cart_payment'){
-                $paystack = new Paystack(env('PAYSTACK_SECRET_KEY'), $baseUrl);
+                $paystack = new Paystack(config('drikana.payments.paystack.secret_key'), $baseUrl);
                 $payment = $paystack->getPaymentData();
                 $payment_detalis = json_encode($payment);
                 if(!empty($payment['data']) && $payment['data']['status'] == 'success'){
@@ -98,7 +98,7 @@ class PaystackController extends Controller
                 return redirect()->route('home');
             }
             elseif (Session::get('payment_type') == 'wallet_payment') {
-                $paystack = new Paystack(env('PAYSTACK_SECRET_KEY'), $baseUrl);
+                $paystack = new Paystack(config('drikana.payments.paystack.secret_key'), $baseUrl);
                 $payment = $paystack->getPaymentData();
                 $payment_detalis = json_encode($payment);
                 if(!empty($payment['data']) && $payment['data']['status'] == 'success'){
@@ -110,7 +110,7 @@ class PaystackController extends Controller
                 return redirect()->route('home');
             }
             elseif (Session::get('payment_type') == 'package_payment') {
-                $paystack = new Paystack(env('PAYSTACK_SECRET_KEY'), $baseUrl);
+                $paystack = new Paystack(config('drikana.payments.paystack.secret_key'), $baseUrl);
                 $payment = $paystack->getPaymentData();
                 $payment_detalis = json_encode($payment);
                 if(!empty($payment['data']) && $payment['data']['status'] == 'success'){

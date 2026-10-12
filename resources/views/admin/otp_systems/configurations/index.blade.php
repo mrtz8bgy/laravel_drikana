@@ -22,7 +22,7 @@
                             </label>
                         </div>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="MELIPAYAMAK_USERNAME" value="{{  env('MELIPAYAMAK_USERNAME') }}" placeholder="نام کاربری ملی پیامک" required>
+                            <input type="text" class="form-control" name="MELIPAYAMAK_USERNAME" value="{{  config('drikana.sms.melipayamak.username') }}" placeholder="نام کاربری ملی پیامک" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -33,7 +33,7 @@
                             </label>
                         </div>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="MELIPAYAMAK_PASSWORD" value="{{  env('MELIPAYAMAK_PASSWORD') }}" placeholder="رمز عبور ملی پیامک" required>
+                            <input type="text" class="form-control" name="MELIPAYAMAK_PASSWORD" value="{{  config('drikana.sms.melipayamak.password') }}" placeholder="رمز عبور ملی پیامک" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -44,7 +44,7 @@
                             </label>
                         </div>
                         <div class="col-lg-6">
-                            <input type="text" class="form-control" name="MELIPAYAMAK_PATTERN_ID" value="{{  env('MELIPAYAMAK_PATTERN_ID') }}" placeholder="شناسه پترن ملی پیامک" required>
+                            <input type="text" class="form-control" name="MELIPAYAMAK_PATTERN_ID" value="{{  config('drikana.sms.melipayamak.pattern_id') }}" placeholder="شناسه پترن ملی پیامک" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -75,7 +75,7 @@
                                 <label class="control-label">نام کاربری</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="FARAZSMS_USERNAME" value="{{  env('FARAZSMS_USERNAME') }}" placeholder="نام کاربری فراز اس‌ام‌اس" required>
+                                <input type="text" class="form-control" name="FARAZSMS_USERNAME" value="{{  config('drikana.sms.farazsms.username') }}" placeholder="نام کاربری فراز اس‌ام‌اس" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -84,7 +84,7 @@
                                 <label class="control-label">رمز عبور</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="FARAZSMS_PASSWORD" value="{{  env('FARAZSMS_PASSWORD') }}" placeholder="رمز عبور فراز اس‌ام‌اس" required>
+                                <input type="text" class="form-control" name="FARAZSMS_PASSWORD" value="{{  config('drikana.sms.farazsms.password') }}" placeholder="رمز عبور فراز اس‌ام‌اس" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -93,7 +93,7 @@
                                 <label class="control-label">شماره فرستنده</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="FARAZSMS_FROM" value="{{  env('FARAZSMS_FROM') }}" placeholder="شماره فرستنده فراز اس‌ام‌اس" required>
+                                <input type="text" class="form-control" name="FARAZSMS_FROM" value="{{  config('drikana.sms.farazsms.from') }}" placeholder="شماره فرستنده فراز اس‌ام‌اس" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -102,7 +102,7 @@
                                 <label class="control-label">شناسه پترن</label>
                             </div>
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" name="FARAZSMS_PATTERN_ID" value="{{  env('FARAZSMS_PATTERN_ID') }}" placeholder="شناسه پترن فراز اس‌ام‌اس" required>
+                                <input type="text" class="form-control" name="FARAZSMS_PATTERN_ID" value="{{  config('drikana.sms.farazsms.pattern_id') }}" placeholder="شناسه پترن فراز اس‌ام‌اس" required>
                             </div>
                         </div>
                         <div class="form-group">

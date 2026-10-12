@@ -21,8 +21,8 @@ class Language
         if(Session::has('locale')){
             $locale = Session::get('locale');
         }
-        elseif(env('DEFAULT_LANGUAGE') != null){
-            $locale = env('DEFAULT_LANGUAGE');
+        elseif(config('drikana.default_language') != null){
+            $locale = config('drikana.default_language');
         }
         else{
             $locale = 'en';

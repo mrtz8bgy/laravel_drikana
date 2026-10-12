@@ -14,7 +14,7 @@
                         <div class="card-body">
                             <form role="form" action="{{ route('stripe.post') }}" method="post" class="require-validation"
                                 data-cc-on-file="false"
-                                data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                                data-stripe-publishable-key="{{ config('drikana.payments.stripe.public_key') }}"
                                 id="payment-form">
                                 @csrf
 

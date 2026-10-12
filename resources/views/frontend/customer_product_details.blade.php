@@ -22,7 +22,7 @@
     <meta property="og:url" content="{{ route('product', $customer_product->slug) }}" />
     <meta property="og:image" content="{{ asset($customer_product->meta_img) }}" />
     <meta property="og:description" content="{{ $customer_product->meta_description }}" />
-    <meta property="og:site_name" content="{{ env('APP_NAME') }}" />
+    <meta property="og:site_name" content="{{ config('app.name') }}" />
     <meta property="og:price:amount" content="{{ single_price($customer_product->unit_price) }}" />
 @endsection
 

@@ -3,14 +3,14 @@
 <script>
     closedFunction=function() {
         alert('window closed');
-        location.href = '{{ env('APP_URL') }}'+'/admin/sellers'
+        location.href = '{{ config('app.url') }}'+'/admin/sellers'
     }
 
     successFunction=function(transaction_id) {
-        location.href = '{{ env('APP_URL') }}'+'/vogue-pay/success/'+transaction_id
+        location.href = '{{ config('app.url') }}'+'/vogue-pay/success/'+transaction_id
     }
     failedFunction=function(transaction_id) {
-         location.href = '{{ env('APP_URL') }}'+'/vogue-pay/success/'+transaction_id
+         location.href = '{{ config('app.url') }}'+'/vogue-pay/success/'+transaction_id
     }
 </script>
 
