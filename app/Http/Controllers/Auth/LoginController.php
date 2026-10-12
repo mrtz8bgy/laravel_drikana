@@ -92,7 +92,7 @@ class LoginController extends Controller
             auth()->login($newUser, true);
         }
         if (session('link') != null) {
-            return redirect(session('link'));
+            return redirect(drikana_safe_redirect_url(session('link')));
         } else {
             return redirect()->route('dashboard');
         }
@@ -135,7 +135,7 @@ class LoginController extends Controller
             CoreComponentRepository::instantiateShopRepository();
             return redirect()->route('admin.dashboard');
         } elseif (session('link') != null) {
-            return redirect(session('link'));
+            return redirect(drikana_safe_redirect_url(session('link')));
         } else {
             return redirect()->route('dashboard');
         }

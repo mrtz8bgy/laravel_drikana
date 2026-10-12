@@ -412,6 +412,217 @@ class SecurityFixesTest extends TestCase
             'فایل .env نباید در پوشه public قرار داشته باشد.');
     }
 
+    // =========================================================
+    // سخت‌سازی مرحله ۷ — موارد افزوده‌شده در بازبینی دوم
+    // =========================================================
+
+    /** @test */
+    public function session_cookie_is_encrypted_and_restricted()
+    {
+        // کوکی نشست نباید متن روشن باشد
+        $this->assertTrue(
+            config('session.encrypt'),
+            'محتوای نشست باید رمزنگاری‌شده ذخیره شود؛ در غیر این صورت با لو رفتن '
+            . 'کوکی، اطلاعات داخلی و پیام‌های کاربر خوانا خواهند بود.'
+        );
+
+        // http_only باید فعال باشد تا جاوااسکریپت نتواند کوکی را بخواند
+        $this->assertTrue(
+            config('session.http_only'),
+            'کوکی نشست باید http_only باشد تا از دسترسی جاوااسکریپت محافظت شود.'
+        );
+
+        // same_site نباید null باشد (جلوگیری از CSRF بین‌سایتی)
+        $this->assertContains(
+            config('session.same_site'),
+            ['lax', 'strict'],
+            'کوکی نشست باید same_site داشته باشد تا در درخواست‌های بین‌سایتی ارسال نشود.'
+        );
+    }
+
+    /** @test */
+    public function open_redirect_is_blocked_on_login()
+    {
+        // آدرس‌های بیرونی باید رد شوند و به آدرس داخلی تبدیل شوند
+        $external = [
+            'https://evil.example.com/steal',
+            'http://evil.example.com',
+            '//evil.example.com/steal',
+            'javascript:alert(1)',
+            'data:text/html,<script>alert(1)</script>',
+        ];
+
+        foreach ($external as $url) {
+            $result = drikana_safe_redirect_url($url);
+
+            $this->assertStringStartsWith(
+                'http',
+                $result,
+                'آدرس بیرونی «' . $url . '» باید رد شود.'
+            );
+
+            $this->assertStringNotContainsString(
+                'evil.example.com',
+                $result,
+                'آدرس «' . $url . '» نباید به دامنه بیرونی هدایت کند (Open Redirect).'
+            );
+
+            $this->assertStringNotContainsString(
+                'javascript:',
+                $result,
+                'آدرس «' . $url . '» نباید اسکیمای خطرناک داشته باشد.'
+            );
+        }
+    }
+
+    /** @test */
+    public function safe_redirect_allows_internal_paths()
+    {
+        // مسیرهای داخلی باید بدون تغییر عبور کنند
+        $this->assertSame('/admin/users', drikana_safe_redirect_url('/admin/users'));
+        $this->assertSame('/my-jewelry?tab=1', drikana_safe_redirect_url('/my-jewelry?tab=1'));
+
+        $own = url('/admin/users');
+        $this->assertSame($own, drikana_safe_redirect_url($own));
+    }
+
+    /** @test */
+    public function installer_and_updater_are_blocked_on_installed_system()
+    {
+        // در محیط آزمون، دیتابیس نصب‌شده است؛ بنابراین مسیرهای نصب و
+        // به‌روزرسانی باید ۴۰۴ (پیدا نشد) بدهند.
+        foreach (['/install', '/install/step1', '/install/step2', '/update'] as $uri) {
+            $response = $this->get($uri);
+
+            $this->assertNotEquals(
+                200,
+                $response->getStatusCode(),
+                'مسیر «' . $uri . '» روی سامانه نصب‌شده باید بسته باشد؛ در غیر این صورت '
+                . 'هر فرد بیرونی می‌تواند فایل .env را بازنویسی کند یا SQL ایمپورت نماید.'
+            );
+        }
+    }
+
+    /** @test */
+    public function installer_can_be_temporarily_enabled_by_env_flag()
+    {
+        // راه فرار اضطراری برای به‌روزرسانی برنامه‌ریزی‌شده
+        putenv('DRIKANA_ALLOW_INSTALLER=true');
+        $_ENV['DRIKANA_ALLOW_INSTALLER'] = 'true';
+
+        $middleware = new \App\Http\Middleware\BlockWhenInstalled();
+
+        $reached = false;
+        $middleware->handle(request(), function () use (&$reached) {
+            $reached = true;
+            return response('ok');
+        });
+
+        $this->assertTrue(
+            $reached,
+            'با تنظیم DRIKANA_ALLOW_INSTALLER=true باید امکان اجرای به‌روزرسانی فراهم باشد.'
+        );
+
+        putenv('DRIKANA_ALLOW_INSTALLER');
+        unset($_ENV['DRIKANA_ALLOW_INSTALLER']);
+        app()->forgetInstance('env.DRIKANA_ALLOW_INSTALLER');
+    }
+
+    /** @test */
+    public function delete_confirmation_modal_uses_post_with_csrf()
+    {
+        $modal = file_get_contents(resource_path('views/partials/modal.blade.php'));
+
+        $this->assertContains(
+            '@csrf',
+            $modal,
+            'مودال تأیید حذف باید توکن CSRF داشته باشد؛ در غیر این صورت درخواست حذف '
+            . 'بدون توکن ارسال می‌شود و ابزارهای امنیتی آن را رد می‌کنند.'
+        );
+
+        $this->assertContains(
+            '_method',
+            $modal,
+            'مودال تأیید حذف باید فیلد _method=DELETE داشته باشد تا درخواست با متد '
+            . 'درست به روت‌های DELETE برسد.'
+        );
+
+        $this->assertContains(
+            'method="POST"',
+            $modal,
+            'عملیات حذف باید با متد POST ارسال شود، نه با لینک GET.'
+        );
+
+        $this->assertFalse(
+            strpos($modal, '<a id="delete_link"'),
+            'نسخه قبلی از لینک GET برای حذف استفاده می‌کرد که در برابر CSRF آسیب‌پذیر است.'
+        );
+    }
+
+    /** @test */
+    public function native_session_is_not_started_at_file_level()
+    {
+        // هیچ کلاسی نباید در سطح فایل session_start() صدا بزند؛ این کار با
+        // بارگذاری خودکار کلاس اجرا می‌شود و در خط فرمان خطا می‌دهد.
+        $offenders = [];
+
+        foreach (glob(app_path('Http/Controllers/*.php')) as $file) {
+            $content = file_get_contents($file);
+
+            if (preg_match('/^\s*session_start\s*\(\s*\)\s*;/m', $content)) {
+                $offenders[] = basename($file);
+            }
+        }
+
+        $this->assertEmpty(
+            $offenders,
+            "این فایل‌ها در سطح فایل session_start() دارند که با بارگذاری کلاس اجرا می‌شود:\n  - "
+            . implode("\n  - ", $offenders)
+        );
+    }
+
+    /** @test */
+    public function every_mutating_admin_route_requires_a_permission_or_admin_gate()
+    {
+        // روت‌های تغییردهنده در ناحیه /admin باید دست‌کم از میدل‌ور admin عبور کنند
+        $unguarded = [];
+
+        foreach (\Illuminate\Support\Facades\Route::getRoutes() as $route) {
+            $uri = $route->uri();
+
+            if (strpos($uri, 'admin') !== 0) {
+                continue;
+            }
+
+            $methods = array_intersect($route->methods(), ['POST', 'PUT', 'PATCH', 'DELETE']);
+
+            if (empty($methods)) {
+                continue;
+            }
+
+            $middleware = $route->gatherMiddleware();
+
+            $hasGate = false;
+            foreach ($middleware as $m) {
+                if (strpos($m, 'permission') === 0 || strpos($m, 'admin') !== false
+                    || strpos($m, 'auth') !== false || strpos($m, 'role') !== false) {
+                    $hasGate = true;
+                    break;
+                }
+            }
+
+            if (!$hasGate) {
+                $unguarded[] = $uri . ' [' . implode(',', $methods) . ']';
+            }
+        }
+
+        $this->assertEmpty(
+            $unguarded,
+            "این روت‌های تغییردهنده در ناحیه مدیریت هیچ دروازه دسترسی ندارند:\n  - "
+            . implode("\n  - ", $unguarded)
+        );
+    }
+
     /** @test */
     public function env_file_is_gitignored()
     {

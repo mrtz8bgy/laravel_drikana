@@ -122,3 +122,109 @@ if (!function_exists('drikana_admin_menu_allowed')) {
         return false;
     }
 }
+
+if (!function_exists('drikana_safe_redirect_url')) {
+    /**
+     * برگرداندن یک آدرس «امن برای هدایت» یا آدرس پیش‌فرض.
+     *
+     * ── مشکل امنیتی که برطرف می‌کند (Open Redirect) ──────────────────
+     * در این پروژه، میدل‌ورهای دسترسی هنگام روبه‌رو شدن با کاربر
+     * وارد‌نشده، آدرس صفحه فعلی را در نشست ذخیره می‌کنند:
+     *
+     *     session(['link' => url()->current()]);
+     *
+     * و کنترلر ورود پس از موفقیت، کاربر را به همان آدرس می‌فرستد:
+     *
+     *     return redirect(session('link'));
+     *
+     * اگر مقدار این نشست هرگونه دستکاری شود (مثلاً از طریق پارامتر
+     * بازگشت یا هر مسیر دیگری که بعداً اضافه شود)، کاربر می‌تواند پس از
+     * ورود موفق، به یک سایت بیرونی هدایت شود. این الگو «Open Redirect»
+     * نام دارد و مهاجم از آن برای فیشینگ استفاده می‌کند: کاربر آدرس
+     * سایت معتبر را می‌بیند، اما پس از ورود به سایت جعلی می‌رسد.
+     *
+     * این تابع تنها آدرس‌هایی را می‌پذیرد که:
+     *   • مسیر نسبی باشند (بدون دامنه)، یا
+     *   • میزبانشان دقیقاً با دامنه همین سایت یکسان باشد.
+     *
+     * در غیر این صورت، آدرس پیش‌فرض بازگردانده می‌شود.
+     *
+     * @param  string|null $url     آدرس ذخیره‌شده
+     * @param  string|null $default آدرس جایگزین (پیش‌فرض: صفحه اصلی پنل)
+     * @return string
+     */
+    function drikana_safe_redirect_url($url, $default = null)
+    {
+        if ($default === null) {
+            $default = '/';
+            try {
+                $default = url('/');
+            } catch (\Exception $e) {
+                // در محیط‌های خاص ممکن است مولّد آدرس آماده نباشد
+            }
+        }
+
+        if (empty($url) || !is_string($url)) {
+            return $default;
+        }
+
+        // رد کردن اسکیماهای خطرناک مانند javascript:، data:، vbscript:
+        // این بررسی پیش از تشخیص «مسیر نسبی» انجام می‌شود، چون رشته‌ای مثل
+        // «javascript:alert(1)» اسلش ابتدایی ندارد و در غیر این صورت
+        // به‌اشتباه یک مسیر داخلی تلقی می‌شد.
+        if (preg_match('#^[a-zA-Z][a-zA-Z0-9+.\-]*:#', $url)
+            && !preg_match('#^https?://#i', $url)) {
+            return $default;
+        }
+
+        // فقط اسکیمای http و https پذیرفته می‌شود
+        if (!preg_match('#^https?://#i', $url)) {
+            // مسیر نسبی: نباید با «//» شروع شود (پروتکل-نسبی، که به دامنه
+            // بیرونی اشاره می‌کند) و نباید کاراکتر کنترلی داشته باشد.
+            if (strpos($url, '//') === 0 || preg_match('/[\x00-\x1F]/', $url)) {
+                return $default;
+            }
+
+            return $url;
+        }
+
+        $parts = parse_url($url);
+
+        if ($parts === false || empty($parts['host'])) {
+            return $default;
+        }
+
+        $host   = strtolower($parts['host']);
+        $scheme = isset($parts['scheme']) ? strtolower($parts['scheme']) : 'http';
+
+        // مقایسه با دامنه همین سایت (هم با و هم بدون www)
+        $allowedHosts = [];
+        try {
+            $appHost = strtolower(parse_url(config('app.url'), PHP_URL_HOST));
+            if ($appHost) {
+                $allowedHosts[] = $appHost;
+                $allowedHosts[] = preg_replace('/^www\./', '', $appHost);
+            }
+        } catch (\Exception $e) {
+            // نادیده — فهرست خالی می‌ماند و در نتیجه آدرس رد می‌شود
+        }
+
+        try {
+            $requestHost = strtolower(request()->getHost());
+            if ($requestHost) {
+                $allowedHosts[] = $requestHost;
+                $allowedHosts[] = preg_replace('/^www\./', '', $requestHost);
+            }
+        } catch (\Exception $e) {
+            // نادیده
+        }
+
+        if (!in_array(strtolower(preg_replace('/^www\./', '', $host)), array_map(function ($h) {
+            return preg_replace('/^www\./', '', $h);
+        }, $allowedHosts), true)) {
+            return $default;
+        }
+
+        return $url;
+    }
+}

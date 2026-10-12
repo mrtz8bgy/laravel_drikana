@@ -99,6 +99,8 @@ class Kernel extends HttpKernel
 
         // ---- نقش‌های موجود پروژه ----
         'admin' => IsAdmin::class,
+        // مسدودسازی صفحه‌های نصب/به‌روزرسانی روی سامانه نصب‌شده
+        'not_installed' => \App\Http\Middleware\BlockWhenInstalled::class,
         'seller' => IsSeller::class,
         'user' => IsUser::class,
         'checkout' => CheckoutMiddleware::class,

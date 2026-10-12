@@ -237,7 +237,10 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapUpdateRoutes()
   {
-    Route::middleware('web')
+    // میدل‌ور not_installed: روی سامانه‌ای که قبلاً نصب شده، مسیر
+    // /update کاملاً بسته می‌شود (پاسخ ۴۰۴). بدون این قید، هر فرد
+    // بیرونی می‌توانست صفحه به‌روزرسانی را باز کند.
+    Route::middleware(['web', 'not_installed'])
        ->namespace($this->namespace)
        ->prefix('update')
        ->group(base_path('routes/update.php'));
@@ -252,7 +255,15 @@ class RouteServiceProvider extends ServiceProvider
    */
   protected function mapInstallRoutes()
   {
-    Route::middleware('web')
+    // میدل‌ور not_installed: روی سامانه‌ای که قبلاً نصب شده، مسیر
+    // /install کاملاً بسته می‌شود (پاسخ ۴۰۴).
+    //
+    // ── چرا حیاتی است؟ ─────────────────────────────────────────────
+    // نصب‌کننده فایل .env را بازنویسی می‌کند، SQL ایمپورت می‌کند و
+    // تنظیمات سیستم را تغییر می‌دهد. اگر این مسیر روی سامانه در حال
+    // بهره‌برداری باز بماند، یک فرد بیرونی می‌تواند پیکربندی سایت را
+    // بازنویسی کند یا آن را از کار بیندازد.
+    Route::middleware(['web', 'not_installed'])
        ->namespace($this->namespace)
        ->prefix('install')
        ->group(base_path('routes/install.php'));
