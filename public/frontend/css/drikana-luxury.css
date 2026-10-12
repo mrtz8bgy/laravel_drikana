@@ -1830,7 +1830,6 @@ select.form-control-lux {
 }
 
 @media (max-width: 768px) {
-
     /* بخش مقالات در تبلت و موبایل */
     .d-articles { padding: 56px 0; }
     .d-art-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 28px; }
@@ -1965,10 +1964,31 @@ a, .link a { color: var(--d-gold); }
    ============================================ */
 @media (max-width: 768px) {
     .d-header { position: sticky; top:0; }
+    .body-wrap { width: 100%; max-width: 100%; }
     .d-mainbar { padding: 10px 0; }
-    .d-mainbar-inner { gap: 10px; }
-    .d-header-icons { gap: 4px; }
-    .d-icon-btn { width: 40px; height: 40px; font-size: 18px; }
+    .d-mainbar .container {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0 12px;
+    }
+    .d-mainbar-inner { min-width: 0; gap: 8px; }
+    .d-mobile-toggle { flex: 0 0 40px; width: 40px; height: 40px; }
+    .d-logo {
+        flex: 0 1 clamp(100px, 36vw, 140px);
+        min-width: 0;
+        justify-content: center;
+    }
+    .d-logo img {
+        display: block;
+        width: 100%;
+        max-width: 140px;
+        max-height: 40px;
+        height: auto !important;
+        object-fit: contain;
+    }
+    .d-header-icons { flex: 0 0 auto; gap: 4px; }
+    .d-icon-btn { width: 36px; height: 36px; font-size: 18px; }
 
     /* Show mobile search toggle */
     .d-mobile-search-toggle {

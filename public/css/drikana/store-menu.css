@@ -17,7 +17,7 @@
    منبع: resources/views/frontend/partials/mobile_menu_lux.blade.php
    ===================================================================== */
 
-.mobile-side-menu { position: fixed; inset: 0; z-index: 1050; pointer-events: none; }
+.mobile-side-menu { position: fixed; inset: 0; z-index: 1201; pointer-events: none; }
 .mobile-side-menu .side-menu-overlay {
     position: absolute; inset: 0; background: rgba(0,0,0,.7);
     opacity: 0; transition: opacity .3s ease;
@@ -61,4 +61,11 @@
 .mobile-side-menu .badge {
     margin-right: auto; background: var(--d-gold); color: var(--d-navy-900);
     font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 700;
+}
+
+@media (max-width: 992px) {
+    .mobile-side-menu .side-menu-wrap,
+    .mobile-side-menu .side-menu-overlay {
+        transition: none;
+    }
 }

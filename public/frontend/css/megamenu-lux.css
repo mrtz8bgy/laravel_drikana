@@ -234,17 +234,20 @@
         justify-content: space-between;
     }
     .lux-mega-list {
-        /*! position: static !important; */
         width: calc(100% - 20px) !important;
         margin: 0 10px 10px;
         border-radius: 12px;
         max-height: 0;
         overflow: hidden;
         padding: 0;
-        transition: max-height .35s ease;
+        transition: none;
         display: block;
     }
-    .lux-mega-trigger.open .lux-mega-list { max-height: 75vh; overflow-y: auto; padding: 6px 0; }
+    .lux-mega-trigger.open .lux-mega-list {
+        max-height: 75vh;
+        overflow-y: auto;
+        padding: 6px 0;
+    }
     .lux-mega-sub {
         position: static !important;
         width: 100% !important;
@@ -260,7 +263,7 @@
         margin-top: 6px;
         max-height: 0;
         overflow: hidden;
-        transition: max-height .3s ease;
+        transition: none;
     }
     .lux-mega-item.open > .lux-mega-sub {
         max-height: 2000px;
