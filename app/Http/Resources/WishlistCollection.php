@@ -20,10 +20,10 @@ class WishlistCollection extends ResourceCollection
                         'unit' => $data->product->unit,
                         'rating' => (double) $data->product->rating,
                         'links' => [
-                            'details' => route('products.show', $data->product->id),
+                            'details' => route('api.products.show', $data->product->id),
                             'reviews' => route('api.reviews.index', $data->product->id),
-                            'related' => route('products.related', $data->product->id),
-                            'top_from_seller' => route('products.topFromSeller', $data->product->id)
+                            'related' => route('api.products.related', $data->product->id),
+                            'top_from_seller' => route('api.products.topFromSeller', $data->product->id)
                         ]
                     ]
                 ];

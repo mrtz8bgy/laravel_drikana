@@ -17,6 +17,8 @@ use CoreComponentRepository;
 
 class ProductController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -323,7 +325,7 @@ class ProductController extends Controller
      */
     public function admin_product_edit($id)
     {
-        $product = Product::findOrFail(decrypt($id));
+        $product = Product::findOrFail($this->decryptId($id));
         $tags = json_decode($product->tags);
         $categories = Category::all();
         return view('admin.products.edit', compact('product', 'categories', 'tags'));
@@ -337,7 +339,7 @@ class ProductController extends Controller
      */
     public function seller_product_edit($id)
     {
-        $product = Product::findOrFail(decrypt($id));
+        $product = Product::findOrFail($this->decryptId($id));
         $tags = json_decode($product->tags);
         $categories = Category::all();
         return view('admin.products.edit', compact('product', 'categories', 'tags'));
@@ -545,6 +547,37 @@ class ProductController extends Controller
     }
 
     /**
+     * سرویس ثبت رخدادهای امنیتی (Audit Log).
+     *
+     * @return \App\Services\AuditLogger
+     */
+    protected function audit()
+    {
+        return app(\App\Services\AuditLogger::class);
+    }
+
+    /**
+     * رد کردن عملیات حذف + ثبت رخداد «دسترسی غیرمجاز».
+     *
+     * @param  \App\Product $product
+     * @param  string       $reason
+     * @return void
+     */
+    protected function denyDelete($product, $reason)
+    {
+        $this->audit()->log(
+            \App\Models\AuditLog::EVENT_ACCESS_DENIED,
+            'تلاش برای حذف محصول بدون داشتن دسترسی — ' . $reason . ' — شناسه محصول: ' . $product->id,
+            $product,
+            [],
+            [],
+            \App\Models\AuditLog::SEVERITY_WARNING
+        );
+
+        abort(403, 'دسترسی شما به این بخش مجاز نیست.');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -553,7 +586,41 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
+
+        // ── کنترل دسترسی (دفاع لایه‌ای؛ Stage 4 و Stage 7) ──────────────
+        // مدیریت باید مجوز «products.delete» داشته باشد و فروشنده تنها
+        // اجازه حذف محصولات خودش را دارد. بدون این بررسی، هر فروشنده
+        // می‌توانست با تغییر id در آدرس، محصول فروشندگان دیگر را حذف کند
+        // (آسیب‌پذیری IDOR). لینک‌های صفحه هرگز جای این بررسی را نمی‌گیرند.
+        $user = Auth::user();
+
+        if ($user === null) {
+            abort(403, 'دسترسی شما به این بخش مجاز نیست.');
+        }
+
+        if ($user->user_type === 'admin') {
+            if (!$user->hasPermissionTo('products.delete')) {
+                $this->denyDelete($product, 'کمبود مجوز products.delete');
+            }
+        } elseif ($user->user_type === 'seller') {
+            if ((int) $product->user_id !== (int) $user->id) {
+                $this->denyDelete($product, 'تلاش فروشنده برای حذف محصول فروشنده دیگر');
+            }
+        } else {
+            $this->denyDelete($product, 'نوع کاربر غیرمجاز برای حذف محصول');
+        }
+
         if(Product::destroy($id)){
+            // ثبت ردپای حذف محصول (رخداد حساس) برای گزارش‌های امنیتی.
+            $this->audit()->log(
+                \App\Models\AuditLog::EVENT_PRODUCT_DELETED,
+                'حذف محصول: ' . $product->name . ' (شناسه ' . $product->id . ')',
+                $product,
+                ['name' => $product->name, 'user_id' => $product->user_id],
+                [],
+                \App\Models\AuditLog::SEVERITY_NOTICE
+            );
+
             foreach (Language::all() as $key => $language) {
                 $data = openJSONFile($language->code);
                 unset($data[$product->name]);

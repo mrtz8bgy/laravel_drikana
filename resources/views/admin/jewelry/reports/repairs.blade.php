@@ -209,7 +209,8 @@
                                         @endswitch
                                     </td>
                                     <td>{{ jdate($order->created_at)->format('Y/m/d') }}</td>
-                                    <td>{{ $order->completed_at ? jdate($order->completed_at)->format('Y/m/d') : '---' }}</td>
+                                    {{-- ستون درست جدول repair_orders مقدار completion_date است. --}}
+                                    <td>{{ $order->completion_date ? jdate($order->completion_date)->format('Y/m/d') : '---' }}</td>
                                     <td>
                                         @switch($order->status)
                                             @case('pending') <span class="badge bg-warning">در انتظار</span> @break

@@ -12,12 +12,17 @@ use App\User;
 use Auth;
 use App\ProductsImport;
 use App\ProductsExport;
-use PDF;
+// نکته: الیاس سراسری `PDF` توسط پکیج niklasravnsborg/laravel-pdf (از طریق
+// bootstrap/cache/packages.php) روی mPDF بازنویسی می‌شود و متد
+// setOptions ندارد. بنابراین اینجا کلاس dompdf را صریح import می‌کنیم.
+use Barryvdh\DomPDF\Facade as PDF;
 use Excel;
+use App\Http\Controllers\Concerns\BuildsPdfDocuments;
 use App\Http\Controllers\Concerns\HandlesCsvDownload;
 
 class ProductBulkUploadController extends Controller
 {
+    use BuildsPdfDocuments;
     use HandlesCsvDownload;
 
     public function index()
@@ -37,61 +42,31 @@ class ProductBulkUploadController extends Controller
     public function pdf_download_category()
     {
         $categories = Category::all();
-        $pdf = PDF::setOptions([
-                        'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true,
-                        'logOutputFile' => storage_path('logs/log.htm'),
-                        'tempDir' => storage_path('logs/')
-                    ])->loadView('downloads.category', compact('categories'));
-
-        return $pdf->download('category.pdf');
+        return $this->pdfDownload('downloads.category', compact('categories'), 'category.pdf');
     }
 
     public function pdf_download_sub_category()
     {
         $sub_categories = Subcategory::all();
-        $pdf = PDF::setOptions([
-                        'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true,
-                        'logOutputFile' => storage_path('logs/log.htm'),
-                        'tempDir' => storage_path('logs/')
-                    ])->loadView('downloads.sub_category', compact('sub_categories'));
-
-        return $pdf->download('sub_category.pdf');
+        return $this->pdfDownload('downloads.sub_category', compact('sub_categories'), 'sub_category.pdf');
     }
 
     public function pdf_download_sub_sub_category()
     {
         $sub_sub_categories = SubSubCategory::all();
-        $pdf = PDF::setOptions([
-                        'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true,
-                        'logOutputFile' => storage_path('logs/log.htm'),
-                        'tempDir' => storage_path('logs/')
-                    ])->loadView('downloads.sub_sub_category', compact('sub_sub_categories'));
-
-        return $pdf->download('sub_sub_category.pdf');
+        return $this->pdfDownload('downloads.sub_sub_category', compact('sub_sub_categories'), 'sub_sub_category.pdf');
     }
 
     public function pdf_download_brand()
     {
         $brands = Brand::all();
-        $pdf = PDF::setOptions([
-                        'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true,
-                        'logOutputFile' => storage_path('logs/log.htm'),
-                        'tempDir' => storage_path('logs/')
-                    ])->loadView('downloads.brand', compact('brands'));
-        return $pdf->download('brands.pdf');
+        return $this->pdfDownload('downloads.brand', compact('brands'), 'brands.pdf');
     }
 
     public function pdf_download_seller()
     {
         $users = User::where('user_type','seller')->get();
-        $pdf = PDF::setOptions([
-                        'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true,
-                        'logOutputFile' => storage_path('logs/log.htm'),
-                        'tempDir' => storage_path('logs/')
-                    ])->loadView('downloads.user', compact('users'));
-
-        return $pdf->download('user.pdf');
-
+        return $this->pdfDownload('downloads.user', compact('users'), 'user.pdf');
     }
 
     public function bulk_upload(Request $request)

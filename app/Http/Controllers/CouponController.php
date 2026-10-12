@@ -12,6 +12,8 @@ use Schema;
 
 class CouponController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -112,7 +114,7 @@ class CouponController extends Controller
      */
     public function edit($id)
     {
-      $coupon = Coupon::findOrFail(decrypt($id));
+      $coupon = Coupon::findOrFail($this->decryptId($id));
       return view('admin.coupons.edit', compact('coupon'));
     }
 

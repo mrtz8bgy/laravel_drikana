@@ -11,6 +11,8 @@ use App\Language;
 
 class SubCategoryController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -92,7 +94,7 @@ class SubCategoryController extends Controller
      */
     public function edit($id)
     {
-        $subcategory = SubCategory::findOrFail(decrypt($id));
+        $subcategory = SubCategory::findOrFail($this->decryptId($id));
         $categories = Category::all();
         return view('admin.subcategories.edit', compact('categories', 'subcategory'));
     }

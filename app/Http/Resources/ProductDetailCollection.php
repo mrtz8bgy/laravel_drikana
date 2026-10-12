@@ -23,7 +23,7 @@ class ProductDetailCollection extends ResourceCollection
                         'avatar_original' => $data->user->avatar_original,
                         'shop_name' => $data->added_by == 'admin' ? '' : $data->user->shop->name,
                         'shop_logo' => $data->added_by == 'admin' ? '' : $data->user->shop->logo,
-                        'shop_link' => $data->added_by == 'admin' ? '' : route('shops.info', $data->user->shop->id)
+                        'shop_link' => $data->added_by == 'admin' ? '' : route('api.shops.info', $data->user->shop->id)
                     ],
                     'category' => [
                         'name' => $data->category->name,
@@ -31,13 +31,13 @@ class ProductDetailCollection extends ResourceCollection
                         'icon' => $data->category->icon,
                         'links' => [
                             'products' => route('api.products.category', $data->category_id),
-                            'sub_categories' => route('subCategories.index', $data->category_id)
+                            'sub_categories' => route('api.subCategories.index', $data->category_id)
                         ]
                     ],
                     'sub_category' => [
                         'name' => $data->subCategory->name,
                         'links' => [
-                            'products' => route('products.subCategory', $data->subcategory_id)
+                            'products' => route('api.products.subCategory', $data->subcategory_id)
                         ]
                     ],
                     'brand' => [
@@ -72,7 +72,7 @@ class ProductDetailCollection extends ResourceCollection
                     'description' => $data->description,
                     'links' => [
                         'reviews' => route('api.reviews.index', $data->id),
-                        'related' => route('products.related', $data->id)
+                        'related' => route('api.products.related', $data->id)
                     ]
                 ];
             })

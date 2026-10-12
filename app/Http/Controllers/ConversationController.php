@@ -11,6 +11,8 @@ use App\Product;
 
 class ConversationController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -87,7 +89,7 @@ class ConversationController extends Controller
      */
     public function show($id)
     {
-        $conversation = Conversation::findOrFail(decrypt($id));
+        $conversation = Conversation::findOrFail($this->decryptId($id));
         if ($conversation->sender_id == Auth::user()->id) {
             $conversation->sender_viewed = 1;
         }
@@ -107,7 +109,7 @@ class ConversationController extends Controller
      */
     public function refresh(Request $request)
     {
-        $conversation = Conversation::findOrFail(decrypt($request->id));
+        $conversation = Conversation::findOrFail($this->decryptId($request->id));
         if($conversation->sender_id == Auth::user()->id){
             $conversation->sender_viewed = 1;
             $conversation->save();
@@ -127,7 +129,7 @@ class ConversationController extends Controller
      */
     public function admin_show($id)
     {
-        $conversation = Conversation::findOrFail(decrypt($id));
+        $conversation = Conversation::findOrFail($this->decryptId($id));
         if ($conversation->sender_id == Auth::user()->id) {
             $conversation->sender_viewed = 1;
         }
@@ -169,11 +171,11 @@ class ConversationController extends Controller
      */
     public function destroy($id)
     {
-        $conversation = Conversation::findOrFail(decrypt($id));
+        $conversation = Conversation::findOrFail($this->decryptId($id));
         foreach ($conversation->messages as $key => $message) {
             $message->delete();
         }
-        if(Conversation::destroy(decrypt($id))){
+        if(Conversation::destroy($this->decryptId($id))){
             flash(__('Conversation has been deleted successfully'))->success();
             return back();
         }

@@ -31,6 +31,8 @@ use Cookie;
 
 class HomeController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     public function login()
     {
         if(Auth::check()){
@@ -545,7 +547,7 @@ class HomeController extends Controller
     public function show_product_edit_form(Request $request, $id)
     {
         $categories = Category::all();
-        $product = Product::find(decrypt($id));
+        $product = Product::find($this->decryptId($id));
         return view('frontend.seller.product_edit', compact('categories', 'product'));
     }
 
@@ -889,7 +891,7 @@ class HomeController extends Controller
     public function show_digital_product_edit_form(Request $request, $id)
     {
         $categories = Category::where('digital', 1)->get();
-        $product = Product::find(decrypt($id));
+        $product = Product::find($this->decryptId($id));
         return view('frontend.seller.digitalproducts.product_edit', compact('categories', 'product'));
     }
 }

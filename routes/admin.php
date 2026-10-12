@@ -44,12 +44,15 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 	Route::get('/seller/payments', 'PaymentController@payment_histories')->name('sellers.payment_histories');
 	Route::get('/seller/payments/show/{id}', 'PaymentController@show')->name('sellers.payment_history');
 
-	Route::resource('customers','CustomerController');
+	// این منابع صفحهٔ «ایجاد» ندارند (فرم ساخت در جای دیگری از پنل است و
+	// متد create کنترلر خالی است). با except(['create']) به‌جای صفحهٔ خالی،
+	// پاسخ ۴۰۴ تمیز برگردانده می‌شود.
+	Route::resource('customers','CustomerController')->except(['create']);
 
 	Route::get('/newsletter', 'NewsletterController@index')->name('newsletters.index');
 	Route::post('/newsletter/send', 'NewsletterController@send')->name('newsletters.send');
 
-	Route::resource('profile','ProfileController');
+	Route::resource('profile','ProfileController')->except(['create']);
 
 	Route::post('/business-settings/update', 'BusinessSettingsController@update')->name('business_settings.update');
 	Route::post('/business-settings/update/activation', 'BusinessSettingsController@updateActivationSettings')->name('business_settings.update.activation');
@@ -98,8 +101,13 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 	Route::group(['prefix' => 'frontend_settings'], function(){
 		Route::resource('sliders','SliderController');
 
-		Route::resource('home_banners','BannerController');
+		// مسیر «ساخت بنر» باید پیش از Route::resource ثبت شود؛ در غیر این صورت
+		// GET /home_banners/create با مسیر show (…/{id}) تطبیق داده می‌شد و
+		// متد create بدون پارامتر position فراخوانی می‌گشت (خطای ۵۰۰).
+		// پارامتر position اختیاری است چون برخی لینک‌های قدیمی بدون آن ساخته شده‌اند.
+		Route::get('/home_banners/create/{position?}', 'BannerController@create')->name('home_banners.create');
 		Route::get('/home_banners/create/{position}', 'BannerController@create')->name('home_banners.create.position');
+		Route::resource('home_banners','BannerController')->except(['create']);
 		Route::post('/home_banners/update_status', 'BannerController@update_status')->name('home_banners.update_status');
 
 		Route::resource('home_categories','HomeCategoryController');
@@ -123,13 +131,13 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 
 	Route::resource('links','LinkController');
 
-	Route::resource('generalsettings','GeneralSettingController');
+	Route::resource('generalsettings','GeneralSettingController')->except(['create']);
 	Route::get('/logo','GeneralSettingController@logo')->name('generalsettings.logo');
 	Route::post('/logo','GeneralSettingController@storeLogo')->name('generalsettings.logo.store');
 	Route::get('/color','GeneralSettingController@color')->name('generalsettings.color');
 	Route::post('/color','GeneralSettingController@storeColor')->name('generalsettings.color.store');
 
-	Route::resource('seosetting','SEOController');
+	Route::resource('seosetting','SEOController')->except(['create']);
 
 	Route::post('/pay_to_seller', 'CommissionController@pay_to_seller')->name('commissions.pay_to_seller');
 
@@ -192,7 +200,7 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 
 	Route::resource('pages', 'PageController');
 
-	Route::resource('countries','CountryController');
+	Route::resource('countries','CountryController')->except(['create']);
 	Route::post('/countries/status', 'CountryController@updateStatus')->name('countries.status');
 });
 

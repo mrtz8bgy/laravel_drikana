@@ -82,6 +82,7 @@ class AuditLog extends Model
     const EVENT_ARTICLE_DELETED     = 'article.deleted';
     const EVENT_SETTINGS_UPDATED    = 'settings.updated';
     const EVENT_ACCESS_DENIED       = 'security.access.denied';
+    const EVENT_PRODUCT_DELETED     = 'product.deleted';
 
     /**
      * کاربر عامل رخداد.

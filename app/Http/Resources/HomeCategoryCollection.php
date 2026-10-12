@@ -16,7 +16,7 @@ class HomeCategoryCollection extends ResourceCollection
                     'icon' => $data->category->icon,
                     'links' => [
                         'products' => route('api.products.category', $data->category->id),
-                        'sub_categories' => route('subCategories.index', $data->category->id)
+                        'sub_categories' => route('api.subCategories.index', $data->category->id)
                     ]
                 ];
             })

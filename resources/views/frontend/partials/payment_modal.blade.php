@@ -1,4 +1,6 @@
-<form class="" action="{{ route('purchase_history.make_payment') }}" method="post" enctype="multipart/form-data">
+{{-- اگر روت پرداخت دستی/آفلاین در این نصب موجود نباشد، فرم بدون مقصد
+     رندر می‌شود تا ارجاع ناموجود باعث خطای ۵۰۰ نشود. --}}
+<form class="" action="{{ Route::has('purchase_history.make_payment') ? route('purchase_history.make_payment') : '#' }}" method="post" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="order_id" value="{{ $order->id }}">
     <div class="modal-body gry-bg px-3 pt-3 mx-auto">

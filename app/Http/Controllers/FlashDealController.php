@@ -8,6 +8,8 @@ use App\FlashDealProduct;
 
 class FlashDealController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -97,7 +99,7 @@ class FlashDealController extends Controller
      */
     public function edit($id)
     {
-        $flash_deal = FlashDeal::findOrFail(decrypt($id));
+        $flash_deal = FlashDeal::findOrFail($this->decryptId($id));
         return view('admin.flash_deals.edit', compact('flash_deal'));
     }
 

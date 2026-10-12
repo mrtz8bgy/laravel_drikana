@@ -8,6 +8,8 @@ use CoreComponentRepository;
 
 class AttributeController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -69,7 +71,7 @@ class AttributeController extends Controller
      */
     public function edit($id)
     {
-        $attribute = Attribute::findOrFail(decrypt($id));
+        $attribute = Attribute::findOrFail($this->decryptId($id));
         return view('admin.attribute.edit', compact('attribute'));
     }
 

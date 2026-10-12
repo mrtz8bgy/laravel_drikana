@@ -207,7 +207,7 @@
         }
 
         function show_make_wallet_recharge_modal(){
-            $.post('{{ route('offline_wallet_recharge_modal') }}', {_token:'{{ csrf_token() }}'}, function(data){
+            $.post('{{ (Route::has('offline_wallet_recharge_modal') ? route('offline_wallet_recharge_modal') : '#') }}', {_token:'{{ csrf_token() }}'}, function(data){
                 $('#offline_wallet_recharge_modal_body').html(data);
                 $('#offline_wallet_recharge_modal').modal('show');
             });

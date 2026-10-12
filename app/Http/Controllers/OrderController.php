@@ -25,6 +25,8 @@ use CoreComponentRepository;
 
 class OrderController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource to seller.
      *
@@ -153,11 +155,11 @@ class OrderController extends Controller
     public function pickup_point_order_sales_show($id)
     {
         if (Auth::user()->user_type == 'staff') {
-            $order = Order::findOrFail(decrypt($id));
+            $order = Order::findOrFail($this->decryptId($id));
             return view('admin.pickup_point.orders.show', compact('order'));
         }
         else{
-            $order = Order::findOrFail(decrypt($id));
+            $order = Order::findOrFail($this->decryptId($id));
             return view('admin.pickup_point.orders.show', compact('order'));
         }
     }
@@ -169,7 +171,7 @@ class OrderController extends Controller
      */
     public function sales_show($id)
     {
-        $order = Order::findOrFail(decrypt($id));
+        $order = Order::findOrFail($this->decryptId($id));
         return view('admin.sales.show', compact('order'));
     }
 
@@ -378,7 +380,7 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        $order = Order::findOrFail(decrypt($id));
+        $order = Order::findOrFail($this->decryptId($id));
         $order->viewed = 1;
         $order->save();
         return view('admin.orders.show', compact('order'));

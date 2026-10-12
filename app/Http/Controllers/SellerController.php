@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Hash;
 
 class SellerController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -103,7 +105,7 @@ class SellerController extends Controller
      */
     public function edit($id)
     {
-        $seller = Seller::findOrFail(decrypt($id));
+        $seller = Seller::findOrFail($this->decryptId($id));
         return view('admin.sellers.edit', compact('seller'));
     }
 

@@ -9,7 +9,7 @@
         </div>
         <!--Horizontal Form-->
         <!--===================================================-->
-        <form class="form-horizontal" action="{{ route('sms.send') }}" method="POST" enctype="multipart/form-data">
+        <form class="form-horizontal" action="{{ (Route::has('sms.send') ? route('sms.send') : '#') }}" method="POST" enctype="multipart/form-data">
         	@csrf
             <div class="panel-body">
                 <div class="form-group">

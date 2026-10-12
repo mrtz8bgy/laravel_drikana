@@ -1,4 +1,4 @@
-<form class="" action="{{ route('wallet_recharge.make_payment') }}" method="post" enctype="multipart/form-data">
+<form class="" action="{{ (Route::has('wallet_recharge.make_payment') ? route('wallet_recharge.make_payment') : '#') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="modal-body gry-bg px-3 pt-3 mx-auto">
         <div class="align-items-center gutters-5 row">

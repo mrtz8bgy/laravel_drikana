@@ -7,6 +7,8 @@ use App\PickupPoint;
 
 class PickupPointController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -72,7 +74,7 @@ class PickupPointController extends Controller
      */
     public function edit($id)
     {
-        $pickup_point = PickupPoint::findOrFail(decrypt($id));
+        $pickup_point = PickupPoint::findOrFail($this->decryptId($id));
         return view('admin.pickup_point.edit', compact('pickup_point'));
     }
 

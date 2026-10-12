@@ -98,10 +98,42 @@ class RouteServiceProvider extends ServiceProvider
     }
   }
 
+  /**
+   * آیا افزونهٔ مشخصی در سامانه نصب و فعال شده است؟
+   *
+   * چرا این بررسی لازم است: کنترلرهای افزونه‌ها از پوشهٔ addons/ بارگذاری
+   * می‌شوند، اما **مدل‌ها و ویوهای** آنان تنها هنگام نصب افزونه (از بخش
+   * «مدیریت افزونه‌ها») داخل app/ و resources/views/ قرار می‌گیرند. اگر
+   * مسیرهای یک افزونهٔ نصب‌نشده ثبت شوند، صفحه با خطای ۵۰۰
+   * (Class/View not found) از کار می‌افتد؛ در حالی که رفتار درست، ۴۰۴
+   * است. بنابراین ثبت مسیرهای افزونه به نتیجهٔ همین بررسی گره خورده است.
+   *
+   * @param  string $identifier شناسهٔ یکتای افزونه (مثل club_point)
+   * @return bool
+   */
+  protected function addonInstalled($identifier)
+  {
+    try {
+      if (!\Illuminate\Support\Facades\Schema::hasTable('addons')) {
+        return false;
+      }
+
+      return \Illuminate\Support\Facades\DB::table('addons')
+        ->where('unique_identifier', $identifier)
+        ->where('activated', 1)
+        ->exists();
+    } catch (\Exception $e) {
+      // در زمان نصب سامانه (پیش از ساخته‌شدن جدول‌ها) یا هر خطای دیتابیس،
+      // امن‌ترین پاسخ «نصب‌نشده» است تا هیچ صفحه‌ای ۵۰۰ ندهد.
+      return false;
+    }
+  }
+
   protected function mapAffiliateRoutes()
   {
     $path = base_path('routes/affiliate.php');
-    if ($this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\AffiliateController'])) {
+    if ($this->addonInstalled('affiliate_system')
+        && $this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\AffiliateController'])) {
       Route::middleware('web')
          ->namespace($this->namespace)
          ->group($path);
@@ -120,7 +152,10 @@ class RouteServiceProvider extends ServiceProvider
     $path = base_path('routes/offline_payment.php');
     // The addon may contain optional seller/customer package handlers. Register
     // its available routes when the core payment controllers are installed.
-    if (file_exists($path) && class_exists('App\\Http\\Controllers\\ManualPaymentMethodController') && class_exists('App\\Http\\Controllers\\WalletController')) {
+    if ($this->addonInstalled('offline_payment')
+        && file_exists($path)
+        && class_exists('App\\Http\\Controllers\\ManualPaymentMethodController')
+        && class_exists('App\\Http\\Controllers\\WalletController')) {
       Route::middleware('web')
          ->namespace($this->namespace)
          ->group($path);
@@ -172,7 +207,8 @@ class RouteServiceProvider extends ServiceProvider
   protected function mapClubPointsRoutes()
   {
     $path = base_path('routes/club_points.php');
-    if ($this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\ClubPointController'])) {
+    if ($this->addonInstalled('club_point')
+        && $this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\ClubPointController'])) {
       Route::middleware('web')
          ->namespace($this->namespace)
          ->group($path);
@@ -221,7 +257,8 @@ class RouteServiceProvider extends ServiceProvider
   protected function mapSellerPackageRoutes()
   {
     $path = base_path('routes/seller_package.php');
-    if ($this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\SellerPackageController'])) {
+    if ($this->addonInstalled('seller_subscription')
+        && $this->canRegisterRouteGroup($path, ['App\\Http\\Controllers\\SellerPackageController'])) {
       Route::middleware('web')
          ->namespace($this->namespace)
          ->group($path);

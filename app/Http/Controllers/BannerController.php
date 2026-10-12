@@ -23,8 +23,13 @@ class BannerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($position)
+    public function create($position = null)
     {
+        // موقعیت بنر می‌تواند «home_banner_one»، عدد یا نامک باشد. اگر در
+        // درخواست تعیین نشده باشد، پیش‌فرض «بنر نخست صفحه اصلی» در نظر
+        // گرفته می‌شود تا متد هرگز با پارامتر خالی خطا ندهد.
+        $position = $position ?: 'home_banner_one';
+
         return view('admin.banners.create', compact('position'));
     }
 

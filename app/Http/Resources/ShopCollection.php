@@ -27,11 +27,11 @@ class ShopCollection extends ResourceCollection
                     'youtube' => $data->youtube,
                     'instagram' => $data->instagram,
                     'links' => [
-                        'featured' => route('shops.featuredProducts', $data->id),
-                        'top' => route('shops.topSellingProducts',  $data->id),
-                        'new' => route('shops.newProducts', $data->id),
-                        'all' => route('shops.allProducts', $data->id),
-                        'brands' => route('shops.brands', $data->id)
+                        'featured' => route('api.shops.featuredProducts', $data->id),
+                        'top' => route('api.shops.topSellingProducts',  $data->id),
+                        'new' => route('api.shops.newProducts', $data->id),
+                        'all' => route('api.shops.allProducts', $data->id),
+                        'brands' => route('api.shops.brands', $data->id)
                     ]
                 ];
             })

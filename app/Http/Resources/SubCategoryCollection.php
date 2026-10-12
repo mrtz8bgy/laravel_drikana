@@ -14,7 +14,7 @@ class SubCategoryCollection extends ResourceCollection
                     'name' => $data->name,
                     'subSubCategories' => new SubSubCategoryCollection($data->subSubCategories),
                     'links' => [
-                        'products' => route('products.subCategory', $data->id)
+                        'products' => route('api.products.subCategory', $data->id)
                     ]
                 ];
             })

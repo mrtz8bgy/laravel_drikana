@@ -10,6 +10,8 @@ use App\TicketReply;
 
 class SupportTicketController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -147,7 +149,7 @@ class SupportTicketController extends Controller
      */
     public function show($id)
     {
-        $ticket = Ticket::findOrFail(decrypt($id));
+        $ticket = Ticket::findOrFail($this->decryptId($id));
         $ticket->client_viewed = 1;
         $ticket->save();
         $ticket_replies = $ticket->ticketreplies;
@@ -156,7 +158,7 @@ class SupportTicketController extends Controller
 
     public function admin_show($id)
     {
-        $ticket = Ticket::findOrFail(decrypt($id));
+        $ticket = Ticket::findOrFail($this->decryptId($id));
         $ticket->viewed = 1;
         $ticket->save();
         return view('admin.support_tickets.show', compact('ticket'));

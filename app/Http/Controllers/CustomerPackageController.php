@@ -17,6 +17,8 @@ use App\Http\Controllers\VoguePayController;
 
 class CustomerPackageController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -83,7 +85,7 @@ class CustomerPackageController extends Controller
      */
     public function edit($id)
     {
-        $customer_package = CustomerPackage::findOrFail(decrypt($id));
+        $customer_package = CustomerPackage::findOrFail($this->decryptId($id));
         return view('admin.customer_packages.edit', compact('customer_package'));
     }
 

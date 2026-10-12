@@ -477,6 +477,38 @@ CREATE TABLE IF NOT EXISTS `seller_withdraw_requests` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
+-- --------------------------------------------------------------------------
+-- ۱-14) جدول `seller_payments` (پرداخت مدیریت به فروشنده)
+-- تاریخچهٔ پرداخت‌های مدیریت به فروشندگان.
+--
+-- چرا اضافه شد: صفحهٔ «تاریخچهٔ پرداخت» در داشبورد فروشنده
+-- (/seller/payments) با خطای ۵۰۰ «Unknown column 'seller_id'» از کار
+-- افتاده بود، چون کنترلر از جدول `payments` (پرداخت سفارش‌ها) استفاده
+-- می‌کرد در حالی که ویوها ستون‌های payment_method و seller_id را
+-- می‌خوانند. این جدول، محل درست نگهداری این داده است.
+--
+-- نکته: `seller_id` به جدول `users` اشاره می‌کند (شناسهٔ کاربری فروشنده)
+-- و با ON DELETE SET NULL تعریف شده تا حذف کاربر، تاریخچهٔ مالی را
+-- از بین نبرد. این جدول هیچ رابطه‌ای با جدول `payments` ندارد و به آن
+-- دست نمی‌زند.
+-- --------------------------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `seller_payments` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `seller_id` int(10) unsigned DEFAULT NULL,
+  `amount` double(8,2) NOT NULL DEFAULT 0.00,
+  `payment_details` text DEFAULT NULL,
+  `payment_method` varchar(255) DEFAULT NULL,
+  `txn_code` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `seller_payments_seller_id_index` (`seller_id`) USING BTREE,
+  KEY `seller_payments_created_at_index` (`created_at`) USING BTREE,
+  CONSTRAINT `seller_payments_seller_id_foreign` FOREIGN KEY (`seller_id`)
+      REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
 -- ============================================================================
 --  بخش ۲ — تغییرات جداول موجود
 -- ============================================================================
@@ -965,6 +997,11 @@ FROM `roles` r
 LEFT JOIN `permission_role` pr ON pr.`role_id` = r.`id`
 GROUP BY r.`id`, r.`slug`, r.`name`, r.`level`
 ORDER BY r.`level` DESC;
+
+-- وجود جدول پرداخت فروشندگان (باید ۱ برگرداند)
+SELECT COUNT(*) AS `جدول seller_payments`
+FROM information_schema.tables
+WHERE table_schema = DATABASE() AND table_name = 'seller_payments';
 
 -- وجود ستون‌های تازه (باید ۲۳ سطر باشد)
 SELECT COUNT(*) AS `ستون‌های افزوده‌شده`

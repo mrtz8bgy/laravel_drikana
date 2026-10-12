@@ -10,6 +10,8 @@ use App\Language;
 
 class CategoryController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -100,7 +102,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail(decrypt($id));
+        $category = Category::findOrFail($this->decryptId($id));
         return view('admin.categories.edit', compact('category'));
     }
 

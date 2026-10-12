@@ -48,7 +48,9 @@
 
 <div class="card mb-3">
     <div class="card-body">
-        <form method="GET" action="{{ route('admin.jewelry.reports.financial') }}" class="row g-2 align-items-end">
+        {{-- این ویو در حال حاضر روت مستقیمی ندارد؛ ارجاع نام‌دارِ محافظت‌شده
+     تا اگر روزی به صفحه وصل شد، نبودِ روت باعث خطای ۵۰۰ نشود. --}}
+        <form method="GET" action="{{ Route::has('admin.jewelry.reports.financial') ? route('admin.jewelry.reports.financial') : url()->current() }}" class="row g-2 align-items-end">
             <div class="col-md-4">
                 <label class="form-label">از تاریخ</label>
                 <input type="date" name="date_from" class="form-control" value="{{ e(request('date_from')) }}">

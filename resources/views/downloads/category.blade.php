@@ -70,9 +70,19 @@
 			<tr>
 				<td>
 					@if($generalsetting->logo != null)
-						<img class="u-display-inline-block" src="{{ asset($generalsetting->logo) }}" height="40">
+						{{-- لوگو از مسیر محلی خوانده می‌شود، نه از آدرس HTTP: dompdf برای
+     آدرس‌های http درخواست شبکه‌ای می‌زند که در سرور تک‌رشته‌ای/بدون
+     اینترنت باعث توقف طولانی (۶۰ ثانیه تایم‌اوت) و مصرف بی‌جای منابع
+     می‌شد. اگر فایل محلی نبود، همان آدرس وب درج می‌شود. --}}
+                                                @php
+                                                    $logoDisk = public_path($generalsetting->logo);
+                                                @endphp
+                                                <img class="u-display-inline-block" src="{{ file_exists($logoDisk) ? $logoDisk : asset($generalsetting->logo) }}" height="40">
 					@else
-						<img class="u-display-inline-block" src="{{ asset('frontend/images/logo/logo.png') }}" height="40">
+						@php
+                                                    $fallbackLogo = public_path('frontend/images/logo/logo.png');
+                                                @endphp
+                                                <img class="u-display-inline-block" src="{{ file_exists($fallbackLogo) ? $fallbackLogo : asset('frontend/images/logo/logo.png') }}" height="40">
 					@endif
 				</td>
 			</tr>

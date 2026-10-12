@@ -246,31 +246,132 @@ class ReportController extends Controller
     {
         $request->validate([
             'report_type' => 'required|in:certificates,repairs,transfers',
-            'format' => 'required|in:excel,csv,pdf',
-            'date_from' => 'nullable|date',
-            'date_to' => 'nullable|date|after_or_equal:date_from',
+            'format'      => 'required|in:excel,csv,pdf',
+            'date_from'   => 'nullable|date',
+            'date_to'     => 'nullable|date|after_or_equal:date_from',
         ]);
-        
+
         $reportType = $request->get('report_type');
-        $format = $request->get('format');
-        $dateFrom = $request->get('date_from');
-        $dateTo = $request->get('date_to');
-        
-        // ایجاد نام فایل
-        $filename = 'jewelry_' . $reportType . '_report_' . date('Y-m-d_H-i') . '.' . $format;
-        
-        // TODO: پیاده‌سازی خروجی اکسل/CSV/PDF
-        // در اینجا باید از کتابخانه‌هایی مانند Maatwebsite/Laravel-Excel یا barryvdh/laravel-dompdf استفاده شود
-        
-        // به عنوان نمونه یک پاسخ JSON برمی‌گردانیم
-        return response()->json([
-            'success' => true,
-            'message' => 'گزارش با موفقیت تولید شد.',
-            'filename' => $filename,
-            'download_url' => route('admin.jewelry.reports.download', ['filename' => $filename]),
-        ]);
+        $format     = $request->get('format');
+        $dateFrom   = $request->get('date_from');
+        $dateTo     = $request->get('date_to');
+
+        // ── خروجی PDF ────────────────────────────────────────────────
+        // در نسخهٔ پیشین این متد یک «نمونهٔ نمایشی» بود که JSON موفقیت با
+        // آدرس دانلودی که وجود نداشت برمی‌گرداند (روت
+        // admin.jewelry.reports.download ثبت نشده بود). اکنون خروجی CSV و
+        // Excel واقعاً تولید می‌شود و برای PDF پاسخ صریح ۵۰۱
+        // (پیاده‌سازی‌نشده) برمی‌گردد تا هیچ‌گاه ادعای نادرست موفقیت نکنیم.
+        if ($format === 'pdf') {
+            return response()->json([
+                'success' => false,
+                'message' => 'خروجی PDF این گزارش هنوز پیاده‌سازی نشده است. لطفاً خروجی CSV یا Excel را انتخاب کنید.',
+            ], 501);
+        }
+
+        list($headings, $rows) = $this->exportDataset($reportType, $dateFrom, $dateTo);
+
+        $extension = $format === 'excel' ? 'xlsx' : 'csv';
+        $filename  = 'jewelry_' . $reportType . '_report_' . date('Y-m-d_H-i') . '.' . $extension;
+
+        if ($format === 'csv') {
+            return response()->streamDownload(function () use ($headings, $rows) {
+                $out = fopen('php://output', 'w');
+
+                // BOM برای نمایش درست متن فارسی در Excel
+                fwrite($out, "\xEF\xBB\xBF");
+                fputcsv($out, $headings);
+
+                foreach ($rows as $row) {
+                    fputcsv($out, $row);
+                }
+
+                fclose($out);
+            }, $filename, ['Content-Type' => 'text/csv; charset=UTF-8']);
+        }
+
+        return \Excel::download(new \App\Exports\JewelryReportExport($headings, $rows), $filename);
     }
-    
+
+    /**
+     * استخراج دادهٔ گزارش برای خروجی گرفتن.
+     *
+     * @param  string      $reportType certificates|repairs|transfers
+     * @param  string|null $dateFrom
+     * @param  string|null $dateTo
+     * @return array{0: array<int,string>, 1: array<int,array>}
+     */
+    protected function exportDataset($reportType, $dateFrom = null, $dateTo = null)
+    {
+        $range = function ($query, $column) use ($dateFrom, $dateTo) {
+            if ($dateFrom) {
+                $query->whereDate($column, '>=', $dateFrom);
+            }
+            if ($dateTo) {
+                $query->whereDate($column, '<=', $dateTo);
+            }
+            return $query;
+        };
+
+        if ($reportType === 'certificates') {
+            $headings = ['شناسه', 'شماره شناسنامه', 'تاریخ صدور', 'وضعیت تأیید', 'ثبت‌کننده'];
+            $rows     = [];
+
+            $query = $range(JewelryCertificate::query()->orderBy('id'), 'created_at');
+            foreach ($query->get() as $certificate) {
+                $rows[] = [
+                    $certificate->id,
+                    $certificate->certificate_number,
+                    (string) $certificate->created_at,
+                    $certificate->is_verified ? 'تأییدشده' : 'در انتظار تأیید',
+                    $certificate->created_by,
+                ];
+            }
+
+            return [$headings, $rows];
+        }
+
+        if ($reportType === 'repairs') {
+            $headings = ['شناسه', 'شماره سفارش', 'وضعیت', 'تاریخ ثبت', 'تاریخ تکمیل', 'هزینه نهایی', 'تکنسین'];
+            $rows     = [];
+
+            $query = $range(RepairOrder::query()->orderBy('id'), 'created_at');
+            foreach ($query->get() as $repair) {
+                $rows[] = [
+                    $repair->id,
+                    $repair->order_number,
+                    $repair->status,
+                    (string) $repair->created_at,
+                    (string) $repair->completion_date,
+                    $repair->final_cost,
+                    $repair->assigned_to,
+                ];
+            }
+
+            return [$headings, $rows];
+        }
+
+        // transfers
+        $headings = ['شناسه', 'شناسنامه', 'مالک پیشین', 'مالک جدید', 'تاریخ انتقال', 'نوع', 'مبلغ', 'وضعیت'];
+        $rows     = [];
+
+        $query = $range(JewelryTransfer::query()->orderBy('id'), 'transfer_date');
+        foreach ($query->get() as $transfer) {
+            $rows[] = [
+                $transfer->id,
+                $transfer->certificate_id,
+                $transfer->from_owner_id,
+                $transfer->to_owner_id,
+                (string) $transfer->transfer_date,
+                $transfer->transfer_type,
+                $transfer->price,
+                $transfer->status,
+            ];
+        }
+
+        return [$headings, $rows];
+    }
+
     /**
      * آمار لحظه‌ای (برای داشبورد ادمین)
      */
@@ -282,7 +383,9 @@ class ReportController extends Controller
         $todayStats = [
             'new_certificates' => JewelryCertificate::whereDate('created_at', $today)->count(),
             'new_repairs' => RepairOrder::whereDate('created_at', $today)->count(),
-            'completed_repairs' => RepairOrder::whereDate('completed_at', $today)->count(),
+            // نام درست ستون در جدول repair_orders مقدار «completion_date»
+            // است؛ پیش‌تر «completed_at» خوانده می‌شد و صفحه ۵۰۰ می‌داد.
+            'completed_repairs' => RepairOrder::whereDate('completion_date', $today)->count(),
             'pending_verifications' => JewelryCertificate::where('is_verified', false)
                 ->whereNull('rejected_at')
                 ->whereDate('created_at', $today)

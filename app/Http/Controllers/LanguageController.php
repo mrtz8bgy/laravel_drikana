@@ -9,6 +9,8 @@ use App\Language;
 
 class LanguageController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     public function changeLanguage(Request $request)
     {
     	$request->session()->put('locale', $request->locale);
@@ -52,13 +54,13 @@ class LanguageController extends Controller
 
     public function show($id)
     {
-        $language = Language::findOrFail(decrypt($id));
+        $language = Language::findOrFail($this->decryptId($id));
         return view('admin.business_settings.languages.language_view', compact('language'));
     }
 
     public function edit($id)
     {
-        $language = Language::findOrFail(decrypt($id));
+        $language = Language::findOrFail($this->decryptId($id));
         return view('admin.business_settings.languages.edit', compact('language'));
     }
 

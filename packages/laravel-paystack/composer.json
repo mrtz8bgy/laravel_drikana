@@ -1,0 +1,27 @@
+{
+    "name": "mehedi-iitdu/laravel-paystack",
+    "description": "یک بستهٔ سبک Paystack برای Laravel (نسخهٔ جایگزین محلی برای بستهٔ حذف‌شدهٔ upstream)",
+    "keywords": ["laravel", "paystack", "payment", "gateway"],
+    "license": "MIT",
+    "version": "1.0.0",
+    "type": "library",
+    "require": {
+        "php": ">=7.1",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "illuminate/support": ">=5.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Mehedi\\Paystack\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Drikana Vendor Replacement"
+        }
+    ],
+    "extra_note": "کلید extra.laravel عمداً در این فایل نیست: در Laravel 5.8 مقدار آن به‌عنوان فهرست نام بسته‌ها در package:discover خوانده می‌شود و باعث خطای «Class ... not found» می‌شد. ثبت Provider در config/app.php انجام می‌شود."
+}

@@ -10,6 +10,8 @@ use Hash;
 
 class StaffController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -81,7 +83,7 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        $staff = Staff::findOrFail(decrypt($id));
+        $staff = Staff::findOrFail($this->decryptId($id));
         $roles = Role::all();
         return view('admin.staffs.edit', compact('staff', 'roles'));
     }

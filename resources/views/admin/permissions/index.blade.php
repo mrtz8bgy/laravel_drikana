@@ -107,7 +107,7 @@
                                         </span>
                                     @elseif(Auth::user()->hasPermissionTo('permissions.delete'))
                                         <a href="#"
-                                           onclick="confirm_modal('{{ route('permissions.destroy', $permission->id) }}'); return false;"
+                                           onclick="confirm_modal('{{ route('permissions.destroy.delete', $permission->id) }}'); return false;"
                                            class="text-danger"
                                            title="{{ __('حذف') }}">
                                             <i class="demo-pli-recycling"></i>

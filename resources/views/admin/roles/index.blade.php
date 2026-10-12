@@ -144,7 +144,7 @@
                                                 </li>
                                             @else
                                                 <li>
-                                                    <a href="#" onclick="confirm_modal('{{ route('roles.destroy', $role->id) }}'); return false;"
+                                                    <a href="#" onclick="confirm_modal('{{ route('roles.destroy.delete', $role->id) }}'); return false;"
                                                        class="text-danger">
                                                         <i class="demo-pli-recycling"></i> {{ __('حذف') }}
                                                     </a>

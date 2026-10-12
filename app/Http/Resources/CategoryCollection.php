@@ -17,7 +17,7 @@ class CategoryCollection extends ResourceCollection
                     // 'brands' => brandsOfCategory($data->id),
                     'links' => [
                         'products' => route('api.products.category', $data->id),
-                        'sub_categories' => route('subCategories.index', $data->id)
+                        'sub_categories' => route('api.subCategories.index', $data->id)
                     ]
                 ];
             })

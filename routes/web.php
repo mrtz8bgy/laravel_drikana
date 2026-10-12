@@ -276,7 +276,9 @@ Route::group(['prefix' =>'seller', 'middleware' => ['seller', 'verified']], func
     Route::get('/products', 'HomeController@seller_product_list')->name('seller.products');
     Route::get('/product/upload', 'HomeController@show_product_upload_form')->name('seller.products.upload');
     Route::get('/product/{id}/edit', 'HomeController@show_product_edit_form')->name('seller.products.edit');
-    Route::resource('payments','PaymentController');
+    // این منبع صفحهٔ «ایجاد» ندارد (متد create کنترلر خالی است)؛ با
+    // except(['create']) به‌جای صفحهٔ خالی، پاسخ ۴۰۴ برگردانده می‌شود.
+    Route::resource('payments','PaymentController')->except(['create']);
 
     // درخواست تایید فروشگاه (Shop Verification)
     Route::get('/shop/apply_for_verification', 'ShopController@verify_form')->name('shop.verify');
@@ -306,6 +308,11 @@ Route::group(['middleware' => ['auth']], function(){
     Route::post('/products/featured', 'ProductController@updateFeatured')
         ->name('admin.products.featured');
     Route::post('/products/published', 'ProductController@updatePublished')->name('products.published');
+    // حذف محصول: این مسیر هم در پنل مدیریت (با مجوز products.delete) و هم در
+    // داشبورد فروشنده (فقط محصولات خودِ او) استفاده می‌شود. کنترل دسترسی در
+    // ProductController::destroy انجام می‌شود (میدل‌ور permission اینجا
+    // نمی‌آید چون فروشندهها مجوز پنل مدیریت ندارند).
+    Route::delete('/products/{id}', 'ProductController@destroy')->name('products.destroy');
 
     // فاکتورها (Invoices)
     Route::get('invoice/customer/{order_id}', 'InvoiceController@customer_invoice_download')->name('customer.invoice.download');
@@ -752,3 +759,6 @@ Route::get('/articles/category/{slug}', 'ArticleController@category')->name('art
 Route::get('/articles/{slug}', 'ArticleController@show')
     ->name('articles.show')
     ->where('slug', '[A-Za-z0-9][A-Za-z0-9-]*');
+
+
+

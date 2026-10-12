@@ -201,19 +201,25 @@
                     </table>
                 </div>
             </div>
-            @if ($order->manual_payment && $order->manual_payment_data == null)
+            {{-- دکمهٔ «پرداخت» فقط وقتی نمایش داده می‌شود که روت آن موجود باشد.
+                 روت `checkout.make_payment` بخشی از «پرداخت دستی/آفلاین» است و
+                 در این نسخه ثبت نشده؛ ارجاع بی‌محافظ باعث خطای ۵۰۰ در رندر
+                 این بخش می‌شد. --}}
+            @if (Route::has('checkout.make_payment') && $order->manual_payment && $order->manual_payment_data == null)
                 <button onclick="show_make_payment_modal({{ $order->id }})" class="btn btn-block btn-base-1">{{__('Make Payment')}}</button>
             @endif
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-    function show_make_payment_modal(order_id){
-        $.post('{{ route('checkout.make_payment') }}', {_token:'{{ csrf_token() }}', order_id : order_id}, function(data){
-            $('#payment_modal_body').html(data);
-            $('#payment_modal').modal('show');
-            $('input[name=order_id]').val(order_id);
-        });
-    }
-</script>
+@if (Route::has('checkout.make_payment'))
+    <script type="text/javascript">
+        function show_make_payment_modal(order_id){
+            $.post('{{ route('checkout.make_payment') }}', {_token:'{{ csrf_token() }}', order_id : order_id}, function(data){
+                $('#payment_modal_body').html(data);
+                $('#payment_modal').modal('show');
+                $('input[name=order_id]').val(order_id);
+            });
+        }
+    </script>
+@endif

@@ -10,6 +10,8 @@ use Auth;
 
 class DigitalProductController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -132,7 +134,7 @@ class DigitalProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::findOrFail(decrypt($id));
+        $product = Product::findOrFail($this->decryptId($id));
         return view('admin.digitalproducts.edit', compact('product'));
     }
 
@@ -254,7 +256,7 @@ class DigitalProductController extends Controller
 
 
     public function download(Request $request){
-        $product = Product::findOrFail(decrypt($request->id));
+        $product = Product::findOrFail($this->decryptId($request->id));
         $downloadable = false;
         foreach (Auth::user()->orders as $key => $order) {
             foreach ($order->orderDetails as $key => $orderDetail) {

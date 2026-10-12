@@ -7,11 +7,17 @@ use App\UsersImport;
 use App\CustomersImport;
 use App\User;
 use Excel;
-use PDF;
+use App\Http\Controllers\Concerns\BuildsPdfDocuments;
+// نکته: الیاس سراسری `PDF` توسط پکیج niklasravnsborg/laravel-pdf (از طریق
+// bootstrap/cache/packages.php) روی mPDF بازنویسی می‌شود و متد
+// setOptions ندارد. بنابراین اینجا کلاس dompdf را صریح import می‌کنیم.
+use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 
 class CustomerBulkUploadController extends Controller
 {
+    use BuildsPdfDocuments;
+
     public function index()
     {
         return view('admin.bulk_upload.customer_upload');
@@ -29,13 +35,7 @@ class CustomerBulkUploadController extends Controller
     public function pdf_download_user()
     {
         $users = User::where('created_at','LIKE', '%'. Carbon::today()->toDateString().'%')->get();
-        $pdf = PDF::setOptions([
-                        'isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true,
-                        'logOutputFile' => storage_path('logs/log.htm'),
-                        'tempDir' => storage_path('logs/')
-                    ])->loadView('downloads.user', compact('users'));
-
-        return $pdf->download('user.pdf');
+        return $this->pdfDownload('downloads.user', compact('users'), 'user.pdf');
     }
 
     public function customer_bulk_file(Request $request)

@@ -237,6 +237,11 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Paypal' => Netshell\Paypal\Facades\Paypal::class,
+        // هشدار: الیاس PDF توسط پکیج niklasravnsborg/laravel-pdf در زمان
+        // bootstrap (extra.laravel.aliases → bootstrap/cache/packages.php)
+        // بازنویسی می‌شود؛ یعنی در عمل `PDF::` به mPDF می‌رسد، نه dompdf.
+        // کدی که به dompdf نیاز دارد باید کلاس را صریح import کند:
+        //     use Barryvdh\DomPDF\Facade as PDF;
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'PDFNEW' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
         'Paystack' => Mehedi\Paystack\Facades\Paystack::class,

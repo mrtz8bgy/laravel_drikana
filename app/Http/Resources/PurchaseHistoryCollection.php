@@ -29,7 +29,7 @@ class PurchaseHistoryCollection extends ResourceCollection
                     'tax' => (double) $data->orderDetails->sum('tax'),
                     'date' => Carbon::createFromTimestamp($data->date)->format('d-m-Y'),
                     'links' => [
-                        'details' => route('purchaseHistory.details', $data->id)
+                        'details' => route('api.purchaseHistory.details', $data->id)
                     ]
                 ];
             })

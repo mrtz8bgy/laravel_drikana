@@ -13,6 +13,8 @@ use ImageOptimizer;
 
 class CustomerProductController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -131,7 +133,7 @@ class CustomerProductController extends Controller
     public function edit($id)
     {
         $categories = Category::all();
-        $product = CustomerProduct::find(decrypt($id));
+        $product = CustomerProduct::find($this->decryptId($id));
         return view('frontend.customer.product_edit', compact('categories', 'product'));
     }
 

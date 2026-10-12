@@ -7,6 +7,8 @@ use App\Link;
 
 class LinkController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -72,7 +74,7 @@ class LinkController extends Controller
      */
     public function edit($id)
     {
-        $link = Link::findOrFail(decrypt($id));
+        $link = Link::findOrFail($this->decryptId($id));
         return view('links.edit', compact('link'));
     }
 

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SellerPayment;
 use App\Payment;
 use Auth;
 
 class PaymentController extends Controller
 {
+    use \App\Http\Controllers\Concerns\HandlesEncryptedIds;
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +18,13 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments = Payment::where('seller_id', Auth::user()->seller->id)->paginate(9);
+        // تاریخچهٔ پرداخت فروشنده از جدول اختصاصی `seller_payments` خوانده
+        // می‌شود؛ پیش‌تر از جدول `payments` (پرداخت سفارش‌ها) خوانده می‌شد
+        // که ستون `seller_id` ندارد و صفحه با خطای ۵۰۰ از کار می‌افتاد.
+        $payments = SellerPayment::where('seller_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(9);
+
         return view('frontend.seller.payment_history', compact('payments'));
     }
 
@@ -26,7 +35,11 @@ class PaymentController extends Controller
      */
     public function payment_histories(Request $request)
     {
-        $payments = Payment::orderBy('created_at', 'desc')->paginate(15);
+        // پنل مدیریت همهٔ پرداخت‌های انجام‌شده به فروشندگان را می‌بیند.
+        $payments = SellerPayment::with('seller')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+
         return view('admin.sellers.payment_histories', compact('payments'));
     }
 
@@ -59,7 +72,7 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        $payments = Payment::where('seller_id', decrypt($id))->orderBy('created_at', 'desc')->get();
+        $payments = SellerPayment::where('seller_id', $this->decryptId($id))->orderBy('created_at', 'desc')->get();
         if($payments->count() > 0){
             return view('admin.sellers.payment', compact('payments'));
         }
