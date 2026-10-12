@@ -1,10 +1,18 @@
 <?php
 
 Route::prefix('v1/auth')->group(function () {
-    Route::post('login', 'Api\AuthController@login');
+    // [امنیت — محدودسازی نرخ] گروه `api` به‌طور پیش‌فرض ۶۰ درخواست در
+    // دقیقه اجازه می‌دهد. برای «ورود» این عدد سخاوتمندانه است؛ ۶۰ تلاش
+    // رمز در دقیقه یعنی حمله دیکشنری عملی. محدودیت سخت‌گیرانه‌تر روی
+    // خود مسیر، جای گروه را نمی‌گیرد بلکه سقف پایین‌تری می‌گذارد.
+    Route::post('login', 'Api\AuthController@login')->middleware('throttle:10,1');
     Route::post('signup', 'Api\AuthController@signup');
     Route::post('social-login', 'Api\AuthController@socialLogin');
-    Route::post('password/create', 'Api\PasswordResetController@create');
+    // [امنیت — محدودسازی نرخ] هر درخواست یک ایمیل واقعی می‌فرستد؛
+    // بدون محدودسازی، Email Bombing و بدنام‌شدن دامنه ممکن است.
+    Route::post('password/create', 'Api\PasswordResetController@create')
+        ->name('api.auth.password.reset')
+        ->middleware('throttle:5,1');
     Route::middleware('auth:api')->group(function () {
         Route::get('logout', 'Api\AuthController@logout');
         Route::get('user', 'Api\AuthController@user');

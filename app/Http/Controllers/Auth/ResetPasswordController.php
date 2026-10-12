@@ -36,6 +36,14 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+
+        // ── محدودسازی نرخ [H-03 / ردیف ۷ موارد باز] ──────────────────
+        //
+        // `POST /password/reset` توکن بازیابی را می‌پذیرد. بدون
+        // محدودسازی، آزمودن انبوه توکن‌ها (Token Brute Force) ممکن
+        // است. عدد ۱۰ در دقیقه، توکن نشست را برای کاربر واقعی کافی
+        // نگه می‌دارد و فضای آزمون مهاجم را می‌بندد.
+        $this->middleware('throttle:10,1')->only('reset');
     }
 
     /**

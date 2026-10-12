@@ -50,24 +50,24 @@ php7.4 -d memory_limit=1G vendor/bin/phpunit --filter SecurityFixesTest
 ```
 PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
 
-...............................................................  63 / 190 ( 33%)
-............................................................... 126 / 190 ( 66%)
-S.............................................................. 189 / 190 ( 99%)
-.                                                               190 / 190 (100%)
+...............................................................  63 / 191 ( 32%)
+............................................................... 126 / 191 ( 65%)
+S.............................................................. 189 / 191 ( 98%)
+..                                                              191 / 191 (100%)
 
-Time: 12.19 seconds, Memory: 86.50 MB
+Time: 12.18 seconds, Memory: 86.50 MB
 
 OK, but incomplete, skipped, or risky tests!
-Tests: 190, Assertions: 1332, Skipped: 1.
+Tests: 191, Assertions: 1349, Skipped: 1.
 ```
 
 | شاخص | مقدار |
 |------|-------|
-| آزمون‌های اجراشده | **۱۹۰** |
-| موفق | **۱۸۹** |
+| آزمون‌های اجراشده | **۱۹۱** |
+| موفق | **۱۹۰** |
 | ناموفق | **۰** |
 | رد‌شده (Skipped) | **۱** |
-| تعداد Assertion | **۱۳۳۲** |
+| تعداد Assertion | **۱۳۴۹** |
 
 ### آزمون رد‌شده (Skipped)
 
@@ -91,7 +91,7 @@ Tests: 190, Assertions: 1332, Skipped: 1.
 | `tests/Feature/InstallAndSeedTest.php` | ۱۵ | ۳۶ | ✅ OK |
 | `tests/Feature/AdminUsersAndHomeArticlesTest.php` | ۱۴ | ۳۶ | ✅ OK |
 | `tests/Feature/ViewSmokeTest.php` | ۱۳ | ۷۷ | ✅ OK |
-| `tests/Feature/AuthHardeningTest.php` | ۹ | ۲۸ | ✅ OK |
+| `tests/Feature/AuthHardeningTest.php` | ۱۰ | ۴۵ | ✅ OK |
 | `tests/Feature/CssSeparationTest.php` | ۸ | ۴۰ | ✅ OK |
 | `tests/Feature/RouteIntegrityTest.php` | ۵ | ۲۴ | ✅ OK |
 | `tests/Feature/ExampleTest.php` | ۲ | ۲ | ✅ OK |
@@ -116,9 +116,10 @@ Tests: 190, Assertions: 1332, Skipped: 1.
 | Path Traversal | `SecurityFixesTest` | آپلود و حذف فایل با مسیر خطرناک |
 | IDOR | `SecurityFixesTest` | دسترسی به رکورد دیگران رد می‌شود |
 | نشت اعتبارنامه | `AuthHardeningTest` | صفحه ورود هیچ رمز/ایمیلی افشا نمی‌کند |
-| محدودسازی نرخ | `AuthHardeningTest` | ۹ مسیر حساس throttle دارند |
 | تصادفی امن | `AuthHardeningTest` | کد OTP با `random_int()` ساخته می‌شود |
 | قفل حساب | `AuthHardeningTest` | پس از تلاش‌های ناموفق، پیام throttle |
+| پوشش محدودسازی نرخ | `AuthHardeningTest` | وجود `throttle` روی **۱۵** مسیر حساس، با تطبیق «متد + مسیر» |
+| شمارش کاربران | `AuthHardeningTest` | پاسخ API بازیابی رمز، وجود کاربر را افشا نمی‌کند |
 | متن به‌هم‌ریخته | `AuthHardeningTest` | نبود mojibake در کنترلرها |
 | Open Redirect | `SecurityFixesTest` | ۵ محموله حمله رد می‌شوند |
 | نصب‌کننده | `SecurityFixesTest` | `/install/*` روی سامانه نصب‌شده ۴۰۴ |
@@ -191,6 +192,8 @@ Audit Log.
 | دسته‌بندی مقالات | `GET /articles/category/{slug}` | ✅ ۲۰۰ |
 | جست‌وجو در مقالات | `GET /articles/search?q=طلا` | ✅ ۲۰۰ |
 | در پشتی نوشتن فایل | `POST /config_content` روی سرور محلی | ✅ ۴۰۴ و **هیچ فایلی نوشته نشد** |
+| پایداری آزمون قفل ورود | اجرای سه‌باره آزمون و دو اجرای کامل مجموعه | ✅ بدون شکست — الگوی متن throttle به‌جای برابری عدد ثانیه |
+| نصب وابستگی‌ها | `composer validate` + `composer install --dry-run` پس از تغییر `minimum-stability` | ✅ بدون خطا و بدون هشدار «قفل قدیمی است» |
 | ایمنی `config:cache` | `php artisan config:cache` + درخواست به `/`، `/articles`، `/admin` | ✅ ۲۰۰/۲۰۰/۲۰۲ — و `config('drikana.sms.farazsms.from')` مقدار درست داد در حالی که `env('APP_NAME')` خالی بود |
 | بررسی نحو PHP | `php -l` روی تمام فایل‌های تغییریافته | ✅ بدون خطا |
 | فهرست روت‌ها | `php artisan route:list` | ✅ بدون خطای روت |

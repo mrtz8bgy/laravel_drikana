@@ -36,11 +36,28 @@ class AuthHardeningTest extends TestCase
     protected function rateLimitedRoutes()
     {
         return [
-            ['POST', 'users/login/otp'],
-            ['POST', 'verification'],
-            ['GET',  'verification/phone/code/resend'],
-            ['POST', 'password/reset/submit'],
-            ['POST', 'login'],
+            // ── ورود ────────────────────────────────────────────────
+            ['POST', 'login'],                    // ورود مدیر/فروشنده
+            ['POST', 'users/login/otp'],          // هر درخواست یک پیامک
+            ['GET',  'users/login/otp'],          // نمایش فرم ورود با کد
+            ['POST', 'users/login/cart'],         // Hash::check روی رمز
+            ['POST', 'api/v1/auth/login'],        // ورود اپلیکیشن موبایل
+            ['POST', 'api/v1/auth/password/create'],   // ارسال ایمیل بازیابی
+
+            // ── تأیید شماره تلفن (OTP) ──────────────────────────────
+            ['POST', 'verification'],             // بررسی کد
+            ['POST', 'verification/verify'],      // بررسی کد (نسخه احراز‌شده)
+            ['POST', 'verification/resend'],      // هر درخواست یک پیامک
+            ['GET',  'verification/phone/code/resend'],   // سخت‌گیرانه‌ترین
+
+            // ── بازیابی رمز عبور ────────────────────────────────────
+            ['POST', 'password/email'],           // ارسال ایمیل بازیابی
+            ['POST', 'password/reset'],           // آزمودن توکن بازیابی
+            ['POST', 'password/reset/submit'],    // بازنشانی با کد پیامکی
+            ['GET',  'password/phone/reset'],     // نمایش فرم بازنشانی
+
+            // ── ثبت‌نام ─────────────────────────────────────────────
+            ['POST', 'register'],                 // یک پیامک تأیید می‌فرستد
         ];
     }
 
@@ -54,9 +71,19 @@ class AuthHardeningTest extends TestCase
      */
     public function test_sensitive_auth_routes_are_rate_limited()
     {
+        // کلید = «متد + مسیر». چرا متد هم لازم است؟ چون چند مسیر
+        // می‌توانند یک URL داشته باشند: مثلاً `GET password/reset`
+        // نمایش فرم است و `POST password/reset` ارسال توکن. اگر کلید
+        // فقط URL باشد، یکی روی دیگری می‌افتد و آزمون می‌تواند
+        // محدودسازی را روی مسیر اشتباه تأیید کند.
         $routes = [];
         foreach (Route::getRoutes() as $route) {
-            $routes[$route->uri()] = $route;
+            foreach ($route->methods() as $method) {
+                if ($method === 'HEAD') {
+                    continue;
+                }
+                $routes[$method . ' ' . $route->uri()] = $route;
+            }
         }
 
         $missing = [];
@@ -64,9 +91,11 @@ class AuthHardeningTest extends TestCase
         foreach ($this->rateLimitedRoutes() as $item) {
             list($method, $uri) = $item;
 
-            $this->assertArrayHasKey($uri, $routes, "مسیر «{$uri}» ثبت نشده است.");
+            $key = $method . ' ' . $uri;
 
-            $middleware = $routes[$uri]->gatherMiddleware();
+            $this->assertArrayHasKey($key, $routes, "مسیر «{$key}» ثبت نشده است.");
+
+            $middleware = $routes[$key]->gatherMiddleware();
 
             $hasThrottle = false;
             foreach ($middleware as $m) {
@@ -246,10 +275,13 @@ class AuthHardeningTest extends TestCase
             'پس از چند تلاش ناموفق، حساب باید قفل شود اما پیام خطای عادی برگشت.'
         );
 
-        $this->assertEquals(
-            trans('auth.throttle', ['seconds' => 60]),
+        // توجه: عدد ثانیه‌های باقی‌مانده «لرزان» است (بین ۵۹ و ۶۰ در
+        // مرز پنجره زمانی). پس متن پیام با الگو بررسی می‌شود، نه با
+        // برابری دقیق — وگرنه آزمون به‌طور تصادفی شکست می‌خورد.
+        $this->assertRegExp(
+            '/^Too many login attempts\. Please try again in \d+ seconds?\.$/',
             $lastError,
-            'پیام قفل‌شدن حساب باید پیام throttle باشد.'
+            'پیام قفل‌شدن حساب باید پیام throttle باشد. پیام دریافتی: ' . $lastError
         );
 
         // پاک‌سازی برای تست‌های بعدی
@@ -394,5 +426,35 @@ class AuthHardeningTest extends TestCase
             $response->getContent(),
             'در حالت نمایشی، اطلاعات حساب نمونه باید نمایش داده شود.'
         );
+    }
+
+    /**
+     * درخواست بازیابی رمز از API نباید وجود یا نبود کاربر را افشا کند.
+     *
+     * پیش‌تر برای ایمیل ناموجود پاسخ ۴۰۴ با پیام «کاربری با این ایمیل
+     * پیدا نشد» برمی‌گشت و برای ایمیل موجود پاسخ ۲۰۰. یعنی با چند
+     * درخواست ساده می‌شد فهرست کاربران ثبت‌شده سامانه را استخراج کرد
+     * (User Enumeration) — پایه‌ای برای حملات هدفمند بعدی.
+     */
+    public function test_api_password_reset_does_not_reveal_registered_emails()
+    {
+        $unknown = 'definitely-not-registered-' . uniqid() . '@example.test';
+
+        $response = $this->postJson(route('api.auth.password.reset'), [
+            'email' => $unknown,
+        ]);
+
+        // پاسخ باید موفق و بی‌اطلاع باشد — نه ۴۰۴، نه پیام «کاربر پیدا نشد»
+        $response->assertStatus(200);
+        $response->assertJson(['success' => true]);
+
+        $body = strtolower($response->getContent());
+
+        foreach (['not find', 'not found', 'پیدا نشد', 'unknown', 'no user'] as $leak) {
+            $this->assertFalse(
+                strpos($body, $leak) !== false,
+                'پاسخ API نباید وجود یا نبود کاربر را افشا کند؛ عبارت افشاگر: ' . $leak
+            );
+        }
     }
 }

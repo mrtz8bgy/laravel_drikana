@@ -49,6 +49,10 @@ cd drikana
 git checkout develop/refactor-rbac
 
 # ۲) نصب وابستگی‌های PHP
+#    نکته: `composer install` همیشه از فایل قفل (`composer.lock`) می‌خواند،
+#    پس دقیقاً همان نسخه‌های آزموده‌شده نصب می‌شوند. هرگز روی سرور
+#    `composer update` اجرا نکنید؛ سه بسته پرداخت روی شاخه `dev-master`
+#    قفل شده‌اند و به‌روزرسانی می‌تواند آن‌ها را به کامیت ناخواسته ببرد.
 composer install --no-dev --optimize-autoloader
 
 # ۳) فایل محیطی

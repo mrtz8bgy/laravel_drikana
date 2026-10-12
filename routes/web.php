@@ -38,6 +38,11 @@ use App\Http\Controllers\HomeController;
 // ============================================
 // احراز هویت و کاربران (Authentication & Users)
 // ============================================
+// توجه: `Auth::routes()` مسیرهای ثبت‌نام را بدون محدودسازی نرخ ثبت
+// می‌کند. چون «ثبت‌نام» در این سامانه یک پیامک تأیید می‌فرستد، بدون
+// محدودسازی می‌توان اعتبار پنل پیامک را با اسکریپت ساده سوزاند
+// (SMS Bombing). محدودسازی در کنترلر و تنها روی متد `register` اعمال
+// شده است تا صفحات GET نمایش فرم، بی‌دلیل محدود نشوند.
 Auth::routes(['verify' => true]);
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::post('/language', 'LanguageController@changeLanguage')->name('language.change');
@@ -50,7 +55,13 @@ Route::get('/social-login/{provider}/callback', 'Auth\LoginController@handleProv
 // صفحات ورود و ثبت‌نام کاربران
 Route::get('/users/login', 'HomeController@login')->name('user.login');
 Route::get('/users/registration', 'HomeController@registration')->name('user.registration');
-Route::post('/users/login/cart', 'HomeController@cart_login')->name('cart.login.submit');
+// [امنیت — محدودسازی نرخ] این مسیر رمز عبور را با Hash::check بررسی
+// می‌کند؛ یعنی یک «مسیر ورود» است، نه فقط نمایش سبد خرید. بدون
+// محدودسازی، حمله دیکشنری و شمارش کاربران (اختلاف پاسخ برای ایمیل
+// موجود و ناموجود) ممکن بود.
+Route::post('/users/login/cart', 'HomeController@cart_login')
+     ->name('cart.login.submit')
+     ->middleware('throttle:10,1');
 
 // routes/web.php
 
