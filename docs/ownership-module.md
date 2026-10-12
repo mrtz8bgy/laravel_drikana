@@ -108,7 +108,7 @@
 ```
                     ┌──────────────────┐
                     │  ثبت درخواست     │   مالک فعلی یا مدیر مالکیت
-                    │  status=pending  │   مجوز: jewelry.transfers.request
+                    │  status=pending  │   مجوز: jewelry.transfers.create
                     └────────┬─────────┘
                              │
              ┌───────────────┼───────────────┐
@@ -132,6 +132,18 @@
    └─────────────────────────────────────────────┘
 ```
 
+### سه لایه اعمال مجوز
+
+| لایه | جای بررسی | چه چیزی را می‌سنجد |
+|------|-----------|-------------------|
+| ۱. میدل‌ور مسیر | `routes/web.php` | مجوز اتمی (`jewelry.transfers.view/create/approve/reject/cancel`) |
+| ۲. Policy | `Policies/OwnershipTransferPolicy.php` | مالکیت رکورد — آیا این کاربر روی **این** انتقال حق اقدام دارد |
+| ۳. سرویس | `OwnershipTransferService` | وضعیت رکورد و قواعد گردش‌کار (مثلاً لغو فقط توسط درخواست‌دهنده) |
+
+> **Deny by Default:** اگر هیچ‌کدام از سه لایه اجازه ندهد، درخواست رد
+> می‌شود. مسیر بدون میدل‌ور، ویو بدون بررسی و کنترلر بدون Policy —
+> هیچ‌کدام فرض «مجاز» نمی‌گیرند.
+
 ### گام‌به‌گام
 
 **۱. ثبت درخواست**
@@ -149,7 +161,7 @@ $transfer = app(OwnershipTransferService::class)->requestTransfer([
 ```
 
 بررسی‌های انجام‌شده:
-- مجوز `jewelry.transfers.request`
+- مجوز `jewelry.transfers.create` (روی میدل‌ور مسیر)
 - کاربر درخواست‌دهنده مالک فعلی قطعه است (یا مجوز مدیریتی دارد)
 - مالک مقصد ≠ مالک مبدأ
 - انتقال «در جریان» دیگری برای این قطعه وجود ندارد
@@ -157,7 +169,7 @@ $transfer = app(OwnershipTransferService::class)->requestTransfer([
 **۲. تأیید**
 
 ```php
-$service->approve($transfer, $approvingUser, 'یادداشت تأیید');
+$service->approve($transfer->id, $approvingUser, 'یادداشت تأیید');
 ```
 
 بررسی‌ها:
@@ -168,7 +180,7 @@ $service->approve($transfer, $approvingUser, 'یادداشت تأیید');
 **۳. رد**
 
 ```php
-$service->reject($transfer, $approvingUser, 'دلیل رد — اجباری');
+$service->reject($transfer->id, $approvingUser, 'دلیل رد — اجباری');
 ```
 
 دلیل رد **الزامی** است و در `approval_note` و `audit_logs` ثبت می‌شود.
@@ -229,14 +241,14 @@ $service->cancel($transfer, $user);
 | `/admin/jewelry/certificates/{id}/transfer-history` | سابقه انتقالات | `jewelry.certificates.view` |
 | `/admin/jewelry/transfers` | فهرست انتقال‌ها | `jewelry.transfers.view` |
 | `/admin/jewelry/transfers/{id}` | تأیید/رد انتقال | `jewelry.transfers.approve` |
-| `/admin/jewelry/transfers/create` | ثبت انتقال توسط مدیر | `jewelry.transfers.request` |
+| `/admin/jewelry/transfers/create` | ثبت انتقال توسط مدیر | `jewelry.transfers.create` |
 | `/admin/jewelry/owners` | فهرست مالکان | `jewelry.owners.view` |
 | `/admin/jewelry/repair-orders` | سفارش‌های تعمیر | `jewelry.repairs.view` |
 | `/admin/jewelry/repair-orders/{id}/assign` | اختصاص تکنسین | `jewelry.repairs.assign` |
 | `/admin/jewelry/repair-orders/{id}/status-history` | تاریخچه وضعیت | `jewelry.repairs.view` |
 | `/admin/jewelry/reports` | گزارش جامع | `jewelry.reports.view` |
 | `/admin/jewelry/reports/transfers` | گزارش انتقالات | `jewelry.reports.view` |
-| `/admin/jewelry/reports/financial` | گزارش مالی | `jewelry.reports.view` |
+| `/admin/jewelry/reports/export` | خروجی CSV گزارش‌ها | `jewelry.reports.export` |
 
 ---
 
@@ -268,13 +280,34 @@ php artisan drikana:backfill-ownership-history --chunk=200
 
 ## گزارش‌گیری و جست‌وجو
 
+### گزارش‌های مدیریتی (سراسری)
+
 | گزارش | مسیر | معیارها |
 |-------|------|---------|
 | جامع | `/admin/jewelry/reports` | آمار کلی، توزیع فلز، روند ماهانه |
 | شناسنامه‌ها | `/admin/jewelry/reports/certificates` | بازه تاریخ، نوع فلز |
 | تعمیرات | `/admin/jewelry/reports/repairs` | بازه تاریخ، وضعیت، تکنسین |
 | انتقالات | `/admin/jewelry/reports/transfers` | بازه تاریخ، وضعیت، نوع انتقال |
-| مالی | `/admin/jewelry/reports/financial` | بازه تاریخ، درآمد، میانگین ارزش |
+| آمار زنده | `/admin/jewelry/reports/live-stats` | شمارش لحظه‌ای برای داشبورد |
+| نمودارها | `/admin/jewelry/reports/charts` | داده سری‌های زمانی (JSON) |
+| خروجی CSV | `/admin/jewelry/reports/export` | همان فیلترها، خروجی قابل دانلود |
+
+> این گزارش‌ها سراسری‌اند و به `Jewelry\Admin\ReportController` متصل
+> هستند. کنترلر گزارش مالک‌محور (`Jewelry\ReportController`) حذف نشده و
+> در پنل کاربری باقی است.
+
+### گزارش‌های مالک‌محور (پنل کاربری)
+
+| گزارش | مسیر | دامنه داده |
+|-------|------|-----------|
+| شناسنامه‌های من | `/my-jewelry/reports/certificates` | فقط قطعات مالکیت کاربر |
+| تعمیرات من | `/my-jewelry/reports/repairs` | فقط سفارش‌های کاربر |
+| انتقالات من | `/my-jewelry/reports/transfers` | فقط انتقال‌های مرتبط با کاربر |
+| مالی من | `/my-jewelry/reports/financial` | بازه تاریخ، ارزش قطعات کاربر |
+| خروجی | `/my-jewelry/reports/export` | خروجی CSV داده‌های خود کاربر |
+
+> محدودسازی این گزارش‌ها در خود کنترلر با `Auth::id()` انجام می‌شود؛
+> یعنی حتی با دست‌کاری پارامترهای درخواست، داده کاربر دیگری برنمی‌گردد.
 
 **جست‌وجوی قطعه** از سه راه ممکن است:
 
