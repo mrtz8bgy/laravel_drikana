@@ -24,6 +24,8 @@ use App\BusinessSetting;
 use App\Http\Controllers\SearchController;
 use App\Models\Article;
 use App\Models\ArticleCategory;
+use App\Slider;
+use Illuminate\Support\Facades\Schema;
 use ImageOptimizer;
 use Cookie;
 
@@ -176,10 +178,54 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the application frontend home.
+     * اسلایدهای قابل نمایش در بنر بالای صفحه اصلی.
      *
-     * @return \Illuminate\Http\Response
+     * پیش‌تر ویو صفحه اصلی این کوئری را خودش می‌زد:
+     * `Slider::where('published', 1)->get()` — بدون مرتب‌سازی. منطق نمایش
+     * اکنون در کنترلر است (جدا کردن مسئولیت‌ها) و سه محافظ دارد:
+     *
+     * ۱) **ترتیب صریح:** ترتیب بازگشتی MySQL تضمین‌شده نیست؛ با
+     *    `orderBy('id')` ترتیب اسلایدها ثابت و برابر ترتیب پنل مدیریت است.
+     *
+     * ۲) **حذف اسلاید بی‌تصویر:** اگر رکوردی در جدول باشد اما فایل تصویرش
+     *    روی دیسک نباشد (فایل پاک‌شده یا رکورد نمونه با نام ساختگی)، بنر
+     *    یک کادر شکسته نشان می‌دهد و کاربر فکر می‌کند اسلایدر خراب است.
+     *    چنین رکوردی از فهرست نمایش حذف می‌شود، اما رکورد دیتابیس
+     *    دست‌نخورده می‌ماند تا مدیر از پنل تصمیم بگیرد.
+     *
+     * ۳) **تحمل نبود جدول:** در نصب ناقص صفحه اصلی باید سالم بالا بیاید.
+     *
+     * نشانی کامل `http(s)://` (تصویر روی CDN) بدون بررسی فایل پذیرفته
+     * می‌شود، چون طبیعتاً روی دیسک این سرور وجود ندارد.
+     *
+     * @return \Illuminate\Support\Collection
      */
+    protected function publishedSliders()
+    {
+        if (!Schema::hasTable('sliders')) {
+            return collect();
+        }
+
+        return Slider::query()
+            ->where('published', 1)
+            ->orderBy('id')
+            ->get()
+            ->filter(function ($slider) {
+                $photo = (string) $slider->photo;
+
+                if ($photo === '') {
+                    return false;
+                }
+
+                if (preg_match('#^https?://#i', $photo)) {
+                    return true;
+                }
+
+                return file_exists(public_path(ltrim($photo, '/')));
+            })
+            ->values();
+    }
+
     /**
      * صفحه اصلی سایت (عمومی — بدون نیاز به ورود).
      *
@@ -221,7 +267,9 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
-        return view('frontend.index', compact('latestArticles', 'articleCategories'));
+        $sliders = $this->publishedSliders();
+
+        return view('frontend.index', compact('latestArticles', 'articleCategories', 'sliders'));
     }
 
     public function flash_deal_details($slug)

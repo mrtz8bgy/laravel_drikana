@@ -58,16 +58,16 @@ PHPUnit 7.5.20 by Sebastian Bergmann and contributors.
 Time: 12.73 seconds, Memory: 90.50 MB
 
 OK, but incomplete, skipped, or risky tests!
-Tests: 207, Assertions: 1420, Skipped: 1.
+Tests: 233, Assertions: 1512, Skipped: 1.
 ```
 
 | شاخص | مقدار |
 |------|-------|
-| آزمون‌های اجراشده | **۲۰۷** |
-| موفق | **۲۰۶** |
+| آزمون‌های اجراشده | **۲۳۳** |
+| موفق | **۲۳۲** |
 | ناموفق | **۰** |
 | رد‌شده (Skipped) | **۱** |
-| تعداد Assertion | **۱۴۲۰** |
+| تعداد Assertion | **۱۵۱۲** |
 
 ### آزمون رد‌شده (Skipped)
 
@@ -87,6 +87,8 @@ Tests: 207, Assertions: 1420, Skipped: 1.
 | `tests/Feature/ConfigCacheSafetyTest.php` | ۵ | ۷۴۴ | ✅ OK |
 | `tests/Feature/AddonInstallerHardeningTest.php` | ۱۱ | ۳۵ | ✅ OK |
 | `tests/Feature/SqlInjectionHardeningTest.php` | ۵ | ۳۶ | ✅ OK |
+| `tests/Feature/HomeSliderTest.php` | ۹ | ۲۵ | ✅ OK |
+| `tests/Feature/SliderUploadValidationTest.php` | ۱۱ | ۳۶ | ✅ OK |
 | `tests/Feature/ArticleManagementTest.php` | ۲۸ | ۵۴ | ✅ OK |
 | `tests/Feature/RbacAccessControlTest.php` | ۲۰ | ۵۲ | ✅ OK (۱ مورد بالقوه رد‌شونده) |
 | `tests/Feature/OwnershipTransferTest.php` | ۱۹ | ۵۶ | ✅ OK |
@@ -126,6 +128,10 @@ Tests: 207, Assertions: 1420, Skipped: 1.
 | انکار سرویس با `per_page` | `SqlInjectionHardeningTest` | مقدارهای بزرگ و غیرعددی به پیش‌فرض برمی‌گردند |
 | Zip Slip | `AddonInstallerHardeningTest` | سه نوع عضو خصمانه ZIP رد می‌شود و فایل بیرون از مقصد ساخته نمی‌شود |
 | بازنویسی فایل حیاتی | `AddonInstallerHardeningTest` | `.env`، `composer.json`، `public/index.php` و پوشه‌های حساس مسیر معتبر نمی‌گیرند |
+| بارگذاری فایل اجرایی در پنل | `SliderUploadValidationTest` | فایل PHP با نام `.jpg`، بایت تصادفی، HTML و ابعاد بزرگ رد می‌شوند و هیچ فایلی در پوشه بارگذاری نوشته نمی‌شود |
+| ثابت‌بودن مسیر بارگذاری | `SliderUploadValidationTest` | فایل ذخیره‌شده هرگز پسوند اجرایی نمی‌گیرد (پلی‌گلات → `.gif`) |
+| CSRF فرم بارگذاری | `SliderUploadValidationTest` | مسیر `sliders.store` در استثناهای CSRF نیست و فرم `@csrf` دارد |
+| اسلایدر صفحه اصلی | `HomeSliderTest` | اسلایدهای منتشرشده رندر می‌شوند؛ غیرفعال و بی‌تصویر نمی‌شوند؛ نبود اسلاید صفحه را خراب نمی‌کند |
 | متن به‌هم‌ریخته | `AuthHardeningTest` | نبود mojibake در کنترلرها |
 | Open Redirect | `SecurityFixesTest` | ۵ محموله حمله رد می‌شوند |
 | نصب‌کننده | `SecurityFixesTest` | `/install/*` روی سامانه نصب‌شده ۴۰۴ |
@@ -170,7 +176,7 @@ Audit Log.
 رد رمز ضعیف/کوتاه/کم‌تنوع در ساخت مدیر کل، ساخت موفق مدیر کل با رمز
 از فایل، هش‌شدن رمز در دیتابیس.
 
-### رابط کاربری (۳۵ آزمون)
+### رابط کاربری (۳۵ آزمون پیشین + ۹ آزمون اسلایدر صفحه اصلی)
 
 ۱۳ آزمون رندر صفحه (پنل‌های RBAC، مقالات، انتقال، گزارش‌ها، صفحات
 عمومی)، ۸ آزمون جداسازی CSS (وجود فایل، نبود بلوک بزرگ درون‌خطی،
@@ -199,6 +205,8 @@ Audit Log.
 | جست‌وجو در مقالات | `GET /articles/search?q=طلا` | ✅ ۲۰۰ |
 | در پشتی نوشتن فایل | `POST /config_content` روی سرور محلی | ✅ ۴۰۴ و **هیچ فایلی نوشته نشد** |
 | بازبینی کوئری‌های خام | جست‌وجوی الگوی «الحاق متغیر در SQL» روی کل `app/` | ✅ تنها دو مورد باقی‌مانده: `(int)` شده‌اند |
+| انتقال استایل درون‌خطی | `tools/verify_inline_style_extraction.py` (۵۱۱ از ۵۱۱ اعلان با اعلان یکسان) | ✅ صفر کلاس گم‌شده، صفر کلاس اعمال‌نشده، استایل پویا ۹=۹ |
+| نمایش اسلایدر صفحه اصلی | curl روی `/` و بررسی کد وضعیت تصاویر | ✅ بخش بنر رندر شد و هر ۴ تصویر ۲۰۰ |
 | پایداری آزمون قفل ورود | اجرای سه‌باره آزمون و دو اجرای کامل مجموعه | ✅ بدون شکست — الگوی متن throttle به‌جای برابری عدد ثانیه |
 | نصب وابستگی‌ها | `composer validate` + `composer install --dry-run` پس از تغییر `minimum-stability` | ✅ بدون خطا و بدون هشدار «قفل قدیمی است» |
 | ایمنی `config:cache` | `php artisan config:cache` + درخواست به `/`، `/articles`، `/admin` | ✅ ۲۰۰/۲۰۰/۲۰۲ — و `config('drikana.sms.farazsms.from')` مقدار درست داد در حالی که `env('APP_NAME')` خالی بود |

@@ -420,6 +420,39 @@ php artisan view:cache            # ویوها
 
 ---
 
+### پوشه بارگذاری: اجرای PHP را ببندید
+
+فایل‌های بارگذاری‌شده زیر `public/uploads/` ذخیره می‌شوند (ریشه دیسک
+`local` در `config/filesystems.php` برابر `public_path()` است). کد
+برنامه اعتبارسنجی نوع فایل را انجام می‌دهد (مورد M-12 در گزارش امنیت:
+`mimes` + `dimensions` + سقف حجم)، اما «لایه دوم» را در وب‌سرور هم
+فعال کنید تا فایلی که از فیلتر رد شده، هرگز اجرا نشود:
+
+**Apache** — فایل `public/uploads/.htaccess`:
+
+```apache
+# هیچ فایلی در این پوشه اجرا نشود — فقط سرو شود
+<FilesMatch "\.(php|phtml|phar|php[0-9]|cgi|pl|py|sh)$">
+    Require all denied
+</FilesMatch>
+php_flag engine off
+```
+
+**Nginx** — در بلوک `server`:
+
+```nginx
+location ^~ /uploads/ {
+    location ~ \.(php|phtml|phar|cgi|pl|py|sh)$ { deny all; }
+    try_files $uri =404;
+}
+```
+
+نکته: پیش از افزودن این قواعد، مطمئن شوید هیچ قابلیت پروژه به اجرای
+اسکریپت داخل `uploads/` وابسته نیست — هیچ‌کدام از قابلیت‌ها چنین
+وابستگی‌ای ندارند (فقط تصویر و فایل بارگذاری‌شده).
+
+---
+
 ## پاک‌سازی تاریخچه Git
 
 فایل‌های `.env` در گذشته در مخزن ثبت شده بودند. خروج آن‌ها از ردیابی
