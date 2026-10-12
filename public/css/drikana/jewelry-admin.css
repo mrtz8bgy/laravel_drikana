@@ -820,5 +820,120 @@
         .card-header, .table thead { background: linear-gradient(90deg, rgba(212,175,55,.08), rgba(212,175,55,.02)); }
         a.text-danger { color:#e53e3e !important; }
         .sidebar a.text-danger:hover { background:rgba(229,62,62,.12) !important; color:#fca5a5 !important; border-right-color:#e53e3e !important; }
+
+        .missing-reports-page .missing-reports-header {
+            gap: 1rem;
+            color: #fff;
+            background: linear-gradient(135deg, #a16207, #d4af37);
+        }
+        .missing-reports-page .missing-report-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: .45rem;
+            min-height: 38px;
+            padding: .45rem .85rem;
+            border: 1px solid transparent;
+            border-radius: .5rem;
+            font-size: .9rem;
+            font-weight: 600;
+            line-height: 1.35;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+        }
+        .missing-reports-page .missing-report-button:hover {
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+        .missing-reports-page .missing-report-button:focus-visible {
+            outline: 3px solid rgba(13, 110, 253, .3);
+            outline-offset: 2px;
+        }
+        .missing-reports-page .missing-report-button--create,
+        .missing-reports-page .missing-report-button--filter {
+            color: #fff;
+            background: linear-gradient(135deg, #b8892a, #8f6718);
+            border-color: #8f6718;
+        }
+        .missing-reports-page .missing-report-button--create:hover,
+        .missing-reports-page .missing-report-button--filter:hover {
+            color: #fff;
+            background: linear-gradient(135deg, #9f741f, #765411);
+        }
+        .missing-reports-page .missing-report-button--reset {
+            color: #343a40;
+            background: #f1f3f5;
+            border-color: #d7dce1;
+        }
+        .missing-reports-page .missing-report-button--reset:hover {
+            color: #212529;
+            background: #e2e6ea;
+        }
+        .missing-reports-page .missing-report-button--details {
+            color: #fff !important;
+            background: #0f766e !important;
+            background-color: #0f766e !important;
+            border-color: #0f766e !important;
+        }
+        .missing-reports-page .missing-report-button--details:hover {
+            color: #fff !important;
+            background: #115e59 !important;
+            background-color: #115e59 !important;
+            border-color: #115e59 !important;
+        }
+        .missing-reports-page .missing-report-button--print {
+            color: #fff !important;
+            background: #475569 !important;
+            background-color: #475569 !important;
+            border-color: #475569 !important;
+        }
+        .missing-reports-page .missing-report-button--print:hover {
+            color: #fff !important;
+            background: #334155 !important;
+            background-color: #334155 !important;
+            border-color: #334155 !important;
+        }
+        .missing-reports-page .missing-report-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: .4rem;
+            white-space: nowrap;
+        }
+        .missing-reports-page .missing-report-actions .missing-report-button {
+            width: auto;
+            min-width: 82px;
+            height: 38px;
+            min-height: 38px;
+            padding: 0 .7rem;
+            flex: 0 0 auto;
+            box-shadow: 0 2px 5px rgba(7, 9, 26, .16);
+        }
+        .missing-reports-page .missing-report-actions .missing-report-button i {
+            color: #fff !important;
+            font-size: 1rem;
+        }
+        .missing-reports-page .missing-report-stat {
+            height: 100%;
+            border-radius: .65rem;
+            box-shadow: 0 3px 12px rgba(7, 9, 26, .06);
+        }
+        .missing-reports-page .missing-report-stat .card-body {
+            padding: .85rem .5rem;
+        }
+        .missing-reports-page .missing-report-stat small {
+            display: block;
+            margin-bottom: .35rem;
+            color: #495057;
+        }
+        .missing-reports-page .missing-report-stat h4 {
+            font-weight: 800;
+        }
+        .missing-reports-page .missing-report-stat--total { border-top: 3px solid #64748b; }
+        .missing-reports-page .missing-report-stat--pending { border-top: 3px solid #d4af37; }
+        .missing-reports-page .missing-report-stat--found { border-top: 3px solid #198754; }
+        .missing-reports-page .missing-report-stat--theft { border-top: 3px solid #dc3545; }
+        .missing-reports-page .missing-report-stat--lost { border-top: 3px solid #0d6efd; }
+
         @media (max-width:768px){ .sidebar { min-height:auto; } }
     

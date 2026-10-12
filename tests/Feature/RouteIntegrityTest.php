@@ -189,7 +189,10 @@ class RouteIntegrityTest extends TestCase
             'audit_logs.index',
             'brands.index',
             'categories.index',
+            'products.category',
             'products.featured',
+            'contact',
+            'articles.index',
             'admin.products.featured',
             'admin.orders.show',
             'admin.reviews.index',
@@ -207,6 +210,26 @@ class RouteIntegrityTest extends TestCase
             $this->assertNotNull(
                 Route::getRoutes()->getByName($name),
                 'روت «' . $name . '» وجود ندارد در حالی که کد به آن ارجاع می‌دهد.'
+            );
+        }
+    }
+
+    /** @test */
+    public function public_category_links_use_existing_category_slugs()
+    {
+        $categorySlugs = [
+            '--2EJpD',
+            '----FoS0v',
+            '---iLNhI',
+            '---uQqCB',
+            '-----MB8NO',
+            '-----H1Zlr',
+        ];
+
+        foreach ($categorySlugs as $slug) {
+            $this->assertStringContainsString(
+                'category=' . $slug,
+                route('products.category', ['category_slug' => $slug])
             );
         }
     }

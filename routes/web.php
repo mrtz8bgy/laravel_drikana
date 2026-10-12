@@ -230,6 +230,7 @@ Route::get('/returnpolicy', 'HomeController@returnpolicy')->name('returnpolicy')
 Route::get('/supportpolicy', 'HomeController@supportpolicy')->name('supportpolicy');
 Route::get('/terms', 'HomeController@terms')->name('terms');
 Route::get('/privacypolicy', 'HomeController@privacypolicy')->name('privacypolicy');
+Route::get('/contact-us', 'HomeController@contact')->name('contact');
 
 // ============================================
 # بخش کاربران (User Area)
@@ -759,6 +760,5 @@ Route::get('/articles/category/{slug}', 'ArticleController@category')->name('art
 Route::get('/articles/{slug}', 'ArticleController@show')
     ->name('articles.show')
     ->where('slug', '[A-Za-z0-9][A-Za-z0-9-]*');
-
 
 

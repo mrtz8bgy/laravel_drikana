@@ -5,8 +5,11 @@ namespace Tests\Feature;
 use App\Models\AuditLog;
 use App\Models\JewelryCertificate;
 use App\Models\JewelryOwner;
+use App\Models\RepairTechnician;
 use App\Models\RepairOrder;
 use App\Models\Role;
+use App\Http\Controllers\Jewelry\JewelryOwnerController;
+use App\Http\Controllers\Jewelry\Admin\RepairOrderController as AdminRepairOrderController;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
@@ -115,6 +118,64 @@ class SecurityFixesTest extends TestCase
         $response = $this->actingAs($user)->get('/admin/jewelry/owners');
 
         $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function repair_order_form_shows_active_repair_technician_profiles()
+    {
+        $admin = $this->makeUser([], ['user_type' => 'admin']);
+        $technician = $this->makeUser([], [
+            'name' => 'تکنسین آزمایشی',
+            'user_type' => 'customer',
+        ]);
+        $technician->role = 'technician';
+        $technician->save();
+
+        $profile = RepairTechnician::create([
+            'user_id' => $technician->id,
+            'specialty' => 'repair',
+            'experience_years' => 5,
+            'is_active' => true,
+        ]);
+
+        $this->actingAs($admin);
+        $view = (new AdminRepairOrderController())->create();
+        $technicians = $view->getData()['technicians'];
+
+        $this->assertTrue($technicians->contains('id', $profile->id));
+
+        $html = $view
+            ->with('errors', new \Illuminate\Support\MessageBag())
+            ->render();
+        $this->assertStringContainsString('تکنسین آزمایشی - تعمیرات عمومی (5 سال)', $html);
+        $this->assertStringContainsString('value="' . $technician->id . '"', $html);
+    }
+
+    /** @test */
+    public function administrator_can_see_owners_created_by_another_administrator()
+    {
+        $ownerCreator = $this->makeUser([], ['user_type' => 'admin']);
+        $administrator = $this->makeUser([], ['user_type' => 'admin']);
+
+        $owner = JewelryOwner::create([
+            'user_id' => $ownerCreator->id,
+            'full_name' => 'مالک آزمایشی مدیر دیگر',
+            'national_id' => '1234567890',
+            'phone' => '09123456789',
+        ]);
+
+        $this->actingAs($administrator);
+        $view = (new JewelryOwnerController())->index();
+        $owners = $view->getData()['owners'];
+
+        $this->assertTrue($owners->getCollection()->contains('id', $owner->id));
+
+        $customer = $this->makeUser();
+        $this->actingAs($customer);
+        $customerView = (new JewelryOwnerController())->index();
+        $customerOwners = $customerView->getData()['owners'];
+
+        $this->assertFalse($customerOwners->getCollection()->contains('id', $owner->id));
     }
 
     /** @test */

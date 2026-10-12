@@ -184,6 +184,28 @@ class RbacAccessControlTest extends TestCase
         );
     }
 
+    /** @test */
+    public function grouped_permissions_are_slug_to_name_pairs_for_role_forms()
+    {
+        $permissionGroups = Permission::grouped();
+        $repairPermissions = $permissionGroups->get('جواهرات — تعمیرات');
+
+        $this->assertIsArray($repairPermissions);
+        $this->assertSame('تخصیص تکنسین به سفارش', $repairPermissions['jewelry.repairs.assign']);
+        $this->assertArrayNotHasKey(0, $repairPermissions);
+
+        $html = view('admin.partials.permission_matrix', [
+            'permissionGroups' => $permissionGroups,
+            'selected' => [],
+            'actorPermissions' => null,
+            'isSuperAdmin' => true,
+        ])->render();
+
+        $this->assertStringContainsString('jewelry.repairs.assign', $html);
+        $this->assertStringContainsString('تخصیص تکنسین به سفارش', $html);
+        $this->assertStringNotContainsString('&quot;id&quot;', $html);
+    }
+
     // =========================================================
     // ۳) بالابردن سطح دسترسی (Privilege Escalation)
     // =========================================================

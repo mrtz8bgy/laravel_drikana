@@ -15,7 +15,7 @@ class JewelryOwnerController extends Controller
      */
     public function index()
     {
-        $owners = JewelryOwner::where('user_id', Auth::id())
+        $owners = $this->ownersVisibleToCurrentUser()
             ->withCount('certificates')
             ->orderBy('created_at', 'desc')
             ->paginate(15);
@@ -141,7 +141,7 @@ class JewelryOwnerController extends Controller
             'q' => 'required|string|min:2',
         ]);
         
-        $owners = JewelryOwner::where('user_id', Auth::id())
+        $owners = $this->ownersVisibleToCurrentUser()
             ->where(function($query) use ($request) {
                 $query->where('full_name', 'LIKE', "%{$request->q}%")
                       ->orWhere('national_id', 'LIKE', "%{$request->q}%")
@@ -159,12 +159,26 @@ class JewelryOwnerController extends Controller
      */
     public function getOwnersForSelect()
     {
-        $owners = JewelryOwner::where('user_id', Auth::id())
+        $owners = $this->ownersVisibleToCurrentUser()
             ->select('id', 'full_name', 'national_id')
             ->orderBy('full_name')
             ->get();
         
         return response()->json($owners);
+    }
+
+    /**
+     * مدیر کل می‌تواند همه مالکان را مدیریت کند؛ سایر کاربران فقط مالکان خود را می‌بینند.
+     */
+    protected function ownersVisibleToCurrentUser()
+    {
+        $query = JewelryOwner::query();
+
+        if (!Auth::user()->isSuperAdmin()) {
+            $query->where('user_id', Auth::id());
+        }
+
+        return $query;
     }
 
     // =========================================================

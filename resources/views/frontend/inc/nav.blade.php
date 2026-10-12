@@ -91,9 +91,9 @@
                 </a>
                 <ul class="d-nav-links">
                     <li class="{{ request()->routeIs('home') ? 'active' : '' }}"><a href="{{ route('home') }}"><i class="la la-home"></i> خانه</a></li>
-                    <li><a href="#"><i class="la la-diamond"></i> طلا و جواهر</a></li>
-                    <li><a href="#"><i class="la la-clock-o"></i> ساعت</a></li>
-                    <li><a href="#"><i class="la la-gem"></i> سنگ‌های قیمتی</a></li>
+                    <li><a href="{{ route('products.category', ['category_slug' => '--2EJpD']) }}"><i class="la la-diamond"></i> طلا و جواهر</a></li>
+                    <li><a href="{{ route('products.category', ['category_slug' => '----FoS0v']) }}"><i class="la la-clock-o"></i> ساعت</a></li>
+                    <li><a href="{{ route('products.category', ['category_slug' => '---iLNhI']) }}"><i class="la la-gem"></i> سنگ‌های قیمتی</a></li>
                     <li><a href="{{ route('jewelry.certificates.verify_page') }}"><i class="la la-certificate"></i> استعلام شناسنامه</a></li>
                     <li><a href="{{ route('jewelry.missing_reports.create_public') }}"><i class="la la-bullhorn"></i> اعلام سرقت</a></li>
 
@@ -102,7 +102,7 @@
                         <a href="{{ route('articles.index') }}"><i class="la la-book"></i> مقالات و راهنما</a>
                     </li>
 
-                    <li><a href="#"><i class="la la-phone"></i> تماس با ما</a></li>
+                    <li><a href="{{ route('contact') }}"><i class="la la-phone"></i> تماس با ما</a></li>
                 </ul>
                 <div class="d-nav-cta">
                     @if (\App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)

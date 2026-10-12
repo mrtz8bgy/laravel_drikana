@@ -64,7 +64,14 @@ class Permission extends Model
     public static function grouped()
     {
         return Cache::remember(self::CACHE_KEY_GROUPS, self::CACHE_TTL, function () {
-            return self::query()->orderBy('group')->orderBy('slug')->get()->groupBy('group');
+            return self::query()
+                ->orderBy('group')
+                ->orderBy('slug')
+                ->get()
+                ->groupBy('group')
+                ->map(function ($permissions) {
+                    return $permissions->pluck('name', 'slug')->all();
+                });
         });
     }
 

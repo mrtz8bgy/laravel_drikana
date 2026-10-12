@@ -8,17 +8,17 @@
 @endsection
 
 @section('jewelry_content')
-<div class="container">
+<div class="container-fluid missing-reports-page">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
+                <div class="card-header missing-reports-header d-flex justify-content-between align-items-center flex-wrap">
                     <h4 class="mb-0">
-                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <i class="fas fa-exclamation-triangle"></i>
                         لیست گزارش‌های سرقت و مفقودی
                     </h4>
-                    <a href="{{ route('admin.jewelry.missing_reports.create') }}" class="btn btn-light">
-                        <i class="fas fa-plus-circle me-2"></i>
+                    <a href="{{ route('admin.jewelry.missing_reports.create') }}" class="btn missing-report-button missing-report-button--create">
+                        <i class="fas fa-plus-circle"></i>
                         ثبت گزارش جدید
                     </a>
                 </div>
@@ -96,11 +96,11 @@
                                 </div>
                                 
                                 <div class="col-12 mt-3">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-filter me-2"></i>اعمال فیلتر
+                                    <button type="submit" class="btn missing-report-button missing-report-button--filter">
+                                        <i class="fas fa-filter"></i> اعمال فیلتر
                                     </button>
-                                    <a href="{{ route('admin.jewelry.missing_reports.index') }}" class="btn btn-secondary">
-                                        <i class="fas fa-times me-2"></i>پاک کردن فیلترها
+                                    <a href="{{ route('admin.jewelry.missing_reports.index') }}" class="btn missing-report-button missing-report-button--reset">
+                                        <i class="fas fa-times"></i> پاک کردن فیلترها
                                     </a>
                                 </div>
                             </form>
@@ -108,61 +108,52 @@
                     </div>
                     
                     {{-- نمایش تعداد نتایج --}}
-                    <div class="alert alert-info mb-3">
-                        <i class="fas fa-info-circle me-2"></i>
-                        تعداد گزارش‌های یافت شده: <strong>{{ $reports->count() }}</strong>
-                    </div>
-                    
-                    {{-- آمار خلاصه --}}
-                    @php
-                        $totalReports = $reports->count();
-                        $pendingCount = $reports->where('status', 'pending')->count();
-                        $foundCount = $reports->where('status', 'found')->count();
-                        $theftCount = $reports->where('type', 'theft')->count();
-                        $lostCount = $reports->where('type', 'lost')->count();
-                    @endphp
-                    
                     <div class="row mb-4">
-                        <div class="col-md-2">
-                            <div class="card bg-light">
-                                <div class="card-body py-2 text-center">
-                                    <small class="text-muted">کل گزارش‌ها</small>
-                                    <h5 class="mb-0">{{ $totalReports }}</h5>
+                        <div class="col-sm-6 col-xl mb-3">
+                            <div class="card missing-report-stat missing-report-stat--total">
+                                <div class="card-body text-center">
+                                    <small>کل گزارش‌ها</small>
+                                    <h4 class="mb-0">{{ number_format($stats['total']) }}</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="card bg-warning text-white">
-                                <div class="card-body py-2 text-center">
+                        <div class="col-sm-6 col-xl mb-3">
+                            <div class="card missing-report-stat missing-report-stat--pending">
+                                <div class="card-body text-center">
                                     <small>در انتظار</small>
-                                    <h5 class="mb-0">{{ $pendingCount }}</h5>
+                                    <h4 class="mb-0">{{ number_format($stats['pending']) }}</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="card bg-success text-white">
-                                <div class="card-body py-2 text-center">
+                        <div class="col-sm-6 col-xl mb-3">
+                            <div class="card missing-report-stat missing-report-stat--found">
+                                <div class="card-body text-center">
                                     <small>پیدا شده</small>
-                                    <h5 class="mb-0">{{ $foundCount }}</h5>
+                                    <h4 class="mb-0">{{ number_format($stats['found']) }}</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="card bg-danger text-white">
-                                <div class="card-body py-2 text-center">
+                        <div class="col-sm-6 col-xl mb-3">
+                            <div class="card missing-report-stat missing-report-stat--theft">
+                                <div class="card-body text-center">
                                     <small>سرقت</small>
-                                    <h5 class="mb-0">{{ $theftCount }}</h5>
+                                    <h4 class="mb-0">{{ number_format($stats['theft']) }}</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="card bg-info text-white">
-                                <div class="card-body py-2 text-center">
+                        <div class="col-sm-6 col-xl mb-3">
+                            <div class="card missing-report-stat missing-report-stat--lost">
+                                <div class="card-body text-center">
                                     <small>مفقودی</small>
-                                    <h5 class="mb-0">{{ $lostCount }}</h5>
+                                    <h4 class="mb-0">{{ number_format($stats['lost']) }}</h4>
                                 </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="alert alert-info mb-3">
+                        <i class="fas fa-info-circle"></i>
+                        تعداد گزارش‌های منطبق با فیلترها: <strong>{{ number_format($reports->count()) }}</strong>
                     </div>
                     
                     {{-- جدول نتایج --}}
@@ -177,7 +168,7 @@
                                     <th>نوع</th>
                                     <th>تاریخ ثبت</th>
                                     <th>وضعیت</th>
-                                    <th width="120">عملیات</th>
+                                    <th width="190">عملیات</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -243,21 +234,27 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.jewelry.missing_reports.show', $report->id) }}" 
-                                           class="btn btn-sm btn-info" 
-                                           data-bs-toggle="tooltip" 
-                                           title="مشاهده جزییات">
-                                            <i class="fas fa-eye"></i>
-                                        </a>
-                                        @if($report->status == 'pending')
-                                            <a href="{{ route('admin.jewelry.missing_reports.print', $report->id) }}" 
-                                               class="btn btn-sm btn-secondary" 
-                                               target="_blank"
-                                               data-bs-toggle="tooltip" 
-                                               title="چاپ گزارش">
-                                                <i class="fas fa-print"></i>
+                                        <div class="missing-report-actions">
+                                            <a href="{{ route('admin.jewelry.missing_reports.show', $report->id) }}"
+                                               class="btn missing-report-button missing-report-button--details"
+                                               data-bs-toggle="tooltip"
+                                               aria-label="مشاهده جزئیات گزارش"
+                                               title="مشاهده جزئیات">
+                                                <i class="fas fa-eye" aria-hidden="true"></i>
+                                                <span>جزئیات</span>
                                             </a>
-                                        @endif
+                                            @if($report->status == 'pending')
+                                                <a href="{{ route('admin.jewelry.missing_reports.print', $report->id) }}"
+                                                   class="btn missing-report-button missing-report-button--print"
+                                                   target="_blank"
+                                                   data-bs-toggle="tooltip"
+                                                   aria-label="چاپ گزارش"
+                                                   title="چاپ گزارش">
+                                                    <i class="fas fa-print" aria-hidden="true"></i>
+                                                    <span>چاپ</span>
+                                                </a>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                                 @empty
@@ -265,8 +262,8 @@
                                     <td colspan="8" class="text-center py-5">
                                         <i class="fas fa-exclamation-circle fa-3x text-muted mb-3"></i>
                                         <h5 class="text-muted">هیچ گزارشی یافت نشد</h5>
-                                        <a href="{{ route('admin.jewelry.missing_reports.create') }}" class="btn btn-warning mt-2">
-                                            <i class="fas fa-plus-circle me-2"></i>ثبت گزارش جدید
+                                        <a href="{{ route('admin.jewelry.missing_reports.create') }}" class="btn missing-report-button missing-report-button--create mt-2">
+                                            <i class="fas fa-plus-circle"></i> ثبت گزارش جدید
                                         </a>
                                     </td>
                                 </tr>

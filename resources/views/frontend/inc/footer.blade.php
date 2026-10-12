@@ -29,8 +29,6 @@
                     @if($gs->twitter)<a href="{{ $gs->twitter }}" target="_blank" aria-label="Twitter"><i class="fa fa-twitter"></i></a>@endif
                     @if($gs->youtube)<a href="{{ $gs->youtube }}" target="_blank" aria-label="Youtube"><i class="fa fa-youtube-play"></i></a>@endif
                     @if($gs->google_plus)<a href="{{ $gs->google_plus }}" target="_blank" aria-label="Google+"><i class="fa fa-google-plus"></i></a>@endif
-                    <a href="#" aria-label="Telegram"><i class="fa fa-telegram"></i></a>
-                    <a href="#" aria-label="Whatsapp"><i class="fa fa-whatsapp"></i></a>
                 </div>
             </div>
 
@@ -45,7 +43,7 @@
                     <li><a href="{{ route('products.todays_deal') }}">تخفیف‌های امروز</a></li>
                     <li><a href="{{ route('brands.all') }}">برندها</a></li>
                     <li><a href="{{ route('articles.index') }}">مقالات و راهنمای طلا و جواهر</a></li>
-                    <li><a href="#">وبلاگ و مقالات</a></li>
+                    <li><a href="{{ route('contact') }}">تماس با ما</a></li>
                 </ul>
             </div>
 

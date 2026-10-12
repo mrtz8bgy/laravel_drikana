@@ -8,10 +8,12 @@ use App\Models\JewelryCertificate;
 use App\Models\JewelryOwner;
 use App\Models\JewelryTransfer;
 use App\Models\Role;
+use App\Http\Controllers\Jewelry\Admin\ReportController;
 use App\Services\Content\ArticleService;
 use App\Services\Ownership\OwnershipTransferService;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Http\Request;
 use Tests\TestCase;
 
 /**
@@ -313,6 +315,52 @@ class ViewSmokeTest extends TestCase
         foreach ($pages as $uri => $label) {
             $this->assertPageRenders($admin, $uri, $label);
         }
+    }
+
+    /** @test */
+    public function certificates_report_renders_certificate_data_and_status_filters()
+    {
+        $admin = $this->makeUser(['super_admin']);
+        $owner = JewelryOwner::create([
+            'user_id' => $admin->id,
+            'full_name' => 'مالک گزارش آزمایشی',
+            'national_id' => '9876543210',
+            'phone' => '09123456789',
+        ]);
+        $certificate = JewelryCertificate::create([
+            'owner_id' => $owner->id,
+            'product_name' => 'انگشتر گزارش آزمایشی',
+            'metal_type' => 'طلا',
+            'purity' => 18,
+            'weight' => 4.25,
+            'serial_number' => 'REPORT-' . strtoupper(uniqid()),
+            'issued_at' => now()->toDateString(),
+            'is_verified' => true,
+        ]);
+
+        $this->actingAs($admin);
+        $view = (new ReportController())->certificates(Request::create(
+            '/admin/jewelry/reports/certificates',
+            'GET',
+            [
+                'verification_status' => 'verified',
+                'metal_type' => '',
+                'search' => $certificate->serial_number,
+            ]
+        ));
+        $certificates = $view->getData()['certificates'];
+
+        $this->assertTrue($certificates->getCollection()->contains('id', $certificate->id));
+        $this->assertSame(1, $view->getData()['stats']['verified']);
+
+        $html = $view
+            ->with('errors', new \Illuminate\Support\MessageBag())
+            ->render();
+
+        $this->assertStringContainsString($certificate->serial_number, $html);
+        $this->assertStringContainsString('انگشتر گزارش آزمایشی', $html);
+        $this->assertStringContainsString('مالک گزارش آزمایشی', $html);
+        $this->assertStringContainsString('فهرست شناسنامه‌ها', $html);
     }
 
     /** @test */

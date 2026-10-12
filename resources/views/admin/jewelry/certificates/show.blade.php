@@ -158,12 +158,21 @@
                 </div>
                 <div class="card-body">
                     @if($certificate->certificate_file)
+                        @php
+                            $certificateFileUrl = preg_replace(
+                                '/^https?:/',
+                                request()->getScheme() . ':',
+                                asset('storage/' . ltrim($certificate->certificate_file, '/'))
+                            );
+                            $certificateFileExtension = strtolower(pathinfo($certificate->certificate_file, PATHINFO_EXTENSION));
+                            $certificateFileIsImage = in_array($certificateFileExtension, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp']);
+                        @endphp
                         <div class="text-center">
-                            <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                            <i class="fas {{ $certificateFileIsImage ? 'fa-file-image text-primary' : 'fa-file-pdf text-danger' }} fa-3x mb-3"></i>
                             <p class="mb-3">فایل شناسنامه ضمیمه شده است</p>
                             <div class="btn-group">
-                                <a href="{{ Storage::url($certificate->certificate_file) }}" 
-                                   class="btn btn-primary" target="_blank">
+                                <a href="{{ $certificateFileUrl }}"
+                                   class="btn btn-primary" target="_blank" rel="noopener noreferrer">
                                     <i class="fas fa-eye"></i> مشاهده
                                 </a>
                                 <a href="{{ route('admin.jewelry.certificates.download', $certificate) }}" 

@@ -3,172 +3,221 @@
 namespace App\Http\Controllers\Jewelry;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Models\JewelryOwner;
 use App\Models\JewelryCertificate;
-use App\Models\RepairOrder;
+use App\Models\JewelryOwner;
 use App\Models\JewelryTransfer;
+use App\Models\MissingReport;
+use App\Models\RepairOrder;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     /**
-     * نمایش داشبورد مدیریت جواهرات کاربر (صفحه ادمین)
+     * نمایش داشبورد سامانه جواهرات.
      */
     public function index()
     {
-        $userId = Auth::id();
-        
-        // آمار کلی
+        $user = Auth::user();
+        $userId = $user->id;
+        $isSuperAdmin = $user->isSuperAdmin();
+
+        $owners = $this->ownersQuery($userId, $isSuperAdmin);
+        $certificates = $this->certificatesQuery($userId, $isSuperAdmin);
+        $repairs = $this->repairsQuery($userId, $isSuperAdmin);
+        $transfers = $this->transfersQuery($userId, $isSuperAdmin);
+        $missingReports = $this->missingReportsQuery($userId, $isSuperAdmin);
+
         $stats = [
-            'owners_count' => JewelryOwner::where('user_id', $userId)->count(),
-            'certificates_count' => JewelryCertificate::whereHas('owner', function($q) use ($userId) {
-                $q->where('user_id', $userId);
-            })->count(),
-            'verified_certificates' => JewelryCertificate::whereHas('owner', function($q) use ($userId) {
-                $q->where('user_id', $userId);
-            })->where('is_verified', true)->count(),
-            'repair_orders_count' => RepairOrder::where('user_id', $userId)->count(),
-            'active_repairs' => RepairOrder::where('user_id', $userId)
-                ->whereIn('status', ['در حال تعمیر', 'در انتظار'])
+            'owners_count' => (clone $owners)->count(),
+            'certificates_count' => (clone $certificates)->count(),
+            'verified_certificates' => (clone $certificates)
+                ->where('is_verified', true)
+                ->whereNull('rejected_at')
                 ->count(),
-            'completed_repairs' => RepairOrder::where('user_id', $userId)
-                ->where('status', 'تکمیل شده')
+            'pending_verification' => (clone $certificates)
+                ->where('is_verified', false)
+                ->whereNull('rejected_at')
                 ->count(),
+            'rejected_certificates' => (clone $certificates)
+                ->whereNotNull('rejected_at')
+                ->count(),
+            'repair_orders_count' => (clone $repairs)->count(),
+            'pending_repairs' => (clone $repairs)->where('status', 'pending')->count(),
+            'in_progress_repairs' => (clone $repairs)->where('status', 'in_progress')->count(),
+            'active_repairs' => (clone $repairs)->whereIn('status', ['pending', 'in_progress'])->count(),
+            'completed_repairs' => (clone $repairs)->whereIn('status', ['completed', 'delivered'])->count(),
+            'urgent_repairs' => (clone $repairs)
+                ->where('priority', 'urgent')
+                ->whereIn('status', ['pending', 'in_progress'])
+                ->count(),
+            'transfers_count' => (clone $transfers)->count(),
+            'pending_transfers' => (clone $transfers)->where('status', JewelryTransfer::STATUS_PENDING)->count(),
+            'missing_reports_count' => (clone $missingReports)->count(),
+            'pending_missing_reports' => (clone $missingReports)->where('status', 'pending')->count(),
         ];
-        
-        // آخرین شناسنامه‌ها
-        $recentCertificates = JewelryCertificate::whereHas('owner', function($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })
-        ->with('owner')
-        ->latest()
-        ->take(5)
-        ->get();
-        
-        // آخرین سفارشات تعمیر
-        $recentRepairs = RepairOrder::where('user_id', $userId)
-            ->with('certificate')
-            ->latest()
+
+        $recentCertificates = $certificates->with('owner')
+            ->latest('created_at')
+            ->take(6)
+            ->get();
+        $recentRepairs = $repairs->with(['certificate.owner', 'technician'])
+            ->latest('created_at')
+            ->take(6)
+            ->get();
+        $recentTransfers = $transfers->with(['certificate', 'fromOwner', 'toOwner'])
+            ->latest('created_at')
+            ->take(6)
+            ->get();
+        $recentMissingReports = $missingReports->with('jewelryCertificate')
+            ->latest('created_at')
             ->take(5)
             ->get();
-        
-        // آخرین انتقالات
-        $recentTransfers = JewelryTransfer::whereHas('certificate.owner', function($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })
-        ->with(['certificate', 'fromOwner', 'toOwner'])
-        ->latest()
-        ->take(5)
-        ->get();
-        
-        // شناسنامه‌های نیازمند تأیید
-        $pendingVerification = JewelryCertificate::whereHas('owner', function($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })
-        ->where('is_verified', false)
-        ->whereNull('rejected_at')
-        ->count();
-        
-        // مسیر view تغییر کرد به admin.jewelry.dashboard.index
+
+        $metalDistribution = (clone $certificates)
+            ->select('metal_type')
+            ->selectRaw('COUNT(*) as total')
+            ->groupBy('metal_type')
+            ->orderByDesc('total')
+            ->get();
+
         return view('admin.jewelry.dashboard.index', compact(
-            'stats', 
-            'recentCertificates', 
-            'recentRepairs', 
+            'stats',
+            'recentCertificates',
+            'recentRepairs',
             'recentTransfers',
-            'pendingVerification'
+            'recentMissingReports',
+            'metalDistribution',
+            'isSuperAdmin'
         ));
     }
-    
+
     /**
-     * نمایش خلاصه وضعیت (برای AJAX)
+     * نمایش خلاصه وضعیت برای درخواست‌های AJAX.
      */
     public function summary()
     {
-        $userId = Auth::id();
-        
-        $summary = [
-            'total_certificates' => JewelryCertificate::whereHas('owner', function($q) use ($userId) {
-                $q->where('user_id', $userId);
-            })->count(),
-            'pending_repairs' => RepairOrder::where('user_id', $userId)
-                ->where('status', 'در انتظار')
-                ->count(),
-            'in_progress_repairs' => RepairOrder::where('user_id', $userId)
-                ->where('status', 'در حال تعمیر')
-                ->count(),
-            'recent_activity' => $this->getRecentActivity($userId),
-        ];
-        
-        return response()->json($summary);
+        $user = Auth::user();
+        $userId = $user->id;
+        $isSuperAdmin = $user->isSuperAdmin();
+        $certificates = $this->certificatesQuery($userId, $isSuperAdmin);
+        $repairs = $this->repairsQuery($userId, $isSuperAdmin);
+
+        return response()->json([
+            'total_certificates' => (clone $certificates)->count(),
+            'pending_repairs' => (clone $repairs)->where('status', 'pending')->count(),
+            'in_progress_repairs' => (clone $repairs)->where('status', 'in_progress')->count(),
+            'recent_activity' => $this->getRecentActivity($userId, $isSuperAdmin),
+        ]);
     }
-    
-    /**
-     * دریافت فعالیت‌های اخیر
-     */
-    private function getRecentActivity($userId)
+
+    protected function ownersQuery($userId, $isSuperAdmin)
     {
-        $activities = [];
-        
-        // شناسنامه‌های اخیر
-        $certificates = JewelryCertificate::whereHas('owner', function($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })
-        ->latest()
-        ->take(3)
-        ->get();
-        
-        foreach ($certificates as $certificate) {
-            $activities[] = [
-                'type' => 'certificate',
+        $query = JewelryOwner::query();
+
+        if (!$isSuperAdmin) {
+            $query->where('user_id', $userId);
+        }
+
+        return $query;
+    }
+
+    protected function certificatesQuery($userId, $isSuperAdmin)
+    {
+        $query = JewelryCertificate::query();
+
+        if (!$isSuperAdmin) {
+            $query->whereHas('owner', function ($ownerQuery) use ($userId) {
+                $ownerQuery->where('user_id', $userId);
+            });
+        }
+
+        return $query;
+    }
+
+    protected function repairsQuery($userId, $isSuperAdmin)
+    {
+        $query = RepairOrder::query();
+
+        if (!$isSuperAdmin) {
+            $query->where('user_id', $userId);
+        }
+
+        return $query;
+    }
+
+    protected function transfersQuery($userId, $isSuperAdmin)
+    {
+        $query = JewelryTransfer::query();
+
+        if (!$isSuperAdmin) {
+            $query->whereHas('certificate.owner', function ($ownerQuery) use ($userId) {
+                $ownerQuery->where('user_id', $userId);
+            });
+        }
+
+        return $query;
+    }
+
+    protected function missingReportsQuery($userId, $isSuperAdmin)
+    {
+        $query = MissingReport::query();
+
+        if (!$isSuperAdmin) {
+            $query->where('user_id', $userId);
+        }
+
+        return $query;
+    }
+
+    /**
+     * دریافت فعالیت‌های اخیر با مرتب‌سازی بر اساس زمان واقعی ثبت.
+     */
+    private function getRecentActivity($userId, $isSuperAdmin)
+    {
+        $activities = collect();
+
+        foreach ($this->certificatesQuery($userId, $isSuperAdmin)
+            ->latest('created_at')->take(3)->get() as $certificate) {
+            $activities->push([
                 'title' => 'شناسنامه جدید: ' . $certificate->product_name,
                 'description' => 'شماره سریال: ' . $certificate->serial_number,
-                'date' => $certificate->created_at->diffForHumans(),
+                'date' => optional($certificate->created_at)->diffForHumans(),
+                'timestamp' => optional($certificate->created_at)->timestamp ?: 0,
                 'icon' => 'fa-certificate',
                 'color' => 'success',
-            ];
+            ]);
         }
-        
-        // سفارشات تعمیر اخیر
-        $repairs = RepairOrder::where('user_id', $userId)
-            ->latest()
-            ->take(3)
-            ->get();
-        
-        foreach ($repairs as $repair) {
-            $activities[] = [
-                'type' => 'repair',
-                'title' => 'سفارش تعمیر جدید',
-                'description' => 'نوع تعمیر: ' . $repair->repair_type,
-                'date' => $repair->created_at->diffForHumans(),
+
+        foreach ($this->repairsQuery($userId, $isSuperAdmin)
+            ->latest('created_at')->take(3)->get() as $repair) {
+            $activities->push([
+                'title' => 'سفارش تعمیر: ' . ($repair->order_number ?: '#' . $repair->id),
+                'description' => 'وضعیت: ' . $repair->status_label,
+                'date' => optional($repair->created_at)->diffForHumans(),
+                'timestamp' => optional($repair->created_at)->timestamp ?: 0,
                 'icon' => 'fa-tools',
                 'color' => 'info',
-            ];
+            ]);
         }
-        
-        // انتقالات اخیر
-        $transfers = JewelryTransfer::whereHas('certificate.owner', function($q) use ($userId) {
-            $q->where('user_id', $userId);
-        })
-        ->latest()
-        ->take(2)
-        ->get();
-        
-        foreach ($transfers as $transfer) {
-            $activities[] = [
-                'type' => 'transfer',
-                'title' => 'انتقال مالکیت',
+
+        foreach ($this->transfersQuery($userId, $isSuperAdmin)
+            ->latest('created_at')->take(2)->get() as $transfer) {
+            $activities->push([
+                'title' => 'درخواست انتقال مالکیت',
                 'description' => 'نوع انتقال: ' . $transfer->transfer_type,
-                'date' => $transfer->created_at->diffForHumans(),
+                'date' => optional($transfer->created_at)->diffForHumans(),
+                'timestamp' => optional($transfer->created_at)->timestamp ?: 0,
                 'icon' => 'fa-exchange-alt',
                 'color' => 'warning',
-            ];
+            ]);
         }
-        
-        // مرتب‌سازی بر اساس تاریخ
-        usort($activities, function($a, $b) {
-            return strtotime($b['date']) - strtotime($a['date']);
-        });
-        
-        return array_slice($activities, 0, 5);
+
+        return $activities->sortByDesc('timestamp')
+            ->take(5)
+            ->map(function ($activity) {
+                unset($activity['timestamp']);
+                return $activity;
+            })
+            ->values();
     }
 }

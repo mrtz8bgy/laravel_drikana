@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Jewelry\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\RepairTechnician;
 use App\Models\RepairOrder;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -91,10 +92,9 @@ class RepairOrderController extends Controller
     public function create()
     {
         $jewelries = \App\Models\JewelryCertificate::with('owner.user')->get();
-        $technicians = User::where('user_type', 'staff')
-            ->orWhere('user_type', 'admin')
-            ->where('id', '!=', auth()->id())
-            ->whereNotNull('id') // اضافه شده برای اطمینان
+        $technicians = RepairTechnician::with('user')
+            ->active()
+            ->whereHas('user')
             ->get();
         
         return view('admin.jewelry.repair-orders.create', compact('jewelries', 'technicians'));
@@ -113,7 +113,7 @@ class RepairOrderController extends Controller
             'scheduled_date' => 'nullable|date',
             'estimated_cost' => 'nullable|numeric|min:0',
             'priority' => 'nullable|in:normal,urgent',
-            'assigned_to' => 'nullable|exists:users,id',
+            'assigned_to' => 'nullable|exists:repair_technicians,user_id,is_active,1',
         ]);
         
         // Get the user_id from the jewelry certificate's owner - اصلاح شده با بررسی null

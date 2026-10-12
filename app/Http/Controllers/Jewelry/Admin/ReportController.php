@@ -193,12 +193,23 @@ class ReportController extends Controller
     public function certificates(Request $request)
     {
         $query = JewelryCertificate::with(['owner.user']);
+
+        $stats = [
+            'total' => JewelryCertificate::count(),
+            'verified' => JewelryCertificate::where('is_verified', true)
+                ->whereNull('rejected_at')
+                ->count(),
+            'pending' => JewelryCertificate::where('is_verified', false)
+                ->whereNull('rejected_at')
+                ->count(),
+            'rejected' => JewelryCertificate::whereNotNull('rejected_at')->count(),
+        ];
         
         // فیلترها
-        if ($request->has('verification_status')) {
+        if ($request->filled('verification_status')) {
             $status = $request->get('verification_status');
             if ($status == 'verified') {
-                $query->where('is_verified', true);
+                $query->where('is_verified', true)->whereNull('rejected_at');
             } elseif ($status == 'pending') {
                 $query->where('is_verified', false)->whereNull('rejected_at');
             } elseif ($status == 'rejected') {
@@ -206,21 +217,21 @@ class ReportController extends Controller
             }
         }
         
-        if ($request->has('metal_type')) {
+        if ($request->filled('metal_type')) {
             $query->where('metal_type', $request->get('metal_type'));
         }
         
-        if ($request->has('date_from')) {
+        if ($request->filled('date_from')) {
             $query->whereDate('created_at', '>=', $request->get('date_from'));
         }
         
-        if ($request->has('date_to')) {
+        if ($request->filled('date_to')) {
             $query->whereDate('created_at', '<=', $request->get('date_to'));
         }
         
         // جستجو
-        if ($request->has('search')) {
-            $search = $request->get('search');
+        $search = trim((string) $request->get('search', ''));
+        if ($search !== '') {
             $query->where(function($q) use ($search) {
                 $q->where('serial_number', 'LIKE', "%{$search}%")
                   ->orWhere('product_name', 'LIKE', "%{$search}%")
@@ -236,7 +247,11 @@ class ReportController extends Controller
         
         $metalTypes = ['طلا', 'نقره', 'پلاتین', 'سایر'];
         
-        return view('admin.jewelry.reports.certificates', compact('certificates', 'metalTypes'));
+        return view('admin.jewelry.reports.certificates', compact(
+            'certificates',
+            'metalTypes',
+            'stats'
+        ));
     }
     
     /**

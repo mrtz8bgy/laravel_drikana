@@ -6,11 +6,11 @@
     <title>چاپ شناسنامه: {{ $certificate->serial_number }}</title>
 {{-- استایل چاپ به فایل مستقل زیر منتقل شده است (مرحله ۳ بازسازی).
      این فایل مشترک میان همه صفحات چاپی است. --}}
-<link rel="stylesheet" href="{{ asset('css/drikana/print.css') }}">
+<link rel="stylesheet" href="{{ preg_replace('/^https?:/', request()->getScheme() . ':', asset('css/drikana/print.css')) }}?v={{ filemtime(public_path('css/drikana/print.css')) }}">
     
     {{-- حذف لینک خارجی Font Awesome - استفاده از آیکون‌های متنی ساده --}}
     {{-- کلاس‌های استخراج‌شده از استایل درون‌خطی ویوها (بازبینی L-04) --}}
-    <link rel="stylesheet" href="{{ asset('css/drikana/utilities.css') }}">
+    <link rel="stylesheet" href="{{ preg_replace('/^https?:/', request()->getScheme() . ':', asset('css/drikana/utilities.css')) }}?v={{ filemtime(public_path('css/drikana/utilities.css')) }}">
 </head>
 <body>
     <!-- کنترل‌های چاپ -->
@@ -72,7 +72,7 @@
         <!-- عکس جواهر -->
         <div class="jewelry-image-section" id="imageSection">
             @php
-                // ایجاد URL صحیح برای عکس
+                // Embed the image so it remains available on HTTPS and in print previews.
                 $hasImage = false;
                 $imageUrl = null;
                 $imageExtension = null;
@@ -90,23 +90,20 @@
                         $imageExtension = $extension;
                     }
 
-                    if ($hasImage) {
-                        try {
-                            if (\Illuminate\Support\Facades\Storage::disk('public')->exists($imagePath)) {
-                                $imageUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($imagePath);
-                            } elseif (file_exists(public_path('storage/' . $imagePath))) {
-                                $imageUrl = asset('storage/' . $imagePath);
-                            } else {
-                                $physicalPath = storage_path('app/public/' . $imagePath);
-                                if (file_exists($physicalPath) && is_readable($physicalPath)) {
-                                    $contents = file_get_contents($physicalPath);
-                                    $base64 = base64_encode($contents);
-                                    $imageUrl = 'data:image/' . $extension . ';base64,' . $base64;
-                                }
-                            }
-                        } catch (\Exception $e) {
-                            $imageUrl = null;
-                        }
+                    $mimeTypes = [
+                        'jpg' => 'image/jpeg',
+                        'jpeg' => 'image/jpeg',
+                        'png' => 'image/png',
+                        'gif' => 'image/gif',
+                        'webp' => 'image/webp',
+                        'bmp' => 'image/bmp',
+                    ];
+
+                    if ($hasImage
+                        && isset($mimeTypes[$extension])
+                        && \Illuminate\Support\Facades\Storage::disk('public')->exists($imagePath)) {
+                        $imageContents = \Illuminate\Support\Facades\Storage::disk('public')->get($imagePath);
+                        $imageUrl = 'data:' . $mimeTypes[$extension] . ';base64,' . base64_encode($imageContents);
                     }
                 }
             @endphp

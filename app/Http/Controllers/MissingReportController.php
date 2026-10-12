@@ -20,8 +20,15 @@ class MissingReportController extends Controller
      */
     public function index(Request $request)
     {
-        $query = MissingReport::with(['jewelry.owner', 'user'])
-                              ->where('user_id', Auth::id());
+        $baseQuery = $this->reportsVisibleToCurrentUser();
+        $stats = [
+            'total' => (clone $baseQuery)->count(),
+            'pending' => (clone $baseQuery)->where('status', 'pending')->count(),
+            'found' => (clone $baseQuery)->where('status', 'found')->count(),
+            'theft' => (clone $baseQuery)->where('type', 'theft')->count(),
+            'lost' => (clone $baseQuery)->where('type', 'lost')->count(),
+        ];
+        $query = (clone $baseQuery)->with(['jewelry.owner', 'user']);
         
         // فیلتر بر اساس نوع (سرقت/مفقودی)
         if ($request->filled('type')) {
@@ -51,15 +58,13 @@ class MissingReportController extends Controller
             $query->whereDate('created_at', '<=', $request->date_to);
         }
         
-        // مرتب‌سازی
-        $query->latest();
-        
         // دریافت نتایج
-        $reports = $query->get();
+        $reports = $query->latest()->get();
         
         // ارسال پارامترهای فیلتر به ویو برای نمایش در فرم
         return view('admin.jewelry.missing_reports.index', [
             'reports' => $reports,
+            'stats' => $stats,
             'filters' => $request->only(['search', 'type', 'status', 'date_from', 'date_to'])
         ]);
     }
@@ -70,11 +75,9 @@ class MissingReportController extends Controller
     public function create()
     {
         // فقط قطعاتی که مالکش کاربر فعلی هست رو نمایش بده
-        $jewelries = JewelryCertificate::with('owner')
-                                       ->whereHas('owner', function($query) {
-                                           $query->where('user_id', Auth::id());
-                                       })
-                                       ->get();
+        $jewelries = $this->certificatesVisibleToCurrentUser()
+            ->with('owner')
+            ->get();
         
         return view('admin.jewelry.missing_reports.create', compact('jewelries'));
     }
@@ -93,12 +96,10 @@ class MissingReportController extends Controller
         ]);
         
         // چک میکنیم قطعه واقعاً مال این کاربر هست؟
-        $jewelry = JewelryCertificate::with('owner')
-                                     ->where('id', $request->jewelry_id)
-                                     ->whereHas('owner', function($query) {
-                                         $query->where('user_id', Auth::id());
-                                     })
-                                     ->first();
+        $jewelry = $this->certificatesVisibleToCurrentUser()
+            ->with('owner')
+            ->where('id', $request->jewelry_id)
+            ->first();
                                      
         if (!$jewelry) {
             return back()->withErrors(['شما مالک این قطعه نیستید'])->withInput();
@@ -130,9 +131,9 @@ class MissingReportController extends Controller
      */
     public function show($id)
     {
-        $report = MissingReport::with(['jewelry.owner', 'user'])
-                               ->where('user_id', Auth::id())
-                               ->findOrFail($id);
+        $report = $this->reportsVisibleToCurrentUser()
+            ->with(['jewelry.owner', 'user'])
+            ->findOrFail($id);
                                
         return view('admin.jewelry.missing_reports.show', compact('report'));
     }
@@ -142,7 +143,7 @@ class MissingReportController extends Controller
      */
     public function updateStatus(Request $request, $id)
     {
-        $report = MissingReport::where('user_id', Auth::id())->findOrFail($id);
+        $report = $this->reportsVisibleToCurrentUser()->findOrFail($id);
         
         $request->validate([
             'status' => 'required|in:pending,found'
@@ -163,9 +164,9 @@ class MissingReportController extends Controller
      */
     public function print($id)
     {
-        $report = MissingReport::with(['jewelry.owner', 'user'])
-                               ->where('user_id', Auth::id())
-                               ->findOrFail($id);
+        $report = $this->reportsVisibleToCurrentUser()
+            ->with(['jewelry.owner', 'user'])
+            ->findOrFail($id);
                                
         return view('admin.jewelry.missing_reports.print', compact('report'));
     }
@@ -175,7 +176,7 @@ class MissingReportController extends Controller
      */
     public function downloadDocument($id)
     {
-        $report = MissingReport::where('user_id', Auth::id())->findOrFail($id);
+        $report = $this->reportsVisibleToCurrentUser()->findOrFail($id);
 
         if (!$report->police_report_path || !Storage::disk('private')->exists($report->police_report_path)) {
             abort(404);
@@ -192,12 +193,10 @@ class MissingReportController extends Controller
      */
     public function getJewelryInfo($id)
     {
-        $jewelry = JewelryCertificate::with('owner')
-                                     ->where('id', $id)
-                                     ->whereHas('owner', function($query) {
-                                         $query->where('user_id', Auth::id());
-                                     })
-                                     ->first();
+        $jewelry = $this->certificatesVisibleToCurrentUser()
+            ->with('owner')
+            ->where('id', $id)
+            ->first();
                                      
         if (!$jewelry) {
             return response()->json(['error' => 'قطعه مورد نظر یافت نشد'], 404);
@@ -215,5 +214,35 @@ class MissingReportController extends Controller
             'owner_national_id' => $jewelry->owner->national_id ?? '---',
             'certificate_file' => $jewelry->certificate_file ?? null
         ]);
+    }
+
+    /**
+     * Super admins can review all reports; other users remain owner-scoped.
+     */
+    protected function reportsVisibleToCurrentUser()
+    {
+        $query = MissingReport::query();
+
+        if (!Auth::user()->isSuperAdmin()) {
+            $query->where('user_id', Auth::id());
+        }
+
+        return $query;
+    }
+
+    /**
+     * Keep certificate selection and report creation within the same access scope.
+     */
+    protected function certificatesVisibleToCurrentUser()
+    {
+        $query = JewelryCertificate::query();
+
+        if (!Auth::user()->isSuperAdmin()) {
+            $query->whereHas('owner', function ($ownerQuery) {
+                $ownerQuery->where('user_id', Auth::id());
+            });
+        }
+
+        return $query;
     }
 }

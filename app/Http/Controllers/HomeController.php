@@ -858,6 +858,13 @@ class HomeController extends Controller
         return view("frontend.policies.privacypolicy");
     }
 
+    public function contact()
+    {
+        $contact = \App\GeneralSetting::query()->first();
+
+        return view('frontend.contact', compact('contact'));
+    }
+
     public function get_pick_ip_points(Request $request)
     {
         $pick_up_points = PickupPoint::all();

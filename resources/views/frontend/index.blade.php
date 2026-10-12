@@ -797,22 +797,22 @@
             <span class="divider-gold"></span>
         </div>
         <div class="d-cat-grid">
-            <a href="{{ route('categories.all') }}" class="d-cat-card">
+            <a href="{{ route('products.category', ['category_slug' => '---uQqCB']) }}" class="d-cat-card">
                 <img src="{{ asset('frontend/images/drikana/ring.svg') }}" alt="حلقه" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>حلقه و انگشتر</h4>
                 <span class="cat-count">۲,۴۰۰+ مدل</span>
             </a>
-            <a href="{{ route('categories.all') }}" class="d-cat-card">
+            <a href="{{ route('products.category', ['category_slug' => '-----MB8NO']) }}" class="d-cat-card">
                 <img src="{{ asset('frontend/images/drikana/necklace.svg') }}" alt="گردنبند" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>گردنبند و آویز</h4>
                 <span class="cat-count">طلای ظریف</span>
             </a>
-            <a href="{{ route('categories.all') }}" class="d-cat-card">
+            <a href="{{ route('products.category', ['category_slug' => '----FoS0v']) }}" class="d-cat-card">
                 <img src="{{ asset('frontend/images/drikana/watch.svg') }}" alt="ساعت" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>ساعت لوکس</h4>
                 <span class="cat-count">رولکس، پتک و...</span>
             </a>
-            <a href="{{ route('categories.all') }}" class="d-cat-card">
+            <a href="{{ route('products.category', ['category_slug' => '---iLNhI']) }}" class="d-cat-card">
                 <img src="{{ asset('frontend/images/drikana/diamond.svg') }}" alt="الماس" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ffea0d">
                 <h4>الماس و سنگ قیمتی</h4>
                 <span class="cat-count">قیمتی و نیمه‌قیمتی</span>
@@ -822,12 +822,12 @@
                 <h4>جواهرات سلطنتی</h4>
                 <span class="cat-count">کلکسیون ویژه</span>
             </a>
-            <a href="{{ route('categories.all') }}" class="d-cat-card">
+            <a href="{{ route('products.category', ['category_slug' => '--2EJpD']) }}" class="d-cat-card">
                 <img src="{{ asset('frontend/images/drikana/coin.svg') }}" alt="سکه" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-ddc6d9">
                 <h4>شمش و سکه</h4>
                 <span class="cat-count">سرمایه‌گذاری</span>
             </a>
-            <a href="{{ route('categories.all') }}" class="d-cat-card">
+            <a href="{{ route('products.category', ['category_slug' => '-----H1Zlr']) }}" class="d-cat-card">
                 <img src="{{ asset('frontend/images/drikana/gift.svg') }}" alt="هدیه" class="cat-ico u-width-90px-height-90px-object-fit-contain-filter-drop-s-13829f">
                 <h4>پک هدیه لوکس</h4>
                 <span class="cat-count">بسته‌بندی ویژه</span>
