@@ -1,0 +1,209 @@
+@extends('frontend.layouts.app')
+
+@section('meta_title', $currentCategory ? ($currentCategory->name . ' — ' . __('مقالات')) : __('مقالات طلا، جواهر و سنگ‌های قیمتی'))
+@section('meta_description', __('مقالات آموزشی درباره طلا، جواهرات، سنگ‌های قیمتی، شناسنامه، اصالت‌سنجی و نگهداری اشیاء قیمتی.'))
+
+@section('content')
+
+{{--
+    فهرست عمومی مقالات
+    ─────────────────────────────────────────────────────────────
+    تنها مقالات منتشرشده نمایش داده می‌شوند (فیلتر در کنترلر با
+    scopePublished). جست‌وجو و مرتب‌سازی با parameter binding و
+    فهرست سفید انجام می‌شود.
+--}}
+
+<div class="container" style="padding: 24px 15px;">
+
+    {{-- ============================================= --}}
+    {{-- سرصفحه --}}
+    {{-- ============================================= --}}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="margin-bottom: 6px;">
+                @if($currentCategory)
+                    {{ $currentCategory->name }}
+                @else
+                    {{ __('مقالات و راهنماها') }}
+                @endif
+            </h1>
+            <p class="text-muted">
+                @if($currentCategory && $currentCategory->description)
+                    {{ $currentCategory->description }}
+                @else
+                    {{ __('آموزش، راهنما و دانستنی‌های طلا، جواهر و سنگ‌های قیمتی') }}
+                @endif
+            </p>
+        </div>
+    </div>
+
+    {{-- ============================================= --}}
+    {{-- جست‌وجو و مرتب‌سازی --}}
+    {{-- ============================================= --}}
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-sm-12">
+            <form method="GET" action="{{ route('articles.index') }}" class="form-inline">
+                <div class="form-group" style="margin-left: 8px;">
+                    <input type="text"
+                           name="q"
+                           class="form-control"
+                           placeholder="{{ __('جست‌وجو در مقالات...') }}"
+                           maxlength="100"
+                           value="{{ e(request('q')) }}">
+                </div>
+
+                <div class="form-group" style="margin-left: 8px;">
+                    <select name="sort" class="form-control">
+                        @foreach([
+                            'latest'  => 'جدیدترین',
+                            'oldest'  => 'قدیمی‌ترین',
+                            'popular' => 'پربازدیدترین',
+                            'title'   => 'بر اساس عنوان',
+                        ] as $value => $label)
+                            <option value="{{ $value }}" @if(request('sort') === $value) selected @endif>{{ $label }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">{{ __('جست‌وجو') }}</button>
+            </form>
+        </div>
+    </div>
+
+    {{-- ============================================= --}}
+    {{-- دسته‌بندی‌ها --}}
+    {{-- ============================================= --}}
+    @if($categories->count() > 0)
+        <div class="row" style="margin-bottom: 24px;">
+            <div class="col-sm-12">
+                <a href="{{ route('articles.index') }}"
+                   class="btn btn-sm {{ !$currentCategory ? 'btn-primary' : 'btn-default' }}">
+                    {{ __('همه') }}
+                </a>
+                @foreach($categories as $category)
+                    <a href="{{ route('articles.category', $category->slug) }}"
+                       class="btn btn-sm {{ $currentCategory && $currentCategory->id === $category->id ? 'btn-primary' : 'btn-default' }}">
+                        {{ $category->name }}
+                        <span class="badge">{{ $category->published_articles_count }}</span>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    <div class="row">
+
+        {{-- ============================================= --}}
+        {{-- فهرست مقالات --}}
+        {{-- ============================================= --}}
+        <div class="col-md-9">
+            <div class="row">
+                @forelse($articles as $article)
+                    <div class="col-sm-6 col-md-4" style="margin-bottom: 24px;">
+                        <div class="thumbnail" style="height: 100%;">
+
+                            <a href="{{ $article->public_url }}">
+                                @if($article->featured_image)
+                                    <img src="{{ $article->featured_image_url }}"
+                                         alt="{{ $article->featured_image_alt ?: $article->title }}"
+                                         style="height: 170px; width: 100%; object-fit: cover;">
+                                @else
+                                    <div style="height: 170px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">
+                                        <span class="text-muted">{{ __('بدون تصویر') }}</span>
+                                    </div>
+                                @endif
+                            </a>
+
+                            <div class="caption">
+                                @if($article->category)
+                                    <a href="{{ route('articles.category', $article->category->slug) }}"
+                                       class="label label-info" style="font-weight: 400;">
+                                        {{ $article->category->name }}
+                                    </a>
+                                    <br><br>
+                                @endif
+
+                                <h4 style="margin-top: 0; font-size: 15px; line-height: 1.6;">
+                                    <a href="{{ $article->public_url }}" style="color: inherit;">
+                                        {{ \Illuminate\Support\Str::limit($article->title, 70) }}
+                                    </a>
+                                </h4>
+
+                                <p class="text-muted" style="font-size: 13px;">
+                                    {{ \Illuminate\Support\Str::limit($article->excerpt ?: strip_tags($article->content), 90) }}
+                                </p>
+
+                                <small class="text-muted">
+                                    <i class="fa fa-clock-o"></i>
+                                    {{ $article->published_at ? $article->published_at->format('Y/m/d') : $article->created_at->format('Y/m/d') }}
+                                    &nbsp;|&nbsp;
+                                    <i class="fa fa-eye"></i> {{ number_format($article->views_count) }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-sm-12">
+                        <div class="alert alert-info">
+                            {{ __('هیچ مقاله‌ای یافت نشد.') }}
+                        </div>
+                    </div>
+                @endforelse
+            </div>
+
+            <div class="text-center">
+                {{ $articles->appends(request()->query())->links() }}
+            </div>
+        </div>
+
+        {{-- ============================================= --}}
+        {{-- نوار کنار --}}
+        {{-- ============================================= --}}
+        <div class="col-md-3">
+
+            @if($featured->count() > 0)
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>{{ __('مقالات ویژه') }}</strong>
+                    </div>
+                    <div class="panel-body">
+                        @foreach($featured as $item)
+                            <div style="margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #eee;">
+                                <a href="{{ $item->public_url }}" style="font-size: 13px; line-height: 1.7;">
+                                    {{ \Illuminate\Support\Str::limit($item->title, 65) }}
+                                </a>
+                                <br>
+                                <small class="text-muted">
+                                    {{ $item->published_at ? $item->published_at->format('Y/m/d') : '' }}
+                                </small>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>{{ __('دسته‌بندی‌ها') }}</strong>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-unstyled" style="margin: 0;">
+                        @foreach($categories as $category)
+                            <li style="padding: 5px 0;">
+                                <a href="{{ route('articles.category', $category->slug) }}">
+                                    {{ $category->name }}
+                                    <span class="badge">{{ $category->published_articles_count }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@endsection

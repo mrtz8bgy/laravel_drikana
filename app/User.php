@@ -7,20 +7,32 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use App\Models\Cart;
+use App\Models\Concerns\HasRolesAndPermissions;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, HasRolesAndPermissions;
 
     /**
-    * The attributes that are mass assignable.
-    *
-    * @var array
-    */
+     * فیلدهای مجاز برای تخصیص انبوه (Mass Assignment).
+     *
+     * [امنیت - Privilege Escalation] پیش از این اصلاح، فیلدهای `role` و
+     * `user_type` در این فهرست بودند. چون فرم‌های ثبت‌نام و ویرایش پروفایل از
+     * `$request->all()` استفاده می‌کنند، هر کاربر می‌توانست با ارسال
+     * `role=admin` یا `user_type=admin` برای خودش نقش مدیر بسازد.
+     *
+     * این دو فیلد حذف شدند و فقط از طریق سرویس RBAC
+     * (App\Services\Rbac\UserRoleService) با بررسی مجوز قابل تغییر هستند.
+     *
+     * ستون‌ها هنوز در جدول `users` باقی هستند (برای سازگاری با کد و
+     * میدل‌ورهای موجود) اما از مسیر درخواست کاربر قابل نوشتن نیستند.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'city', 'postal_code', 
-        'phone', 'country', 'provider_id', 'email_verified_at', 
-        'verification_code', 'role' // اضافه کردن role
+        'name', 'email', 'password', 'address', 'city', 'postal_code',
+        'phone', 'country', 'provider_id', 'email_verified_at',
+        'verification_code',
     ];
 
     /**
@@ -124,11 +136,32 @@ class User extends Authenticatable implements MustVerifyEmail
      */
 
     /**
-     * اطلاعات مالکیت در جدول jewelry_owners
+     * اطلاعات مالکیت در جدول jewelry_owners (اولین رکورد).
+     *
+     * ── نکته (رفع باگ) ─────────────────────────────────────────────
+     * در عمل یک کاربر می‌تواند بیش از یک پرونده مالکیت داشته باشد
+     * (مثلاً به‌عنوان شخص حقیقی و به‌عنوان نماینده یک فروشگاه). بنابراین
+     * رابطه اصلی `jewelryOwners()` (hasMany) است و این متد تنها برای
+     * سازگاری با کدهای قبلی که `$user->jewelryOwner` را صدا می‌زنند
+     * باقی مانده است.
+     *
+     * پیش‌تر کنترلر گزارش‌های مدیریتی `whereHas('jewelryOwners')` را
+     * فراخوانی می‌کرد اما این رابطه وجود نداشت و صفحه با خطای
+     * BadMethodCallException از کار می‌افتاد.
      */
     public function jewelryOwner()
     {
         return $this->hasOne(\App\Models\JewelryOwner::class, 'user_id');
+    }
+
+    /**
+     * همه پرونده‌های مالکیت کاربر در جدول jewelry_owners.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function jewelryOwners()
+    {
+        return $this->hasMany(\App\Models\JewelryOwner::class, 'user_id');
     }
 
     /**

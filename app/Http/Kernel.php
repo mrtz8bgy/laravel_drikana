@@ -2,10 +2,14 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckAllPermissions;
+use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsSeller;
 use App\Http\Middleware\IsUser;
 use App\Http\Middleware\CheckoutMiddleware;
+use App\Http\Middleware\SecurityHeaders;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -23,30 +27,61 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\TrustProxies::class,
+        // [امنیت - L-06] افزودن هدرهای امنیتی HTTP به تمام پاسخ‌ها
+        SecurityHeaders::class,
     ];
 
     /**
      * The application's route middleware groups.
      *
+     * ── تغییرات امنیتی این بخش ───────────────────────────────────────
+     *
+     * ۱) EncryptCookies فعال شد (M-01).
+     *    پیش از این کامنت بود؛ یعنی کوکی نشست بصورت متن ساده به مرورگر
+     *    می‌رفت و قابل خواندن/دستکاری بود.
+     *
+     * ۲) AuthenticateSession فعال شد (M-01).
+     *    بدون آن، تغییر رمز عبور نشست‌های فعال در دستگاه‌های دیگر را باطل
+     *    نمی‌کرد و مهاجم پس از سرقت نشست، دسترسی‌اش را از دست نمی‌داد.
+     *
+     * ۳) HttpsProtocol فعال نشد چون در محیط فعلی ممکن است نصب روی HTTP
+     *    باشد و پروژه را از دسترس خارج کند. فعال‌سازی آن بر عهده مدیر
+     *    استقرار است — دستورالعمل در docs/deployment.md آمده است.
+     *
      * @var array
      */
     protected $middlewareGroups = [
         'web' => [
-            //\App\Http\Middleware\EncryptCookies::class,
+            \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
-            // \Illuminate\Session\Middleware\AuthenticateSession::class,
+            \Illuminate\Session\Middleware\AuthenticateSession::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\Language::class,
-            // \App\Http\Middleware\HttpsProtocol::class
         ],
 
         'api' => [
             'throttle:60,1',
             'bindings',
         ],
+
+        // ─────────────────────────────────────────────────────────────
+        // [رفع باگ بحرانی] اینجا پیش‌تر یک گروه به نام «admin» تعریف شده
+        // بود که خودش به میدل‌ور «admin» ارجاع می‌داد:
+        //
+        //     'admin' => ['auth', 'admin'],   // ← بازگشت بی‌نهایت!
+        //
+        // چون نام گروه و نام alias میدل‌ور یکسان بود،
+        // MiddlewareNameResolver هنگام resolve کردن «admin» ابتدا آن را
+        // به‌عنوان گروه می‌شناخت و دوباره به خودش می‌رسید. نتیجه: مصرف
+        // بی‌نهایت حافظه و Fatal error (Allowed memory size exhausted).
+        //
+        // این گروه حذف شد. رفتار موردنظر قبلاً با نوشتن صریح
+        // `->middleware(['auth', 'admin'])` در routes/admin.php به‌درستی
+        // محقق شده است و نیازی به گروه جداگانه نیست.
+        // ─────────────────────────────────────────────────────────────
     ];
 
     /**
@@ -57,10 +92,18 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
+        // ---- مدیرت دسترسی (RBAC) ----
+        'permission'     => CheckPermission::class,
+        'permission_all' => CheckAllPermissions::class,
+        'role'           => CheckRole::class,
+
+        // ---- نقش‌های موجود پروژه ----
         'admin' => IsAdmin::class,
         'seller' => IsSeller::class,
         'user' => IsUser::class,
         'checkout' => CheckoutMiddleware::class,
+
+        // ---- میدل‌ورهای فریم‌ورک ----
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,

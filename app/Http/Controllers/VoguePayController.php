@@ -65,6 +65,24 @@ class VoguePayController extends Controller
         flash(__('Payment Failed'))->error();
         return redirect()->route('home');
     }
+
+    /**
+     * نمایش فرم پرداخت VoguePay.
+     *
+     * [رفع باگ — Stage 2]
+     * روت `GET /vogue-pay` به متد `showForm` اشاره می‌کرد، در حالی که
+     * نام واقعی متد `customer_showForm` است. در نتیجه کلیک روی گزینه
+     * پرداخت VoguePay با خطای 500 متوقف می‌شد.
+     *
+     * این متد به‌عنوان نام مستعار نگه داشته شده تا سازگاری با لینک‌های
+     * موجود و کش‌شده حفظ شود.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showForm()
+    {
+        return $this->customer_showForm();
+    }
 }
 
 

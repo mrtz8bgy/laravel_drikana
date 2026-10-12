@@ -14,9 +14,12 @@ use App\ProductsImport;
 use App\ProductsExport;
 use PDF;
 use Excel;
+use App\Http\Controllers\Concerns\HandlesCsvDownload;
 
 class ProductBulkUploadController extends Controller
 {
+    use HandlesCsvDownload;
+
     public function index()
     {
         if (Auth::user()->user_type == 'seller') {
@@ -100,6 +103,94 @@ class ProductBulkUploadController extends Controller
         return back();
     }
 
+
+    /**
+     * دانلود فایل الگوی CSV برای بارگذاری گروهی محصولات.
+     *
+     * [رفع باگ — Stage 2]
+     * روت `GET /product-csv-download/{type}` (نام: product_csv.download)
+     * به متد `import_product` اشاره می‌کرد اما این متد وجود نداشت و
+     * کاربر با خطای 500 مواجه می‌شد.
+     *
+     * نکته امنیتی:
+     *   پارامتر `type` از یک فهرست سفید (allowlist) تأیید می‌شود، نه با
+     *   ساختن مستقیم مسیر فایل از ورودی کاربر. بنابراین امکان Path
+     *   Traversal یا دسترسی به فایل دلخواه وجود ندارد.
+     *
+     * @param  string $type نوع الگو
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function import_product($type)
+    {
+        // فهرست سفید انواع مجاز — هر مقدار دیگری رد می‌شود
+        $allowed = ['category', 'subcategory', 'subsubcategory', 'brand', 'seller'];
+
+        if (!in_array($type, $allowed, true)) {
+            flash(__('نوع الگوی درخواستی معتبر نیست.'))->error();
+            return redirect()->back();
+        }
+
+        $columns = $this->csvTemplateColumns();
+        $rows    = $this->csvTemplateRows($type);
+
+        return $this->streamCsv('product_template_' . $type . '.csv', $columns, $rows);
+    }
+
+    /**
+     * دانلود فایل الگوی CSV برای محصولات یک فروشنده مشخص.
+     *
+     * [رفع باگ — Stage 2]
+     * روت `GET /vendor-product-csv-download/{id}` به متد
+     * `import_vendor_product` اشاره می‌کرد که وجود نداشت.
+     *
+     * @param  int $id شناسه فروشنده
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function import_vendor_product($id)
+    {
+        $seller = User::findOrFail($id);
+
+        $rows = $this->csvTemplateRows('seller');
+
+        // درج نام فروشنده تنها در سطر نمونه
+        if (!empty($rows) && isset($rows[0][0])) {
+            $rows[0][0] = $seller->name;
+        }
+
+        return $this->streamCsv('vendor_product_template_' . (int) $seller->id . '.csv',
+            $this->csvTemplateColumns(), $rows);
+    }
+
+    /**
+     * سرستون‌های استاندارد فایل CSV محصولات.
+     *
+     * @return array
+     */
+    protected function csvTemplateColumns()
+    {
+        return [
+            'name', 'category', 'subcategory', 'subsubcategory', 'brand',
+            'unit', 'unit_price', 'purchase_price', 'current_stock',
+            'description',
+        ];
+    }
+
+    /**
+     * سطرهای نمونه فایل CSV بر اساس نوع الگو.
+     *
+     * @param  string $type
+     * @return array
+     */
+    protected function csvTemplateRows($type)
+    {
+        $sample = [
+            'دستبند طلا ۱۸ عیار', 'طلا و جواهرات', 'دستبند', 'دستبند طلا',
+            'دریکانا', 'عدد', '25000000', '20000000', '10',
+            'دستبند طلا ۱۸ عیار با قفل ایمنی',
+        ];
+
+        return [$sample];
+    }
 }
 
 

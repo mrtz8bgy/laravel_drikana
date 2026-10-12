@@ -214,7 +214,7 @@ class ReportController extends Controller
         
         $transferTypes = ['فروش', 'هدیه', 'ارث', 'سایر'];
         
-        return view('jewelry.reports.transfers', compact(
+        return view('admin.jewelry.reports.transfers', compact(
             'transfers', 
             'stats', 
             'transferTypeDistribution',
@@ -273,7 +273,7 @@ class ReportController extends Controller
         ->orderBy('month')
         ->get();
         
-        return view('jewelry.reports.financial', compact(
+        return view('admin.jewelry.reports.financial', compact(
             'sales', 
             'financialStats', 
             'monthlyRevenue'

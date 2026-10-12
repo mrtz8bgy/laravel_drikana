@@ -166,4 +166,70 @@ class JewelryOwnerController extends Controller
         
         return response()->json($owners);
     }
+
+    // =========================================================
+    // داشبورد مالک — بخش «جواهرات من»
+    // =========================================================
+
+    /**
+     * داشبورد مالک قطعات.
+     *
+     * [رفع باگ — Stage 2]
+     * روت `GET /my-jewelry` (نام: my-jewelry.dashboard) به این متد اشاره
+     * می‌کرد اما متد وجود نداشت و کاربر با خطای 500 مواجه می‌شد.
+     *
+     * ─────────────────────────────────────────────────────────
+     * نکته امنیتی مهم:
+     * ─────────────────────────────────────────────────────────
+     * این بخش اطلاعاتی درباره دارایی‌های کاربر نشان می‌دهد، بنابراین
+     * تمام کوئری‌ها به `Auth::id()` محدود شده‌اند. هیچ شناسه‌ای از
+     * ورودی کاربر گرفته نمی‌شود، پس امکان IDOR وجود ندارد.
+     *
+     * علاوه بر این، دسترسی به شناسنامه هر قطعه با Policy بررسی می‌شود
+     * تا اگر ساختار داده تغییر کرد، محافظ دوم برقرار بماند.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function myDashboard()
+    {
+        $user = Auth::user();
+
+        // مالکین متصل به این کاربر
+        $owners = JewelryOwner::query()
+            ->where('user_id', $user->getKey())
+            ->get();
+
+        $ownerIds = $owners->pluck('id')->all();
+
+        // شناسنامه‌های این مالکین — محدود به مالکیت خود کاربر
+        $certificates = \App\Models\JewelryCertificate::query()
+            ->whereIn('owner_id', $ownerIds)
+            ->with(['owner'])
+            ->withCount(['transfers', 'repairOrders'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(12);
+
+        // آمار خلاصه
+        $stats = [
+            'total_certificates' => \App\Models\JewelryCertificate::query()
+                ->whereIn('owner_id', $ownerIds)->count(),
+
+            'pending_transfers'  => \App\Models\JewelryTransfer::query()
+                ->whereIn('from_owner_id', $ownerIds)
+                ->where('status', \App\Models\JewelryTransfer::STATUS_PENDING)
+                ->count(),
+
+            'active_repairs'     => \App\Models\RepairOrder::query()
+                ->where('user_id', $user->getKey())
+                ->whereNotIn('status', ['delivered', 'cancelled'])
+                ->count(),
+
+            'missing_reports'    => \App\Models\MissingReport::query()
+                ->where('user_id', $user->getKey())
+                ->count(),
+        ];
+
+        return view('frontend.jewelry.owner_dashboard',
+            compact('owners', 'certificates', 'stats'));
+    }
 }

@@ -22,18 +22,45 @@ class CurrencyController extends Controller
         return view('admin.business_settings.currency', compact('currencies', 'active_currencies'));
     }
 
-    // public function updateCurrency(Request $request)
-    // {
-    //     $currency = Currency::findOrFail($request->id);
-    //     $currency->exchange_rate = $request->exchange_rate;
-    //     $currency->status = $request->status;
-    //     if($currency->save()){
-    //         flash('Currency updated successfully')->success();
-    //         return '1';
-    //     }
-    //     flash('Ù…Ø´Ú©Ù„ÛŒ Ù¾ÛŒØ´ Ø¢Ù…Ø¯Ù‡! Ù„Ø·ÙØ§ Ù…Ø¬Ø¯Ø¯Ø§ Ø§Ù…ØªØ­Ø§Ù† Ú©Ù†ÛŒØ¯')->error();
-    //     return '0';
-    // }
+    /**
+     * به‌روزرسانی نرخ تبدیل و وضعیت یک ارز.
+     *
+     * [رفع باگ — Stage 2]
+     * این متد پیش‌تر کامنت شده بود، در حالی که روت
+     * `POST /admin/currency/update` (نام: currency.update) به آن
+     * اشاره می‌کرد. نتیجه این بود که هر بار تغییر نرخ ارز در پنل
+     * مدیریت با خطای 500 مواجه می‌شد.
+     *
+     * همچنین متن خطای فارسی داخل متد کامنت‌شده با کدگذاری نادرست
+     * (mojibake) ذخیره شده بود که در بازنویسی اصلاح شد.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return string '1' در صورت موفقیت، '0' در صورت شکست
+     */
+    public function updateCurrency(Request $request)
+    {
+        // اعتبارسنجی ورودی — پیش از این هیچ بررسی‌ای انجام نمی‌شد
+        $request->validate([
+            'id'            => 'required|integer',
+            'exchange_rate' => 'required|numeric|min:0',
+            'status'        => 'nullable|integer|in:0,1',
+        ]);
+
+        $currency = Currency::findOrFail($request->id);
+
+        $currency->exchange_rate = $request->exchange_rate;
+        $currency->status        = $request->status;
+
+        if ($currency->save()) {
+            flash(__('نرخ ارز با موفقیت به‌روزرسانی شد'))->success();
+
+            return '1';
+        }
+
+        flash(__('مشکلی پیش آمد! لطفاً مجدداً امتحان کنید'))->error();
+
+        return '0';
+    }
 
     public function updateYourCurrency(Request $request)
     {

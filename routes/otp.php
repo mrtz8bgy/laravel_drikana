@@ -19,7 +19,7 @@ Route::post('/users/login/otp', 'OTPController@login');
 //Verofocation phone
 Route::get('/verification', 'OTPVerificationController@verification')->name('verification');
 Route::post('/verification', 'OTPVerificationController@verify_phone')->name('verification.submit');
-Route::get('/verification/phone/code/resend', 'OTPVerificationController@resend_verificcation_code')->name('verification.phone.resend');
+Route::get('/verification/phone/code/resend', 'OTPVerificationController@resend_verification_code')->name('verification.phone.resend');
 
 //Forgot password phone
 Route::get('/password/phone/reset', 'OTPVerificationController@show_reset_password_form')->name('password.phone.form');

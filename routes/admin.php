@@ -115,11 +115,9 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 		Route::post('/home_categories/get_subsubcategories_by_category', 'HomeCategoryController@getSubSubCategories')->name('home_categories.get_subsubcategories_by_category');
 	});
 
-	Route::resource('roles','RoleController');
-    Route::get('/roles/destroy/{id}', 'RoleController@destroy')->name('roles.destroy');
-
-    Route::resource('staffs','StaffController');
+	Route::resource('staffs','StaffController');
     Route::get('/staffs/destroy/{id}', 'StaffController@destroy')->name('staffs.destroy');
+
 
 	Route::resource('flash_deals','FlashDealController');
     Route::get('/flash_deals/destroy/{id}', 'FlashDealController@destroy')->name('flash_deals.destroy');
@@ -214,4 +212,87 @@ Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function()
 
 	Route::resource('countries','CountryController');
 	Route::post('/countries/status', 'CountryController@updateStatus')->name('countries.status');
+});
+
+// =========================================================
+// گروه RBAC — نقش‌ها، مجوزها، کاربران، مقالات و Audit Log
+// =========================================================
+//
+// [چرا این گروه از گروه بالایی جدا است؟]
+//
+// گروه بالای این فایل میدل‌ور «admin» دارد؛ یعنی تنها کاربرانی را می‌پذیرد
+// که user_type آن‌ها admin یا staff باشد و برای بقیه ۴۰۴ برمی‌گرداند.
+//
+// این با نیازمندی RBAC در تناقض بود: «مدیر محتوا» و «مدیر مالکیت» کاربرانی
+// هستند که باید بدون user_type=admin به بخش‌های مجاز خود دسترسی داشته باشند.
+// اگر این روت‌ها داخل گروه بالا می‌ماندند، هرگز قابل استفاده نبودند.
+//
+// بنابراین این گروه تنها با auth + permission:* محافظت می‌شود.
+// مدیر کل سیستم به‌واسطه Gate::before همیشه دسترسی کامل دارد و سایر نقش‌ها
+// بر پایه مجوزهای صریح کار می‌کنند. «رد پیش‌فرض» برقرار است، چون هر روت
+// میدل‌ور permission مخصوص خود را دارد.
+//
+// نام‌ها با پیشوند admin. ثبت می‌شوند تا با روت‌های عمومی /articles که نام
+// articles.* دارند تداخل نکنند (سبب تولید URL اشتباه می‌شد).
+//
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
+
+    // ---------------------------------------------------------
+    // نقش‌ها
+    // ---------------------------------------------------------
+    Route::get('/roles',            'RoleController@index')->name('roles.index')->middleware('permission:roles.view');
+    Route::get('/roles/create',     'RoleController@create')->name('roles.create')->middleware('permission:roles.create');
+    Route::post('/roles',           'RoleController@store')->name('roles.store')->middleware('permission:roles.create');
+    Route::get('/roles/{id}',       'RoleController@show')->name('roles.show')->middleware('permission:roles.view');
+    Route::get('/roles/{id}/edit',  'RoleController@edit')->name('roles.edit')->middleware('permission:roles.update');
+    Route::match(['put', 'patch'], '/roles/{id}', 'RoleController@update')->name('roles.update')->middleware('permission:roles.update');
+    Route::get('/roles/destroy/{id}', 'RoleController@destroy')->name('roles.destroy')->middleware('permission:roles.delete');
+    Route::delete('/roles/{id}',    'RoleController@destroy')->name('roles.destroy.delete')->middleware('permission:roles.delete');
+
+    // ---------------------------------------------------------
+    // کاربران و انتساب نقش
+    // ---------------------------------------------------------
+    Route::get('/users',             'UserRoleController@index')->name('users.index')->middleware('permission:users.view');
+    Route::get('/users/{id}',        'UserRoleController@show')->name('users.show')->middleware('permission:users.view');
+    Route::get('/users/{id}/roles',  'UserRoleController@editRoles')->name('users.roles.edit')->middleware('permission:roles.assign');
+    Route::post('/users/{id}/roles', 'UserRoleController@updateRoles')->name('users.roles.update')->middleware('permission:roles.assign');
+
+    // ---------------------------------------------------------
+    // مجوزها
+    // ---------------------------------------------------------
+    Route::get('/permissions',               'UserRoleController@permissions')->name('permissions.index')->middleware('permission:permissions.view');
+    Route::post('/permissions',              'UserRoleController@storePermission')->name('permissions.store')->middleware('permission:permissions.create');
+    Route::get('/permissions/destroy/{id}',  'UserRoleController@destroyPermission')->name('permissions.destroy')->middleware('permission:permissions.delete');
+    Route::delete('/permissions/{id}',       'UserRoleController@destroyPermission')->name('permissions.destroy.delete')->middleware('permission:permissions.delete');
+
+    // ---------------------------------------------------------
+    // Audit Log
+    // ---------------------------------------------------------
+    Route::get('/audit-logs',        'UserRoleController@auditLogs')->name('audit_logs.index')->middleware('permission:audit_logs.view');
+
+    // ---------------------------------------------------------
+    // دسته‌بندی مقالات
+    // ---------------------------------------------------------
+    Route::get('/articles/categories',              'Admin\ArticleController@categories')->name('admin.articles.categories')->middleware('permission:articles.categories.manage');
+    Route::post('/articles/categories',             'Admin\ArticleController@storeCategory')->name('admin.articles.categories.store')->middleware('permission:articles.categories.manage');
+    Route::post('/articles/categories/{id}/update', 'Admin\ArticleController@updateCategory')->name('admin.articles.categories.update')->middleware('permission:articles.categories.manage');
+    Route::get('/articles/categories/{id}/delete',  'Admin\ArticleController@deleteCategory')->name('admin.articles.categories.delete')->middleware('permission:articles.categories.manage');
+
+    // ---------------------------------------------------------
+    // مقالات (CMS)
+    // مسیرهای ثابت باید پیش از /articles/{id} ثبت شوند
+    // ---------------------------------------------------------
+    Route::get('/articles',               'Admin\ArticleController@index')->name('admin.articles.index')->middleware('permission:articles.view,articles.view_own');
+    Route::get('/articles/create',        'Admin\ArticleController@create')->name('admin.articles.create')->middleware('permission:articles.create');
+    Route::post('/articles',              'Admin\ArticleController@store')->name('admin.articles.store')->middleware('permission:articles.create');
+    Route::get('/articles/images/{imageId}/delete', 'Admin\ArticleController@deleteImage')->name('admin.articles.images.delete')->middleware('permission:articles.images.manage');
+    Route::get('/articles/{id}/edit',     'Admin\ArticleController@edit')->name('admin.articles.edit')->middleware('permission:articles.update');
+    Route::match(['put', 'patch'], '/articles/{id}', 'Admin\ArticleController@update')->name('admin.articles.update')->middleware('permission:articles.update');
+    Route::delete('/articles/{id}',       'Admin\ArticleController@destroy')->name('admin.articles.destroy')->middleware('permission:articles.delete');
+    Route::get('/articles/{id}/delete',   'Admin\ArticleController@destroy')->name('admin.articles.delete')->middleware('permission:articles.delete');
+    Route::post('/articles/{id}/submit',  'Admin\ArticleController@submit')->name('admin.articles.submit')->middleware('permission:articles.submit');
+    Route::post('/articles/{id}/publish', 'Admin\ArticleController@publish')->name('admin.articles.publish')->middleware('permission:articles.publish');
+    Route::post('/articles/{id}/unpublish', 'Admin\ArticleController@unpublish')->name('admin.articles.unpublish')->middleware('permission:articles.publish');
+    Route::post('/articles/{id}/images',  'Admin\ArticleController@uploadImage')->name('admin.articles.images.upload')->middleware('permission:articles.images.manage');
+    Route::get('/articles/{id}',          'Admin\ArticleController@show')->name('admin.articles.show')->middleware('permission:articles.view,articles.view_own');
 });

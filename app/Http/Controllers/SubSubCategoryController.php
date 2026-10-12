@@ -173,27 +173,67 @@ class SubSubCategoryController extends Controller
         return $subsubcategories;
     }
 
-    // public function get_brands_by_subsubcategory(Request $request)
-    // {
-    //     $brand_ids = json_decode(SubSubCategory::findOrFail($request->subsubcategory_id)->brands);
-    //     $brands = array();
-    //     foreach ($brand_ids as $key => $brand_id) {
-    //         array_push($brands, Brand::findOrFail($brand_id));
-    //     }
-    //     return $brands;
-    // }
+    /**
+     * برندهای وابسته به یک زیر‌زیر‌دسته.
+     *
+     * [رفع باگ — Stage 2]
+     * این متد کامنت شده بود در حالی که روت
+     * `POST /subsubcategories/get_brands_by_subsubcategory` به آن
+     * اشاره می‌کرد؛ بنابراین انتخاب زیر‌زیر‌دسته در فرم محصولات با
+     * خطای 500 متوقف می‌شد.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_brands_by_subsubcategory(Request $request)
+    {
+        $request->validate(['subsubcategory_id' => 'required|integer']);
 
-    // public function get_attributes_by_subsubcategory(Request $request)
-    // {
-    //     $attribute_ids = json_decode(SubSubCategory::findOrFail($request->subsubcategory_id)->attributes);
-    //     $attributes = array();
-    //     foreach ($attribute_ids as $key => $attribute_id) {
-    //         if(\App\Attribute::find($attribute_id) != null){
-    //             array_push($attributes, \App\Attribute::findOrFail($attribute_id));
-    //         }
-    //     }
-    //     return $attributes;
-    // }
+        $subsubcategory = SubSubCategory::findOrFail($request->subsubcategory_id);
+
+        $brand_ids = json_decode($subsubcategory->brands, true);
+
+        if (!is_array($brand_ids)) {
+            $brand_ids = [];
+        }
+
+        // پاک‌سازی شناسه‌ها: تنها اعداد صحیح مجاز هستند
+        $brand_ids = array_filter(array_map('intval', $brand_ids));
+
+        $brands = Brand::whereIn('id', $brand_ids)->get();
+
+        return response()->json($brands);
+    }
+
+    /**
+     * ویژگی‌های وابسته به یک زیر‌زیر‌دسته.
+     *
+     * [رفع باگ — Stage 2]
+     * این متد نیز کامنت شده بود و روت مربوطه خطای 500 می‌داد.
+     * علاوه بر آن، پیاده‌سازی قبلی برای هر شناسه یک کوئری جدا می‌زد
+     * (مسئله N+1)؛ در اینجا با یک کوئری گروهی جایگزین شد.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function get_attributes_by_subsubcategory(Request $request)
+    {
+        $request->validate(['subsubcategory_id' => 'required|integer']);
+
+        $subsubcategory = SubSubCategory::findOrFail($request->subsubcategory_id);
+
+        $attribute_ids = json_decode($subsubcategory->attributes, true);
+
+        if (!is_array($attribute_ids)) {
+            $attribute_ids = [];
+        }
+
+        $attribute_ids = array_filter(array_map('intval', $attribute_ids));
+
+        $attributes = \App\Attribute::whereIn('id', $attribute_ids)->get();
+
+        return response()->json($attributes);
+    }
 }
 
 

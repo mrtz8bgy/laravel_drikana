@@ -78,7 +78,7 @@
                         @endif
 
                         <!-- Product Menu -->
-                        @if(Auth::user()->user_type == 'admin' || in_array('1', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('1'))
                             <li>
                                 <a href="#">
                                     <i class="fa fa-shopping-cart"></i>
@@ -134,7 +134,7 @@
                             </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('2', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('2'))
                         <li class="{{ areActiveRoutes(['flash_deals.index', 'flash_deals.create', 'flash_deals.edit'])}}">
                             <a class="nav-link" href="{{ route('flash_deals.index') }}">
                                 <i class="fa fa-bolt"></i>
@@ -143,7 +143,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('3', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('3'))
                             @php
                                 $orders = DB::table('orders')
                                             ->orderBy('code', 'desc')
@@ -162,7 +162,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('14', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('14'))
                         <li class="{{ areActiveRoutes(['pick_up_point.order_index','pick_up_point.order_show'])}}">
                             <a class="nav-link" href="{{ route('pick_up_point.order_index') }}">
                                 <i class="fa fa-money"></i>
@@ -171,7 +171,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('4', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('4'))
                         <li class="{{ areActiveRoutes(['sales.index', 'sales.show'])}}">
                             <a class="nav-link" href="{{ route('sales.index') }}">
                                 <i class="fa fa-money"></i>
@@ -204,7 +204,7 @@
                                 </ul>
                             </li>
                         @endif
-                        @if((Auth::user()->user_type == 'admin' || in_array('5', json_decode(Auth::user()->staff->role->permissions))) && \App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
+                        @if((drikana_admin_menu_allowed('5')) && \App\BusinessSetting::where('type', 'vendor_system_activation')->first()->value == 1)
                         <li>
                             <a href="#">
                                 <i class="fa fa-user-plus"></i>
@@ -237,7 +237,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('6', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('6'))
                         <li>
                             <a href="#">
                                 <i class="fa fa-user-plus"></i>
@@ -284,7 +284,7 @@
                             </ul>
                         </li>
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('7', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('7'))
                         <li>
                             <a href="#">
                                 <i class="fa fa-envelope"></i>
@@ -307,7 +307,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('8', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('8'))
                         <li>
                             <a href="#">
                                 <i class="fa fa-briefcase"></i>
@@ -336,7 +336,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('9', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('9'))
                         <li>
                             <a href="#">
                                 <i class="fa fa-desktop"></i>
@@ -395,7 +395,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('12', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('12'))
                         <li>
                             <a class="nav-link" href="{{route('coupon.index')}}">
                                 <i class="fa fa-money"></i>
@@ -520,7 +520,7 @@
                             </ul>
                         </li>
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('13', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('13'))
                             @php
                                 $support_ticket = DB::table('tickets')
                                             ->where('viewed', 0)
@@ -535,7 +535,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('11', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('11'))
                         <li class="{{ areActiveRoutes(['seosetting.index'])}}">
                             <a class="nav-link" href="{{ route('seosetting.index') }}">
                                 <i class="fa fa-search"></i>
@@ -544,7 +544,7 @@
                         </li>
                         @endif
 
-                        @if(Auth::user()->user_type == 'admin' || in_array('10', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('10'))
                         <li>
                             <a href="#">
                                 <i class="fa fa-user"></i>
@@ -563,7 +563,7 @@
                             </ul>
                         </li>
                         @endif
-                        @if(Auth::user()->user_type == 'admin' || in_array('15', json_decode(Auth::user()->staff->role->permissions)))
+                        @if(drikana_admin_menu_allowed('15'))
                         <!--
                             <li class="{{ areActiveRoutes(['addons.index', 'addons.create'])}}">
                                 <a class="nav-link" href="{{ route('addons.index') }}">

@@ -62,7 +62,7 @@ class ForgotPasswordController extends Controller
                 $user->verification_code = rand(100000,999999);
                 $user->save();
                 sendSMS($user->phone, env('APP_NAME'), $user->verification_code.' is your verification code');
-                return view('otp_systems.frontend.auth.passwords.reset_with_phone');
+                return view('admin.otp_systems.frontend.auth.passwords.reset_with_phone');
             }
             else {
                 flash('No account exists with this phone number')->error();

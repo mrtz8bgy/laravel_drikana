@@ -9,13 +9,33 @@ class DrikanaCoreInstallSeeder extends Seeder
     public function run()
     {
         // ══════════════════════════════════════════════
-        // 1) Admin user
+        // 1) کاربر مدیر
+        //
+        // [امنیت — رفع آسیب‌پذیری] پیش از این، این Seeder یک کاربر مدیر با
+        // ایمیل ثابت `admin@drikana.com` و رمز عبور ثابت و بسیار ضعیف
+        // «123456» می‌ساخت. سه مشکل امنیتی داشت:
+        //   ۱) رمز عبور در کد و در تاریخچه Git ذخیره می‌شد
+        //   ۲) رمز به‌قدر کافی قوی نبود
+        //   ۳) اگر مدیر آن را تغییر نمی‌داد، در دسترس عموم باقی می‌ماند
+        //
+        // اکنون هیچ رمز ثابتی ساخته نمی‌شود. رمز به‌صورت تصادفی و امن تولید
+        // می‌شود و یک‌بار در خروجی کنسول نمایش داده می‌شود تا مدیر آن را
+        // تغییر دهد. برای ساخت نخستین مدیر کل با رمز دلخواه، از دستور
+        // اختصاصی استفاده کنید:
+        //
+        //     php artisan drikana:make-super-admin
         // ══════════════════════════════════════════════
-        if (DB::table('users')->where('email', 'admin@drikana.com')->doesntExist()) {
+        $adminEmail = 'admin@drikana.com';
+
+        if (DB::table('users')->where('email', $adminEmail)->doesntExist()) {
+
+            // تولید رمز تصادفی قوی — هرگز در کد ذخیره نمی‌شود
+            $generatedPassword = $this->generateStrongPassword();
+
             DB::table('users')->insert([
                 'name'              => 'مدیریت دریکانا',
-                'email'             => 'admin@drikana.com',
-                'password'          => Hash::make('123456'),
+                'email'             => $adminEmail,
+                'password'          => Hash::make($generatedPassword),
                 'user_type'         => 'admin',
                 'role'              => 'admin',
                 'email_verified_at' => now(),
@@ -25,8 +45,18 @@ class DrikanaCoreInstallSeeder extends Seeder
                 'created_at'        => now(),
                 'updated_at'        => now(),
             ]);
+
+            $this->command->warn('═══════════════════════════════════════════════════════');
+            $this->command->warn('  کاربر مدیر ساخته شد — رمز عبور را همین حالا یادداشت کنید');
+            $this->command->warn('═══════════════════════════════════════════════════════');
+            $this->command->line('  ایمیل : ' . $adminEmail);
+            $this->command->line('  رمز   : ' . $generatedPassword);
+            $this->command->warn('  ⚠ این رمز فقط یک بار نمایش داده می‌شود.');
+            $this->command->warn('  ⚠ پس از نخستین ورود، آن را تغییر دهید.');
+            $this->command->warn('═══════════════════════════════════════════════════════');
         }
-        $adminId = DB::table('users')->where('email', 'admin@drikana.com')->value('id');
+
+        $adminId = DB::table('users')->where('email', $adminEmail)->value('id');
 
         // ══════════════════════════════════════════════
         // 2) Default currency (Iranian Toman)
@@ -246,5 +276,37 @@ class DrikanaCoreInstallSeeder extends Seeder
                 ['name' => 'seller_policy',   'content' => 'فروشندگان منتخب پس از احراز هویت.', 'created_at' => now(), 'updated_at' => now()],
             ]);
         }
+    }
+
+    /**
+     * تولید رمز عبور تصادفی و قوی.
+     *
+     * از `random_bytes` استفاده می‌کند که منبع تصادفی رمزنگاری‌شده است
+     * (نه `rand` یا `mt_rand` که قابل پیش‌بینی هستند).
+     *
+     * @param  int $length
+     * @return string
+     */
+    protected function generateStrongPassword($length = 20)
+    {
+        $lower  = 'abcdefghijkmnopqrstuvwxyz';
+        $upper  = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+        $digits = '23456789';
+        $symbol = '!@#$%^&*()-_=+';
+
+        $all = $lower . $upper . $digits . $symbol;
+
+        // تضمین حضور هر دسته کاراکتر
+        $password = $lower[random_int(0, strlen($lower) - 1)]
+                  . $upper[random_int(0, strlen($upper) - 1)]
+                  . $digits[random_int(0, strlen($digits) - 1)]
+                  . $symbol[random_int(0, strlen($symbol) - 1)];
+
+        for ($i = strlen($password); $i < $length; $i++) {
+            $password .= $all[random_int(0, strlen($all) - 1)];
+        }
+
+        // درهم‌ریختن ترتیب
+        return str_shuffle($password);
     }
 }

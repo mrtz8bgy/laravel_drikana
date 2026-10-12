@@ -234,6 +234,38 @@ class AddonController extends Controller
 
         return 1;
     }
+
+    /**
+     * حذف یک افزونه.
+     *
+     * [رفع باگ — Stage 2]
+     * روت `DELETE /admin/addons/{addon}` (Route::resource) به این متد
+     * اشاره می‌کرد اما متد وجود نداشت و حذف افزونه از پنل مدیریت با
+     * خطای 500 مواجه می‌شد.
+     *
+     * نکته امنیتی:
+     *   شناسه افزونه پیش از حذف اعتبارسنجی می‌شود و حذف در یک تراکنش
+     *   دیتابیس انجام می‌گیرد تا اگر حذف رکورد منو شکست خورد، افزونه
+     *   نیمه‌حذف باقی نماند.
+     *
+     * @param  int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $addon = Addon::findOrFail($id);
+
+        DB::transaction(function () use ($addon) {
+            // رکوردهای منوی وابسته به این افزونه نیز حذف می‌شوند
+            Menu::where('parent_id', $addon->id)->orWhere('id', $addon->id)->delete();
+
+            $addon->delete();
+        });
+
+        flash(__('افزونه با موفقیت حذف شد'))->success();
+
+        return redirect()->route('addons.index');
+    }
 }
 
 

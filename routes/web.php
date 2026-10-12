@@ -17,10 +17,23 @@ use App\Http\Controllers\HomeController;
 */
 
 // ============================================
-// بخش دمو (Demo)
+// بخش دمو (Demo) — حذف شده به دلایل امنیتی
 // ============================================
-Route::get('/demo/cron_1', 'DemoController@cron_1');
-Route::get('/demo/cron_2', 'DemoController@cron_2');
+//
+// [امنیت - CRITICAL] روترهای قبلی زیر بدون هیچ احراز هویتی قابل فراخوانی بودند
+// و DemoController@cron_1 با یک درخواست GET تمام جداول دیتابیس را دراپ می‌کرد:
+//
+//     Route::get('/demo/cron_1', 'DemoController@cron_1');
+//     Route::get('/demo/cron_2', 'DemoController@cron_2');
+//
+// علت شکست محافظ DEMO_MODE در DemoController نیز آن بود که در سازنده (constructor)
+// دستور `return false;` صرفاً از سازنده خارج می‌شد و هیچ‌گاه جلوی اجرای اکشن را
+// نمی‌گرفت. علاوه بر آن فایل موردنیاز `demo.sql` در مخزن وجود ندارد؛ لذا اجرای
+// cron_1 فقط منجر به «دراپ کامل داده‌ها» و سپس خطا می‌شد.
+//
+// تصمیم: حذف کامل روترها و حذف فایل DemoController.php.
+// برای ریست محیط دمو در آینده باید یک Artisan Command محافظت‌شده (فقط local)
+// ساخته شود، نه یک اندپوینت HTTP عمومی.
 
 // ============================================
 // احراز هویت و کاربران (Authentication & Users)
@@ -335,121 +348,302 @@ Route::get('/addresses/set_default/{id}', 'AddressController@set_default')->name
 
 
 // ============================================
-// مدیریت جواهرات (Jewelry Management)
-// تمام روت‌های جواهرات برای کاربران لاگین کرده
-Route::middleware(['auth'])->prefix('admin/jewelry')->name('admin.jewelry.')->group(function () {
+// مدیریت جواهرات (Jewelry Management) — پنل مدیریت
+// ============================================
+//
+// [امنیت - H-01] پیش از این اصلاح، تمام روت‌های زیر در سه گروه جداگانه با
+// میدل‌ور «auth» تنها ثبت شده بودند. نتیجه آن بود که:
+//
+//   1) هیچ بررسی مجوزی انجام نمی‌شد؛ هر کاربر لاگین‌شده (حتی یک مشتری عادی)
+//      می‌توانست به /admin/jewelry/repair-orders و سایر مسیرها دسترسی بگیرد.
+//   2) گروه `admin/jewelry/repair-orders` و `admin/jewelry/reports/certificates`
+//      دو بار تعریف شده بودند و تعریف دوم (بدون میدل‌ور admin) روی اولی سایه
+//      می‌انداخت.
+//
+// اصلاح: یک گروه واحد با میدل‌ور «auth» + میدل‌ور مجوزمحور «permission:*».
+// سیاست Deny-by-Default است: کاربری که مجوز لازم را نداشته باشد، رد می‌شود.
+// مدیر کل سیستم (user_type=admin) از طریق Gate::before دسترسی کامل دارد.
+//
+Route::prefix('admin/jewelry')
+    ->name('admin.jewelry.')
+    ->middleware(['auth'])
+    ->group(function () {
 
-    // داشبورد
-    Route::get('/dashboard', 'Jewelry\DashboardController@index')->name('dashboard');
+        // -------------------------------------------
+        // داشبورد ماژول
+        // -------------------------------------------
+        Route::get('/dashboard', 'Jewelry\DashboardController@index')
+            ->name('dashboard')
+            ->middleware('permission:jewelry.dashboard.view');
 
-    // مالکان جواهرات (Owners)
-    Route::resource('owners', 'Jewelry\JewelryOwnerController');
+        // -------------------------------------------
+        // مالکان جواهرات (Owners)
+        // -------------------------------------------
+        Route::get('owners/search', 'Jewelry\JewelryOwnerController@search')
+            ->name('owners.search')
+            ->middleware('permission:jewelry.owners.view');
+        Route::get('owners/select-list', 'Jewelry\JewelryOwnerController@getOwnersForSelect')
+            ->name('owners.select_list')
+            ->middleware('permission:jewelry.owners.view');
 
-    // جستجو و انتخاب مالکان (AJAX)
-    Route::get('owners/search', 'Jewelry\JewelryOwnerController@search')->name('owners.search');
-    Route::get('owners/select-list', 'Jewelry\JewelryOwnerController@getOwnersForSelect')->name('owners.select_list');
+        Route::get('owners', 'Jewelry\JewelryOwnerController@index')
+            ->name('owners.index')
+            ->middleware('permission:jewelry.owners.view');
+        Route::get('owners/create', 'Jewelry\JewelryOwnerController@create')
+            ->name('owners.create')
+            ->middleware('permission:jewelry.owners.create');
+        Route::post('owners', 'Jewelry\JewelryOwnerController@store')
+            ->name('owners.store')
+            ->middleware('permission:jewelry.owners.create');
+        Route::get('owners/{owner}', 'Jewelry\JewelryOwnerController@show')
+            ->name('owners.show')
+            ->middleware('permission:jewelry.owners.view');
+        Route::get('owners/{owner}/edit', 'Jewelry\JewelryOwnerController@edit')
+            ->name('owners.edit')
+            ->middleware('permission:jewelry.owners.update');
+        Route::match(['put', 'patch'], 'owners/{owner}', 'Jewelry\JewelryOwnerController@update')
+            ->name('owners.update')
+            ->middleware('permission:jewelry.owners.update');
+        Route::delete('owners/{owner}', 'Jewelry\JewelryOwnerController@destroy')
+            ->name('owners.destroy')
+            ->middleware('permission:jewelry.owners.delete');
 
-    // شناسنامه‌ها (Certificates)
-    Route::resource('certificates', 'Jewelry\JewelryCertificateController');
-    Route::get('certificates/{certificate}/download', 'Jewelry\JewelryCertificateController@downloadFile')
-        ->name('certificates.download');
-    Route::get('certificates/{certificate}/print', 'Jewelry\JewelryCertificateController@print')
-        ->name('certificates.print');
-    Route::get('certificates/verify/{serial_number}', 'Jewelry\JewelryCertificateController@publicVerify')
-        ->name('certificates.public_verify');
+        // -------------------------------------------
+        // شناسنامه‌ها (Certificates)
+        // -------------------------------------------
+        Route::get('certificates', 'Jewelry\JewelryCertificateController@index')
+            ->name('certificates.index')
+            ->middleware('permission:jewelry.certificates.view');
+        Route::get('certificates/create', 'Jewelry\JewelryCertificateController@create')
+            ->name('certificates.create')
+            ->middleware('permission:jewelry.certificates.create');
+        Route::post('certificates', 'Jewelry\JewelryCertificateController@store')
+            ->name('certificates.store')
+            ->middleware('permission:jewelry.certificates.create');
+        Route::get('certificates/{certificate}', 'Jewelry\JewelryCertificateController@show')
+            ->name('certificates.show')
+            ->middleware('permission:jewelry.certificates.view');
+        Route::get('certificates/{certificate}/edit', 'Jewelry\JewelryCertificateController@edit')
+            ->name('certificates.edit')
+            ->middleware('permission:jewelry.certificates.update');
+        Route::match(['put', 'patch'], 'certificates/{certificate}', 'Jewelry\JewelryCertificateController@update')
+            ->name('certificates.update')
+            ->middleware('permission:jewelry.certificates.update');
+        Route::delete('certificates/{certificate}', 'Jewelry\JewelryCertificateController@destroy')
+            ->name('certificates.destroy')
+            ->middleware('permission:jewelry.certificates.delete');
 
-    // سفارشات تعمیر (Repair Orders)
-    Route::resource('repair-orders', 'Jewelry\RepairOrderController');
+        Route::get('certificates/{certificate}/download', 'Jewelry\JewelryCertificateController@downloadFile')
+            ->name('certificates.download')
+            ->middleware('permission:jewelry.certificates.download');
+        Route::get('certificates/{certificate}/print', 'Jewelry\JewelryCertificateController@print')
+            ->name('certificates.print')
+            ->middleware('permission:jewelry.certificates.print');
 
-    // انتقال جواهرات (Transfers)
-    Route::get('transfers/create', 'Jewelry\JewelryTransferController@create')->name('transfers.create');
-    Route::get('transfers/create/certificate/{certificate}', 'Jewelry\JewelryTransferController@createForCertificate')
-        ->name('transfers.createForCertificate');
-    Route::post('transfers', 'Jewelry\JewelryTransferController@store')->name('transfers.store');
-
-    // گزارش‌ها
-    Route::get('reports/certificates', 'Jewelry\ReportController@certificateReport')->name('reports.certificates');
-});
-
-
-
-// روت‌های قبلی پروژه‌تان اینجا هست...
-
-// ================================================
-// روت‌های ماژول ثبت سرقت و مفقودی
-// ================================================
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function() {
-    
-    // روت‌های مربوط به jewelry
-    Route::prefix('jewelry')->name('jewelry.')->group(function() {
-        
-        // روت‌های resource برای missing_reports (index, create, store, show)
-        Route::resource('missing_reports', 'MissingReportController')->only(['index', 'create', 'store', 'show']);
-        
-        // روت جداگانه برای آپدیت وضعیت (از POST استفاده کن بخاطر فرم)
-        Route::post('missing_reports/{id}/status', 'MissingReportController@updateStatus')
-             ->name('missing_reports.update_status');
-        
-        // روت جداگانه برای چاپ
-        Route::get('missing_reports/{id}/print', 'MissingReportController@print')
-             ->name('missing_reports.print');
-
-           // سند کلانتری/مدرک مفقودی؛ فقط مالک گزارش اجازه دانلود دارد.
-           Route::get('missing_reports/{id}/document', 'MissingReportController@downloadDocument')
-               ->name('missing_reports.document');
-        
-        // روت برای دریافت اطلاعات قطعه (AJAX)
-        Route::get('missing_reports/get-jewelry-info/{id}', 'MissingReportController@getJewelryInfo')
-             ->name('missing_reports.get_info');
-    });
-});
-
-// روت API مستقل (اگه نیاز به دسترسی از جاهای دیگه هست)
-Route::middleware(['auth'])->get('/api/jewelry/{id}/info', 'MissingReportController@getJewelryInfo');
-
-// روت‌های ماژول تعمیرات
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function() {
-    Route::prefix('jewelry')->name('jewelry.')->group(function() {
-        
-        // روت‌های repair-orders
-        Route::resource('repair-orders', 'Jewelry\Admin\RepairOrderController');
-        
-        // روت جداگانه برای تغییر وضعیت
-        Route::post('repair-orders/{id}/status', 'Jewelry\Admin\RepairOrderController@updateStatus')
-             ->name('repair-orders.update_status');
-        
-        // روت برای دریافت سابقه تعمیرات قطعه
+        // -------------------------------------------
+        // سفارشات تعمیر (Repair Orders)
+        // — تکنسین تعمیرات به این بخش دسترسی دارد
+        // -------------------------------------------
+        Route::get('repair-orders', 'Jewelry\Admin\RepairOrderController@index')
+            ->name('repair-orders.index')
+            ->middleware('permission:jewelry.repairs.view');
+        Route::get('repair-orders/create', 'Jewelry\Admin\RepairOrderController@create')
+            ->name('repair-orders.create')
+            ->middleware('permission:jewelry.repairs.create');
+        Route::post('repair-orders', 'Jewelry\Admin\RepairOrderController@store')
+            ->name('repair-orders.store')
+            ->middleware('permission:jewelry.repairs.create');
         Route::get('repair-orders/jewelry/{jewelryId}/history', 'Jewelry\Admin\RepairOrderController@jewelryHistory')
-             ->name('repair-orders.jewelry_history');
+            ->name('repair-orders.jewelry_history')
+            ->middleware('permission:jewelry.repairs.view');
+        Route::get('repair-orders/{repair_order}', 'Jewelry\Admin\RepairOrderController@show')
+            ->name('repair-orders.show')
+            ->middleware('permission:jewelry.repairs.view');
+        Route::get('repair-orders/{repair_order}/edit', 'Jewelry\Admin\RepairOrderController@edit')
+            ->name('repair-orders.edit')
+            ->middleware('permission:jewelry.repairs.update');
+        Route::match(['put', 'patch'], 'repair-orders/{repair_order}', 'Jewelry\Admin\RepairOrderController@update')
+            ->name('repair-orders.update')
+            ->middleware('permission:jewelry.repairs.update');
+        Route::get('repair-orders/{id}/status-history', 'Jewelry\Admin\RepairOrderController@statusHistory')
+            ->name('repair-orders.status_history')
+            ->middleware('permission:jewelry.repairs.view');
+
+        // ثبت عیب، شرح تعمیر، هزینه و قطعات مصرفی
+        Route::post('repair-orders/{id}/status', 'Jewelry\Admin\RepairOrderController@updateStatus')
+            ->name('repair-orders.update_status')
+            ->middleware('permission:jewelry.repairs.update_status');
+
+        // تخصیص تکنسین
+        Route::get('repair-orders/{id}/assign', 'Jewelry\Admin\RepairOrderController@assignForm')
+            ->name('repair-orders.assign_form')
+            ->middleware('permission:jewelry.repairs.assign');
+        Route::post('repair-orders/{id}/assign', 'Jewelry\Admin\RepairOrderController@assign')
+            ->name('repair-orders.assign')
+            ->middleware('permission:jewelry.repairs.assign');
+
+        // بارگذاری تصویر/مدرک توسط تکنسین
+        Route::post('repair-orders/{id}/photo', 'Jewelry\Admin\RepairOrderController@uploadAdminPhoto')
+            ->name('repair-orders.upload_photo')
+            ->middleware('permission:jewelry.repairs.update_status');
+
+        Route::delete('repair-orders/{repair_order}', 'Jewelry\Admin\RepairOrderController@destroy')
+            ->name('repair-orders.destroy')
+            ->middleware('permission:jewelry.repairs.delete');
+
+        // -------------------------------------------
+        // گزارش سرقت و مفقودی (Missing Reports)
+        // -------------------------------------------
+        Route::get('missing_reports', 'MissingReportController@index')
+            ->name('missing_reports.index')
+            ->middleware('permission:jewelry.missing_reports.view');
+        Route::get('missing_reports/create', 'MissingReportController@create')
+            ->name('missing_reports.create')
+            ->middleware('permission:jewelry.missing_reports.create');
+        Route::post('missing_reports', 'MissingReportController@store')
+            ->name('missing_reports.store')
+            ->middleware('permission:jewelry.missing_reports.create');
+        Route::get('missing_reports/get-jewelry-info/{id}', 'MissingReportController@getJewelryInfo')
+            ->name('missing_reports.get_info')
+            ->middleware('permission:jewelry.missing_reports.view');
+        Route::get('missing_reports/{missing_report}', 'MissingReportController@show')
+            ->name('missing_reports.show')
+            ->middleware('permission:jewelry.missing_reports.view');
+        Route::post('missing_reports/{id}/status', 'MissingReportController@updateStatus')
+            ->name('missing_reports.update_status')
+            ->middleware('permission:jewelry.missing_reports.update_status');
+        Route::get('missing_reports/{id}/print', 'MissingReportController@print')
+            ->name('missing_reports.print')
+            ->middleware('permission:jewelry.missing_reports.print');
+        // سند کلانتری/مدرک مفقودی؛ فقط دارنده مجوز دانلود
+        Route::get('missing_reports/{id}/document', 'MissingReportController@downloadDocument')
+            ->name('missing_reports.document')
+            ->middleware('permission:jewelry.missing_reports.view');
+
+        // -------------------------------------------
+        // انتقال مالکیت (Ownership Transfers)
+        // — گردش‌کار کامل در OwnershipTransferController و سرویس مربوطه
+        // -------------------------------------------
+        Route::get('transfers', 'Jewelry\OwnershipTransferController@index')
+            ->name('transfers.index')
+            ->middleware('permission:jewelry.transfers.view');
+        Route::get('transfers/create', 'Jewelry\OwnershipTransferController@create')
+            ->name('transfers.create')
+            ->middleware('permission:jewelry.transfers.create');
+        Route::get('transfers/create/certificate/{certificate}', 'Jewelry\OwnershipTransferController@createForCertificate')
+            ->name('transfers.createForCertificate')
+            ->middleware('permission:jewelry.transfers.create');
+        Route::post('transfers', 'Jewelry\OwnershipTransferController@store')
+            ->name('transfers.store')
+            ->middleware('permission:jewelry.transfers.create');
+        Route::get('transfers/{transfer}', 'Jewelry\OwnershipTransferController@show')
+            ->name('transfers.show')
+            ->middleware('permission:jewelry.transfers.view');
+        Route::post('transfers/{transfer}/approve', 'Jewelry\OwnershipTransferController@approve')
+            ->name('transfers.approve')
+            ->middleware('permission:jewelry.transfers.approve');
+        Route::post('transfers/{transfer}/reject', 'Jewelry\OwnershipTransferController@reject')
+            ->name('transfers.reject')
+            ->middleware('permission:jewelry.transfers.reject');
+        Route::post('transfers/{transfer}/cancel', 'Jewelry\OwnershipTransferController@cancel')
+            ->name('transfers.cancel')
+            ->middleware('permission:jewelry.transfers.cancel');
+
+        // -------------------------------------------
+        // گزارش‌ها
+        // -------------------------------------------
+        // -------------------------------------------
+        // گزارش‌های مدیریتی (سراسری)
+        //
+        // [اصلاح طراحی — Stage 2]
+        // پیش‌تر این روت‌ها به Jewelry\ReportController اشاره می‌کردند؛
+        // اما آن کنترلر گزارش‌ها را به مالکیت کاربر جاری (Auth::id())
+        // محدود می‌کند. یعنی مدیر سیستم در پنل مدیریت عملاً گزارش خالی
+        // می‌دید.
+        //
+        // اکنون این روت‌ها به Jewelry\Admin\ReportController متصل
+        // شده‌اند که گزارش سراسری می‌سازد. آن کنترلر (۴۴۲ خط) پیش‌تر
+        // هیچ روتی نداشت و کاملاً غیرقابل دسترس بود.
+        //
+        // کنترلر گزارش مالک‌محور حذف نشده و در بخش «جواهرات من» باقی است.
+        // -------------------------------------------
+        Route::get('reports', 'Jewelry\Admin\ReportController@summary')
+            ->name('reports.summary')
+            ->middleware('permission:jewelry.reports.view');
+
+        Route::get('reports/certificates', 'Jewelry\Admin\ReportController@certificates')
+            ->name('reports.certificates')
+            ->middleware('permission:jewelry.reports.view');
+
+        Route::get('reports/repairs', 'Jewelry\Admin\ReportController@repairs')
+            ->name('reports.repairs')
+            ->middleware('permission:jewelry.reports.view');
+
+        Route::get('reports/transfers', 'Jewelry\Admin\ReportController@transfers')
+            ->name('reports.transfers')
+            ->middleware('permission:jewelry.reports.view');
+
+        Route::get('reports/live-stats', 'Jewelry\Admin\ReportController@liveStats')
+            ->name('reports.live_stats')
+            ->middleware('permission:jewelry.reports.view');
+
+        Route::get('reports/charts', 'Jewelry\Admin\ReportController@charts')
+            ->name('reports.charts')
+            ->middleware('permission:jewelry.reports.view');
+
+        Route::post('reports/export', 'Jewelry\Admin\ReportController@export')
+            ->name('reports.export')
+            ->middleware('permission:jewelry.reports.export');
     });
+
+
+// ============================================
+// پنل کاربری اشیاء قیمتی (سمت مشتری)
+// ============================================
+// این بخش برای «مالک» قطعه است؛ بنابراین به مالکیت رکورد محدود می‌شود
+// و در کنترلرها با Policy بررسی می‌گردد (نه با permission سراسری).
+Route::middleware(['auth'])->prefix('my-jewelry')->name('my-jewelry.')->group(function () {
+    Route::get('/', 'Jewelry\JewelryOwnerController@myDashboard')->name('dashboard');
+
+    // انتقال مالکیت توسط مالک فعلی (ایجاد درخواست)
+    Route::get('transfers', 'Jewelry\OwnershipTransferController@myIndex')->name('transfers.index');
+    Route::get('transfers/create/{certificate}', 'Jewelry\OwnershipTransferController@myCreate')
+        ->name('transfers.create');
+    Route::post('transfers', 'Jewelry\OwnershipTransferController@myStore')->name('transfers.store');
+    Route::get('transfers/{transfer}', 'Jewelry\OwnershipTransferController@myShow')->name('transfers.show');
+    Route::post('transfers/{transfer}/cancel', 'Jewelry\OwnershipTransferController@cancel')
+        ->name('transfers.cancel');
+
+    // سوابق مالکیت قطعات کاربر
+    Route::get('certificates/{certificate}/history', 'Jewelry\OwnershipTransferController@history')
+        ->name('certificates.history');
+
+    // -------------------------------------------
+    // گزارش‌های مالک‌محور
+    //
+    // این گزارش‌ها تنها داده‌های خود کاربر را نشان می‌دهند؛
+    // محدودسازی در خود کنترلر با Auth::id() اعمال می‌شود.
+    // -------------------------------------------
+    Route::get('reports/certificates', 'Jewelry\ReportController@certificateReport')
+        ->name('reports.certificates');
+
+    Route::get('reports/repairs', 'Jewelry\ReportController@repairReport')
+        ->name('reports.repairs');
+
+    Route::get('reports/transfers', 'Jewelry\ReportController@transferReport')
+        ->name('reports.transfers');
+
+    Route::get('reports/financial', 'Jewelry\ReportController@financialReport')
+        ->name('reports.financial');
+
+    Route::post('reports/export', 'Jewelry\ReportController@export')
+        ->name('reports.export');
 });
 
 
-
-// ================================================
-// روت‌های گزارشات
-// ================================================
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function() {
-    Route::prefix('jewelry')->name('jewelry.')->group(function() {
-        
-        // روت‌های گزارشات
-        Route::get('reports/certificates', 'Jewelry\ReportController@certificateReport')
-             ->name('reports.certificates');
-             
-        Route::get('reports/repairs', 'Jewelry\ReportController@repairReport')
-             ->name('reports.repairs');
-             
-        Route::get('reports/transfers', 'Jewelry\ReportController@transferReport')
-             ->name('reports.transfers');
-             
-        Route::get('reports/financial', 'Jewelry\ReportController@financialReport')
-             ->name('reports.financial');
-             
-        Route::post('reports/export', 'Jewelry\ReportController@export')
-             ->name('reports.export');
-    });
-});
-
+// روت API داخلی برای دریافت اطلاعات قطعه (فقط کاربران احراز هویت‌شده)
+Route::middleware(['auth'])->get('/api/jewelry/{id}/info', 'MissingReportController@getJewelryInfo')
+    ->name('api.jewelry.info');
 // مسیرهای محصولات ویژه برای صفحه اصلی
 Route::get('/products/featured', [ProductController::class, 'featured_products'])->name('products.featured');
 Route::get('/products/best-selling', [ProductController::class, 'best_selling_products'])->name('products.best_selling');
@@ -482,3 +676,14 @@ Route::get('/jewelry/track/{serial?}', 'FrontendJewelryController@track')
 Route::get('/jewelry/certificate-service', function () {
     return view('frontend.jewelry.service');
 })->name('jewelry.service');
+
+// ==========================================================
+// روت‌های عمومی مقالات طلا و جواهرات (CMS)
+// ==========================================================
+// این بخش کاملاً عمومی است و تنها مقاله‌های «منتشرشده» را نشان می‌دهد.
+Route::get('/articles', 'ArticleController@index')->name('articles.index');
+Route::get('/articles/search', 'ArticleController@search')->name('articles.search');
+Route::get('/articles/category/{slug}', 'ArticleController@category')->name('articles.category');
+Route::get('/articles/{slug}', 'ArticleController@show')
+    ->name('articles.show')
+    ->where('slug', '[A-Za-z0-9][A-Za-z0-9-]*');

@@ -9,18 +9,25 @@ class JewelryCertificate extends Model
     protected $table = 'jewelry_certificates';
     
     protected $fillable = [
-        'owner_id', 
-        'product_name', 
-        'metal_type', 
+        'owner_id',
+        'product_name',
+        'metal_type',
         'purity',
-        'weight', 
-        'stone_type', 
-        'serial_number', 
+        'weight',
+        'stone_type',
+        'serial_number',
         'issued_at',
         'certificate_file',
         'description',
+        'is_verified',
+        'rejected_at',
+        // ستون‌های افزوده‌شده در مایگریشن 2026_10_12_100004
+        // (پیش از این مدل آن‌ها را می‌فرستاد اما در دیتابیس وجود نداشتند)
         'is_active',
         'created_by',
+        'approved_by',
+        'approved_at',
+        'rejection_reason',
     ];
     
     protected $casts = [
@@ -40,6 +47,35 @@ class JewelryCertificate extends Model
     public function transfers()
     {
         return $this->hasMany(JewelryTransfer::class, 'certificate_id');
+    }
+
+    /**
+     * دفتر کل تاریخچه مالکیت این قطعه.
+     *
+     * ترتیب صعودی بر اساس sequence_no — یعنی از مالک اول تا مالک فعلی.
+     */
+    public function ownershipHistory()
+    {
+        return $this->hasMany(OwnershipHistory::class, 'certificate_id')
+            ->orderBy('sequence_no');
+    }
+
+    /**
+     * آخرین رکورد مالکیت ثبت‌شده در دفتر کل.
+     */
+    public function latestOwnershipRecord()
+    {
+        return $this->hasOne(OwnershipHistory::class, 'certificate_id')
+            ->orderByDesc('sequence_no');
+    }
+
+    /**
+     * درخواست‌های انتقال در انتظار تأیید برای این قطعه.
+     */
+    public function pendingTransfers()
+    {
+        return $this->hasMany(JewelryTransfer::class, 'certificate_id')
+            ->where('status', JewelryTransfer::STATUS_PENDING);
     }
     
     public function repairOrders()
