@@ -41,7 +41,10 @@ class SubCategory extends Model
         return $this->hasMany(SubSubCategory::class);
     }
 
-    // lowercase alias
-    public function subsubcategories() { return $this->subSubCategories(); }
+    // ── رفع باگ ─────────────────────────────────────────────────────
+    // متد نام مستعار «subsubcategories» با subSubCategories() در PHP یکی
+    // شمرده می‌شد (نام متدها حساس به حروف نیست) و خطای مرگبار
+    // «Cannot redeclare» می‌داد؛ حذف شد. Eloquent با نام کوچک هم به
+    // رابطه می‌رسد.
 
 }

@@ -4,7 +4,7 @@
 @php
     $admin_products = array();
     $seller_products = array();
-    foreach (Session::get('cart') as $key => $cartItem){
+    foreach ((Session::get('cart') ?? []) as $key => $cartItem){
         if(\App\Product::find($cartItem['id'])->added_by == 'admin'){
             array_push($admin_products, $cartItem['id']);
         }

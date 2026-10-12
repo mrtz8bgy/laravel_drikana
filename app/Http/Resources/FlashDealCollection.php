@@ -17,7 +17,31 @@ class FlashDealCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $flash_deal = FlashDeal::findOrFail($this->collection->first()->id);
+        // ── رفع باگ ─────────────────────────────────────────────────
+        // پیش‌تر فراخوانی ->id روی عنصر اول مجموعهٔ خالی (یا findOrFail روی
+        // شناسهٔ ناموجود) خطای «Trying to get property 'id' of non-object»
+        // و پاسخ ۵۰۰ می‌ساخت. اکنون در نبود پیشنهاد ویژه، ساختار خالی و
+        // سالم برگردانده می‌شود.
+        $firstDeal = $this->collection->first();
+
+        if ($firstDeal == null) {
+            return [
+                'title' => null,
+                'end_date' => null,
+                'products' => new ProductCollection(collect()),
+            ];
+        }
+
+        $flash_deal = FlashDeal::find($firstDeal->id);
+
+        if ($flash_deal == null) {
+            return [
+                'title' => null,
+                'end_date' => null,
+                'products' => new ProductCollection(collect()),
+            ];
+        }
+
         $products = collect();
         foreach ($flash_deal->flashDealProducts as $key => $flash_deal_product) {
             if(Product::find($flash_deal_product->product_id) != null){

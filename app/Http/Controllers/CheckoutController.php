@@ -156,7 +156,7 @@ class CheckoutController extends Controller
 
     public function get_shipping_info(Request $request)
     {
-        if(Session::has('cart') && count(Session::get('cart')) > 0){
+        if(Session::has('cart') && count((Session::get('cart') ?? [])) > 0){
             $categories = Category::all();
             return view('frontend.shipping_info', compact('categories'));
         }
@@ -198,7 +198,7 @@ class CheckoutController extends Controller
         $subtotal = 0;
         $tax = 0;
         $shipping = 0;
-        foreach (Session::get('cart') as $key => $cartItem){
+        foreach ((Session::get('cart') ?? []) as $key => $cartItem){
             $subtotal += $cartItem['price']*$cartItem['quantity'];
             $tax += $cartItem['tax']*$cartItem['quantity'];
             $shipping += $cartItem['shipping']*$cartItem['quantity'];
@@ -216,7 +216,7 @@ class CheckoutController extends Controller
 
     public function store_delivery_info(Request $request)
     {
-        if(Session::has('cart') && count(Session::get('cart')) > 0){
+        if(Session::has('cart') && count((Session::get('cart') ?? [])) > 0){
             $cart = $request->session()->get('cart', collect([]));
             $cart = $cart->map(function ($object, $key) use ($request) {
                 if(\App\Product::find($object['id'])->added_by == 'admin'){
@@ -249,7 +249,7 @@ class CheckoutController extends Controller
             $subtotal = 0;
             $tax = 0;
             $shipping = 0;
-            foreach (Session::get('cart') as $key => $cartItem){
+            foreach ((Session::get('cart') ?? []) as $key => $cartItem){
                 $subtotal += $cartItem['price']*$cartItem['quantity'];
                 $tax += $cartItem['tax']*$cartItem['quantity'];
                 $shipping += $cartItem['shipping']*$cartItem['quantity'];
@@ -276,7 +276,7 @@ class CheckoutController extends Controller
         $subtotal = 0;
         $tax = 0;
         $shipping = 0;
-        foreach (Session::get('cart') as $key => $cartItem){
+        foreach ((Session::get('cart') ?? []) as $key => $cartItem){
             $subtotal += $cartItem['price']*$cartItem['quantity'];
             $tax += $cartItem['tax']*$cartItem['quantity'];
             $shipping += $cartItem['shipping']*$cartItem['quantity'];
@@ -305,7 +305,7 @@ class CheckoutController extends Controller
                         $subtotal = 0;
                         $tax = 0;
                         $shipping = 0;
-                        foreach (Session::get('cart') as $key => $cartItem)
+                        foreach ((Session::get('cart') ?? []) as $key => $cartItem)
                         {
                             $subtotal += $cartItem['price']*$cartItem['quantity'];
                             $tax += $cartItem['tax']*$cartItem['quantity'];
@@ -331,7 +331,7 @@ class CheckoutController extends Controller
                     elseif ($coupon->type == 'product_base')
                     {
                         $coupon_discount = 0;
-                        foreach (Session::get('cart') as $key => $cartItem){
+                        foreach ((Session::get('cart') ?? []) as $key => $cartItem){
                             foreach ($coupon_details as $key => $coupon_detail) {
                                 if($coupon_detail->product_id == $cartItem['id']){
                                     if ($coupon->discount_type == 'percent') {

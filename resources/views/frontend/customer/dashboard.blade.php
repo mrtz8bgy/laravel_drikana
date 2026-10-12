@@ -36,7 +36,7 @@
                                     <a href="javascript:;" class="d-block">
                                         <i class="fa fa-shopping-cart"></i>
                                         @if(Session::has('cart'))
-                                            <span class="d-block title">{{ count(Session::get('cart'))}} {{__('Product(s)')}}</span>
+                                            <span class="d-block title">{{ count((Session::get('cart') ?? []))}} {{__('Product(s)')}}</span>
                                         @else
                                             <span class="d-block title">0 {{__('Product')}}</span>
                                         @endif

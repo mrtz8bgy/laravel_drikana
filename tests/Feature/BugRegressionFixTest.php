@@ -355,4 +355,155 @@ class BugRegressionFixTest extends TestCase
         $this->assertEquals(403, $response->getStatusCode(), 'کاربر بدون مجوز products.delete نباید محصول حذف کند.');
         $this->assertDatabaseHas('products', ['id' => $product->id]);
     }
+
+    // =========================================================
+    // دور سوم — رگرسیون باگ‌های کشف‌شده با خزش همهٔ صفحات
+    // =========================================================
+
+    /**
+     * PHP نام متدها را حساس به بزرگی/کوچکی حرف نمی‌داند؛ پس تعریف
+     * aliases مثل subcategories() در کنار subCategories() خطای مرگبار
+     * «Cannot redeclare» می‌دهد و کل مدل بارگذاری نمی‌شود.
+     *
+     * @test
+     */
+    public function category_models_load_without_redeclare_fatal() : void
+    {
+        $category = \App\Models\Category::query()->with(['subCategories.subSubCategories'])->first();
+        $this->assertNotNull($category, 'پیش‌نیاز تست: وجود حداقل یک دسته‌بندی.');
+        $this->assertNotNull($category->subcategories, 'دسترسی با نام کوچک هم باید کار کند.');
+
+        $subCategory = \App\Models\SubCategory::query()->with(['subSubCategories'])->first();
+
+        if ($subCategory !== null) {
+            $this->assertNotNull($subCategory->subsubcategories, 'زیردسته با نام کوچک باید به رابطه برسد.');
+        }
+    }
+
+    /**
+     * اندپوینت‌های API دسته‌بندی که پیش‌تر ۵۰۰ می‌دادند.
+     *
+     * @test
+     */
+    public function category_api_endpoints_return_200() : void
+    {
+        foreach (['/api/v1/categories', '/api/v1/categories/featured', '/api/v1/categories/home', '/api/v1/home-categories'] as $uri) {
+            $response = $this->get($uri);
+            $this->assertEquals(200, $response->getStatusCode(), $uri . ' باید ۲۰۰ بدهد.');
+        }
+    }
+
+    /**
+     * صفحه‌های وابسته به سبد خرید نباید با سبد خالی ۵۰۰ بدهند.
+     *
+     * @test
+     */
+    public function cart_empty_pages_do_not_throw_500() : void
+    {
+        $uris = [
+            '/checkout/delivery_info' => 'مرحلهٔ تحویل',
+            '/checkout/payment_select' => 'انتخاب پرداخت',
+            '/customer-products'      => 'محصولات مشتری‌ها',
+            '/api/v1/products/flash-deal' => 'API پیشنهاد ویژه',
+        ];
+
+        foreach ($uris as $uri => $label) {
+            $response = $this->get($uri);
+            $this->assertNotEquals(500, $response->getStatusCode(), $label . ' (' . $uri . ') با سبد خالی ۵۰۰ داد.');
+        }
+    }
+
+    /**
+     * بازگشت از درگاه بدون پارامتر Authority نباید ۵۰۰ بدهد.
+     *
+     * @test
+     */
+    public function zarinpal_back_url_without_authority_redirects() : void
+    {
+        $response = $this->get('/zarinpal/back_url');
+
+        $this->assertNotEquals(500, $response->getStatusCode(), 'بازگشت از درگاه بدون پارامتر نباید خطای سرور بدهد.');
+        $this->assertContains($response->getStatusCode(), [200, 302], 'انتظار پاسخ سالم یا هدایت.');
+    }
+
+    /**
+     * partialهای مشترک (سبد/مقایسه) باید با نشست خالی سالم رندر شوند؛
+     * این‌ها در ده‌ها صفحه استفاده می‌شوند و خطایشان کل سایت را ۵۰۰ می‌کند.
+     *
+     * @test
+     */
+    public function shared_cart_partials_render_with_empty_session() : void
+    {
+        foreach (['frontend.partials.cart_summary', 'frontend.partials.cart', 'frontend.partials.compare', 'frontend.partials.cart_details'] as $view) {
+            try {
+                $this->assertIsString(view($view)->render(), $view . ' باید رندر شود.');
+            } catch (\Throwable $e) {
+                $this->fail($view . ' با خطا رندر نشد: ' . $e->getMessage());
+            }
+        }
+    }
+
+    /**
+     * کمک‌تابع فیلتر محصولات مشتری‌ها پیش‌تر از متغیر تعریف‌نشدهٔ $products
+     * استفاده می‌کرد و /customer-products را ۵۰۰ می‌کرد.
+     *
+     * @test
+     */
+    public function customer_products_filter_helper_uses_its_parameter() : void
+    {
+        $collection = collect([(object) ['published' => 1, 'added_by' => 'admin']]);
+
+        $this->assertNotNull(filter_customer_products($collection), 'کمک‌تابع فیلتر باید مقدار برگرداند.');
+    }
+
+    /**
+     * ستون cart در نشست یک Collection است، نه آرایه؛ cast کورکورانه با
+     * (array) ساختار را می‌شکند و «Undefined index: id/price» می‌دهد.
+     * این تست مسیر واقعی خرید را با سبد پُر می‌سنجد.
+     *
+     * @test
+     */
+    public function cart_pages_render_with_a_filled_cart_collection() : void
+    {
+        $product = \App\Product::where('published', 1)->first();
+
+        if ($product === null) {
+            $this->markTestSkipped('برای این تست حداقل یک محصول منتشرشده لازم است.');
+        }
+
+        $cart = collect([[
+            'id'       => $product->id,
+            'quantity' => 1,
+            'price'    => (float) $product->unit_price,
+            'tax'      => 0,
+            'shipping' => 0,
+            'variant'  => '',
+            'digital'  => 0,
+            'product_referral_code' => null,
+        ]]);
+
+        foreach (['/cart', '/checkout/delivery_info', '/checkout/payment_select'] as $uri) {
+            $response = $this->withSession(['cart' => $cart])->get($uri);
+
+            $this->assertEquals(200, $response->getStatusCode(), $uri . ' با سبد پُر باید ۲۰۰ بدهد.');
+            $this->assertStringNotContainsString('Undefined index', $response->getContent(), $uri . ' نباید «Undefined index» بدهد.');
+        }
+    }
+
+    /**
+     * نشست نباید با cast آرایه‌ای، ساختار Collection را از دست بدهد.
+     *
+     * @test
+     */
+    public function cart_session_collection_survives_iteration() : void
+    {
+        $cart = collect([['id' => 7, 'price' => 10, 'quantity' => 2, 'variant' => '', 'digital' => 0, 'tax' => 0, 'shipping' => 0]]);
+
+        $this->withSession(['cart' => $cart])->get('/cart');
+
+        $fromSession = session('cart');
+
+        $this->assertInstanceOf(\Illuminate\Support\Collection::class, $fromSession, 'سبد خرید باید Collection باقی بماند.');
+        $this->assertEquals(7, $fromSession->first()['id'], 'آیتم سبد باید بدون تغییر باقی بماند.');
+    }
 }

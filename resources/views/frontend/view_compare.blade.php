@@ -30,7 +30,7 @@
                             <div class="heading-5">{{__('Comparison')}}</div>
                         </div>
                         @if(Session::has('compare'))
-                            @if(count(Session::get('compare')) > 0)
+                            @if(count((Session::get('compare') ?? [])) > 0)
                                 <div class="card-body">
                                     <table class="table table-bordered compare-table mb-0">
                                         <thead>
@@ -38,7 +38,7 @@
                                                 <th scope="col" class="font-weight-bold u-width-16">
                                                     {{__('Name')}}
                                                 </th>
-                                                @foreach (Session::get('compare') as $key => $item)
+                                                @foreach ((Session::get('compare') ?? []) as $key => $item)
                                                     <th scope="col" class="font-weight-bold u-width-28">
                                                         <a href="{{ route('product', \App\Product::find($item)->slug) }}">{{ \App\Product::find($item)->name }}</a>
                                                     </th>
@@ -48,7 +48,7 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">{{__('Image')}}</th>
-                                                @foreach (Session::get('compare') as $key => $item)
+                                                @foreach ((Session::get('compare') ?? []) as $key => $item)
                                                     <td>
                                                         <img loading="lazy"  src="{{ asset(\App\Product::find($item)->thumbnail_img) }}" alt="Product Image" class="img-fluid py-4">
                                                     </td>
@@ -56,13 +56,13 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">{{__('Price')}}</th>
-                                                @foreach (Session::get('compare') as $key => $item)
+                                                @foreach ((Session::get('compare') ?? []) as $key => $item)
                                                     <td>{{ single_price(\App\Product::find($item)->unit_price) }}</td>
                                                 @endforeach
                                             </tr>
                                             <tr>
                                                 <th scope="row">{{__('Brand')}}</th>
-                                                @foreach (Session::get('compare') as $key => $item)
+                                                @foreach ((Session::get('compare') ?? []) as $key => $item)
                                                     <td>
                                                         @if (\App\Product::find($item)->brand != null)
                                                             {{ \App\Product::find($item)->brand->name }}
@@ -72,7 +72,7 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">{{__('Sub Sub Category')}}</th>
-                                                @foreach (Session::get('compare') as $key => $item)
+                                                @foreach ((Session::get('compare') ?? []) as $key => $item)
                                                     <td>
                                                         @if (\App\Product::find($item)->subsubcategory != null)
                                                             {{ \App\Product::find($item)->subsubcategory->name }}
@@ -82,13 +82,13 @@
                                             </tr>
                                             <tr>
                                                 <th scope="row">توضیحات</th>
-                                                @foreach (Session::get('compare') as $key => $item)
+                                                @foreach ((Session::get('compare') ?? []) as $key => $item)
                                                     <td><?php echo \App\Product::find($item)->description; ?></td>
                                                 @endforeach
                                             </tr>
                                             <tr>
                                                 <th scope="row"></th>
-                                                @foreach (Session::get('compare') as $key => $item)
+                                                @foreach ((Session::get('compare') ?? []) as $key => $item)
                                                     <td class="text-center py-4">
                                                         <button type="button" class="btn btn-base-1 btn-circle btn-icon-left" onclick="showAddToCartModal({{ $item }})">
                                                             <i class="icon ion-android-cart"></i>{{__('Add to cart')}}

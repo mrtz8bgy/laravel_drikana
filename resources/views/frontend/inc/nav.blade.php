@@ -65,7 +65,7 @@
                     </a>
                     <a href="{{ route('compare') }}" class="d-icon-btn hide-sm u-text-decoration-none" title="مقایسه">
                         <i class="la la-refresh"></i>
-                        @if(Session::has('compare'))<span class="badge">{{ count(Session::get('compare')) }}</span>@else<span class="badge">0</span>@endif
+                        @if(Session::has('compare'))<span class="badge">{{ count((Session::get('compare') ?? [])) }}</span>@else<span class="badge">0</span>@endif
                     </a>
                     <a href="{{ route('wishlists.index') }}" class="d-icon-btn u-text-decoration-none" title="علاقه‌مندی">
                         <i class="la la-heart-o"></i>
@@ -73,7 +73,7 @@
                     <div class="d-user-dropdown">
                         <a href="{{ route('cart') }}" class="d-icon-btn u-text-decoration-none" title="سبد خرید" id="cart_items_sidenav_box">
                             <i class="la la-shopping-cart"></i>
-                            @if(Session::has('cart'))<span class="badge" id="cart_items_sidenav">{{ count(Session::get('cart')) }}</span>@else<span class="badge" id="cart_items_sidenav">0</span>@endif
+                            @if(Session::has('cart'))<span class="badge" id="cart_items_sidenav">{{ count((Session::get('cart') ?? [])) }}</span>@else<span class="badge" id="cart_items_sidenav">0</span>@endif
                         </a>
                     </div>
                 </div>

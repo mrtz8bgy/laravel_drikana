@@ -83,8 +83,12 @@
                                                 @if(\App\BusinessSetting::where('type', 'cash_payment')->first()->value == 1)
                                                     @php
                                                         $digital = 0;
-                                                        foreach(Session::get('cart') as $cartItem){
-                                                            if($cartItem['digital'] == 1){
+                                                        // ── رفع باگ ───────────────────────────
+                                                        // نبودِ سبد در نشست، این foreach را به
+                                                        // «Invalid argument supplied for foreach()»
+                                                        // و پاسخ ۵۰۰ می‌کشاند → پیش‌فرض [].
+                                                        foreach((Session::get('cart') ?? []) as $cartItem){
+                                                            if(isset($cartItem['digital']) && $cartItem['digital'] == 1){
                                                                 $digital = 1;
                                                             }
                                                         }

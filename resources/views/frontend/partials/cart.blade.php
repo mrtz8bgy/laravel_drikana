@@ -2,7 +2,7 @@
     <i class="la la-shopping-cart d-inline-block nav-box-icon"></i>
     <span class="nav-box-text d-none d-xl-inline-block">{{__('Cart')}}</span>
     @if(Session::has('cart'))
-        <span class="nav-box-number">{{ count(Session::get('cart'))}}</span>
+        <span class="nav-box-number">{{ count((Session::get('cart') ?? []))}}</span>
     @else
         <span class="nav-box-number">0</span>
     @endif
@@ -11,7 +11,7 @@
     <li>
         <div class="dropdown-cart px-0">
             @if(Session::has('cart'))
-                @if(count($cart = Session::get('cart')) > 0)
+                @if(count($cart = (Session::get('cart') ?? [])) > 0)
                     <div class="dc-header">
                         <h3 class="heading heading-6 strong-700">{{__('Cart Items')}}</h3>
                     </div>

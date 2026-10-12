@@ -113,11 +113,18 @@ if (!function_exists('sendSMS')) {
 if (!function_exists('filter_customer_products')) {
     function filter_customer_products($customer_products)
     {
-        if (BusinessSetting::where('type', 'classified_product')->first()->value == 1) {
+        // ── رفع باگ ─────────────────────────────────────────────────
+        // ۱) در شاخهٔ else از متغیر تعریف‌نشدهٔ $products استفاده شده بود؛
+        //    پارامتر درست همین $customer_products است.
+        // ۲) تنظیم classified_product ممکن است وجود نداشته باشد و null
+        //    باشد؛ دسترسی به ->value آن‌گاه خطای ۵۰۰ می‌سازد.
+        $classified = BusinessSetting::where('type', 'classified_product')->first();
+
+        if ($classified != null && $classified->value == 1) {
             return $customer_products->where('published', '1');
-        } else {
-            return $products->where('published', '1')->where('added_by', 'admin');
         }
+
+        return $customer_products->where('published', '1')->where('added_by', 'admin');
     }
 }
 

@@ -57,8 +57,13 @@ class Category extends Model
         return $this->hasMany(Product::class);
     }
 
-    // lowercase aliases for Blade templates
-    public function subcategories() { return $this->subCategories(); }
-    public function subsubcategories() { return $this->subSubCategories(); }
+    // ── رفع باگ ─────────────────────────────────────────────────────
+    // پیش‌تر در همین کلاس متدهای «نام مستعار» با حروف کوچک تعریف شده بود
+    // (subcategories/subsubcategories). چون PHP در نام متدها به بزرگی و
+    // کوچکی حروف حساس نیست، این‌ها با subCategories()/subSubCategories()
+    // یکی شمرده می‌شدند و خطای مرگبار «Cannot redeclare
+    // App\Models\Category::subcategories()» کل مدل را از کار می‌انداخت
+    // و هر مسیری که به دسته‌بندی نیاز داشت پاسخ ۵۰۰ می‌داد.
+    // Eloquent خودش $obj->subcategories را به subCategories() نگاشت می‌کند.
 
 }

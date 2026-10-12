@@ -8,7 +8,7 @@
             </div>
 
             <div class="col-6 text-right">
-                <span class="badge badge-md badge-success">{{ count(Session::get('cart')) }} {{__('Items')}}</span>
+                <span class="badge badge-md badge-success">{{ count((Session::get('cart') ?? [])) }} {{__('Items')}}</span>
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
             @php
                 $total_point = 0;
             @endphp
-            @foreach (Session::get('cart') as $key => $cartItem)
+            @foreach ((Session::get('cart') ?? []) as $key => $cartItem)
                 @php
                     $product = \App\Product::find($cartItem['id']);
                     $total_point += $product->earn_point*$cartItem['quantity'];
@@ -47,7 +47,7 @@
                     $admin_products = array();
                     $seller_products = array();
                 @endphp
-                @foreach (Session::get('cart') as $key => $cartItem)
+                @foreach ((Session::get('cart') ?? []) as $key => $cartItem)
                     @php
                         $product = \App\Product::find($cartItem['id']);
                         if($product->added_by == 'admin'){

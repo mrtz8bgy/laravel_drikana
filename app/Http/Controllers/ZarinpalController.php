@@ -53,7 +53,22 @@ class ZarinpalController extends Controller
 
     public function back_url(Request $request){
         
-        $order = Order::where('payment_details', $_GET['Authority'])->first();
+        // ── رفع باگ ─────────────────────────────────────────────────
+        // پیش‌تر $_GET['Authority'] بدون بررسی خوانده می‌شد: در نبود پارامتر
+        // هشدار PHP + استثنا + پاسخ ۵۰۰، و در پارامتر نامعتبر $order تهی
+        // می‌شد و خط بعد «Trying to get property 'id' of non-object» می‌داد.
+        $authority = $request->input('Authority');
+
+        if (empty($authority)) {
+            return redirect()->route('home')->with('error', __('اطلاعات بازگشت از درگاه ناقص است.'));
+        }
+
+        $order = Order::where('payment_details', $authority)->first();
+
+        if ($order == null) {
+            return redirect()->route('home')->with('error', __('سفارش متناظر با این پرداخت یافت نشد.'));
+        }
+
         Session::put('order_id', $order->id);
         $MerchantID 	= config('drikana.payments.zarinpal.merchant_code');
         $Amount 		= $order->grand_total;

@@ -443,3 +443,104 @@ Audit Log.
 - بار اول: بدون خطا → **۷۵ جدول**، ۶ نقش، ۸۶ مجوز، ۱۴۳ پیوند
 - بار دوم: بدون خطا (تکرارپذیری تأیید شد) → همان اعداد
 - هر ۱۱ جدول کلیدی (RBAC، مالکیت، مقالات، حسابرسی، پرداخت فروشنده) ساخته شد
+
+
+---
+
+# پیوست ۳ — دور سوم بازبینی سلامت همهٔ صفحات (۱۴۰۵/۰۷/۲۰)
+
+ابزار تازهٔ `tools/crawl_all_pages.sh` ساخته شد که **تمام مسیرهای GET بدون پارامتر** را
+از خودِ روتر لاراول استخراج می‌کند (نه فهرست دستی، پس هیچ صفحه‌ای جا نمی‌ماند) و هر
+مسیر را دو بار می‌خزد: یک‌بار بی‌ورود (مهمان) و یک‌بار با نشست مدیر کل. علاوه بر کد ۵۰۰،
+صفحه‌هایی که کد ۲۰۰ می‌دهند ولی متن `Fatal error` / `Parse error` / `Uncaught` /
+`Whoops` در بدنه دارند هم خطا شمرده می‌شوند (خطاهای سرکوب‌شده را می‌گیرد).
+
+```bash
+bash tools/crawl_all_pages.sh [BASE_URL] [ADMIN_EMAIL] [ADMIN_PASSWORD]
+```
+
+## نتیجهٔ نهایی
+
+| نما | مسیر | ۲۰۰ سالم | خطای ۵۰۰ | ۴۲۹ (محافظت نرخ) | سایر (۳۰۲/۴۰۴) |
+|-----|------|----------|----------|------------------|-----------------|
+| مهمان | ۲۴۷ | ۷۱ | **۰** | ۳ | ۱۷۳ |
+| مدیر کل | ۲۴۷ | ۱۵۴ | **۰** | ۰ | ۹۳ |
+
+سه مورد ۴۲۹ مربوط به مسیرهای `users/login/otp`، `verification/phone/code/resend` و
+`password/phone/reset` است که در `routes/otp.php` عمداً با `throttle` محدود شده‌اند؛
+یعنی **محافظت از حملهٔ فرهنگ‌نامه‌ای درست کار می‌کند**، نه خرابی.
+
+## باگ‌های یافته و رفع‌شدهٔ این دور
+
+در نخستین اجرا ۹ آدرس با ۵ ریشهٔ خطا پاسخ ۵۰۰ می‌دادند؛ هیچ‌کدام «رگرسیون» نبودند و
+همه باگ‌های از قبل موجود کد اصلی بودند.
+
+| # | مسیر(ها) | ریشهٔ خطا | رفع |
+|---|----------|-----------|-----|
+| R-08 | `/api/v1/categories`, `/api/v1/categories/featured`, `/api/v1/home-categories` | تعریف متد نام‌تکراری در `App\Models\Category` و `App\Models\SubCategory`؛ PHP نام متد را حساس به بزرگی/کوچکی حرف نمی‌داند، پس `subcategories()` در کنار `subCategories()` خطای مرگبار «Cannot redeclare» می‌دهد و **کل مدل** بارگذاری نمی‌شود | حذف متدهای نام‌تکراری؛ Eloquent خودش `$obj->subcategories` را به `subCategories()` نگاشت می‌کند |
+| R-09 | `/api/v1/categories/home` | خواندن `->value` از تنظیم غایب `category_homepage` | بررسی null + بازگشت به همهٔ دسته‌ها |
+| R-10 | `/api/v1/products/flash-deal` | دسترسی به عنصر اولِ مجموعهٔ خالی در `FlashDealCollection::toArray()` | بازگشت `title: null, end_date: null, products: []` |
+| R-11 | `/customer-products` | کمک‌تابع `filter_customer_products()` در `app/Http/Helpers.php` از متغیر تعریف‌نشدهٔ `$products` استفاده می‌کرد | استفاده از پارامتر واقعی + بررسی null روی تنظیم |
+| R-12 | `/checkout/delivery_info`, `/checkout/payment_select` | `foreach`/`count()` روی `Session::get('cart')` در نبود سبد (null) | پیش‌فرض ایمن در کنترلرها و ویوها |
+| R-13 | `/zarinpal/back_url` | `$_GET['Authority']` بدون بررسی + سفارش نامعتبر | خواندن از `$request->input()` + اعتبارسنجی + هدایت به خانه با پیام خطا |
+
+## باگ کلاس پنهان: cast آرایه‌ای روی Collection
+
+هنگام رفع R-12 نخست روش `(array) Session::get('cart', [])` به‌کار رفت. آزمایش با **سبد
+خالی** سالم بود، اما نشست سبد را به‌صورت **Collection** نگه می‌دارد و cast آرایه‌ای
+ساختارش را می‌شکند → `Undefined index: id/price`. آزمون جریان واقعی خرید (سبد پُر) این
+را آشکار کرد و الگوی درست در **۲۸ نقطه از ۱۴ فایل** یکدست شد:
+
+```php
+// ❌ غلط: ساختار Collection را نابود می‌کند
+foreach ((array) Session::get('cart', []) as $key => $cartItem)
+
+// ✅ درست: نوع را دست‌نخورده نگه می‌دارد و فقط null را جبران می‌کند
+foreach ((Session::get('cart') ?? []) as $key => $cartItem)
+```
+
+**درس:** صفحه‌ای که با دادهٔ خالی سالم است، لزوماً با دادهٔ واقعی سالم نیست.
+
+## آزمون جریان کامل خرید (دستی، سبد پُر)
+
+| گام | درخواست | نتیجه |
+|-----|---------|-------|
+| ۱ | `GET /` و گرفتن توکن CSRF | ۲۰۰ |
+| ۲ | `POST /cart/addtocart` (محصول ۱) | ۲۰۰ + پیام «به سبد خرید شما اضافه شد» |
+| ۳ | `GET /cart` | ۲۰۰ — محصول و مبلغ ۱۱٬۸۷۵٬۰۰۰ نمایش داده شد |
+| ۴ | `GET /checkout` | ۲۰۰ (فرم آدرس) |
+| ۵ | `POST /checkout/delivery_info` | ۲۰۰ |
+| ۶ | `POST /checkout/payment_select` | ۲۰۰ — صفحهٔ پرداخت نمایش داده شد |
+
+## آزمون‌های خودکار این دور
+
+| مجموعه | تعداد | نتیجه |
+|--------|-------|-------|
+| کل PHPUnit | ۲۵۲ تست / ۱۵۷۳ گزاره | **OK** — ۱ skip، ۰ شکست |
+| `BugRegressionFixTest` | ۱۹ تست / ۶۱ گزاره | **OK** |
+| `tools/crawl_all_pages.sh` | ۲۴۷ مسیر × ۲ نما | **۰ خطا** |
+| `tools/crawl_admin.sh` (مدیر) | ۱۱۲ مسیر | ۱۰۱ سالم / **۰ خطا** |
+| `tools/crawl_admin.sh` (فروشنده) | ۱۱۴ مسیر | ۸ سالم / **۰ خطا** (بقیه کنترل دسترسی درست) |
+| `tools/health_check.sh` | ۶۰ بررسی | ۵۶ موفق / **۰ ناموفق** / ۴ هشدار |
+| `tools/check_references.py` | ۶۶۷ نام مسیر | **۰ ارجاع شکسته** |
+
+### تست‌های تازهٔ `BugRegressionFixTest`
+
+`category_models_load_without_redeclare_fatal`، `category_api_endpoints_return_200`،
+`cart_empty_pages_do_not_throw_500`، `zarinpal_back_url_without_authority_redirects`،
+`shared_cart_partials_render_with_empty_session`،
+`customer_products_filter_helper_uses_its_parameter`،
+`cart_pages_render_with_a_filled_cart_collection`،
+`cart_session_collection_survives_iteration`.
+
+## بازیابی محیط اجرا (ریشهٔ «دیده‌نشدن سایت»)
+
+سایت و پنل «دیده نمی‌شدند» چون **محیط اجرا بازنشانی شده بود**، نه چون کد خراب بود:
+سرور PHP، فایل‌های پروژه و کش از دست رفته بودند و دیتابیس بدون سرویس‌دهنده بود.
+بازگردانی انجام‌شده:
+
+1. کلون کامل از مخزن گیت‌هاب (کامیت `8ccfdd41`) — `git clone` چون مخزن عمومی است؛
+2. بازگرداندن فایل‌های رازِ خارج از گیت (`.env`, `.env.testing`, …) از نسخهٔ محلی؛
+3. `composer install` برای بازسازی `vendor/`؛
+4. راه‌اندازی سرور روی `0.0.0.0:8000` و اتصال به MariaDB؛
+5. اعمال دوبارهٔ رفع‌های دور سوم روی نسخهٔ کلون‌شده و تأیید مجدد همهٔ آزمون‌ها.

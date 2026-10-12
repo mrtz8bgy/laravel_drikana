@@ -225,7 +225,7 @@ class OrderController extends Controller
                 $shipping = \App\BusinessSetting::where('type', 'flat_rate_shipping_cost')->first()->value;
             }
             elseif (\App\BusinessSetting::where('type', 'shipping_type')->first()->value == 'seller_wise_shipping') {
-                foreach (Session::get('cart') as $key => $cartItem) {
+                foreach ((Session::get('cart') ?? []) as $key => $cartItem) {
                     $product = \App\Product::find($cartItem['id']);
                     if($product->added_by == 'admin'){
                         array_push($admin_products, $cartItem['id']);
@@ -251,7 +251,7 @@ class OrderController extends Controller
             //End Shipping Cost Calculation
 
             //Order Details Storing
-            foreach (Session::get('cart') as $key => $cartItem){
+            foreach ((Session::get('cart') ?? []) as $key => $cartItem){
                 $product = Product::find($cartItem['id']);
 
                 $subtotal += $cartItem['price']*$cartItem['quantity'];
@@ -282,7 +282,7 @@ class OrderController extends Controller
                 //Dividing Shipping Costs
                 if ($cartItem['shipping_type'] == 'home_delivery') {
                     if (\App\BusinessSetting::where('type', 'shipping_type')->first()->value == 'flat_rate') {
-                        $order_detail->shipping_cost = $shipping/count(Session::get('cart'));
+                        $order_detail->shipping_cost = $shipping/count((Session::get('cart') ?? []));
                     }
                     elseif (\App\BusinessSetting::where('type', 'shipping_type')->first()->value == 'seller_wise_shipping') {
                         if($product->added_by == 'admin'){

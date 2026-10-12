@@ -73,17 +73,28 @@
                             @php
                                 $admin_products = array();
                                 $seller_products = array();
-                                foreach (Session::get('cart') as $key => $cartItem){
-                                    if(\App\Product::find($cartItem['id'])->added_by == 'admin'){
+                                // ── رفع باگ ─────────────────────────────────────
+                                // ۱) نبودِ سبد در نشست باعث «Invalid argument supplied
+                                //    for foreach()» و پاسخ ۵۰۰ می‌شد → پیش‌فرض [].
+                                // ۲) اگر محصولی از سبد حذف شده باشد find() تهی می‌دهد و
+                                //    دسترسی به ->added_by خطا می‌دهد → بررسی null-safe.
+                                foreach ((Session::get('cart') ?? []) as $key => $cartItem){
+                                    $cartProduct = \App\Product::find(isset($cartItem['id']) ? $cartItem['id'] : null);
+
+                                    if ($cartProduct === null) {
+                                        continue;
+                                    }
+
+                                    if($cartProduct->added_by == 'admin'){
                                         array_push($admin_products, $cartItem['id']);
                                     }
                                     else{
                                         $product_ids = array();
-                                        if(array_key_exists(\App\Product::find($cartItem['id'])->user_id, $seller_products)){
-                                            $product_ids = $seller_products[\App\Product::find($cartItem['id'])->user_id];
+                                        if(array_key_exists($cartProduct->user_id, $seller_products)){
+                                            $product_ids = $seller_products[$cartProduct->user_id];
                                         }
                                         array_push($product_ids, $cartItem['id']);
-                                        $seller_products[\App\Product::find($cartItem['id'])->user_id] = $product_ids;
+                                        $seller_products[$cartProduct->user_id] = $product_ids;
                                     }
                                 }
                             @endphp

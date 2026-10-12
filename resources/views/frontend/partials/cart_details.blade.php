@@ -20,7 +20,7 @@
                                 @php
                                 $total = 0;
                                 @endphp
-                                @foreach (Session::get('cart') as $key => $cartItem)
+                                @foreach ((Session::get('cart') ?? []) as $key => $cartItem)
                                     @php
                                     $product = \App\Product::find($cartItem['id']);
                                     $total = $total + $cartItem['price']*$cartItem['quantity'];

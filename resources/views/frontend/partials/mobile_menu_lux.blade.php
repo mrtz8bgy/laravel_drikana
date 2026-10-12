@@ -32,7 +32,7 @@
                     <li><a href="{{ route('jewelry.missing_reports.create_public') }}"><i class="la la-bullhorn"></i> اعلام سرقت/مفقودی</a></li>
                     <li><a href="{{ route('orders.track') }}"><i class="la la-map-pin"></i> رهگیری سفارش</a></li>
                     <li><a href="{{ route('cart') }}"><i class="la la-shopping-cart"></i> سبد خرید
-                        @if(Session::has('cart'))<span class="badge">{{ count(Session::get('cart')) }}</span>@endif</a></li>
+                        @if(Session::has('cart'))<span class="badge">{{ count((Session::get('cart') ?? [])) }}</span>@endif</a></li>
                     <li><a href="{{ route('wishlists.index') }}"><i class="la la-heart-o"></i> علاقه‌مندی‌ها</a></li>
                     <li><a href="{{ route('compare') }}"><i class="la la-refresh"></i> مقایسه</a></li>
                     @auth
